@@ -1,0 +1,81 @@
+variables:
+  GIT_SUBMODULE_STRATEGY: none
+
+stages:
+  - build
+  - release
+  - deploy
+
+#######################
+#   Moonion Builds    #
+#######################
+
+
+build moonion latest:
+  stage: build
+  tags:
+    - dind
+  only:
+      - master@skyrocket/scoutzoo/app
+  script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker build -t $CI_REGISTRY_IMAGE:$CI_BUILD_REF .
+    - docker push $CI_REGISTRY_IMAGE:$CI_BUILD_REF
+    - docker tag $CI_REGISTRY_IMAGE:$CI_BUILD_REF $CI_REGISTRY_IMAGE:latest
+    - docker push $CI_REGISTRY_IMAGE:latest
+
+
+#######################
+#   Moonion Release   #
+#######################
+
+release moonion tag:
+  stage: release
+  tags:
+    - dind
+  only:
+    - tags@skyrocket/scoutzoo/app
+  except:
+    - master
+  variables:
+    GIT_STRATEGY: none
+    GIT_CHECKOUT: 'false'
+  script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - MAJOR=$(echo $CI_BUILD_TAG | cut -f1 -d.)
+    - MINOR=$(echo $CI_BUILD_TAG | cut -f2 -d.)
+    - FIX=$(echo $CI_BUILD_TAG | cut -f3 -d.)
+    - docker pull $CI_REGISTRY_IMAGE:$CI_BUILD_REF
+    - docker tag $CI_REGISTRY_IMAGE:$CI_BUILD_REF $CI_REGISTRY_IMAGE:$MAJOR.$MINOR.$FIX
+    - docker tag $CI_REGISTRY_IMAGE:$CI_BUILD_REF $CI_REGISTRY_IMAGE:$MAJOR.$MINOR
+    - docker tag $CI_REGISTRY_IMAGE:$CI_BUILD_REF $CI_REGISTRY_IMAGE:$MAJOR
+    - docker tag $CI_REGISTRY_IMAGE:$CI_BUILD_REF $CI_REGISTRY_IMAGE:stable
+    - docker push $CI_REGISTRY_IMAGE:$MAJOR.$MINOR.$FIX
+    - docker push $CI_REGISTRY_IMAGE:$MAJOR.$MINOR
+    - docker push $CI_REGISTRY_IMAGE:$MAJOR
+    - docker push $CI_REGISTRY_IMAGE:stable
+
+#######################
+#   Moonion Deploy    #
+#######################
+
+deploy moonion dev:
+  image: registry.moonion.com/docker/compose
+  stage: deploy
+  tags:
+    - dev
+  only:
+    - master@skyrocket/scoutzoo/app
+  except:
+    - tags
+  variables:
+    GIT_STRATEGY: none
+    GIT_CHECKOUT: 'false'
+  script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - cd /opt/$CI_ENVIRONMENT_SLUG/$CI_PROJECT_NAMESPACE
+    - test -f docker-compose.yml && docker-compose -p $CI_PROJECT_NAMESPACE-$CI_ENVIRONMENT_SLUG pull $CI_PROJECT_NAME
+    - test -f docker-compose.yml && docker-compose -p $CI_PROJECT_NAMESPACE-$CI_ENVIRONMENT_SLUG up --no-deps -d $CI_PROJECT_NAME
+  environment:
+    name: dev
+    url: https://$CI_PROJECT_NAME.dev.moonion.com

@@ -1,0 +1,17 @@
+FROM node:8-alpine
+
+WORKDIR /usr/src
+
+#nginx settings
+COPY ./nginx.conf /etc/nginx/conf.d/app/
+
+#COPY ./yarn.lock /usr/src/
+COPY ./package.json /usr/src/
+
+RUN yarn install
+
+COPY . /usr/src
+
+VOLUME ["/var/www/app", "/etc/nginx/conf.d/app"]
+
+CMD yarn run develop
