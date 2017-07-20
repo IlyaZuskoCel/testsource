@@ -14,4 +14,4 @@ COPY . /usr/src
 
 VOLUME ["/var/www/app", "/etc/nginx/conf.d/app"]
 
-CMD yarn run develop
+CMD ["yarn", "run", "develop"]
