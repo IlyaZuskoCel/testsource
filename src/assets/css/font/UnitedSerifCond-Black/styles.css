@@ -1,0 +1,13 @@
+/* seems the normal & bold font get inversed */
+
+@font-face {
+  font-family: 'UnitedSerifCond';
+  src:
+    url('UnitedSerifCond-Black.eot?#iefix') format('embedded-opentype'),
+    url('UnitedSerifCond-Black.otf') format('opentype'),
+    url('UnitedSerifCond-Black.woff') format('woff'),
+    url('UnitedSerifCond-Black.ttf') format('truetype'),
+    url('UnitedSerifCond-Black.svg#UnitedSerifCond-Black') format('svg');
+  font-weight: bold;
+  font-style: normal;
+}

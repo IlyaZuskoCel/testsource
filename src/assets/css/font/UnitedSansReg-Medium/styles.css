@@ -1,0 +1,11 @@
+@font-face {
+  font-family: 'UnitedSansReg';
+  src:
+    url('UnitedSansReg-Medium.eot?#iefix') format('embedded-opentype'),
+    url('UnitedSansReg-Medium.otf') format('opentype'),
+    url('UnitedSansReg-Medium.woff') format('woff'),
+    url('UnitedSansReg-Medium.ttf') format('truetype'),
+    url('UnitedSansReg-Medium.svg#UnitedSansReg-Medium') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}

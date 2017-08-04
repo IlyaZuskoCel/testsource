@@ -5,7 +5,7 @@
 
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import {MuiThemeProvider} from 'material-ui/styles';
+import Theme from './theme';
 
 import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
 import {Provider, connect} from 'react-redux';
@@ -78,10 +78,12 @@ const LayoutRedux = connect(
 
 
 ReactDOM.render(
-    <MuiThemeProvider>
+    <Theme>
+
         <Provider store={store}>
             <LayoutRedux/>
         </Provider>
-    </MuiThemeProvider>,
+
+    </Theme>,
     document.getElementById('app')
 );

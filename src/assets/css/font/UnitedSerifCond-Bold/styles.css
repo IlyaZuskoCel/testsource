@@ -1,0 +1,11 @@
+@font-face {
+  font-family: 'UnitedSerifCond';
+  src:
+    url('UnitedSerifCond-Bold.eot?#iefix') format('embedded-opentype'),
+    url('UnitedSerifCond-Bold.otf') format('opentype'),
+    url('UnitedSerifCond-Bold.woff') format('woff'),
+    url('UnitedSerifCond-Bold.ttf') format('truetype'),
+    url('UnitedSerifCond-Bold.svg#UnitedSerifCond-Bold') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}

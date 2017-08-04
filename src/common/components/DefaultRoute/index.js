@@ -20,7 +20,8 @@ const styleSheet = createStyleSheet('DefaultRoute', {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        minHeight: window.innerHeight - 20
+        minHeight: window.innerHeight,
+        overflow: 'hidden'
     }
 });
 

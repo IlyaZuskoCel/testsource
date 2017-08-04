@@ -9,11 +9,13 @@ import {connect} from 'react-redux';
 import Header from '../components/Header';
 
 import {logOut} from '../../user/actions';
+import {go} from '../actions';
 
 const mapStateToProps = (state) => ({
     user: state.user.current
 });
 const mapDispatchToProps = (dispatch) => ({
-    logOut: (username, password) => dispatch(logOut())
+    logOut: (username, password) => dispatch(logOut()),
+    go: page => dispatch(go(page)),
 });
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header))
