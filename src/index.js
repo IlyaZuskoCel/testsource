@@ -18,11 +18,11 @@ import {ConnectedRouter, routerReducer, routerMiddleware, push, goBack} from 're
 import {composeWithDevTools} from 'redux-devtools-extension';
 import thunk from 'redux-thunk'
 
-import DefaultRoute from './common/containers/DefaultRoute';
-import NoMatch from './common/components/NoMatch';
+
 import CommonReducer from './common/reducers';
 import UserReducer from './user/reducers';
 
+import CommonRouters from './common';
 import UserRouters from './user';
 
 import {getCurrent as getCurrentUser} from './user/actions'
@@ -61,7 +61,7 @@ class Layout extends Component {
         return <ConnectedRouter history={history}>
             <Switch>
                 {UserRouters}
-                <DefaultRoute component={NoMatch}/>
+                {CommonRouters}
             </Switch>
         </ConnectedRouter>
     }

@@ -6,7 +6,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-
 import classNames from 'classnames';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import withWidth from 'material-ui/utils/withWidth';

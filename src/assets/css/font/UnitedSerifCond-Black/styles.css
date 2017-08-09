@@ -1,7 +1,7 @@
 /* seems the normal & bold font get inversed */
 
 @font-face {
-  font-family: 'UnitedSerifCond';
+  font-family: 'UnitedSerifCond-Black';
   src:
     url('UnitedSerifCond-Black.eot?#iefix') format('embedded-opentype'),
     url('UnitedSerifCond-Black.otf') format('opentype'),

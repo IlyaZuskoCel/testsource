@@ -15,24 +15,26 @@ import Grid from 'material-ui/Grid';
 import Header from '../../containers/Header'
 import Footer from '../../containers/Footer'
 
-const styleSheet = createStyleSheet('DefaultRoute', {
+const styleSheet = createStyleSheet('DefaultRoute', theme => ({
     root: {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
         minHeight: window.innerHeight,
-        overflow: 'hidden'
+        overflow: 'hidden',
+        marginTop: 70,
+        [theme.breakpoints.down('sm')]: {
+            height: 60,
+        }
     }
-});
+}));
 
 
 const DefaultRoute = ({component: Component, isAuthenticated, classes, ...rest}) => (
     <Route {...rest} render={props => (
         <Grid className={classes.root}>
-            <div>
-                <Header/>
-                <Component {...props} />
-            </div>
+            <Header/>
+            <Component {...props} />
             <Footer/>
         </Grid>
     )}/>
