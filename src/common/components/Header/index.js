@@ -17,7 +17,6 @@ import Button from 'material-ui/Button';
 import Menu, {MenuItem} from 'material-ui/Menu';
 import Drawer from 'material-ui/Drawer';
 import Avatar from 'material-ui/Avatar';
-import Icon from 'material-ui/Icon';
 import Hidden from 'material-ui/Hidden';
 
 

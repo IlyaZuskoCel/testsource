@@ -17,6 +17,9 @@ import Radio, {RadioGroup} from 'material-ui/Radio';
 import Checkbox from 'material-ui/Checkbox';
 import Button from 'material-ui/Button';
 
+
+import {Autosuggest} from '../';
+
 const styleSheet = createStyleSheet('Typography', theme => ({
     root: {
         paddingLeft: 136,
@@ -37,7 +40,8 @@ class Form extends Component {
             switch: false,
             TextField: '',
             TextFieldError: 'Text',
-            TextFieldMulti: ''
+            TextFieldMulti: '',
+            DropdownValue: '',
         };
 
     }
@@ -48,10 +52,10 @@ class Form extends Component {
             <Grid container gutter={8} className={classes.root}>
 
                 <h1 style={{
-                    backgroundImage:'linear-gradient(312deg, #c39e3d, #ddc674)',
-                    backgroundClip:'text',
-                    textFillColor:'transparent',
-                    color:'transparent'
+                    backgroundImage: 'linear-gradient(312deg, #c39e3d, #ddc674)',
+                    backgroundClip: 'text',
+                    textFillColor: 'transparent',
+                    color: 'transparent'
 
                 }}>12</h1>
 
@@ -90,7 +94,22 @@ class Form extends Component {
 
                 </Grid>
                 <Grid item xs={12}>
-                    <Typography type="body1">Dropdown (need wait new version material)</Typography>
+                    <Typography type="body1">Dropdown</Typography>
+
+                    <Autosuggest
+                        suggestions={[{label: 'Option 1'}, {label: 'Option 2'}]}
+                        onSuggestionsFetchRequested={() => {
+                        }}
+                        onSuggestionsClearRequested={() => {
+                        }}
+                        inputProps={{
+                            label: "Dropdown with no selection",
+                            value: this.state.DropdownValue,
+                            onChange: (event, {newValue}) => this.setState({DropdownValue: newValue}),
+                        }}
+                    />
+
+
                 </Grid>
                 <Grid item xs={12}>
                     <Typography type="body1">Tags (need to do component)</Typography>

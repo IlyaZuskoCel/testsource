@@ -143,6 +143,7 @@ const theme = (outerTheme) => {
         },
         primary: {
             ...outerTheme.palette.primary,
+            A200: '#c2a24d',
             A700: '#c2a24d',
             500: '#c2a24d'
         },
@@ -341,12 +342,13 @@ const theme = (outerTheme) => {
                     },
                 }
             },
-            MuiInputLabel: {
+            MuiFormLabel: {
                 root: {
                     paddingLeft: 8,
                     paddingRight: 8,
                     ...typography.body1
-                }
+                },
+
             },
             MuiFormControlLabel: {
                 label: {
