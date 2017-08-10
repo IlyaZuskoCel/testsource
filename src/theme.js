@@ -402,13 +402,28 @@ const theme = (outerTheme) => {
                     transform: 'translateX(18px)',
                     '& + $bar': {
                         borderColor: palette.primary[500],
-                        backgroundColor: 'transparent',
+                        backgroundColor: 'transparent'
                     },
                     '& $icon': {
                         backgroundColor: '#c2a24d',
                     },
 
                 },
+            },
+            MuiSnackbar: {
+                anchorTopCenter: {
+                    zIndex: 1000,
+                    top: 80,
+                    [outerTheme.breakpoints.down('sm')]: {
+                        top: 70,
+                    }
+                }
+            },
+            MuiSnackbarContent: {
+                root: {
+                    backgroundColor: '#fff',
+
+                }
             }
 
 

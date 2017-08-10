@@ -30,7 +30,10 @@ export const styleSheet = createStyleSheet('MuiIcon', theme => ({
         color: theme.palette.action.disabled,
     },
     colorError: {
-        color: theme.palette.error[500],
+        color: theme.palette.error.A400,
+    },
+    colorSuccess: {
+        color: theme.palette.primary.A700,
     },
     colorPrimary: {
         color: theme.palette.primary[500],

@@ -8,9 +8,15 @@ import {connect} from 'react-redux';
 
 import DefaultRoute from '../components/DefaultRoute';
 
+import {removeAlert} from '../actions';
 
 const mapStateToProps = (state) => ({
-    isAuthenticated: state.user.current !== null
+    isAuthenticated: state.user.current !== null,
+    alert: state.common.alert
 });
 
-export default withRouter(connect(mapStateToProps)(DefaultRoute))
+const mapDispatchToProps = (dispatch) => ({
+    hideAlert: () => dispatch(removeAlert()),
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DefaultRoute));

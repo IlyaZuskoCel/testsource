@@ -46,6 +46,15 @@ class Form extends Component {
         const {classes} = this.props;
         return (
             <Grid container gutter={8} className={classes.root}>
+
+                <h1 style={{
+                    backgroundImage:'linear-gradient(312deg, #c39e3d, #ddc674)',
+                    backgroundClip:'text',
+                    textFillColor:'transparent',
+                    color:'transparent'
+
+                }}>12</h1>
+
                 <Grid item xs={12}>
                     <Typography type="headline">Form</Typography>
                 </Grid>

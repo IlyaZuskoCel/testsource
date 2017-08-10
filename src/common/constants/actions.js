@@ -4,3 +4,10 @@
  */
 
 export const LOAD = 'common:Load';
+
+
+export const ERROR_ALERT = 'alert:error';
+export const SUCCESS_ALERT = 'alert:success';
+export const REMOVE_ALERT = 'alert:remove';
+
+

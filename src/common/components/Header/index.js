@@ -20,6 +20,7 @@ import Avatar from 'material-ui/Avatar';
 import Icon from 'material-ui/Icon';
 import Hidden from 'material-ui/Hidden';
 
+
 import ScoutIcon from '../Icon';
 import {Link} from '../';
 
@@ -224,7 +225,8 @@ class Header extends Component {
 
         if (user) {
             let items = [
-                <MenuItem key="profile" onClick={this.handleMenuRequestClose('/profile')}><span>Profile</span></MenuItem>,
+                <MenuItem key="profile"
+                          onClick={this.handleMenuRequestClose('/profile')}><span>Profile</span></MenuItem>,
                 <MenuItem key="settings" onClick={this.handleMenuRequestClose('/settings')}>Settings</MenuItem>,
                 <MenuItem key="logout" onClick={this.props.logOut}>Log Out</MenuItem>,
 
@@ -261,6 +263,7 @@ class Header extends Component {
 
         return (
             <AppBar position="fixed" className={classes.container}>
+
                 <Toolbar className={classes.root}>
                     <Link to="/" className={classes.logoLink} disabledUnderline>
                         <div className={classes.logoWrap}>
@@ -291,6 +294,7 @@ class Header extends Component {
                         </div>
                     )}
                 </Toolbar>
+
             </AppBar>
         )
     }

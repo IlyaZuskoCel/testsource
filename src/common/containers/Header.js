@@ -12,7 +12,8 @@ import {logOut} from '../../user/actions';
 import {go} from '../actions';
 
 const mapStateToProps = (state) => ({
-    user: state.user.current
+    user: state.user.current,
+
 });
 const mapDispatchToProps = (dispatch) => ({
     logOut: (username, password) => dispatch(logOut()),

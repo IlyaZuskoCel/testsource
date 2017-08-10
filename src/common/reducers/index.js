@@ -6,7 +6,9 @@
 import {combineReducers} from 'redux';
 
 import load from './load';
+import alert from './alert';
 
 export default combineReducers({
-    load
+    load,
+    alert
 });
