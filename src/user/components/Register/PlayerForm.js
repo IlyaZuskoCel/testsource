@@ -8,6 +8,9 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
+
+import {FormGroup, FormControlLabel} from 'material-ui/Form';
+import Radio, {RadioGroup} from 'material-ui/Radio';
 import Button from 'material-ui/Button';
 import FormControl from 'material-ui/Form/FormControl';
 import TextField from 'material-ui/TextField';
@@ -21,7 +24,8 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
     },
     formControl: {
         width: '100%',
-    }
+    },
+
 }));
 
 
@@ -37,7 +41,8 @@ class PlayerForm extends Component {
             email: '',
             password: '',
             password_repeat: '',
-            errors: []
+            errors: [],
+            selectedValue: 'player',
         };
 
 
@@ -84,8 +89,34 @@ class PlayerForm extends Component {
         const classes = this.props.classes;
 
         return <form className={classes.form} onSubmit={this.handleSubmit}>
+            <Grid container gutter={24} direction={'column'}>
+                <Grid item xs={12}>
+                    {'I am a______'}
+                    <FormGroup style={{display: 'inline'}}>
+                        <FormControlLabel
+                            control={
+                                <Radio
+                                    checked={this.state.selectedValue === 'player'}
+                                    onChange={this.handleChange('selectedValue')}
+                                    value="player"
 
-            <Grid container gutter={24}>
+                                />
+                            }
+                            label="Player"
+                        />
+                        <FormControlLabel
+                            control={
+                                <Radio
+                                    checked={this.state.selectedValue === 'scout'}
+                                    onChange={this.handleChange('selectedValue')}
+                                    value="scout"
+
+                                />
+                            }
+                            label="Scout"
+                        />
+                    </FormGroup>
+                </Grid>
                 <Grid item xs={12} sm={4}>
                     <TextField id="first_name"
                                required
@@ -116,8 +147,8 @@ class PlayerForm extends Component {
                                className={classes.formControl}
                     />
                 </Grid>
-            </Grid>
-            <Grid container gutter={24}>
+
+
                 <Grid item xs={12} sm={6}>
                     <TextField id="phone"
                                required
@@ -139,8 +170,8 @@ class PlayerForm extends Component {
                                className={classes.formControl}
                     />
                 </Grid>
-            </Grid>
-            <Grid container gutter={24}>
+
+
                 <Grid item xs={12} sm={6}>
                     <TextField id="password"
                                type="password"
@@ -163,8 +194,8 @@ class PlayerForm extends Component {
                                className={classes.formControl}
                     />
                 </Grid>
-            </Grid>
-            <Grid container gutter={24}>
+
+
                 <Grid item xs={12} sm={6} md={4}>
                     <FormControl className={classes.formControl}>
                         <Button raised type="submit" color="primary" className={classes.button}>
@@ -173,6 +204,7 @@ class PlayerForm extends Component {
                     </FormControl>
                 </Grid>
             </Grid>
+
         </form>
     }
 }
