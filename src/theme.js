@@ -14,7 +14,7 @@ import './assets/css/font/UnitedSerifCond-Black/styles.css';
 import './assets/css/font/UnitedSerifCond-Bold/styles.css';
 import './assets/css/font/UnitedSansReg-Bold/styles.css';
 //import './assets/css/font/UnitedSerifCond-Medium/styles.css;
-
+//import './assets/css/font/UnitedSerifCond-Heavy/styles.css;
 const theme = (outerTheme) => {
     const typography = {
         fontFamily: "UnitedSansReg-Medium",
@@ -373,6 +373,8 @@ const theme = (outerTheme) => {
                     color: '#4a4a4a',
                     width: 18,
                     height: 18,
+                    marginRight: 11,
+                    marginLeft: 10,
                 }
             },
             MuiRadio: {

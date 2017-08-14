@@ -11,6 +11,7 @@ import Grid from 'material-ui/Grid';
 
 import {FormGroup, FormControlLabel} from 'material-ui/Form';
 import Radio, {RadioGroup} from 'material-ui/Radio';
+import Checkbox from 'material-ui/Checkbox';
 import Button from 'material-ui/Button';
 import FormControl from 'material-ui/Form/FormControl';
 import TextField from 'material-ui/TextField';
@@ -24,9 +25,17 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
     },
     formControl: {
         width: '100%',
+        alignItems: 'center',
+
     },
+    formBirthDate: {
+        width: 200,
 
-
+    },
+    formBirthYear: {
+        width: 200,
+        marginLeft: 30
+    },
 }));
 
 
@@ -38,12 +47,16 @@ class PlayerForm extends Component {
             first_name: '',
             last_name: '',
             phone: '',
-            username: '',
+            birthDay: '',
+            birthYear: '',
             email: '',
             password: '',
             password_repeat: '',
             errors: [],
             selectedValue: 'player',
+            yes_no_agent: 'no',
+            terms: 'no',
+            news: 'no',
         };
 
 
@@ -67,8 +80,11 @@ class PlayerForm extends Component {
         if (!this.state.phone)
             return this.setState({errors: ['phone']});
 
-        if (!this.state.username)
-            return this.setState({errors: ['username']});
+        if (!this.state.birthDay)
+            return this.setState({errors: ['birthDay']});
+
+        if (!this.state.birthYear)
+            return this.setState({errors: ['birthYear']});
 
         if (!this.state.email)
             return this.setState({errors: ['email']});
@@ -90,7 +106,7 @@ class PlayerForm extends Component {
         const classes = this.props.classes;
 
         return <form className={classes.form} onSubmit={this.handleSubmit}>
-            <Grid container gutter={24} direction={'column'}>
+            <Grid container gutter={24} direction={'column'} style={{marginTop: 60}}>
                 <Grid item xs={12} style={{display: 'inline-flex'}}>
                     <Typography type="subheading">I am a</Typography>
                     <FormGroup style={{display: 'inline',}}>
@@ -100,11 +116,11 @@ class PlayerForm extends Component {
                                     checked={this.state.selectedValue === 'player'}
                                     onChange={this.handleChange('selectedValue')}
                                     value="player"
-                                    //className={classes.radioButton}
+
                                 />
                             }
                             label="Player"
-                            style={{marginLeft:16,marginTop:8}}
+                            style={{marginLeft: 16, marginTop: 8}}
                         />
                         <FormControlLabel
                             control={
@@ -112,7 +128,7 @@ class PlayerForm extends Component {
                                     checked={this.state.selectedValue === 'scout'}
                                     onChange={this.handleChange('selectedValue')}
                                     value="scout"
-                                    //className={classes.radioButton}
+
                                 />
                             }
                             label="Scout"
@@ -137,17 +153,28 @@ class PlayerForm extends Component {
                                value={this.state.last_name}
                                onChange={this.handleChange('last_name')}
                                className={classes.formControl}
+                               slyle={{marginLeft: 20}}
                     />
                 </Grid>
                 <Grid item xs={12} sm={4}>
-                    <TextField id="username"
-                               required
-                               error={this.state.errors.indexOf('username') > -1}
-                               label="Username"
-                               value={this.state.username}
-                               onChange={this.handleChange('username')}
-                               className={classes.formControl}
-                    />
+                    <div style={{display: 'inline-flex'}}>
+                        <TextField id="birth_day"
+                                   required
+                                   error={this.state.errors.indexOf('birthDay') > -1}
+                                   label="Date of birth"
+                                   value={this.state.birthDay}
+                                   onChange={this.handleChange('birthDay')}
+                                   className={classes.formBirthDate}
+                        />
+                        <TextField id="birth_year"
+                                   required
+                                   error={this.state.errors.indexOf('birthYear') > -1}
+                                   label=" "
+                                   value={this.state.birthYear}
+                                   onChange={this.handleChange('birthYear')}
+                                   className={classes.formBirthYear}
+                        />
+                    </div>
                 </Grid>
 
 
@@ -196,15 +223,74 @@ class PlayerForm extends Component {
                                className={classes.formControl}
                     />
                 </Grid>
+                <Grid item xs={12} style={{display: 'inline-flex', marginTop: 30,marginLeft:8}}>
+                    <Typography type="subheading">I have an agent</Typography>
+                    <FormGroup style={{display: 'inline',}}>
+                        <FormControlLabel
+                            control={
+                                <Radio
+                                    checked={this.state.yes_no_agent === 'yes'}
+                                    onChange={this.handleChange('yes_no_agent')}
+                                    value="yes"
 
+                                />
+                            }
+                            label="Yes"
+                            style={{marginLeft: 16, marginTop: 8}}
+                        />
+                        <FormControlLabel
+                            control={
+                                <Radio
+                                    checked={this.state.yes_no_agent === 'no'}
+                                    onChange={this.handleChange('yes_no_agent')}
+                                    value="no"
 
-                <Grid item xs={12} sm={6} md={4}>
-                    <FormControl className={classes.formControl}>
-                        <Button raised type="submit" color="primary" className={classes.button}>
-                            Register
-                        </Button>
-                    </FormControl>
+                                />
+                            }
+                            label="No"
+                        />
+                    </FormGroup>
+
                 </Grid>
+                <Grid item xs={12} sm={6} style={{marginLeft:8}}>
+                    <Typography type="caption" style={{width:400}}>If you have an agent, scouts will contact your agent directly.</Typography>
+                </Grid>
+
+                <Grid item xs={12} style={{marginTop: 30}}>
+                    <FormGroup>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={this.state.terms ==='yes'}
+                                    onChange={this.handleChange('terms')}
+                                    value={this.state.terms==='yes'?'no':'yes'}
+                                />
+                            }
+                            label="I agree to the Terms of Service and Privacy Policy."
+                            style={{marginTop: 8}}
+                        />
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={this.state.news==='yes'}
+                                    onChange={this.handleChange('news')}
+                                    value={this.state.news==='yes'?'no':'yes'}
+                                />
+                            }
+                            label="Subscribe to our Newsletter."
+                            style={{marginTop: 20}}
+                        />
+                    </FormGroup>
+
+                </Grid>
+            </Grid>
+
+            <Grid container gutter={24} direction={'column'} style={{marginTop: 60, marginBottom: 60,}}>
+                <FormControl className={classes.formControl}>
+                    <Button raised type="submit" color="primary" className={classes.button}>
+                        Sign up
+                    </Button>
+                </FormControl>
             </Grid>
 
         </form>

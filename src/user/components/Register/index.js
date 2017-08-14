@@ -11,24 +11,29 @@ import Paper from 'material-ui/Paper';
 import Button from 'material-ui/Button';
 import FormControl from 'material-ui/Form/FormControl';
 import TextField from 'material-ui/TextField';
-
+import Typography from 'material-ui/Typography';
 
 import PlayerForm from './PlayerForm';
 import ScoutForm from './PlayerForm';
 
 const styleSheet = createStyleSheet('Register', theme => ({
     root: {
-        backgroundColor: theme.palette.background.paper,
+        backgroundColor: '#ffffff',
         marginTop: 100,
         [theme.breakpoints.up('sm')]: {
             position: 'relative',
             width: 600,
             left: '50%',
             marginLeft: -300,
+            alignItems: 'center'
 
         },
 
     },
+    header: {
+        alignItems: 'center',
+        backgroundColor: '#ffffff'
+    }
 
 }));
 
@@ -73,10 +78,10 @@ class Register extends Component {
     render() {
         const classes = this.props.classes;
         return <Paper className={classes.root}>
-            <AppBar position="static">
+            <AppBar position="static" className={classes.header}>
                 <Tabs index={this.state.index} onChange={this.handleChangeTab}>
-                    <Tab label="Register Player"/>
-                    <Tab label="Register Scout"/>
+                    <Tab label={<Typography style={{color:'#d7001e'}} type="body2">Log In</Typography>}/>
+                    <Tab label={<Typography style={{color:'#d7001e'}} type="body2">Sign up</Typography>}/>
                 </Tabs>
             </AppBar>
             {this.state.index === 0 && <PlayerForm onSubmit={this.props.registerPlayer}/>}
