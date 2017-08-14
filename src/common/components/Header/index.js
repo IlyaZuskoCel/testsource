@@ -13,6 +13,7 @@ import compose from 'recompose/compose';
 
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
+import Grid from 'material-ui/Grid';
 import Button from 'material-ui/Button';
 import Menu, {MenuItem} from 'material-ui/Menu';
 import Drawer from 'material-ui/Drawer';
@@ -31,6 +32,10 @@ import {PLAYER_ROLE, SCOUT_ROLE} from '../../../user/constants';
 
 const styleSheet = createStyleSheet('Header', theme => ({
     container: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+        alignItems: 'center',
         height: 70,
         backgroundColor: '#ffffff',
         [theme.breakpoints.up('sm')]: {
@@ -43,20 +48,13 @@ const styleSheet = createStyleSheet('Header', theme => ({
         }
     },
     root: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        padding: 0,
-        margin: 0,
-        overflow: 'hidden'
+        maxWidth: 1440,
     },
 
     logo: {
         fontSize: 26,
         color: '#fff',
         [theme.breakpoints.up('sm')]: {
-            transform: 'skew(20deg)',
-            margin: 80,
             lineHeight: '70px',
             height: 70,
         },
@@ -67,18 +65,12 @@ const styleSheet = createStyleSheet('Header', theme => ({
         }
 
     },
-    logoWrap: {
-        [theme.breakpoints.up('sm')]: {
-            transform: 'skew(20deg)',
-        },
-    },
+
     logoLink: {
+
         height: 70,
         [theme.breakpoints.up('sm')]: {
-            backgroundImage: 'linear-gradient(290deg, #f55e58, #c9011b)',
-            transform: 'skew(-20deg)',
-            marginLeft: -20,
-            width: 196,
+            margin: 60
         },
         [theme.breakpoints.down('sm')]: {
             height: 60,
@@ -93,8 +85,7 @@ const styleSheet = createStyleSheet('Header', theme => ({
         justifyContent: 'center',
         alignItems: 'center',
         [theme.breakpoints.up('sm')]: {
-            backgroundColor: '#f5f5f5',
-            transform: 'skew(-20deg)',
+
             marginRight: -20,
             paddingRight: 20,
             height: 70,
@@ -108,9 +99,6 @@ const styleSheet = createStyleSheet('Header', theme => ({
     menuItem: {
         marginLeft: 24,
         marginRight: 24,
-        [theme.breakpoints.up('sm')]: {
-            transform: 'skew(20deg)',
-        },
         [theme.breakpoints.down('sm')]: {
             marginLeft: 0,
             marginRight: 0,
@@ -188,6 +176,59 @@ const styleSheet = createStyleSheet('Header', theme => ({
             color: '#ffffff',
             opacity: 0.6,
         }
+    },
+    searchButtonHideBackground:{
+        color: '#000',
+        opacity: 1,
+    },
+
+    hideBackground: {
+        backgroundColor: 'transparent',
+        transform: 'none',
+        backgroundImage: 'none'
+    },
+    hideShadow: {
+        boxShadow: 'none',
+        backgroundColor: 'transparent',
+        transform: 'none',
+        backgroundImage: 'none'
+    },
+    right: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+    },
+    leftBg: {
+        zIndex: -1,
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        height: 70,
+
+        [theme.breakpoints.up('sm')]: {
+            backgroundImage: 'linear-gradient(290deg, #f55e58, #c9011b)',
+            transform: 'skew(-20deg)',
+            width: 'calc( ( 100% - 1440px ) / 2 + 196px )',
+            minWidth: 196,
+            left: -20
+        },
+
+
+    },
+    rightBg: {
+        zIndex: -1,
+        position: 'absolute',
+        top: 0,
+        height: 70,
+        [theme.breakpoints.up('sm')]: {
+            backgroundColor: '#f5f5f5',
+            transform: 'skew(-20deg)',
+            width: 'calc( ( 100% - 1440px ) / 2 + 480px )',
+            minWidth: 480,
+            right: -20
+        },
+
     }
 }));
 
@@ -197,13 +238,31 @@ class Header extends Component {
         super(props);
 
         this.state = {
+            scroll: false,
             anchorEl: undefined,
             open: false,
         };
 
         this.handleMenuClick = this.handleMenuClick.bind(this);
         this.handleMenuRequestClose = this.handleMenuRequestClose.bind(this);
+        this.onScroll = this.onScroll.bind(this);
+
     }
+
+    componentDidMount() {
+        window.addEventListener('scroll', this.onScroll);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.onScroll);
+    }
+
+    onScroll(e) {
+        const scroll = window.scrollY > 0;
+        if (scroll !== this.state.scroll) {
+            this.setState({scroll})
+        }
+    };
 
     handleMenuClick(event) {
         this.setState({open: !this.state.open, anchorEl: event.currentTarget});
@@ -260,39 +319,53 @@ class Header extends Component {
 
         }
 
+
+        const hideBackground = this.props.hideBackgroundTopHeader && !this.state.scroll;
+
         return (
-            <AppBar position="fixed" className={classes.container}>
-
-                <Toolbar className={classes.root}>
-                    <Link to="/" className={classes.logoLink} disabledUnderline>
-                        <div className={classes.logoWrap}>
+            <AppBar position="fixed" className={classNames(classes.container, {[classes.hideShadow]: hideBackground})}>
+                <div className={classNames({[classes.leftBg]: !hideBackground})}/>
+                <div className={classNames({[classes.rightBg]: !hideBackground})}/>
+                <Grid container gutter={8} className={classes.root}>
+                    <Grid item xs={6}>
+                        <Link to="/"
+                              className={classNames(classes.logoLink)}
+                              disabledUnderline>
                             <ScoutIcon className={classes.logo}>scoutzoo-symbol</ScoutIcon>
-                        </div>
-                    </Link>
-                    {DropMenu ? (
-                        <div className={classes.menu}>
-                            <Link to="/" className={classes.menuItem}>
-                                <Button className={classes.searchButton}>
-                                    <ScoutIcon className={classes.searchIcon}>search</ScoutIcon>
-                                    <span>Discover</span>
-                                </Button>
-                            </Link>
+                        </Link>
+                    </Grid>
+                    <Grid item xs={6} className={classes.right}>
+                        {DropMenu ? (
+                            <div className={classNames(classes.menu)}>
+                                <Link to="/" disabledUnderline
+                                      className={classNames(classes.menuItem)}>
+                                    <Button className={classNames(classes.searchButton, {[classes.searchButtonHideBackground]:hideBackground})}>
+                                        <ScoutIcon className={classes.searchIcon}>search</ScoutIcon>
+                                        <span>Discover</span>
+                                    </Button>
+                                </Link>
 
-                            <Button className={classNames(classes.menuItem, classes.profileButton)}
+                                <Button
+                                    className={classNames(classes.menuItem, classes.profileButton)}
                                     aria-owns="simple-menu"
                                     aria-haspopup="true" onClick={this.handleMenuClick}>
-                                <Avatar alt={user.full_name} className={classes.avatar} src={DefaultAvatarImg}/>
-                                <Hidden xsDown><span className={classes.username}>{user.full_name}</span></Hidden>
-                            </Button>
-                            {DropMenu}
-                        </div>
-                    ) : (
-                        <div className={classes.menu}>
-                            <Link to="/register" className={classes.menuItem}><Button>Sign Up</Button></Link>
-                            <Link to="/login" className={classes.menuItem}><Button>Sign In</Button></Link>
-                        </div>
-                    )}
-                </Toolbar>
+                                    <Avatar alt={user.full_name} className={classes.avatar} src={DefaultAvatarImg}/>
+                                    <Hidden xsDown><span className={classes.username}>{user.full_name}</span></Hidden>
+                                </Button>
+                                {DropMenu}
+                            </div>
+                        ) : (
+                            <div className={classNames(classes.menu)}>
+                                <Link to="/register" disabledUnderline
+                                      className={classNames(classes.menuItem)}><Button>Sign
+                                    Up</Button></Link>
+                                <Link to="/login" disabledUnderline
+                                      className={classNames(classes.menuItem)}><Button>Sign
+                                    In</Button></Link>
+                            </div>
+                        )}
+                    </Grid>
+                </Grid>
 
             </AppBar>
         )

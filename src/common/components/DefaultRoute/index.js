@@ -8,7 +8,7 @@ import React from 'react';
 import {Route} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-
+import classNames from 'classnames';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import Snackbar from 'material-ui/Snackbar';
@@ -22,16 +22,19 @@ import ScoutIcon from '../Icon';
 
 const styleSheet = createStyleSheet('DefaultRoute', theme => ({
     root: {
+        position: 'relative',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        minHeight: window.innerHeight,
+        minHeight: window.innerHeight - 70,
         overflow: 'hidden',
-        marginTop: 70,
+        paddingTop: 70,
         [theme.breakpoints.down('sm')]: {
+            minHeight: window.innerHeight - 60,
             height: 60,
         }
     },
+
     message: {
         display: 'flex',
         flexDirection: 'row',
@@ -40,17 +43,19 @@ const styleSheet = createStyleSheet('DefaultRoute', theme => ({
     },
     alertIcon: {
         marginRight: 24
+    },
+    hideBackgroundTopHeader: {
+        marginTop: 0,
     }
 }));
 
 
-const DefaultRoute = ({component: Component, isAuthenticated, alert, hideAlert, classes, ...rest}) => (
+const DefaultRoute = ({component: Component, isAuthenticated, alert, hideAlert, classes, hideBackgroundTopHeader, ...rest}) => (
     <Route {...rest} render={props => (
         <div>
+            <Grid className={classNames(classes.root, {[classes.hideBackgroundTopHeader]: hideBackgroundTopHeader})}>
 
-            <Grid className={classes.root}>
-
-                <Header/>
+                <Header hideBackgroundTopHeader={hideBackgroundTopHeader}/>
                 <Component {...props} />
                 <Footer/>
             </Grid>

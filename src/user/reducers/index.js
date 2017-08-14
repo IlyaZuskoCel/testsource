@@ -6,8 +6,10 @@
 import {combineReducers} from 'redux';
 
 import current from './current';
+import user from './user';
 
 
 export default combineReducers({
-    current
+    current,
+    user
 });

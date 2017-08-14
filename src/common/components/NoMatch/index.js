@@ -20,15 +20,15 @@ import {Link} from '../';
 
 const styleSheet = createStyleSheet('NoMatch', theme => ({
     root: {
-        position: 'relative',
         paddingLeft: 136,
         paddingRight: 136,
-        paddingTop: 260,
         [theme.breakpoints.down('md')]: {
             paddingLeft: 16,
             paddingRight: 16,
-        }
-
+        },
+        maxWidth: 1440,
+        width: '100%',
+        margin: 'auto'
 
     },
     headline: {
@@ -49,7 +49,10 @@ const styleSheet = createStyleSheet('NoMatch', theme => ({
         minWidth: '100%',
         position: 'absolute',
         top: 0,
-        left: 0
+        left: 0,
+        [theme.breakpoints.down('md')]: {
+            maxWidth: '1200px',
+        },
     }
 }));
 

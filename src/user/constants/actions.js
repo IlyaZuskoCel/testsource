@@ -7,3 +7,5 @@
 export const LOGIN = 'user:Login';
 export const LOGOUT = 'user:Logout';
 export const SET_CURRENT = 'user:setCurrent';
+
+export const SET_USER = 'user:setUser';
