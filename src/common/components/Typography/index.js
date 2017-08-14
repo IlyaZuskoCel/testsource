@@ -56,7 +56,7 @@ const TypographyPage = ({location, classes}) => (
             <Typography type="subheading">This is a smaller subtitle</Typography>
         </Grid>
         <Grid item xs={12} className={classes.row}>
-            <Typography type="body1">body2</Typography>
+            <Typography type="body1">body2 (h4 body d / h4 body m)</Typography>
             <Typography type="body2">This is an h4</Typography>
         </Grid>
         <Grid item xs={12} className={classes.row}>

@@ -29,16 +29,11 @@ import ShareButton from '../ShareButton';
 import playerBg from './assets/images/profile-player-background.jpg';
 import defaultPhoto from './assets/images/default-photo.png';
 
-const styleSheet = createStyleSheet('Profile', theme => ({
+const styleSheet = createStyleSheet('PlayerProfile', theme => ({
     root: {},
     content: {
         maxWidth: 1168,
         margin: 'auto',
-
-        [theme.breakpoints.down('lg')]: {
-            padding: '0 16px',
-        },
-
     },
     backgroundImg: {
         zIndex: -1,
@@ -436,7 +431,7 @@ class PlayerProfile extends Component {
                             <div className={classes.infoRow}>
                                 <Typography type="caption" className={classes.infoCaption}>Weight</Typography>
                                 <Typography type="body2" className={classes.infoValue}>
-                                    {user.weight}
+                                    {user.weight} lbs
                                 </Typography>
 
                             </div>
@@ -494,7 +489,7 @@ class PlayerProfile extends Component {
                                     Birth Date
                                 </Typography>
                                 <Typography type="subheading" className={classes.infoRightValue}>
-                                    {user.birthda ? moment(user.birthday).format('MMM. YYYY') : 'Unknown'}
+                                    {user.birthday ? moment(user.birthday).format('MMM. YYYY') : 'Unknown'}
                                 </Typography>
                             </div>
                             <div>
@@ -514,16 +509,9 @@ class PlayerProfile extends Component {
                                 </Typography>
                             </div>
                         </div>
-                        {user.about && (
-                            <Typography type="body1" className={classes.infoRightAbout}>{user.about}</Typography>
+                        {user.bio && (
+                            <Typography type="body1" className={classes.infoRightAbout}>{user.bio}</Typography>
                         )}
-
-                        <Typography type="body1" className={classes.infoRightAbout}>I am a passionate 18 year old who
-                            has been playing hockey for the past 10 years. Pst non commodo luctus, nisi erat porttitor
-                            ligula, eget lacinia odio sem nec elit. Fusce dapibus, tellus ac cursus.
-                            Donec id elit non mi porta gravida at eget metus. Vestibulum id ligula porta felis euismod
-                            semper. Aenean lacinia bibendum nulla sed consectetur. Quis risus eget urna mollis ornare
-                            vel eu leo.</Typography>
                     </div>
                 </div>
 
