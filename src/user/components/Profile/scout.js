@@ -32,6 +32,7 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
     root: {},
     content: {
         maxWidth: 1168,
+        marginTop: 56,
         width: '100%',
         margin: 'auto'
     },
@@ -202,7 +203,7 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
     infoCard: {
         width: 270,
         height: 402,
-        marginLeft: 160,
+        marginLeft: 144,
         marginRight: 20,
         backgroundColor: '#f7f7f7',
         position: 'relative'

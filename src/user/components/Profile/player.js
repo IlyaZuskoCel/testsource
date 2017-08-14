@@ -34,6 +34,7 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
     content: {
         maxWidth: 1168,
         margin: 'auto',
+        marginTop: 56,
     },
     backgroundImg: {
         zIndex: -1,
@@ -55,15 +56,15 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
         top: 0,
         width: 'calc( ( 100% - 1440px ) / 2 + 786px )',
         minWidth: 196,
-        right: 'calc( ( 100% - 1440px ) / 2 + 872px)',
+        right: 'calc( ( 100% - 1440px ) / 2 + 832px)',
 
         height: 688,
 
         [theme.breakpoints.down('lg')]: {
-            right: 792,
+            right: 728,
         },
         [theme.breakpoints.down('md')]: {
-            right: 540,
+            right: 560,
         },
 
 
@@ -92,17 +93,17 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
 
         position: 'absolute',
         top: 0,
-        right: 'calc( ( 100% - 1440px ) / 2 + 120px)',
+        right: 'calc( ( 100% - 1440px ) / 2 + 80px)',
         width: 752,
         height: 688,
         opacity: 0.8,
 
         [theme.breakpoints.down('lg')]: {
-            right: 40,
+            right: -24,
         },
 
         [theme.breakpoints.down('md')]: {
-            width: 500,
+            width: 590,
         },
 
         [theme.breakpoints.down('sm')]: {
@@ -174,7 +175,7 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
     },
     videoList: {
         width: '100%',
-        marginTop: 72,
+        marginTop: 56,
         marginBottom: 72
 
     },
