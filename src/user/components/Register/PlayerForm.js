@@ -14,7 +14,7 @@ import Radio, {RadioGroup} from 'material-ui/Radio';
 import Button from 'material-ui/Button';
 import FormControl from 'material-ui/Form/FormControl';
 import TextField from 'material-ui/TextField';
-
+import Typography from 'material-ui/Typography';
 
 const styleSheet = createStyleSheet('PlayerForm', theme => ({
 
@@ -25,6 +25,7 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
     formControl: {
         width: '100%',
     },
+
 
 }));
 
@@ -90,19 +91,20 @@ class PlayerForm extends Component {
 
         return <form className={classes.form} onSubmit={this.handleSubmit}>
             <Grid container gutter={24} direction={'column'}>
-                <Grid item xs={12}>
-                    {'I am a______'}
-                    <FormGroup style={{display: 'inline'}}>
+                <Grid item xs={12} style={{display: 'inline-flex'}}>
+                    <Typography type="subheading">I am a</Typography>
+                    <FormGroup style={{display: 'inline',}}>
                         <FormControlLabel
                             control={
                                 <Radio
                                     checked={this.state.selectedValue === 'player'}
                                     onChange={this.handleChange('selectedValue')}
                                     value="player"
-
+                                    //className={classes.radioButton}
                                 />
                             }
                             label="Player"
+                            style={{marginLeft:16,marginTop:8}}
                         />
                         <FormControlLabel
                             control={
@@ -110,7 +112,7 @@ class PlayerForm extends Component {
                                     checked={this.state.selectedValue === 'scout'}
                                     onChange={this.handleChange('selectedValue')}
                                     value="scout"
-
+                                    //className={classes.radioButton}
                                 />
                             }
                             label="Scout"

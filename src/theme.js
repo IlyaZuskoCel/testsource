@@ -13,7 +13,7 @@ import './assets/css/font/UnitedSansReg-Medium/styles.css';
 import './assets/css/font/UnitedSerifCond-Black/styles.css';
 import './assets/css/font/UnitedSerifCond-Bold/styles.css';
 import './assets/css/font/UnitedSansReg-Bold/styles.css';
-
+//import './assets/css/font/UnitedSerifCond-Medium/styles.css;
 
 const theme = (outerTheme) => {
     const typography = {
@@ -370,12 +370,18 @@ const theme = (outerTheme) => {
             },
             MuiCheckbox: {
                 default: {
-                    color: '#4a4a4a'
+                    color: '#4a4a4a',
+                    width: 18,
+                    height: 18,
                 }
             },
             MuiRadio: {
                 default: {
-                    color: '#4a4a4a'
+                    color: '#4a4a4a',
+                    width: 20,
+                    height: 20,
+                    marginRight: 11,
+                    marginLeft: 25,
                 }
             },
             MuiSwitch: {
