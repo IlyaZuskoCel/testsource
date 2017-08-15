@@ -15,6 +15,7 @@ import Typography from 'material-ui/Typography';
 
 import PlayerForm from './PlayerForm';
 import ScoutForm from './PlayerForm';
+import {Link} from '../../../common/components';
 
 const styleSheet = createStyleSheet('Register', theme => ({
     root: {
@@ -43,7 +44,7 @@ class Register extends Component {
         super(props);
 
         this.state = {
-            index: 0,
+            index: 1,
             username: '',
             password: '',
             errors: []
@@ -77,16 +78,28 @@ class Register extends Component {
 
     render() {
         const classes = this.props.classes;
-        return <Paper className={classes.root}>
-            <AppBar position="static" className={classes.header}>
-                <Tabs index={this.state.index} onChange={this.handleChangeTab}>
-                    <Tab label={<Typography style={{color:'#d7001e'}} type="body2">Log In</Typography>}/>
-                    <Tab label={<Typography style={{color:'#d7001e'}} type="body2">Sign up</Typography>}/>
+        // return <Paper className={classes.root}>
+            {/*<AppBar position="static" className={classes.header}>*/}
+             return (<div className={classes.root}>
+        <Tabs index={this.state.index} onChange={this.handleChangeTab}>
+                    <Tab label={<Link to="/login" className={classes.menuItem}>
+                        <Typography style={{color: '#d7001e'}} type="body2">
+                            Log In
+                        </Typography>
+                    </Link>}>
+                    </Tab>
+                    <Tab label={<Link to="/register" className={classes.menuItem}>
+                        <Typography style={{color: '#d7001e'}} type="body2">
+                            Sign up
+                        </Typography>
+                    </Link>}>
+                    </Tab>
                 </Tabs>
-            </AppBar>
+            {/*</AppBar>*/}
             {this.state.index === 0 && <PlayerForm onSubmit={this.props.registerPlayer}/>}
             {this.state.index === 1 && <ScoutForm onSubmit={this.props.registerScout}/>}
-        </Paper>
+                 </div>);
+        {/*</Paper>*/}
 
     }
 }

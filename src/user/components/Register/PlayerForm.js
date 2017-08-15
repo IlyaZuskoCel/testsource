@@ -161,7 +161,7 @@ class PlayerForm extends Component {
                         <TextField id="birth_day"
                                    required
                                    error={this.state.errors.indexOf('birthDay') > -1}
-                                   label="Date of birth"
+                                   label="Day of birth"
                                    value={this.state.birthDay}
                                    onChange={this.handleChange('birthDay')}
                                    className={classes.formBirthDate}
@@ -169,10 +169,11 @@ class PlayerForm extends Component {
                         <TextField id="birth_year"
                                    required
                                    error={this.state.errors.indexOf('birthYear') > -1}
-                                   label=" "
+                                   label="Year of birth "
                                    value={this.state.birthYear}
                                    onChange={this.handleChange('birthYear')}
                                    className={classes.formBirthYear}
+                                   type={'number'}
                         />
                     </div>
                 </Grid>
