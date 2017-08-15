@@ -158,6 +158,10 @@ const theme = (outerTheme) => {
             bottomLine: '#cbcbcb'
 
         },
+        text: {
+            ...outerTheme.palette.text,
+            disabled: '#cbcbcb'
+        }
 
     };
 
@@ -326,6 +330,14 @@ const theme = (outerTheme) => {
                     paddingLeft: 8,
                     paddingRight: 8,
                 },
+                disabled: {
+                    '&:parent': {
+                        paddingLeft: 80,
+                    }
+                },
+                inputDisabled: {
+                    color: palette.text.disabled
+                },
                 error: {
                     '&:after': {
                         backgroundColor: palette.error.A400,
@@ -344,6 +356,11 @@ const theme = (outerTheme) => {
                 },
                 underline: {
                     '&:hover:not($disabled):before': {
+                        backgroundColor: '#cbcbcb',
+                        height: 1,
+                    },
+
+                    '&$disabled:before': {
                         backgroundColor: '#cbcbcb',
                         height: 1,
                     },

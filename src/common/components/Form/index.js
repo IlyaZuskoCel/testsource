@@ -63,6 +63,14 @@ class Form extends Component {
                         onChange={event => this.setState({TextField: event.target.value})}/>
                 </Grid>
                 <Grid item xs={12}>
+                    <Typography type="body1">Disabled Text Input</Typography>
+                    <TextField
+                        disabled
+                        InputLabelProps={{disabled: true}}
+                        label="Name"
+                        value="Disabled Text Input"/>
+                </Grid>
+                <Grid item xs={12}>
                     <Typography type="body1">Error Text Input</Typography>
                     <TextField
                         error
