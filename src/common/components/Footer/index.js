@@ -21,17 +21,14 @@ const styleSheet = createStyleSheet('Footer', theme => ({
         alignItems: 'center',
         height: 200,
         backgroundColor: '#f5f5f5',
-        paddingLeft: 104,
-        paddingRight: 104,
+
         zIndex: 1,
         [theme.breakpoints.down('sm')]: {
             height: 376,
 
+
         },
-        [theme.breakpoints.down('md')]: {
-            paddingLeft: 32,
-            paddingRight: 32,
-        }
+
 
 
     },
@@ -44,6 +41,13 @@ const styleSheet = createStyleSheet('Footer', theme => ({
     },
     footer: {
         paddingTop: 24,
+        maxWidth: 1440,
+        paddingLeft: 104,
+        paddingRight: 104,
+        [theme.breakpoints.down('md')]: {
+            paddingLeft: 32,
+            paddingRight: 32,
+        }
     },
     links: {
         display: 'flex',
@@ -85,6 +89,7 @@ const styleSheet = createStyleSheet('Footer', theme => ({
         maxWidth: 120,
     },
     logoSkyrocketContainer: {
+        maxWidth: 1400,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',

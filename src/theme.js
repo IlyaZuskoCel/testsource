@@ -4,7 +4,13 @@
  */
 
 import React from 'react';
-import createTypography from 'material-ui/styles/typography';
+
+import {create as createJss} from 'jss';
+import {JssProvider} from 'react-jss';
+import vendorPrefixer from 'jss-vendor-prefixer';
+import jssPresetDefault from 'jss-preset-default';
+
+
 import {MuiThemeProvider, createMuiTheme} from 'material-ui/styles';
 
 import 'normalize.css';
@@ -226,6 +232,7 @@ const theme = (outerTheme) => {
 
                 },
                 raised: {
+                    minWidth: 160,
                     boxShadow: '0 0 7px 0 rgba(0, 0, 0, 0.3)',
                     backgroundColor: '#ffffff',
                     color: '#d7001e',
@@ -424,6 +431,7 @@ const theme = (outerTheme) => {
                 anchorTopCenter: {
                     zIndex: 1000,
                     top: 80,
+
                     [outerTheme.breakpoints.down('sm')]: {
                         top: 70,
                     }
@@ -431,8 +439,21 @@ const theme = (outerTheme) => {
             },
             MuiSnackbarContent: {
                 root: {
-                    backgroundColor: '#fff',
+                    height: 70,
 
+                    backgroundColor: '#fff',
+                    [outerTheme.breakpoints.down('md')]: {
+                        width: 'auto'
+                    },
+                    [outerTheme.breakpoints.up('md')]: {
+                        width: '100%',
+                        maxWidth: 1168,
+                    },
+                    [outerTheme.breakpoints.down('sm')]: {
+                        width: '100%',
+                        top: 50,
+                        maxWidth: 344,
+                    }
                 }
             }
 
@@ -444,6 +465,21 @@ const theme = (outerTheme) => {
 
 
 const outerTheme = createMuiTheme();
+
+
+const jss = createJss(jssPresetDefault());
+// jss.use(vendorPrefixer());
+
+
+// const ScoutTheme = ({children, ...props}) => (
+//     <JssProvider jss={jss}>
+//         <MuiThemeProvider theme={outerTheme}>
+//             <MuiThemeProvider theme={theme} {...props}>
+//                 {children}
+//             </MuiThemeProvider>
+//         </MuiThemeProvider>
+//     </JssProvider>
+// );
 const ScoutTheme = ({children, ...props}) => (
     <MuiThemeProvider theme={outerTheme}>
         <MuiThemeProvider theme={theme} {...props}>

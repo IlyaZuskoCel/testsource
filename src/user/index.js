@@ -16,7 +16,7 @@ import Profile from './containers/Profile';
 const routes = [
     <DefaultLayout key="1" path="/login" component={Login}/>,
     <DefaultLayout key="2" path="/register" component={Register}/>,
-    <PrivateRoute key="3" path="/profile" component={Profile}/>
+    <PrivateRoute key="3" path="/profile" component={Profile} hideBackgroundTopHeader/>
 ];
 
 export default routes;

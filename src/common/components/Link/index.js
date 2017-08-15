@@ -15,7 +15,8 @@ const styleSheet = createStyleSheet('Link', (theme) => ({
         fontWeight: 900,
         color: '#d7001e',
         textDecoration: 'none',
-
+        letterSpacing: '0.4px',
+        fontFamily: 'UnitedSansReg-Medium',
         [theme.breakpoints.down('sm')]: {
             fontSize: 16,
         },
@@ -31,10 +32,17 @@ const styleSheet = createStyleSheet('Link', (theme) => ({
         '&:hover': {
             textDecoration: 'none',
         },
+    },
+    invert: {
+        color: '#fff',
+        opacity: 0.6,
+        '&:hover': {
+            opacity: 1,
+        },
     }
 }));
 
-const Link = ({children, classes, className, disabled, disabledUnderline, onClick, ...props}) => <RouteLink
+const Link = ({children, classes, className, disabled, invert, disabledUnderline, onClick, ...props}) => <RouteLink
     disabled={disabled || false}
     onClick={e => {
         disabled ? e.preventDefault() : onClick && onClick(e)
@@ -43,6 +51,7 @@ const Link = ({children, classes, className, disabled, disabledUnderline, onClic
         classes.root,
         {
             [classes.disabled]: disabled,
+            [classes.invert]: invert,
             [classes.disabledUnderline]: disabledUnderline,
         },
         className
