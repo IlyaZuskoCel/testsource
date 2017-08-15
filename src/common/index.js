@@ -15,7 +15,7 @@ import Form from './components/Form';
 
 const routes = [
     <DefaultLayout key="1" path="/typography" component={Typography}/>,
-    <DefaultLayout key="1" path="/form" component={Form}/>,
+    <DefaultLayout key="2" path="/form" component={Form}/>,
     <DefaultLayout key="20" component={NoMatch}/>
 ];
 

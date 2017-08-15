@@ -12,11 +12,13 @@ import DefaultLayout from '../common/containers/DefaultRoute'
 import Login from './containers/Login';
 import Register from './containers/Register';
 import Profile from './containers/Profile';
+import Main from './containers/Main';
 
 const routes = [
-    <DefaultLayout key="1" path="/login" component={Login}/>,
-    <DefaultLayout key="2" path="/register" component={Register}/>,
-    <PrivateRoute key="3" path="/profile" component={Profile} hideBackgroundTopHeader/>
+    <DefaultLayout key="1" path="/" component={Main}/>,
+    <DefaultLayout key="2" path="/login" component={Login}/>,
+    <DefaultLayout key="3" path="/register" component={Register}/>,
+    <PrivateRoute key="4" path="/profile" component={Profile} hideBackgroundTopHeader/>
 ];
 
 export default routes;
