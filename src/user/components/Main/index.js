@@ -10,8 +10,8 @@ import Tabs, {Tab} from 'material-ui/Tabs';
 import Typography from 'material-ui/Typography';
 
 import Card, {CardMedia} from 'material-ui/Card';
-
-
+import PlayerForm from '../Register/PlayerForm';
+import Login from '../Login/index';
 //import PlayerForm from './PlayerForm';
 //import ScoutForm from './PlayerForm';
 //import {Link} from '../../../common/components';
@@ -43,6 +43,17 @@ const styleSheet = createStyleSheet('Main', theme => ({
 
 }));
 
+function TabContainer(props) {
+    return (
+        <div style={{padding: 20}}>
+            {props.children}
+        </div>
+    );
+}
+
+TabContainer.propTypes = {
+    children: PropTypes.node.isRequired,
+};
 
 class Main extends Component {
     constructor(props) {
@@ -52,7 +63,8 @@ class Main extends Component {
             index: 1,
             username: '',
             password: '',
-            errors: []
+            errors: [],
+            value: 'registration',
         };
 
         //this.handleSubmit = this.handleSubmit.bind(this);
@@ -66,12 +78,20 @@ class Main extends Component {
 
     handleChangeTab(event, index) {
         this.setState({index});
-        if (index === 1) this.props.goRegister();
-        if (index === 0) this.props.goLogin();
+        if (index === 1) {
+            this.props.goRegister();
+            this.setState({value: 'registration'})
+        }
+        if (index === 0) {
+            this.props.goLogin();
+            this.setState({value: 'login'})
+        }
+
     }
 
     handleChange(name) {
         return event => this.setState({[name]: event.target.value});
+        console.log('name', name);
     }
 
     // handleSubmit(e) {
@@ -87,29 +107,41 @@ class Main extends Component {
     // }
 
     render() {
-        const classes = this.props.classes;
+        const {classes} = this.props;
+        const {value} = this.state;
         return (<div className={classes.root}>
             <Tabs index={this.state.index} onChange={this.handleChangeTab}>
-                <Tab label={
+                <Tab value="login" label={
                     <Typography style={{color: '#d7001e'}} type="body2">
                         Log In
                     </Typography>
                 }>
+
                 </Tab>
-                <Tab label={
+                <Tab value="registration" label={
                     <Typography style={{color: '#d7001e'}} type="body2">
                         Sign up
                     </Typography>
                 }>
+
                 </Tab>
             </Tabs>
+            {value === 'login' &&
+            <TabContainer>
+                <Login/>
+            </TabContainer>}
+            {value === 'registration' &&
+            <TabContainer>
+                <PlayerForm/>
+            </TabContainer>}
+
             {/*{this.state.index === 0 && <PlayerForm onSubmit={this.props.registerPlayer}/>}*/}
             {/*{this.state.index === 1 && <ScoutForm onSubmit={this.props.registerScout}/>}*/}
 
-                <Card className={classes.card}>
-                    <CardMedia className={classes.media} image='app/src/assets/image/signup.jpg' title="Contemplative Reptile"/>
+            {/*<Card className={classes.card}>*/}
+            {/*<CardMedia className={classes.media}  title="Contemplative Reptile"/>*/}
 
-                </Card>
+            {/*</Card>*/}
 
         </div>);
     }
