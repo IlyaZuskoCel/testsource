@@ -27,7 +27,7 @@ const styleSheet = createStyleSheet('DefaultRoute', theme => ({
         flexDirection: 'column',
         justifyContent: 'space-between',
         minHeight: window.innerHeight - 70,
-        overflow: 'hidden',
+        overflowX: 'hidden',
         paddingTop: 70,
         [theme.breakpoints.down('sm')]: {
             minHeight: window.innerHeight - 60,

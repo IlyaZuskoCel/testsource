@@ -74,8 +74,10 @@ deploy moonion dev:
   script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
     - cd /opt/$CI_ENVIRONMENT_SLUG/$CI_PROJECT_NAMESPACE
+    - test -f docker-compose.yml && docker-compose -p $CI_PROJECT_NAMESPACE-$CI_ENVIRONMENT_SLUG stop
+    - test -f docker-compose.yml && docker-compose -p $CI_PROJECT_NAMESPACE-$CI_ENVIRONMENT_SLUG rm -f
     - test -f docker-compose.yml && docker-compose -p $CI_PROJECT_NAMESPACE-$CI_ENVIRONMENT_SLUG pull $CI_PROJECT_NAME
-    - test -f docker-compose.yml && docker-compose -p $CI_PROJECT_NAMESPACE-$CI_ENVIRONMENT_SLUG up --no-deps -d $CI_PROJECT_NAME
+    - test -f docker-compose.yml && docker-compose -p $CI_PROJECT_NAMESPACE-$CI_ENVIRONMENT_SLUG up --no-deps -d
   environment:
     name: dev
     url: https://$CI_PROJECT_NAME.dev.moonion.com
