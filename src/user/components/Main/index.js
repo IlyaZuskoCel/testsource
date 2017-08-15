@@ -11,7 +11,7 @@ import Typography from 'material-ui/Typography';
 
 import Card, {CardMedia} from 'material-ui/Card';
 import PlayerForm from '../Register/PlayerForm';
-import Login from '../Login/index';
+import Login from '../../containers/Login';
 //import PlayerForm from './PlayerForm';
 //import ScoutForm from './PlayerForm';
 //import {Link} from '../../../common/components';
