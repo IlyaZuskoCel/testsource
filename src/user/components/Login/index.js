@@ -5,29 +5,31 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
-import Tabs, {Tab} from 'material-ui/Tabs';
-import AppBar from 'material-ui/AppBar';
-import Paper from 'material-ui/Paper';
 import Button from 'material-ui/Button';
 import FormControl from 'material-ui/Form/FormControl';
 import TextField from 'material-ui/TextField';
-
+import {FormGroup, FormControlLabel} from 'material-ui/Form';
+import Checkbox from 'material-ui/Checkbox';
+import Typography from 'material-ui/Typography';
 
 const styleSheet = createStyleSheet('Login', theme => ({
     root: {
         backgroundColor: theme.palette.background.paper,
-        position: 'relative',
-        left: '50%',
-        marginLeft: -200,
-        marginTop: 100,
-        width: 400
+        marginLeft: -72,
+        marginTop: 30,
+        width: 400,
+        position: 'inherit'
     },
     form: {
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        alignItems:'center'
     },
     formControl: {
-        margin: 10
+
+    },
+    button:{
+        marginTop: 32
     }
 }));
 
@@ -39,7 +41,8 @@ class Login extends Component {
         this.state = {
             username: '',
             password: '',
-            errors: []
+            errors: [],
+            terms:'no',
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -64,13 +67,7 @@ class Login extends Component {
 
     render() {
         const classes = this.props.classes;
-        return <Paper className={classes.root}>
-            <AppBar position="static">
-                <Tabs index={0} onChange={() => {
-                }}>
-                    <Tab label="Sign In"/>
-                </Tabs>
-            </AppBar>
+        return <div className={classes.root}>
 
             <form className={classes.form} onSubmit={this.handleSubmit}>
                 <TextField id="username"
@@ -90,13 +87,27 @@ class Login extends Component {
                            onChange={this.handleChange('password')}
                            className={classes.formControl}
                 />
+
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            checked={this.state.terms === 'yes'}
+                            onChange={this.handleChange('terms')}
+                            value={this.state.terms === 'yes' ? 'no' : 'yes'}
+                        />
+                    }
+                    label="Remember me"
+                    style={{marginTop: 24,marginRight:136}}
+                />
+                <Typography type="body1" style={{marginTop: 24,marginRight:136}}>Forgot password</Typography>
                 <FormControl className={classes.formControl}>
                     <Button raised type="submit" color="primary" className={classes.button}>
                         Login
                     </Button>
                 </FormControl>
+
             </form>
-        </Paper>
+        </div>
 
     }
 }

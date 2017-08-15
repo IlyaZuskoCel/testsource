@@ -10,7 +10,7 @@ import {withStyles, createStyleSheet} from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 
 import {FormGroup, FormControlLabel} from 'material-ui/Form';
-import Radio, {RadioGroup} from 'material-ui/Radio';
+import Radio from 'material-ui/Radio';
 import Checkbox from 'material-ui/Checkbox';
 import Button from 'material-ui/Button';
 import FormControl from 'material-ui/Form/FormControl';
@@ -21,11 +21,12 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
 
     form: {
         flexGrow: 1,
-        padding: 10
+        padding: 10,
+        alignItems:'center'
     },
     formControl: {
         width: '100%',
-        alignItems: 'center',
+        //alignItems: 'center',
 
     },
     formBirthDate: {
@@ -36,6 +37,9 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
         width: 200,
         marginLeft: 30
     },
+    button:{
+        maxWidth:160
+    }
 }));
 
 
@@ -59,11 +63,9 @@ class PlayerForm extends Component {
             news: 'no',
         };
 
-
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
-
 
     handleChange(name) {
         return event => this.setState({[name]: event.target.value});
@@ -116,7 +118,6 @@ class PlayerForm extends Component {
                                     checked={this.state.selectedValue === 'player'}
                                     onChange={this.handleChange('selectedValue')}
                                     value="player"
-
                                 />
                             }
                             label="Player"
@@ -128,7 +129,6 @@ class PlayerForm extends Component {
                                     checked={this.state.selectedValue === 'scout'}
                                     onChange={this.handleChange('selectedValue')}
                                     value="scout"
-
                                 />
                             }
                             label="Scout"
@@ -177,8 +177,6 @@ class PlayerForm extends Component {
                         />
                     </div>
                 </Grid>
-
-
                 <Grid item xs={12} sm={6}>
                     <TextField id="phone"
                                required
@@ -200,8 +198,6 @@ class PlayerForm extends Component {
                                className={classes.formControl}
                     />
                 </Grid>
-
-
                 <Grid item xs={12} sm={6}>
                     <TextField id="password"
                                type="password"
@@ -224,7 +220,7 @@ class PlayerForm extends Component {
                                className={classes.formControl}
                     />
                 </Grid>
-                <Grid item xs={12} style={{display: 'inline-flex', marginTop: 30,marginLeft:8}}>
+                <Grid item xs={12} style={{display: 'inline-flex', marginTop: 30, marginLeft: 8}}>
                     <Typography type="subheading">I have an agent</Typography>
                     <FormGroup style={{display: 'inline',}}>
                         <FormControlLabel
@@ -253,18 +249,18 @@ class PlayerForm extends Component {
                     </FormGroup>
 
                 </Grid>
-                <Grid item xs={12} sm={6} style={{marginLeft:8}}>
-                    <Typography type="caption" style={{width:400}}>If you have an agent, scouts will contact your agent directly.</Typography>
+                <Grid item xs={12} sm={6} style={{marginLeft: 8}}>
+                    <Typography type="caption" style={{width: 400}}>If you have an agent, scouts will contact your agent
+                        directly.</Typography>
                 </Grid>
-
                 <Grid item xs={12} style={{marginTop: 30}}>
                     <FormGroup>
                         <FormControlLabel
                             control={
                                 <Checkbox
-                                    checked={this.state.terms ==='yes'}
+                                    checked={this.state.terms === 'yes'}
                                     onChange={this.handleChange('terms')}
-                                    value={this.state.terms==='yes'?'no':'yes'}
+                                    value={this.state.terms === 'yes' ? 'no' : 'yes'}
                                 />
                             }
                             label="I agree to the Terms of Service and Privacy Policy."
@@ -273,27 +269,24 @@ class PlayerForm extends Component {
                         <FormControlLabel
                             control={
                                 <Checkbox
-                                    checked={this.state.news==='yes'}
+                                    checked={this.state.news === 'yes'}
                                     onChange={this.handleChange('news')}
-                                    value={this.state.news==='yes'?'no':'yes'}
+                                    value={this.state.news === 'yes' ? 'no' : 'yes'}
                                 />
                             }
                             label="Subscribe to our Newsletter."
                             style={{marginTop: 20}}
                         />
                     </FormGroup>
-
                 </Grid>
             </Grid>
-
-            <Grid container gutter={24} direction={'column'} style={{marginTop: 60, marginBottom: 60,}}>
+            <Grid item xs={12} style={{marginTop: 30,marginLeft:30}} >
                 <FormControl className={classes.formControl}>
                     <Button raised type="submit" color="primary" className={classes.button}>
                         Sign up
                     </Button>
                 </FormControl>
             </Grid>
-
         </form>
     }
 }
