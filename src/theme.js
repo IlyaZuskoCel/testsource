@@ -464,8 +464,28 @@ const theme = (outerTheme) => {
                         maxWidth: 344,
                     }
                 }
-            }
+            },
+            MuiTabIndicator: {
+                colorAccent: {
+                    backgroundColor: '#d7001e'
+                }
+            },
+            MuiTab: {
+                root: {
+                    ...typography.body2,
+                    textTransform: 'none',
 
+                },
+                rootInheritSelected: {
+                    color: '#d7001e'
+                },
+                label: {}
+            },
+            MuiTabs:{
+                flexContainer:{
+                    borderBottom: 'solid 1px #cbcbcb60'
+                }
+            }
 
         }
 
