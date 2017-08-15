@@ -356,12 +356,6 @@ class Header extends Component {
                             </div>
                         ) : (
                             <div className={classNames(classes.menu)}>
-                                <Link to="/register" disabledUnderline
-                                      className={classNames(classes.menuItem)}><Button>Sign
-                                    Up</Button></Link>
-                                <Link to="/login" disabledUnderline
-                                      className={classNames(classes.menuItem)}><Button>Sign
-                                    In</Button></Link>
                             </div>
                         )}
                     </Grid>
