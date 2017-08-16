@@ -22,12 +22,13 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
     form: {
         flexGrow: 1,
         padding: 10,
-        alignItems:'center'
+        alignItems: 'center'
     },
     formControl: {
         width: '100%',
         //alignItems: 'center',
 
+        marginLeft: 20
     },
     formBirthDate: {
         width: 200,
@@ -37,8 +38,32 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
         width: 200,
         marginLeft: 30
     },
-    button:{
-        maxWidth:160
+    button: {
+        maxWidth: 160
+    },
+    grid_container:{
+      marginTop:60,
+    },
+    grid_flex:{
+        display: 'inline-flex'
+    },
+    radio_buttons_group:{
+        display: 'inline',
+    },
+    player_label:{
+        marginLeft: 16, marginTop: 8
+    },
+    birth:{
+        display: 'inline-flex'
+    },
+    agent:{
+        display: 'inline-flex', marginTop: 30, marginLeft: 8
+    },
+    text_agent:{
+        width: 400
+    },
+    check_box:{
+        marginTop: 30
     }
 }));
 
@@ -108,10 +133,10 @@ class PlayerForm extends Component {
         const classes = this.props.classes;
 
         return <form className={classes.form} onSubmit={this.handleSubmit}>
-            <Grid container gutter={24} direction={'column'} style={{marginTop: 60}}>
-                <Grid item xs={12} style={{display: 'inline-flex'}}>
+            <Grid container gutter={24} direction={'column'} className={classes.grid_container}>
+                <Grid item xs={12} className={classes.grid_flex}>
                     <Typography type="subheading">I am a</Typography>
-                    <FormGroup style={{display: 'inline',}}>
+                    <FormGroup className={classes.radio_buttons_group}>
                         <FormControlLabel
                             control={
                                 <Radio
@@ -121,7 +146,7 @@ class PlayerForm extends Component {
                                 />
                             }
                             label="Player"
-                            style={{marginLeft: 16, marginTop: 8}}
+                            className={classes.player_label}
                         />
                         <FormControlLabel
                             control={
@@ -153,11 +178,11 @@ class PlayerForm extends Component {
                                value={this.state.last_name}
                                onChange={this.handleChange('last_name')}
                                className={classes.formControl}
-                               slyle={{marginLeft: 20}}
+
                     />
                 </Grid>
                 <Grid item xs={12} sm={4}>
-                    <div style={{display: 'inline-flex'}}>
+                    <div className={classes.birth}>
                         <TextField id="birth_day"
                                    required
                                    error={this.state.errors.indexOf('birthDay') > -1}
@@ -165,6 +190,7 @@ class PlayerForm extends Component {
                                    value={this.state.birthDay}
                                    onChange={this.handleChange('birthDay')}
                                    className={classes.formBirthDate}
+
                         />
                         <TextField id="birth_year"
                                    required
@@ -174,6 +200,7 @@ class PlayerForm extends Component {
                                    onChange={this.handleChange('birthYear')}
                                    className={classes.formBirthYear}
                                    type={'number'}
+
                         />
                     </div>
                 </Grid>
@@ -220,9 +247,9 @@ class PlayerForm extends Component {
                                className={classes.formControl}
                     />
                 </Grid>
-                <Grid item xs={12} style={{display: 'inline-flex', marginTop: 30, marginLeft: 8}}>
+                <Grid item xs={12} className={classes.agent}>
                     <Typography type="subheading">I have an agent</Typography>
-                    <FormGroup style={{display: 'inline',}}>
+                    <FormGroup className={classes.radio_buttons_group}>
                         <FormControlLabel
                             control={
                                 <Radio
@@ -233,7 +260,7 @@ class PlayerForm extends Component {
                                 />
                             }
                             label="Yes"
-                            style={{marginLeft: 16, marginTop: 8}}
+                            className={classes.player_label}
                         />
                         <FormControlLabel
                             control={
@@ -249,11 +276,11 @@ class PlayerForm extends Component {
                     </FormGroup>
 
                 </Grid>
-                <Grid item xs={12} sm={6} style={{marginLeft: 8}}>
-                    <Typography type="caption" style={{width: 400}}>If you have an agent, scouts will contact your agent
+                <Grid item xs={12} sm={6} >
+                    <Typography type="caption" className={classes.text_agent}>If you have an agent, scouts will contact your agent
                         directly.</Typography>
                 </Grid>
-                <Grid item xs={12} style={{marginTop: 30}}>
+                <Grid item xs={12} className={classes.check_box}>
                     <FormGroup>
                         <FormControlLabel
                             control={
@@ -264,7 +291,7 @@ class PlayerForm extends Component {
                                 />
                             }
                             label="I agree to the Terms of Service and Privacy Policy."
-                            style={{marginTop: 8}}
+                            // style={{marginTop: 8}}
                         />
                         <FormControlLabel
                             control={
@@ -275,12 +302,12 @@ class PlayerForm extends Component {
                                 />
                             }
                             label="Subscribe to our Newsletter."
-                            style={{marginTop: 20}}
+                            // style={{marginTop: 20}}
                         />
                     </FormGroup>
                 </Grid>
             </Grid>
-            <Grid item xs={12} style={{marginTop: 30,marginLeft:30}} >
+            <Grid item xs={12} >
                 <FormControl className={classes.formControl}>
                     <Button raised type="submit" color="primary" className={classes.button}>
                         Sign up

@@ -30,6 +30,9 @@ const styleSheet = createStyleSheet('Login', theme => ({
     },
     button:{
         marginTop: 32
+    },
+    check_box:{
+        marginTop: 24,marginRight:136
     }
 }));
 
@@ -97,9 +100,9 @@ class Login extends Component {
                         />
                     }
                     label="Remember me"
-                    style={{marginTop: 24,marginRight:136}}
+                    className={classes.check_box}
                 />
-                <Typography type="body1" style={{marginTop: 24,marginRight:136}}>Forgot password</Typography>
+                <Typography type="body1" className={classes.check_box}>Forgot password</Typography>
                 <FormControl className={classes.formControl}>
                     <Button raised type="submit" color="primary" className={classes.button}>
                         Login
