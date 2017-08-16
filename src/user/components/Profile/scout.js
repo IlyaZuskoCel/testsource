@@ -360,24 +360,24 @@ class ScoutProfile extends Component {
                         <div className={classes.infoCardLeagueLine}/>
                         <div className={classes.infoCardData}>
                             <Typography type="subheading" align="center" className={classes.infoCardTeam}>
-                                {user.team_current_name || 'Team Unknown'}
+                                {user.team || 'Team Unknown'}
                             </Typography>
                             <Typography type="body1" align="center">
-                                {user.city || user.state || user.country ? `${user.city || ''}${user.state ? (user.city ? ', ' + user.state : user.state ) : ''} ${user.country ? (user.city || user.state ? ', ' + user.country : user.country ) : ''}` : 'Location Unknown'}
+                                {user.team_location || user.team_country || 'Location Unknown'}
                             </Typography>
 
                         </div>
                     </Paper>
                     <div className={classes.infoRight}>
-                        <Typography type="headline" className={classes.infoRightName}>{user.full_name}</Typography>
+                        <Typography type="headline" className={classes.infoRightName}>{user.first_name} {user.last_name}</Typography>
 
                         <Typography type="body2">{user.job_title || 'Title Unknown'}</Typography>
 
-                        {user.bio && (
-                            <Typography type="body1" className={classes.infoRightAbout}>{user.bio}</Typography>
+                        {user.biography && (
+                            <Typography type="body1" className={classes.infoRightAbout}>{user.biography}</Typography>
                         )}
 
-                        {user.id === currentUser.id && (!user.bio || !user.profile_picture) && (
+                        {user.id === currentUser.id && (!user.biography || !user.profile_picture) && (
                             <div className={classes.profileIncomplete}>
                                 <Typography type="subheading">Your profile is incomplete!</Typography>
 

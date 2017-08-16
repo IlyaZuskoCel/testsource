@@ -448,7 +448,7 @@ class PlayerProfile extends Component {
                             <Icon>previous</Icon>
                             <Hidden xsDown><span className={classes.backTitle}>Back to search</span></Hidden></Link>
                         <div>
-                            {this.props.currentUser.user_role === SCOUT_ROLE &&
+                            {this.props.currentUser.role === SCOUT_ROLE &&
                             <FavoriteButton user={user.id} active={user.is_tagged}/>}
 
                             <IconButton
@@ -504,11 +504,11 @@ class PlayerProfile extends Component {
 
                                 </div>
                             )}
-                            {user.gender && (
+                            {user.gender_full && (
                                 <div className={classes.infoRow}>
                                     <Typography type="caption" className={classes.infoCaption}>Gender</Typography>
                                     <Typography type="body2" className={classes.infoValue}>
-                                        {user.gender === GENDER_MALE ? 'Male' : 'Female'}
+                                        {user.gender_full}
                                     </Typography>
 
                                 </div>
@@ -525,8 +525,8 @@ class PlayerProfile extends Component {
                         </div>
                     </Hidden>
                     <Paper className={classes.infoCard} square>
-                        {user.player_num && (
-                            <Typography className={classes.infoCardNumber} type="title">{user.player_num}</Typography>)}
+                        {user.jersey_number && (
+                            <Typography className={classes.infoCardNumber} type="title">{user.jersey_number}</Typography>)}
 
 
                         <div
@@ -537,33 +537,33 @@ class PlayerProfile extends Component {
 
                         </div>
                         <div className={classes.infoCardLeagueLine}>
-                            <Typography type="body2" align="center" className={classes.infoCardLeague}>RW</Typography>
+                            <Typography type="body2" align="center" className={classes.infoCardLeague}>{user.position_short}</Typography>
 
                         </div>
                         <div className={classes.infoCardData}>
                             <Hidden smUp>
                                 <Typography type="headline" align="center"
-                                            className={classes.infoCardName}>{user.full_name}</Typography>
+                                            className={classes.infoCardName}>{user.first_name} {user.last_name}</Typography>
                             </Hidden>
                             <Typography type="subheading" align="center" className={classes.infoCardTeam}>
-                                {user.team_current_name || 'Team Unknown'}
+                                {user.team || 'Team Unknown'}
                             </Typography>
                             <Typography type="body1" align="center">
-                                {user.city || user.state || user.country ? `${user.city || ''}${user.state ? (user.city ? ', ' + user.state : user.state ) : ''} ${user.country ? (user.city || user.state ? ', ' + user.country : user.country ) : ''}` : 'Location Unknown'}
+                                {user.team_location || user.team_country || 'Location Unknown'}
                             </Typography>
 
                         </div>
                     </Paper>
                     <Hidden xsDown>
                         <div className={classes.infoRight}>
-                            <Typography type="headline" className={classes.infoRightName}>{user.full_name}</Typography>
+                            <Typography type="headline" className={classes.infoRightName}>{user.first_name} {user.last_name}</Typography>
                             <div className={classes.infoRightColumn}>
                                 <div>
                                     <Typography type="caption" className={classes.infoRightCaption}>
                                         Birth Date
                                     </Typography>
                                     <Typography type="subheading" className={classes.infoRightValue}>
-                                        {user.birthday ? moment(user.birthday).format('MMM. YYYY') : 'Unknown'}
+                                        {user.birthday || 'Unknown'}
                                     </Typography>
                                 </div>
                                 <div>
@@ -571,7 +571,7 @@ class PlayerProfile extends Component {
                                         Position
                                     </Typography>
                                     <Typography type="subheading" className={classes.infoRightValue}>
-                                        {user.position ? POS_LIST[user.position] : 'Unknown'}
+                                        {user.position_full || 'Unknown'}
                                     </Typography>
                                 </div>
                                 <div>
@@ -579,12 +579,12 @@ class PlayerProfile extends Component {
                                         Nationality
                                     </Typography>
                                     <Typography type="subheading" className={classes.infoRightValue}>
-                                        {user.nationality ? user.nationalit : 'Unknown'}
+                                        {user.nationality_code || 'Unknown'}
                                     </Typography>
                                 </div>
                             </div>
-                            {user.bio && (
-                                <Typography type="body1" className={classes.infoRightAbout}>{user.bio}</Typography>
+                            {user.biography && (
+                                <Typography type="body1" className={classes.infoRightAbout}>{user.biography}</Typography>
                             )}
                         </div>
                     </Hidden>
@@ -597,7 +597,7 @@ class PlayerProfile extends Component {
                                 Birth Date
                             </Typography>
                             <Typography type="subheading" className={classes.infoRightValue}>
-                                {user.birthday ? moment(user.birthday).format('MMM. YYYY') : 'Unknown'}
+                                {user.birthday || 'Unknown'}
                             </Typography>
                         </div>
                         <div>
@@ -605,7 +605,7 @@ class PlayerProfile extends Component {
                                 Position
                             </Typography>
                             <Typography type="subheading" className={classes.infoRightValue}>
-                                {user.position ? POS_LIST[user.position] : 'Unknown'}
+                                {user.position_full || 'Unknown'}
                             </Typography>
                         </div>
                         <div>
@@ -613,7 +613,7 @@ class PlayerProfile extends Component {
                                 Nationality
                             </Typography>
                             <Typography type="subheading" className={classes.infoRightValue}>
-                                {user.nationality ? user.nationalit : 'Unknown'}
+                                {user.nationality_code || 'Unknown'}
                             </Typography>
                         </div>
                     </div>
@@ -675,7 +675,7 @@ class PlayerProfile extends Component {
 
                         </Paper>
 
-                        {user.id !== currentUser.id && (
+                        {user.id !== currentUser.id && currentUser.role === SCOUT_ROLE && (
 
                             <div className={classes.contactContainer}>
                                 <Typography type="title" className={classes.contactTitle}>

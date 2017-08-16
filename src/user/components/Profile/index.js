@@ -27,7 +27,7 @@ class Profile extends Component {
         if (!this.props.user)
             return null;
 
-        if( this.props.user.user_role === SCOUT_ROLE)
+        if( this.props.user.role === SCOUT_ROLE)
             return <ScoutProfile {...this.props} />;
         else
             return <PlayerProfile {...this.props}/>;

@@ -13,9 +13,12 @@ import {LOGIN, LOGOUT, SET_CURRENT, SET_USER} from '../constants/actions';
 import {LOAD} from '../../common/constants/actions';
 
 
-export const logIn = (username, password) => dispatch => {
-    return post('/api/v2/profile/login', {username, password})
+export const logIn = (email, password) => dispatch => {
+    return post('/api/v2/profile/login', {email, password})
         .then(user => {
+            if('error' in user)
+                return  dispatch({type: ERROR_ALERT, payload: {message: user.error.message}});
+
             auth(user.access_token);
             dispatch({type: LOGIN, payload: user});
             dispatch(push('/profile'))
@@ -26,7 +29,9 @@ export const logIn = (username, password) => dispatch => {
 export const registerScout = user => dispatch => {
     return post('/api/v2/profile/signup-scout', user)
         .then(user => {
-            dispatch(push('/login'))
+            if('error' in user)
+                return  dispatch({type: ERROR_ALERT, payload: {message: user.error.message}});
+            dispatch(push('/sign/in'))
         })
         .catch()
 };
@@ -34,7 +39,9 @@ export const registerScout = user => dispatch => {
 export const registerPlayer = user => dispatch => {
     return post('/api/v2/profile/signup-player', user)
         .then(user => {
-            dispatch(push('/login'))
+            if('error' in user)
+                return  dispatch({type: ERROR_ALERT, payload: {message: user.error.message}});
+            dispatch(push('/sign/in'))
         })
         .catch()
 };
@@ -44,13 +51,16 @@ export const logOut = () => dispatch => {
         .then(() => {
             auth('');
             dispatch({type: LOGOUT});
-            dispatch(push('/login'));
+            dispatch(push('/sign/in'));
         })
 };
 
 export const getCurrent = () => dispatch => {
     return get('/api/v2/profile/get')
         .then(user => {
+            if('error' in user)
+                return  dispatch({type: ERROR_ALERT, payload: {message: user.error.message}});
+
             dispatch({type: SET_CURRENT, payload: user});
             dispatch({type: LOAD});
         })
@@ -63,6 +73,8 @@ export const getUser = (id) => dispatch => {
     dispatch({type: SET_USER, payload: null});
     return get(`/api/v2/user/get/${id}`)
         .then(user => {
+            if('error' in user)
+                return  dispatch({type: ERROR_ALERT, payload: {message: user.error.message}});
             dispatch({type: SET_USER, payload: user});
         })
         .catch((message) => {
