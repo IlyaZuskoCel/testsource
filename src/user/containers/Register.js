@@ -16,8 +16,8 @@ const mapStateToProps = (state) => ({});
 const mapDispatchToProps = (dispatch) => ({
     registerPlayer: (user) => dispatch(registerPlayer(user)),
     registerScout: (user) => dispatch(registerScout(user)),
-    goLogin: () =>  dispatch(go('/login')),
-    goRegister: () =>  dispatch(go('/register')),
+    goLogin: () =>  dispatch(go('/sign/in')),
+    goRegister: () =>  dispatch(go('/sign/up')),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Register))

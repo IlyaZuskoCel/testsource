@@ -45,7 +45,7 @@ TabContainer.propTypes = {
 class Main extends Component {
     constructor(props) {
         super(props);
-
+console.log(props)
         this.state = {
             index: 1,
             username: '',
@@ -58,9 +58,7 @@ class Main extends Component {
         this.handleChangeTab = this.handleChangeTab.bind(this);
     }
 
-    componentDidMount() {
-        this.props.goRegister();
-    }
+
 
     handleChangeTab(event, index) {
         this.setState({index});

@@ -4,8 +4,8 @@
  */
 
 
-export const PLAYER_ROLE = 1;
-export const SCOUT_ROLE = 2;
+export const PLAYER_ROLE = 'Player';
+export const SCOUT_ROLE = 'Scout';
 
 
 export const GENDER_MALE = '1';

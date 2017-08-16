@@ -15,10 +15,8 @@ import Profile from './containers/Profile';
 import Main from './containers/Main';
 
 const routes = [
-    <DefaultLayout key="1" path="/" component={Main}/>,
-    <DefaultLayout key="2" path="/login" component={Login}/>,
-    <DefaultLayout key="3" path="/register" component={Register}/>,
-    <PrivateRoute key="4" path="/profile" component={Profile} hideBackgroundTopHeader/>
+    <DefaultLayout key="1" path="/sign/:type" component={Main}/>,
+    <PrivateRoute key="2" path="/profile" component={Profile} hideBackgroundTopHeader/>
 ];
 
 export default routes;

@@ -14,7 +14,7 @@ const PrivateRoute = ({component: Component, isAuthenticated, hideBackgroundTopH
             <DefaultLayout component={Component} hideBackgroundTopHeader={hideBackgroundTopHeader} {...props}/>
         ) : (
             <Redirect to={{
-                pathname: '/login',
+                pathname: '/sign/in',
                 state: {from: props.location}
             }}/>
         )

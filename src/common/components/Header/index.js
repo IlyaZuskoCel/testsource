@@ -290,7 +290,7 @@ class Header extends Component {
 
             ];
 
-            if (user.user_role === SCOUT_ROLE)
+            if (user.role === SCOUT_ROLE)
                 items.unshift(<MenuItem key="favorite"
                                         onClick={this.handleMenuRequestClose('/favorite')}>ShortList</MenuItem>);
 
@@ -318,7 +318,6 @@ class Header extends Component {
 
 
         }
-
 
         const hideBackground = this.props.hideBackgroundTopHeader && !this.state.scroll;
 
@@ -350,7 +349,7 @@ class Header extends Component {
                                     aria-owns="simple-menu"
                                     aria-haspopup="true" onClick={this.handleMenuClick}>
                                     <Avatar alt={user.full_name} className={classes.avatar} src={DefaultAvatarImg}/>
-                                    <Hidden xsDown><span className={classes.username}>{user.full_name}</span></Hidden>
+                                    <Hidden xsDown><span className={classes.username}>{user.first_name} {user.last_name}</span></Hidden>
                                 </Button>
                                 {DropMenu}
                             </div>
