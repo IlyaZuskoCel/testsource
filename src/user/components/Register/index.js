@@ -26,7 +26,6 @@ class Register extends Component {
         super(props);
 
         this.state = {
-            index: 1,
             username: '',
             password: '',
             errors: []
@@ -34,13 +33,7 @@ class Register extends Component {
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.handleChangeTab = this.handleChangeTab.bind(this);
-    }
-
-    handleChangeTab(event, index) {
-        this.setState({index});
-    }
-
+            }
 
     handleChange(name) {
         return event => this.setState({[name]: event.target.value});

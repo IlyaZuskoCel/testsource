@@ -9,13 +9,11 @@ import React from 'react';
 import PrivateRoute from '../common/containers/PrivateRoute'
 import DefaultLayout from '../common/containers/DefaultRoute'
 
-import Login from './containers/Login';
-import Register from './containers/Register';
 import Profile from './containers/Profile';
-import Main from './containers/Main';
+import Sign from './containers/Sign';
 
 const routes = [
-    <DefaultLayout key="1" path="/sign/:type" component={Main}/>,
+    <DefaultLayout key="1" path="/sign/:type" component={Sign}/>,
     <PrivateRoute key="2" path="/profile" component={Profile} hideBackgroundTopHeader/>
 ];
 

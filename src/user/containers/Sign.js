@@ -1,7 +1,7 @@
 
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux';
-import Main from '../components/Main';
+import Sign from '../components/Sign';
 import {go} from '../../common/actions';
 
 const mapStateToProps = (state, props) => ({
@@ -12,4 +12,4 @@ const mapDispatchToProps = (dispatch) => ({
     goRegister: () =>  dispatch(go('/sign/up')),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));
+export default connect(mapStateToProps, mapDispatchToProps)(Sign);
