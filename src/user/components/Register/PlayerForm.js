@@ -26,13 +26,10 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
     },
     formControl: {
         width: '100%',
-        //alignItems: 'center',
-
         marginLeft: 20
     },
     formBirthDate: {
         width: 200,
-
     },
     formBirthYear: {
         width: 200,
@@ -40,32 +37,38 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
     },
     button: {
         maxWidth: 160,
-        marginTop:38,
-        marginLeft:106,
+        marginTop: 38,
+        marginLeft: 106,
     },
-    grid_container:{
-      marginTop:60,
+    grid_container: {
+        marginTop: 60,
     },
-    grid_flex:{
+    grid_flex: {
         display: 'inline-flex'
     },
-    radio_buttons_group:{
+    radio_buttons_group: {
         display: 'inline',
     },
-    player_label:{
+    player_label: {
         marginLeft: 16, marginTop: 8
     },
-    birth:{
-        display: 'inline-flex'
+    birth: {
+        display: 'inline-flex',
+        marginLeft: 20,
     },
-    agent:{
-        display: 'inline-flex', marginTop: 30, marginLeft: 8
+    agent: {
+        display: 'inline-flex',
+        marginTop: 30,
+        marginLeft: 8,
     },
-    text_agent:{
+    text_agent: {
         width: 400
     },
-    check_box:{
+    check_box: {
         marginTop: 30
+    },
+    second_check:{
+        marginTop:20
     }
 }));
 
@@ -278,8 +281,9 @@ class PlayerForm extends Component {
                     </FormGroup>
 
                 </Grid>
-                <Grid item xs={12} sm={6} >
-                    <Typography type="caption" className={classes.text_agent}>If you have an agent, scouts will contact your agent
+                <Grid item xs={12} sm={6}>
+                    <Typography type="caption" className={classes.text_agent}>If you have an agent, scouts will contact
+                        your agent
                         directly.</Typography>
                 </Grid>
                 <Grid item xs={12} className={classes.check_box}>
@@ -293,7 +297,7 @@ class PlayerForm extends Component {
                                 />
                             }
                             label="I agree to the Terms of Service and Privacy Policy."
-                             //style={{marginTop: 8}}
+
                         />
                         <FormControlLabel
                             control={
@@ -304,12 +308,12 @@ class PlayerForm extends Component {
                                 />
                             }
                             label="Subscribe to our Newsletter."
-                             style={{marginTop: 20}}
+                           className={classes.second_check}
                         />
                     </FormGroup>
                 </Grid>
             </Grid>
-            <Grid item xs={12} >
+            <Grid item xs={12}>
                 <FormControl className={classes.formControl}>
                     <Button raised type="submit" color="primary" className={classes.button}>
                         Sign up
