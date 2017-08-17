@@ -21,7 +21,7 @@ const styleSheet = createStyleSheet('Main', theme => ({
     header: {
         //alignItems: 'center',
         // backgroundColor: '#ffffff',
-        marginTop: 50,
+        marginTop: 100,
 
     },
     card: {
@@ -47,8 +47,8 @@ const styleSheet = createStyleSheet('Main', theme => ({
         marginLeft: -333,
         marginRight: 0,
         marginBottom: -4,
-        width: 1400,
-        height: 842,
+        width: 1600,
+        height: 992,
 
 
     }
