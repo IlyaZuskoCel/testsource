@@ -39,7 +39,9 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
         marginLeft: 30
     },
     button: {
-        maxWidth: 160
+        maxWidth: 160,
+        marginTop:38,
+        marginLeft:106,
     },
     grid_container:{
       marginTop:60,
@@ -291,7 +293,7 @@ class PlayerForm extends Component {
                                 />
                             }
                             label="I agree to the Terms of Service and Privacy Policy."
-                            // style={{marginTop: 8}}
+                             //style={{marginTop: 8}}
                         />
                         <FormControlLabel
                             control={
@@ -302,7 +304,7 @@ class PlayerForm extends Component {
                                 />
                             }
                             label="Subscribe to our Newsletter."
-                            // style={{marginTop: 20}}
+                             style={{marginTop: 20}}
                         />
                     </FormGroup>
                 </Grid>
