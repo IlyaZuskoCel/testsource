@@ -310,18 +310,36 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
     info: {
         marginLeft: 20,
         marginRight: 20,
+
+        [theme.breakpoints.down('sm')]: {
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+            alignItems: 'center',
+            marginLeft: 0,
+            marginRight: 0,
+            paddingBottom: 24,
+        },
+
     },
     infoRow: {
         paddingTop: 15,
         paddingBottom: 15,
-
+        [theme.breakpoints.down('sm')]: {
+            paddingTop: 0,
+            paddingBottom: 0,
+        }
     },
     infoCaption: {
         color: '#000'
     },
     infoValue: {
         color: '#fff',
-        textTransform: 'uppercase'
+        textTransform: 'uppercase',
+        [theme.breakpoints.down('sm')]: {
+            color: '#000',
+            textTransform: 'capitalize'
+        },
     },
     infoRight: {
         width: 566,
@@ -340,6 +358,11 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
             marginLeft: 24,
             marginRight: 24,
             justifyContent: 'space-around',
+            alignItems: 'flex-start',
+        },
+        [theme.breakpoints.down('xs')]: {
+            marginLeft: 0,
+            marginRight: 0,
         },
     },
     infoRightName: {
@@ -364,6 +387,12 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
         fontSize: 16,
         lineHeight: 1.5,
 
+        [theme.breakpoints.down('sm')]: {
+            paddingBottom: 16,
+            fontSize: 14,
+            lineHeight: 1.71,
+        }
+
     },
     contactContainer: {
         padding: 80,
@@ -374,10 +403,18 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
     },
     contactTextField: {
         width: '100%',
-        marginTop: 24
+        marginTop: 24,
+        [theme.breakpoints.down('sm')]: {
+            marginTop: 8,
+        }
+
     },
     contactButton: {
-        marginTop: 64
+        marginTop: 64,
+        [theme.breakpoints.down('sm')]: {
+            marginTop: 40,
+            marginBottom: 40,
+        }
     },
 
     mobileContent: {
@@ -385,6 +422,10 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
     },
     tabs: {
         justifyContent: 'center',
+    },
+    tabContent: {
+        padding: 16,
+        paddingTop: 24,
     }
 }));
 
@@ -526,7 +567,8 @@ class PlayerProfile extends Component {
                     </Hidden>
                     <Paper className={classes.infoCard} square>
                         {user.jersey_number && (
-                            <Typography className={classes.infoCardNumber} type="title">{user.jersey_number}</Typography>)}
+                            <Typography className={classes.infoCardNumber}
+                                        type="title">{user.jersey_number}</Typography>)}
 
 
                         <div
@@ -537,7 +579,8 @@ class PlayerProfile extends Component {
 
                         </div>
                         <div className={classes.infoCardLeagueLine}>
-                            <Typography type="body2" align="center" className={classes.infoCardLeague}>{user.position_short}</Typography>
+                            <Typography type="body2" align="center"
+                                        className={classes.infoCardLeague}>{user.position_short}</Typography>
 
                         </div>
                         <div className={classes.infoCardData}>
@@ -556,7 +599,8 @@ class PlayerProfile extends Component {
                     </Paper>
                     <Hidden xsDown>
                         <div className={classes.infoRight}>
-                            <Typography type="headline" className={classes.infoRightName}>{user.first_name} {user.last_name}</Typography>
+                            <Typography type="headline"
+                                        className={classes.infoRightName}>{user.first_name} {user.last_name}</Typography>
                             <div className={classes.infoRightColumn}>
                                 <div>
                                     <Typography type="caption" className={classes.infoRightCaption}>
@@ -584,7 +628,8 @@ class PlayerProfile extends Component {
                                 </div>
                             </div>
                             {user.biography && (
-                                <Typography type="body1" className={classes.infoRightAbout}>{user.biography}</Typography>
+                                <Typography type="body1"
+                                            className={classes.infoRightAbout}>{user.biography}</Typography>
                             )}
                         </div>
                     </Hidden>
@@ -602,32 +647,188 @@ class PlayerProfile extends Component {
                         </div>
                         <div>
                             <Typography type="caption" className={classes.infoRightCaption}>
-                                Position
-                            </Typography>
-                            <Typography type="subheading" className={classes.infoRightValue}>
-                                {user.position_full || 'Unknown'}
-                            </Typography>
-                        </div>
-                        <div>
-                            <Typography type="caption" className={classes.infoRightCaption}>
                                 Nationality
                             </Typography>
                             <Typography type="subheading" className={classes.infoRightValue}>
                                 {user.nationality_code || 'Unknown'}
                             </Typography>
                         </div>
+                        <div>
+                            <Typography type="caption" className={classes.infoRightCaption}>
+                                Position
+                            </Typography>
+                            <Typography type="subheading" className={classes.infoRightValue}>
+                                {user.position_full || 'Unknown'}
+                            </Typography>
+                        </div>
+
                     </div>
                 </Hidden>
                 <Hidden smUp>
                     <Paper square className={classes.mobileContent}>
-                        <Tabs index={this.state.tab}
-                              onChange={this.handleChangeTab}
-                              className={classes.tabs}
-                              centered fullWidth>
-                            <Tab label="Videos"/>
-                            <Tab label="Profile"/>
-                            <Tab label="Contact"/>
-                        </Tabs>
+                        {user.id !== currentUser.id && currentUser.role === SCOUT_ROLE ? (
+                            <Tabs index={this.state.tab}
+                                  onChange={this.handleChangeTab}
+                                  className={classes.tabs}
+                                  centered fullWidth>
+                                <Tab label="Videos"/>
+                                <Tab label="Profile"/>
+                                <Tab label="Contact"/>
+                            </Tabs>
+                        ) : (
+                            <Tabs index={this.state.tab}
+                                  onChange={this.handleChangeTab}
+                                  className={classes.tabs}
+                                  centered fullWidth>
+                                <Tab label="Videos"/>
+                                <Tab label="Profile"/>
+                            </Tabs>
+                        )}
+
+
+                        {this.state.tab === 0 && user.videos.length > 0 && (
+                            <div className={classes.tabContent}>
+                                <div className={classes.videoListWrap}/>
+                            </div>
+                        )}
+
+                        {this.state.tab === 0 && user.videos.length <= 0 && user.id !== currentUser.id && (
+                            <div className={classes.tabContent}>
+                                <Typography type="subheading" align="center">
+                                    This player hasn't uploaded any video yet.
+                                </Typography>
+                            </div>
+                        )}
+
+                        {this.state.tab === 0 && user.videos.length <= 0 && user.id === currentUser.id && (
+                            <div className={classes.tabContent}>
+                                <Typography type="subheading">Your profile is
+                                    incomplete!</Typography>
+                                <Typography type="body1" className={classes.desc}>
+                                    Scouts are actively looking for talents like you. Here is what
+                                    they look for:
+                                </Typography>
+                                <Typography type="body1" className={classes.point}> Tap
+                                    <Button color="primary" raised
+                                            className={classNames(classes.addVideoButton, classes.addVideoButtonDesc)}>
+                                        Add a Video
+                                    </Button> to upload a video
+                                </Typography>
+                            </div>
+                        )}
+
+
+                        {this.state.tab === 1 && (
+                            <div className={classes.tabContent}>
+                                <div className={classes.info}>
+                                    {user.height && (user.height[0] > 0 || user.height[1] > 0 ) && (
+                                        <div className={classes.infoRow}>
+                                            <Typography type="caption"
+                                                        className={classes.infoCaption}>Height</Typography>
+                                            <Typography type="body2" className={classes.infoValue}>
+                                                {`${user.height[0]}'${user.height[1]}''`}
+                                            </Typography>
+
+                                        </div>
+                                    )}
+                                    {user.weight && (
+                                        <div className={classes.infoRow}>
+                                            <Typography type="caption"
+                                                        className={classes.infoCaption}>Weight</Typography>
+                                            <Typography type="body2" className={classes.infoValue}>
+                                                {user.weight} lbs
+                                            </Typography>
+
+                                        </div>
+                                    )}
+                                    {user.gender_full && (
+                                        <div className={classes.infoRow}>
+                                            <Typography type="caption"
+                                                        className={classes.infoCaption}>Gender</Typography>
+                                            <Typography type="body2" className={classes.infoValue}>
+                                                {user.gender_full}
+                                            </Typography>
+
+                                        </div>
+                                    )}
+                                    {user.shot && (
+                                        <div className={classes.infoRow}>
+                                            <Typography type="caption" className={classes.infoCaption}>Shot</Typography>
+                                            <Typography type="body2" className={classes.infoValue}>
+                                                {user.shot === SHOT_RIGHT ? 'Right' : 'Left'}
+                                            </Typography>
+
+                                        </div>
+                                    )}
+                                </div>
+                                {user.biography && (
+                                    <Typography type="body1"
+                                                className={classes.infoRightAbout}>{user.biography}</Typography>
+                                )}
+
+                            </div>
+                        )}
+
+                        {this.state.tab === 2 && user.id !== currentUser.id && currentUser.role === SCOUT_ROLE && (
+                            <div className={classes.tabContent}>
+                                <Grid container>
+                                    <Grid item sm={3} xs={12}>
+
+                                        {user.have_agent ? (
+                                            <Typography type="body1">
+                                                <strong>You are contacting this player’s agent.</strong> Responses will
+                                                be send
+                                                directly
+                                                to your email as indicated.
+                                            </Typography>
+                                        ) : (
+                                            <Typography type="body1">
+                                                You can send a message to a player here. Responses will be send directly
+                                                to your
+                                                email as indicated.
+                                            </Typography>
+                                        )}
+
+                                    </Grid>
+                                    <Grid item sm={8} xs={12}>
+                                        <form onSubmit={this.sendMessage}>
+                                            <Grid item xs={12}>
+                                                <TextField
+                                                    className={classes.contactTextField}
+                                                    label="Your Email Address"
+                                                    value={user.self_contact_information}
+                                                    disabled
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <TextField
+                                                    className={classes.contactTextField}
+                                                    label="Subject Line"
+                                                    value={this.state.contactSubject}
+                                                    onChange={this.handleChange('contactSubject')}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <TextField
+                                                    className={classes.contactTextField}
+                                                    label="Message"
+                                                    value={this.state.contactMessage}
+                                                    onChange={this.handleChange('contactMessage')}
+                                                />
+                                            </Grid>
+                                            <Grid container align="center" justify="center">
+                                                <Grid item xs={6}>
+                                                    <Button type="submit" color="primary" raised
+                                                            className={classes.contactButton}>Send</Button>
+                                                </Grid>
+                                            </Grid>
+                                        </form>
+                                    </Grid>
+                                </Grid>
+                            </div>
+                        )}
+
+
                     </Paper>
                 </Hidden>
 
@@ -740,14 +941,15 @@ class PlayerProfile extends Component {
                 </Hidden>
             </div>
 
-        </div>
+            <
+            /div>
 
-    }
-}
+            }
+            }
 
-PlayerProfile.propTypes = {
-    children: PropTypes.node,
-    classes: PropTypes.object.isRequired,
-};
+            PlayerProfile.propTypes = {
+            children: PropTypes.node,
+            classes: PropTypes.object.isRequired,
+        };
 
-export default compose(withStyles(styleSheet), withWidth())(PlayerProfile);
+            export default compose(withStyles(styleSheet), withWidth())(PlayerProfile);
