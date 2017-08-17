@@ -7,6 +7,7 @@ import Register from '../../containers/Register';
 import Login from '../../containers/Login';
 import Grid from 'material-ui/Grid';
 import Hidden from 'material-ui/Hidden';
+import hockeyMen from '../../../assets/image/signup.jpg';
 
 const styleSheet = createStyleSheet('Main', theme => ({
     root: {
@@ -14,10 +15,8 @@ const styleSheet = createStyleSheet('Main', theme => ({
         marginTop: 100,
         left: '11%',
         width: '74%',
-        marginLeft:50,
-        [theme.breakpoints.up('sm')]: {
-
-        },
+        marginLeft: 50,
+        [theme.breakpoints.up('sm')]: {},
     },
     header: {
         //alignItems: 'center',
@@ -33,12 +32,23 @@ const styleSheet = createStyleSheet('Main', theme => ({
         display: 'inline-block',
         float: 'left'
     },
-    image: {
-        width: 704,
-        height: 738,
-    },
     text: {
         color: '#d7001e'
+    },
+    crop: {
+        float: 'left',
+        overflow: 'hidden', /* this is important */
+        border: 1
+    },
+    crop_img: {
+        marginTop: -1,
+        marginLeft: -333,
+        marginRight: -353,
+        marginBottom: -4,
+        width: 1400,
+        height: 842,
+
+
     }
 }));
 
@@ -70,13 +80,13 @@ class Sign extends Component {
         } else {
             this.props.goRegister();
         }
-    }
+    };
 
     render() {
         const {classes} = this.props;
         return (
             <Grid container direction={'row'} className={classes.root}>
-                <Grid item lg={6} md={7} sm={8} xs={12}>
+                <Grid item lg={6} md={7}>
                     <Tabs className={classes.header}
                           index={this.props.type === 'in' ? 0 : 1}
                           onChange={this.handleChangeTab}
@@ -108,12 +118,13 @@ class Sign extends Component {
                     )}
 
                 </Grid>
-                <Grid item lg={6} md={5} sm={4} xs={0}>
-                    <Hidden xsDown>
-                        <div>
-                            <img src='../../../assets/image/signup.jpg'
+                <Grid item lg={6} md={5}>
+                    <Hidden smDown>
+                        <div className={classes.crop}>
+                            <img className={classes.crop_img}
+                                 src={hockeyMen}
                                  alt='HockeyMenHockeyMenHockeyMenHockeyMenHockeyMenHockeyMen'
-                                 className={classes.image}/>
+                            />
                         </div>
                     </Hidden>
                 </Grid>
