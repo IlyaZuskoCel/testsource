@@ -27,9 +27,11 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
     formControl: {
         width: '100%',
         marginLeft: 20
+
     },
     formBirthDate: {
         width: 200,
+
     },
     formBirthYear: {
         width: 200,
@@ -50,7 +52,8 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
         display: 'inline',
     },
     player_label: {
-        marginLeft: 16, marginTop: 8
+        marginLeft: 16,
+        marginTop: 8
     },
     birth: {
         display: 'inline-flex',

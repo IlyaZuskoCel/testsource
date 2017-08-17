@@ -12,7 +12,7 @@ import hockeyMen from '../../../assets/image/signup.jpg';
 const styleSheet = createStyleSheet('Main', theme => ({
     root: {
         backgroundColor: '#ffffff',
-        marginTop: 100,
+        marginTop: -8,
         left: '11%',
         width: '74%',
         marginLeft: 50,
@@ -20,7 +20,9 @@ const styleSheet = createStyleSheet('Main', theme => ({
     },
     header: {
         //alignItems: 'center',
-        // backgroundColor: '#ffffff'
+        // backgroundColor: '#ffffff',
+        marginTop: 50,
+
     },
     card: {
         maxWidth: 345,
@@ -43,7 +45,7 @@ const styleSheet = createStyleSheet('Main', theme => ({
     crop_img: {
         marginTop: -1,
         marginLeft: -333,
-        marginRight: -353,
+        marginRight: 0,
         marginBottom: -4,
         width: 1400,
         height: 842,
@@ -103,7 +105,9 @@ class Sign extends Component {
                             <Typography className={classes.text} type="body2">
                                 Sign up
                             </Typography>
-                        }>
+
+                        }
+                        >
 
                         </Tab>
                     </Tabs>
