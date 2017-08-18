@@ -11,26 +11,27 @@ import TextField from 'material-ui/TextField';
 import {FormGroup, FormControlLabel} from 'material-ui/Form';
 import Checkbox from 'material-ui/Checkbox';
 import Typography from 'material-ui/Typography';
+import Link from '../../../common/components/Link';
 
 const styleSheet = createStyleSheet('Login', theme => ({
     root: {
         backgroundColor: theme.palette.background.paper,
         marginLeft: -20,
         marginTop: 30,
-        width: 400,
-
-
-    },
+       // width: 400,
+   },
     form: {
         display: 'flex',
         flexDirection: 'column',
        marginLeft:40,
     },
     formControl: {
-        minWidth: '120%'
+        minWidth: '100%',
+        marginTop:24,
     },
     button: {
-        marginTop: 32
+        marginTop: 32,
+        marginBottom:164,
     },
     check_box: {
         marginTop: 24, marginRight: 136
@@ -108,7 +109,7 @@ class Login extends Component {
                     label="Remember me"
                     className={classes.check_box}
                 />
-                <a href="/forgotpassword"><Typography type="body1" className={classes.linkText}>Forgot my password</Typography></a>
+                <Link to="/forgotpassword"><Typography type="body1" className={classes.linkText}>Forgot my password</Typography></Link>
                 <FormControl>
                     <Button raised type="submit" color="primary" className={classes.button}>
                         Login
