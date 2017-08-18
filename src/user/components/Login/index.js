@@ -15,25 +15,31 @@ import Typography from 'material-ui/Typography';
 const styleSheet = createStyleSheet('Login', theme => ({
     root: {
         backgroundColor: theme.palette.background.paper,
-        marginLeft: -72,
+        marginLeft: -20,
         marginTop: 30,
         width: 400,
-        position: 'inherit'
+
+
     },
     form: {
         display: 'flex',
         flexDirection: 'column',
-        alignItems:'center'
+       marginLeft:40,
     },
     formControl: {
-
+        minWidth: '120%'
     },
-    button:{
+    button: {
         marginTop: 32
     },
-    check_box:{
-        marginTop: 24,marginRight:136
-    }
+    check_box: {
+        marginTop: 24, marginRight: 136
+    },
+    linkText: {
+        marginTop: 24,
+        marginRight: 136,
+        color: '#d7001e',
+    },
 }));
 
 
@@ -45,7 +51,7 @@ class Login extends Component {
             username: '',
             password: '',
             errors: [],
-            terms:'no',
+            terms: 'no',
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -102,8 +108,8 @@ class Login extends Component {
                     label="Remember me"
                     className={classes.check_box}
                 />
-                <Typography type="body1" className={classes.check_box}>Forgot password</Typography>
-                <FormControl className={classes.formControl}>
+                <a href="/forgotpassword"><Typography type="body1" className={classes.linkText}>Forgot my password</Typography></a>
+                <FormControl>
                     <Button raised type="submit" color="primary" className={classes.button}>
                         Login
                     </Button>

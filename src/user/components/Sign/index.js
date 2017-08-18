@@ -7,20 +7,24 @@ import Register from '../../containers/Register';
 import Login from '../../containers/Login';
 import Grid from 'material-ui/Grid';
 import Hidden from 'material-ui/Hidden';
-import hockeyMen from '../../../assets/image/signup.jpg';
+import hockeyMen from './image/signup.jpg';
 
 const styleSheet = createStyleSheet('Main', theme => ({
     root: {
         backgroundColor: '#ffffff',
-        marginTop: 100,
+        marginTop: -8,
         left: '11%',
         width: '74%',
         marginLeft: 50,
-        [theme.breakpoints.up('sm')]: {},
+         [theme.breakpoints.up('sm')]: {},
     },
     header: {
-        //alignItems: 'center',
-        // backgroundColor: '#ffffff'
+               marginTop: 100,
+        marginLeft: 94,
+        [theme.breakpoints.down('sm')]: {
+            marginTop: 100,
+            marginLeft: 94,
+        },
     },
     card: {
         maxWidth: 345,
@@ -43,12 +47,13 @@ const styleSheet = createStyleSheet('Main', theme => ({
     crop_img: {
         marginTop: -1,
         marginLeft: -333,
-        marginRight: -353,
+        marginRight: 0,
         marginBottom: -4,
-        width: 1400,
-        height: 842,
-
-
+        width: 1600,
+        height: 992,
+    },
+    grid: {
+        alignItems: 'center',
     }
 }));
 
@@ -86,7 +91,7 @@ class Sign extends Component {
         const {classes} = this.props;
         return (
             <Grid container direction={'row'} className={classes.root}>
-                <Grid item lg={6} md={7}>
+                <Grid item lg={6} md={7} className={classes.grid}>
                     <Tabs className={classes.header}
                           index={this.props.type === 'in' ? 0 : 1}
                           onChange={this.handleChangeTab}
@@ -103,7 +108,9 @@ class Sign extends Component {
                             <Typography className={classes.text} type="body2">
                                 Sign up
                             </Typography>
-                        }>
+
+                        }
+                        >
 
                         </Tab>
                     </Tabs>
