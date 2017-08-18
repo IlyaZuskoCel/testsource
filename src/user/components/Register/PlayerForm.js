@@ -84,7 +84,7 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
         marginLeft: 24,
     },
     haveAgent: {
-        display: 'inline',
+        display: 'inline-block',
         marginLeft: 12,
     },
     terms: {
@@ -101,6 +101,11 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
     },
     text: {
         display: 'inline-block',
+    },
+    termsPolicy:{
+        display:'inline',
+        position:'absolute',
+        width:'100%',
     }
 }));
 
@@ -331,7 +336,7 @@ class PlayerForm extends Component {
                                 }
 
                             />
-                            <div style={{display:'inline',position:'absolute'}}>
+                            <div className={classes.termsPolicy}>
                                 <Typography type="body1" className={classes.text}>{'I agree with\u00A0'}</Typography>
                                 <Link to="/termsofservice">
                                     <Typography type="body1" className={classes.link}>Terms of Service </Typography>
