@@ -86,10 +86,14 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
         marginLeft: 12,
     },
     terms: {
-        display: 'inline',
+        display: 'inline-flex',
     },
-    yesBox: {
-        display: 'inline',
+    subscribe: {
+        display: 'inline-flex',
+        marginTop:10,
+    },
+    link:{
+       color:'#d7001e',
     }
 }));
 
@@ -309,7 +313,7 @@ class PlayerForm extends Component {
                 </Grid>
                 <Grid item xs={12} className={classes.check_box}>
                     <FormGroup>
-                        <div style={{display: 'inline-flex'}}>
+                        <div className={classes.terms}>
                             <FormControlLabel
                                 control={
                                     <Checkbox
@@ -318,13 +322,12 @@ class PlayerForm extends Component {
                                         value={this.state.terms === 'yes' ? 'no' : 'yes'}
                                     />
                                 }
-                                //className={classes.yesBox}
+
                             />
-                            <Typography type="body1" /*className={classes.terms}*/>I agree with Terms of Service and
-                                Privacy
-                                Policy.</Typography>
+                            <Typography type="body1" >I agree with <a href="/termsofservice" className={classes.link}>Terms of Service</a> and
+                                <a href="/privacypolicy" className={classes.link}> Privacy Policy.</a></Typography>
                         </div>
-                        <div style={{display: 'inline-flex'}}>
+                        <div className={classes.subscribe}>
                             <FormControlLabel
                                 control={
                                     <Checkbox
@@ -333,7 +336,7 @@ class PlayerForm extends Component {
                                         value={this.state.news === 'yes' ? 'no' : 'yes'}
                                     />
                                 }
-                                className={classes.second_check}
+
                             />
                             <Typography type="body1">Subscribe to our Newsletter.</Typography>
                         </div>
