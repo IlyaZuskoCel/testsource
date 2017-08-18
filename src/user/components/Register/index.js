@@ -12,11 +12,9 @@ const styleSheet = createStyleSheet('Register', theme => ({
     root: {
         backgroundColor: '#ffffff',
         marginTop: -32,
-        width: 600,
+
         [theme.breakpoints.up('sm')]: {
-            position: 'inherit',
-            width: 600,
-            marginLeft: -24,
+           marginLeft: -24,
         },
     },
 }));

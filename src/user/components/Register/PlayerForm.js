@@ -16,6 +16,7 @@ import Button from 'material-ui/Button';
 import FormControl from 'material-ui/Form/FormControl';
 import TextField from 'material-ui/TextField';
 import Typography from 'material-ui/Typography';
+import Link from '../../../common/components/Link';
 
 const styleSheet = createStyleSheet('PlayerForm', theme => ({
 
@@ -26,17 +27,18 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
 
     },
     formControl: {
-        minWidth: '160%',
+        minWidth: '200%',
         marginLeft: 20
 
     },
     formBirthDate: {
-        width: 200,
-
+        display: 'inline-table',
+        width: '100%',
     },
     formBirthYear: {
-        width: 200,
-        marginLeft: 30
+        display: 'inline-table',
+        width: '92%',
+        marginLeft: '8%'
     },
     button: {
         maxWidth: 160,
@@ -57,9 +59,9 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
         marginTop: 8
     },
     birth: {
-        display: 'inline-flex',
+        display: 'flex',
         marginLeft: 20,
-        maxWidth: '160%',
+        width: '100%',
     },
     agent: {
         display: 'inline-flex',
@@ -86,14 +88,19 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
         marginLeft: 12,
     },
     terms: {
-        display: 'inline-flex',
+        display: 'inline',
+        marginTop: 20,
     },
     subscribe: {
         display: 'inline-flex',
-        marginTop:10,
+        marginTop: 10,
     },
-    link:{
-       color:'#d7001e',
+    link: {
+        color: '#d7001e',
+        display: 'inline-block',
+    },
+    text: {
+        display: 'inline-block',
     }
 }));
 
@@ -324,8 +331,16 @@ class PlayerForm extends Component {
                                 }
 
                             />
-                            <Typography type="body1" >I agree with <a href="/termsofservice" className={classes.link}>Terms of Service</a> and
-                                <a href="/privacypolicy" className={classes.link}> Privacy Policy.</a></Typography>
+                            <div style={{display:'inline',position:'absolute'}}>
+                                <Typography type="body1" className={classes.text}>{'I agree with\u00A0'}</Typography>
+                                <Link to="/termsofservice">
+                                    <Typography type="body1" className={classes.link}>Terms of Service </Typography>
+                                </Link>
+                                <Typography type="body1" className={classes.text}>{'\u00A0and\u00A0'}</Typography>
+                                <Link to="/privacypolicy">
+                                    <Typography type="body1" className={classes.link}> Privacy Policy.</Typography>
+                                </Link>
+                            </div>
                         </div>
                         <div className={classes.subscribe}>
                             <FormControlLabel
