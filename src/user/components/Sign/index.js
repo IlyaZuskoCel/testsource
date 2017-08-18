@@ -7,7 +7,7 @@ import Register from '../../containers/Register';
 import Login from '../../containers/Login';
 import Grid from 'material-ui/Grid';
 import Hidden from 'material-ui/Hidden';
-import hockeyMen from '../../../assets/image/signup.jpg';
+import hockeyMen from './image/signup.jpg';
 
 const styleSheet = createStyleSheet('Main', theme => ({
     root: {
