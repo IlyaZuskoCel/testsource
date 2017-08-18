@@ -16,13 +16,15 @@ const styleSheet = createStyleSheet('Main', theme => ({
         left: '11%',
         width: '74%',
         marginLeft: 50,
-        [theme.breakpoints.up('sm')]: {},
+         [theme.breakpoints.up('sm')]: {},
     },
     header: {
-        //alignItems: 'center',
-        // backgroundColor: '#ffffff',
-        marginTop: 100,
-
+               marginTop: 100,
+        marginLeft: 94,
+        [theme.breakpoints.down('sm')]: {
+            marginTop: 100,
+            marginLeft: 94,
+        },
     },
     card: {
         maxWidth: 345,
@@ -49,8 +51,9 @@ const styleSheet = createStyleSheet('Main', theme => ({
         marginBottom: -4,
         width: 1600,
         height: 992,
-
-
+    },
+    grid: {
+        alignItems: 'center',
     }
 }));
 
@@ -88,7 +91,7 @@ class Sign extends Component {
         const {classes} = this.props;
         return (
             <Grid container direction={'row'} className={classes.root}>
-                <Grid item lg={6} md={7}>
+                <Grid item lg={6} md={7} className={classes.grid}>
                     <Tabs className={classes.header}
                           index={this.props.type === 'in' ? 0 : 1}
                           onChange={this.handleChangeTab}

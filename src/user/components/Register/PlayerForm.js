@@ -20,12 +20,13 @@ import Typography from 'material-ui/Typography';
 const styleSheet = createStyleSheet('PlayerForm', theme => ({
 
     form: {
-        flexGrow: 1,
-        padding: 10,
-        alignItems: 'center'
+        display: 'flex',
+        flexDirection: 'column',
+        marginLeft: 40,
+
     },
     formControl: {
-        width: '100%',
+        minWidth: '160%',
         marginLeft: 20
 
     },
@@ -58,6 +59,7 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
     birth: {
         display: 'inline-flex',
         marginLeft: 20,
+        maxWidth: '160%',
     },
     agent: {
         display: 'inline-flex',
@@ -65,13 +67,29 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
         marginLeft: 8,
     },
     text_agent: {
-        width: 400
+        width: 400,
+        marginLeft: 20,
     },
     check_box: {
-        marginTop: 30
+        marginTop: 30,
+        marginLeft: 8
     },
-    second_check:{
-        marginTop:20
+    second_check: {
+        marginTop: 20
+    },
+    iam: {
+        display: 'inline',
+        marginLeft: 24,
+    },
+    haveAgent: {
+        display: 'inline',
+        marginLeft: 12,
+    },
+    terms: {
+        display: 'inline',
+    },
+    yesBox: {
+        display: 'inline',
     }
 }));
 
@@ -143,7 +161,7 @@ class PlayerForm extends Component {
         return <form className={classes.form} onSubmit={this.handleSubmit}>
             <Grid container gutter={24} direction={'column'} className={classes.grid_container}>
                 <Grid item xs={12} className={classes.grid_flex}>
-                    <Typography type="subheading">I am a</Typography>
+                    <Typography type="subheading" className={classes.iam}>I am a</Typography>
                     <FormGroup className={classes.radio_buttons_group}>
                         <FormControlLabel
                             control={
@@ -168,7 +186,7 @@ class PlayerForm extends Component {
                         />
                     </FormGroup>
                 </Grid>
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={12} sm={6}>
                     <TextField id="first_name"
                                required
                                error={this.state.errors.indexOf('first_name') > -1}
@@ -178,7 +196,7 @@ class PlayerForm extends Component {
                                className={classes.formControl}
                     />
                 </Grid>
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={12} sm={6}>
                     <TextField id="last_name"
                                required
                                error={this.state.errors.indexOf('last_name') > -1}
@@ -189,7 +207,7 @@ class PlayerForm extends Component {
 
                     />
                 </Grid>
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={12} sm={6}>
                     <div className={classes.birth}>
                         <TextField id="birth_day"
                                    required
@@ -256,7 +274,7 @@ class PlayerForm extends Component {
                     />
                 </Grid>
                 <Grid item xs={12} className={classes.agent}>
-                    <Typography type="subheading">I have an agent</Typography>
+                    <Typography type="subheading" className={classes.haveAgent}>I have an agent</Typography>
                     <FormGroup className={classes.radio_buttons_group}>
                         <FormControlLabel
                             control={
@@ -291,28 +309,34 @@ class PlayerForm extends Component {
                 </Grid>
                 <Grid item xs={12} className={classes.check_box}>
                     <FormGroup>
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                    checked={this.state.terms === 'yes'}
-                                    onChange={this.handleChange('terms')}
-                                    value={this.state.terms === 'yes' ? 'no' : 'yes'}
-                                />
-                            }
-                            label="I agree to the Terms of Service and Privacy Policy."
-
-                        />
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                    checked={this.state.news === 'yes'}
-                                    onChange={this.handleChange('news')}
-                                    value={this.state.news === 'yes' ? 'no' : 'yes'}
-                                />
-                            }
-                            label="Subscribe to our Newsletter."
-                           className={classes.second_check}
-                        />
+                        <div style={{display: 'inline-flex'}}>
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={this.state.terms === 'yes'}
+                                        onChange={this.handleChange('terms')}
+                                        value={this.state.terms === 'yes' ? 'no' : 'yes'}
+                                    />
+                                }
+                                //className={classes.yesBox}
+                            />
+                            <Typography type="body1" /*className={classes.terms}*/>I agree with Terms of Service and
+                                Privacy
+                                Policy.</Typography>
+                        </div>
+                        <div style={{display: 'inline-flex'}}>
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={this.state.news === 'yes'}
+                                        onChange={this.handleChange('news')}
+                                        value={this.state.news === 'yes' ? 'no' : 'yes'}
+                                    />
+                                }
+                                className={classes.second_check}
+                            />
+                            <Typography type="body1">Subscribe to our Newsletter.</Typography>
+                        </div>
                     </FormGroup>
                 </Grid>
             </Grid>
