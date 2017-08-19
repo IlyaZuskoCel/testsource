@@ -32,6 +32,8 @@ const styleSheet = createStyleSheet('Login', theme => ({
     button: {
         marginTop: 32,
         marginBottom:164,
+        maxWidth:160,
+        alignSelf:'center',
     },
     check_box: {
         marginTop: 24, marginRight: 136
