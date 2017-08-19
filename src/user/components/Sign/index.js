@@ -16,14 +16,14 @@ const styleSheet = createStyleSheet('Main', theme => ({
         left: '11%',
         width: '74%',
         marginLeft: 50,
-         [theme.breakpoints.up('sm')]: {},
+        [theme.breakpoints.up('sm')]: {},
     },
     header: {
-               marginTop: 100,
-        marginLeft: 94,
-        [theme.breakpoints.down('sm')]: {
-            marginTop: 100,
-            marginLeft: 94,
+        marginTop: 100,
+        marginLeft: '23%',
+
+        [theme.breakpoints.down('md')]: {
+            marginLeft: '30%',
         },
     },
     card: {
@@ -53,7 +53,8 @@ const styleSheet = createStyleSheet('Main', theme => ({
         height: 992,
     },
     grid: {
-        alignItems: 'center',
+        display: 'inline-block',
+        alignSelf: 'center',
     }
 }));
 
