@@ -28,7 +28,8 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
     },
     formControl: {
         minWidth: '200%',
-        marginLeft: 20
+        marginLeft: 20,
+        alignSelf: 'center',
 
     },
     formBirthDate: {
@@ -37,13 +38,13 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
     },
     formBirthYear: {
         display: 'inline-table',
-        width: '92%',
-        marginLeft: '8%'
+        width: 'calc(92%-20)',
+        marginLeft: 20
     },
     button: {
         maxWidth: 160,
         marginTop: 38,
-        marginLeft: 106,
+        alignSelf: 'center',
     },
     grid_container: {
         marginTop: 60,
@@ -52,11 +53,13 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
         display: 'inline-flex'
     },
     radio_buttons_group: {
-        display: 'inline',
+        display: 'inline-block',
+        top: 11,
     },
     player_label: {
         marginLeft: 16,
-        marginTop: 8
+        marginTop: 8,
+
     },
     birth: {
         display: 'flex',
@@ -64,9 +67,9 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
         width: '100%',
     },
     agent: {
-        display: 'inline-flex',
+        display: 'inline-block',
         marginTop: 30,
-        marginLeft: 8,
+        marginLeft: 20,
     },
     text_agent: {
         width: 400,
@@ -81,7 +84,7 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
     },
     iam: {
         display: 'inline',
-        marginLeft: 24,
+        marginLeft: 16,
     },
     haveAgent: {
         display: 'inline-block',
@@ -102,11 +105,15 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
     text: {
         display: 'inline-block',
     },
-    termsPolicy:{
-        display:'inline',
-        position:'absolute',
-        width:'100%',
-    }
+    termsPolicy: {
+        display: 'inline',
+        position: 'absolute',
+        width: '100%',
+    },
+    yes_no_agent: {
+        width: 16,
+        height: 16,
+    },
 }));
 
 
@@ -176,7 +183,7 @@ class PlayerForm extends Component {
 
         return <form className={classes.form} onSubmit={this.handleSubmit}>
             <Grid container gutter={24} direction={'column'} className={classes.grid_container}>
-                <Grid item xs={12} className={classes.grid_flex}>
+                                <div className={classes.agent}>
                     <Typography type="subheading" className={classes.iam}>I am a</Typography>
                     <FormGroup className={classes.radio_buttons_group}>
                         <FormControlLabel
@@ -201,8 +208,8 @@ class PlayerForm extends Component {
                             label="Scout"
                         />
                     </FormGroup>
-                </Grid>
-                <Grid item xs={12} sm={6}>
+                </div>
+               <Grid item xs={12} sm={6}>
                     <TextField id="first_name"
                                required
                                error={this.state.errors.indexOf('first_name') > -1}
@@ -232,7 +239,7 @@ class PlayerForm extends Component {
                                    value={this.state.birthDay}
                                    onChange={this.handleChange('birthDay')}
                                    className={classes.formBirthDate}
-
+                                   type={'number'}
                         />
                         <TextField id="birth_year"
                                    required
@@ -289,7 +296,7 @@ class PlayerForm extends Component {
                                className={classes.formControl}
                     />
                 </Grid>
-                <Grid item xs={12} className={classes.agent}>
+                <div className={classes.agent}>
                     <Typography type="subheading" className={classes.haveAgent}>I have an agent</Typography>
                     <FormGroup className={classes.radio_buttons_group}>
                         <FormControlLabel
@@ -298,7 +305,7 @@ class PlayerForm extends Component {
                                     checked={this.state.yes_no_agent === 'yes'}
                                     onChange={this.handleChange('yes_no_agent')}
                                     value="yes"
-
+                                    className={classes.yes_no_agent}
                                 />
                             }
                             label="Yes"
@@ -310,14 +317,13 @@ class PlayerForm extends Component {
                                     checked={this.state.yes_no_agent === 'no'}
                                     onChange={this.handleChange('yes_no_agent')}
                                     value="no"
-
+                                    className={classes.yes_no_agent}
                                 />
                             }
                             label="No"
                         />
                     </FormGroup>
-
-                </Grid>
+                </div>
                 <Grid item xs={12} sm={6}>
                     <Typography type="caption" className={classes.text_agent}>If you have an agent, scouts will contact
                         your agent
@@ -356,20 +362,17 @@ class PlayerForm extends Component {
                                         value={this.state.news === 'yes' ? 'no' : 'yes'}
                                     />
                                 }
-
                             />
                             <Typography type="body1">Subscribe to our Newsletter.</Typography>
                         </div>
                     </FormGroup>
                 </Grid>
             </Grid>
-            <Grid item xs={12}>
-                <FormControl className={classes.formControl}>
-                    <Button raised type="submit" color="primary" className={classes.button}>
-                        Sign up
-                    </Button>
-                </FormControl>
-            </Grid>
+            <FormControl className={classes.formControl}>
+                <Button raised type="submit" color="primary" className={classes.button}>
+                    Sign up
+                </Button>
+            </FormControl>
         </form>
     }
 }
