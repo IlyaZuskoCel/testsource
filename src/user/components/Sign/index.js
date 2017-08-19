@@ -19,7 +19,7 @@ const styleSheet = createStyleSheet('Main', theme => ({
         [theme.breakpoints.up('sm')]: {},
     },
     header: {
-        marginTop: 100,
+        marginTop: 120,
         marginLeft: '23%',
 
         [theme.breakpoints.down('md')]: {
@@ -54,7 +54,7 @@ const styleSheet = createStyleSheet('Main', theme => ({
     },
     grid: {
         display: 'inline-block',
-        alignSelf: 'center',
+
     }
 }));
 
@@ -131,7 +131,7 @@ class Sign extends Component {
                         <div className={classes.crop}>
                             <img className={classes.crop_img}
                                  src={hockeyMen}
-                                 alt='HockeyMenHockeyMenHockeyMenHockeyMenHockeyMenHockeyMen'
+                                 alt='HockeyMen'
                             />
                         </div>
                     </Hidden>

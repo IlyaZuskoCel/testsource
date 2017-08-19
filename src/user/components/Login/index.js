@@ -17,23 +17,23 @@ const styleSheet = createStyleSheet('Login', theme => ({
     root: {
         backgroundColor: theme.palette.background.paper,
         marginLeft: -20,
-        marginTop: 30,
-       // width: 400,
-   },
+        marginTop: -1,
+        marginRight:32,
+    },
     form: {
         display: 'flex',
         flexDirection: 'column',
-       marginLeft:40,
+        marginLeft: 40,
     },
     formControl: {
         minWidth: '100%',
-        marginTop:24,
+        marginTop: 24,
     },
     button: {
         marginTop: 32,
-        marginBottom:164,
-        maxWidth:160,
-        alignSelf:'center',
+        marginBottom: 164,
+        maxWidth: 160,
+        alignSelf: 'center',
     },
     check_box: {
         marginTop: 24, marginRight: 136
@@ -111,7 +111,8 @@ class Login extends Component {
                     label="Remember me"
                     className={classes.check_box}
                 />
-                <Link to="/forgotpassword"><Typography type="body1" className={classes.linkText}>Forgot my password</Typography></Link>
+                <Link to="/forgotpassword"><Typography type="body1" className={classes.linkText}>Forgot my
+                    password</Typography></Link>
                 <FormControl>
                     <Button raised type="submit" color="primary" className={classes.button}>
                         Login
