@@ -16,57 +16,104 @@ import Button from 'material-ui/Button';
 import FormControl from 'material-ui/Form/FormControl';
 import TextField from 'material-ui/TextField';
 import Typography from 'material-ui/Typography';
+import Link from '../../../common/components/Link';
 
 const styleSheet = createStyleSheet('PlayerForm', theme => ({
 
     form: {
-        flexGrow: 1,
-        padding: 10,
-        alignItems: 'center'
+        display: 'flex',
+        flexDirection: 'column',
+        marginLeft: 40,
+
     },
     formControl: {
-        width: '100%',
-        //alignItems: 'center',
+        minWidth: '200%',
+        marginLeft: 20,
+        alignSelf: 'center',
 
-        marginLeft: 20
     },
     formBirthDate: {
-        width: 200,
-
+        display: 'inline-table',
+        width: '100%',
     },
     formBirthYear: {
-        width: 200,
-        marginLeft: 30
+        display: 'inline-table',
+        width: 'calc(92%-20)',
+        marginLeft: 20
     },
     button: {
         maxWidth: 160,
-        marginTop:38,
-        marginLeft:106,
+        marginTop: 38,
+        alignSelf: 'center',
     },
-    grid_container:{
-      marginTop:60,
+    grid_container: {
+        marginTop: 60,
     },
-    grid_flex:{
+    grid_flex: {
         display: 'inline-flex'
     },
-    radio_buttons_group:{
+    radio_buttons_group: {
+        display: 'inline-block',
+        top: 11,
+    },
+    player_label: {
+        marginLeft: 16,
+        marginTop: 8,
+
+    },
+    birth: {
+        display: 'flex',
+        marginLeft: 20,
+        width: '100%',
+    },
+    agent: {
+        display: 'inline-block',
+        marginTop: 30,
+        marginLeft: 20,
+    },
+    text_agent: {
+        width: 400,
+        marginLeft: 20,
+    },
+    check_box: {
+        marginTop: 30,
+        marginLeft: 8
+    },
+    second_check: {
+        marginTop: 20
+    },
+    iam: {
         display: 'inline',
+        marginLeft: 16,
     },
-    player_label:{
-        marginLeft: 16, marginTop: 8
+    haveAgent: {
+        display: 'inline-block',
+        marginLeft: 12,
     },
-    birth:{
-        display: 'inline-flex'
+    terms: {
+        display: 'inline',
+        marginTop: 20,
     },
-    agent:{
-        display: 'inline-flex', marginTop: 30, marginLeft: 8
+    subscribe: {
+        display: 'inline-flex',
+        marginTop: 10,
     },
-    text_agent:{
-        width: 400
+    link: {
+        color: '#d7001e',
+        display: 'inline-block',
     },
-    check_box:{
-        marginTop: 30
-    }
+    text: {
+        display: 'inline-block',
+    },
+    termsPolicy: {
+        display: 'inline',
+        position: 'absolute',
+        width: '100%',
+    },
+    yes_no_agent: {
+        width: 16,
+        height: 16,
+    },
 }));
 
 
@@ -136,8 +183,8 @@ class PlayerForm extends Component {
 
         return <form className={classes.form} onSubmit={this.handleSubmit}>
             <Grid container gutter={24} direction={'column'} className={classes.grid_container}>
-                <Grid item xs={12} className={classes.grid_flex}>
-                    <Typography type="subheading">I am a</Typography>
+                                <div className={classes.agent}>
+                    <Typography type="subheading" className={classes.iam}>I am a</Typography>
                     <FormGroup className={classes.radio_buttons_group}>
                         <FormControlLabel
                             control={
@@ -161,8 +208,8 @@ class PlayerForm extends Component {
                             label="Scout"
                         />
                     </FormGroup>
-                </Grid>
-                <Grid item xs={12} sm={4}>
+                </div>
+               <Grid item xs={12} sm={6}>
                     <TextField id="first_name"
                                required
                                error={this.state.errors.indexOf('first_name') > -1}
@@ -172,7 +219,7 @@ class PlayerForm extends Component {
                                className={classes.formControl}
                     />
                 </Grid>
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={12} sm={6}>
                     <TextField id="last_name"
                                required
                                error={this.state.errors.indexOf('last_name') > -1}
@@ -183,7 +230,7 @@ class PlayerForm extends Component {
 
                     />
                 </Grid>
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={12} sm={6}>
                     <div className={classes.birth}>
                         <TextField id="birth_day"
                                    required
@@ -192,7 +239,7 @@ class PlayerForm extends Component {
                                    value={this.state.birthDay}
                                    onChange={this.handleChange('birthDay')}
                                    className={classes.formBirthDate}
-
+                                   type={'number'}
                         />
                         <TextField id="birth_year"
                                    required
@@ -249,8 +296,8 @@ class PlayerForm extends Component {
                                className={classes.formControl}
                     />
                 </Grid>
-                <Grid item xs={12} className={classes.agent}>
-                    <Typography type="subheading">I have an agent</Typography>
+                <div className={classes.agent}>
+                    <Typography type="subheading" className={classes.haveAgent}>I have an agent</Typography>
                     <FormGroup className={classes.radio_buttons_group}>
                         <FormControlLabel
                             control={
@@ -258,7 +305,7 @@ class PlayerForm extends Component {
                                     checked={this.state.yes_no_agent === 'yes'}
                                     onChange={this.handleChange('yes_no_agent')}
                                     value="yes"
-
+                                    className={classes.yes_no_agent}
                                 />
                             }
                             label="Yes"
@@ -270,52 +317,62 @@ class PlayerForm extends Component {
                                     checked={this.state.yes_no_agent === 'no'}
                                     onChange={this.handleChange('yes_no_agent')}
                                     value="no"
-
+                                    className={classes.yes_no_agent}
                                 />
                             }
                             label="No"
                         />
                     </FormGroup>
-
-                </Grid>
-                <Grid item xs={12} sm={6} >
-                    <Typography type="caption" className={classes.text_agent}>If you have an agent, scouts will contact your agent
+                </div>
+                <Grid item xs={12} sm={6}>
+                    <Typography type="caption" className={classes.text_agent}>If you have an agent, scouts will contact
+                        your agent
                         directly.</Typography>
                 </Grid>
                 <Grid item xs={12} className={classes.check_box}>
                     <FormGroup>
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                    checked={this.state.terms === 'yes'}
-                                    onChange={this.handleChange('terms')}
-                                    value={this.state.terms === 'yes' ? 'no' : 'yes'}
-                                />
-                            }
-                            label="I agree to the Terms of Service and Privacy Policy."
-                             //style={{marginTop: 8}}
-                        />
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                    checked={this.state.news === 'yes'}
-                                    onChange={this.handleChange('news')}
-                                    value={this.state.news === 'yes' ? 'no' : 'yes'}
-                                />
-                            }
-                            label="Subscribe to our Newsletter."
-                             style={{marginTop: 20}}
-                        />
+                        <div className={classes.terms}>
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={this.state.terms === 'yes'}
+                                        onChange={this.handleChange('terms')}
+                                        value={this.state.terms === 'yes' ? 'no' : 'yes'}
+                                    />
+                                }
+
+                            />
+                            <div className={classes.termsPolicy}>
+                                <Typography type="body1" className={classes.text}>{'I agree with\u00A0'}</Typography>
+                                <Link to="/termsofservice">
+                                    <Typography type="body1" className={classes.link}>Terms of Service </Typography>
+                                </Link>
+                                <Typography type="body1" className={classes.text}>{'\u00A0and\u00A0'}</Typography>
+                                <Link to="/privacypolicy">
+                                    <Typography type="body1" className={classes.link}> Privacy Policy.</Typography>
+                                </Link>
+                            </div>
+                        </div>
+                        <div className={classes.subscribe}>
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={this.state.news === 'yes'}
+                                        onChange={this.handleChange('news')}
+                                        value={this.state.news === 'yes' ? 'no' : 'yes'}
+                                    />
+                                }
+                            />
+                            <Typography type="body1">Subscribe to our Newsletter.</Typography>
+                        </div>
                     </FormGroup>
                 </Grid>
             </Grid>
-            <Grid item xs={12} >
-                <FormControl className={classes.formControl}>
-                    <Button raised type="submit" color="primary" className={classes.button}>
-                        Sign up
-                    </Button>
-                </FormControl>
-            </Grid>
+            <FormControl className={classes.formControl}>
+                <Button raised type="submit" color="primary" className={classes.button}>
+                    Sign up
+                </Button>
+            </FormControl>
         </form>
     }
 }

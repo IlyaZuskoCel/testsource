@@ -11,29 +11,38 @@ import TextField from 'material-ui/TextField';
 import {FormGroup, FormControlLabel} from 'material-ui/Form';
 import Checkbox from 'material-ui/Checkbox';
 import Typography from 'material-ui/Typography';
+import Link from '../../../common/components/Link';
 
 const styleSheet = createStyleSheet('Login', theme => ({
     root: {
         backgroundColor: theme.palette.background.paper,
-        marginLeft: -72,
-        marginTop: 30,
-        width: 400,
-        position: 'inherit'
+        marginLeft: -20,
+        marginTop: -1,
+        marginRight:32,
     },
     form: {
         display: 'flex',
         flexDirection: 'column',
-        alignItems:'center'
+        marginLeft: 40,
     },
     formControl: {
-
+        minWidth: '100%',
+        marginTop: 24,
     },
-    button:{
-        marginTop: 32
+    button: {
+        marginTop: 32,
+        marginBottom: 164,
+        maxWidth: 160,
+        alignSelf: 'center',
     },
-    check_box:{
-        marginTop: 24,marginRight:136
-    }
+    check_box: {
+        marginTop: 24, marginRight: 136
+    },
+    linkText: {
+        marginTop: 24,
+        marginRight: 136,
+        color: '#d7001e',
+    },
 }));
 
 
@@ -45,7 +54,7 @@ class Login extends Component {
             username: '',
             password: '',
             errors: [],
-            terms:'no',
+            terms: 'no',
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -102,8 +111,9 @@ class Login extends Component {
                     label="Remember me"
                     className={classes.check_box}
                 />
-                <Typography type="body1" className={classes.check_box}>Forgot password</Typography>
-                <FormControl className={classes.formControl}>
+                <Link to="/forgotpassword"><Typography type="body1" className={classes.linkText}>Forgot my
+                    password</Typography></Link>
+                <FormControl>
                     <Button raised type="submit" color="primary" className={classes.button}>
                         Login
                     </Button>
