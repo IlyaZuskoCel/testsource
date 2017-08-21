@@ -17,7 +17,24 @@ import FormControl from 'material-ui/Form/FormControl';
 import TextField from 'material-ui/TextField';
 import Typography from 'material-ui/Typography';
 import Link from '../../../common/components/Link';
+//import {Autosuggest} from '../../../common/components/Autosuggest';
+import {Autosuggest} from "../../../common/components/index";
 
+const optionsLeagues = [
+    {label: 'North Atlantic'},
+    {label: 'European'},
+    {label: 'South American'},
+
+];
+const optionsTeams = [
+    {label: 'None'},
+    {label: 'Atria'},
+    {label: 'Callisto'},
+    {label: 'Dione'},
+    {label: 'Ganymede'},
+    {label: 'Hangouts Call'},
+    {label: 'Luna'},
+];
 const styleSheet = createStyleSheet('PlayerForm', theme => ({
 
     form: {
@@ -73,7 +90,8 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
     },
     text_agent: {
         width: 400,
-        marginLeft: 20,
+        marginLeft: 32,
+        marginTop: 18,
     },
     check_box: {
         marginTop: 30,
@@ -134,9 +152,9 @@ class PlayerForm extends Component {
             yes_no_agent: 'no',
             terms: 'no',
             news: 'no',
-            league: '',
-            team: '',
             agentEmail: '',
+            league: '',
+            team:'',
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -144,7 +162,18 @@ class PlayerForm extends Component {
     }
 
     handleChange(name) {
-        return event => this.setState({[name]: event.target.value});
+
+        return event => {
+            if (name === 'birthMonth') {
+                if (event.target.value < 1) return this.setState({birthMonth: ''});
+                if (event.target.value > 12) return;
+            }
+            if (name === 'birthYear') {
+                if (event.target.value < 1) return this.setState({birthYear: ''});
+                if (event.target.value > (new Date()).getFullYear()) return;
+            }
+            return this.setState({[name]: event.target.value});
+        };
     }
 
     handleSubmit(e) {
@@ -182,7 +211,6 @@ class PlayerForm extends Component {
 
     render() {
         const classes = this.props.classes;
-
         return <form className={classes.form} onSubmit={this.handleSubmit}>
             <Grid container gutter={24} direction={'column'} className={classes.grid_container}>
                 <div className={classes.agent}>
@@ -330,28 +358,41 @@ class PlayerForm extends Component {
                         </Grid>
                     </div>) : ''}
 
-                {this.state.selectedValue === 'scout' ? (<Grid item xs={12} sm={6}>
-                    {/* scout registering*/}
-                    {/*League*/}
-                    <TextField id="league"
-                               required
-                               error={this.state.errors.indexOf('league') > -1}
-                               label="League"
-                               value={this.state.league}
-                               onChange={this.handleChange('league')}
-                               className={classes.formControl}
-                    /> </Grid>) : ''}
+                {this.state.selectedValue === 'scout' ? (
+                    <Grid item xs={12} sm={6}>
+                        {/* scout registering*/}
+                        {/*League*/}
+                        <Autosuggest
+                            suggestions={optionsLeagues}
+                            onSuggestionsFetchRequested={() => {
+                            }}
+                            onSuggestionsClearRequested={() => {
+                            }}
+                            inputProps={{
+                                label: "League",
+                                value: this.state.league,
+                                onChange: (event, {newValue}) => this.setState({league: newValue}),
+                            }}
+                            className={classes.formControl}
+                        />
+                    </Grid>) : ''}
 
-                {this.state.selectedValue === 'scout' ? ( <Grid item xs={12} sm={6}>
-                    <TextField id="team"
-                               required
-                               error={this.state.errors.indexOf('team') > -1}
-                               label="Team"
-                               value={this.state.team}
-                               onChange={this.handleChange('team')}
-                               className={classes.formControl}
-                    />
-                </Grid>) : ''}
+                {this.state.selectedValue === 'scout' ? (
+                    <Grid item xs={12} sm={6}>
+                        <Autosuggest
+                            suggestions={optionsTeams}
+                            onSuggestionsFetchRequested={() => {
+                            }}
+                            onSuggestionsClearRequested={() => {
+                            }}
+                            inputProps={{
+                                label: "Team",
+                                value: this.state.team,
+                                onChange: (event, {newValue}) => this.setState({team: newValue}),
+                            }}
+                            className={classes.formControl}
+                        />
+                    </Grid>) : ''}
                 {/*Agent Email*/}
                 {this.state.selectedValue === 'player' && this.state.yes_no_agent === 'yes' ? (
                     <Grid item xs={12} sm={6}>

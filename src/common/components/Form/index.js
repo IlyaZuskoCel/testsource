@@ -50,7 +50,6 @@ class Form extends Component {
         const {classes} = this.props;
         return (
             <Grid container gutter={8} className={classes.root}>
-
                 <Grid item xs={12}>
                     <Typography type="headline">Form</Typography>
                 </Grid>
