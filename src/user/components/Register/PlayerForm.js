@@ -32,7 +32,7 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
         alignSelf: 'center',
 
     },
-    formBirthDate: {
+    formBirthMonth: {
         display: 'inline-table',
         width: '100%',
     },
@@ -124,8 +124,7 @@ class PlayerForm extends Component {
         this.state = {
             first_name: '',
             last_name: '',
-            phone: '',
-            birthDay: '',
+            birthMonth: '',
             birthYear: '',
             email: '',
             password: '',
@@ -135,6 +134,9 @@ class PlayerForm extends Component {
             yes_no_agent: 'no',
             terms: 'no',
             news: 'no',
+            league: '',
+            team: '',
+            agentEmail: '',
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -156,8 +158,8 @@ class PlayerForm extends Component {
         if (!this.state.phone)
             return this.setState({errors: ['phone']});
 
-        if (!this.state.birthDay)
-            return this.setState({errors: ['birthDay']});
+        if (!this.state.birthMonth)
+            return this.setState({errors: ['birthMonth']});
 
         if (!this.state.birthYear)
             return this.setState({errors: ['birthYear']});
@@ -183,7 +185,7 @@ class PlayerForm extends Component {
 
         return <form className={classes.form} onSubmit={this.handleSubmit}>
             <Grid container gutter={24} direction={'column'} className={classes.grid_container}>
-                                <div className={classes.agent}>
+                <div className={classes.agent}>
                     <Typography type="subheading" className={classes.iam}>I am a</Typography>
                     <FormGroup className={classes.radio_buttons_group}>
                         <FormControlLabel
@@ -209,7 +211,7 @@ class PlayerForm extends Component {
                         />
                     </FormGroup>
                 </div>
-               <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={6}>
                     <TextField id="first_name"
                                required
                                error={this.state.errors.indexOf('first_name') > -1}
@@ -230,45 +232,37 @@ class PlayerForm extends Component {
 
                     />
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                    <div className={classes.birth}>
-                        <TextField id="birth_day"
-                                   required
-                                   error={this.state.errors.indexOf('birthDay') > -1}
-                                   label="Day of birth"
-                                   value={this.state.birthDay}
-                                   onChange={this.handleChange('birthDay')}
-                                   className={classes.formBirthDate}
-                                   type={'number'}
-                        />
-                        <TextField id="birth_year"
-                                   required
-                                   error={this.state.errors.indexOf('birthYear') > -1}
-                                   label="Year of birth "
-                                   value={this.state.birthYear}
-                                   onChange={this.handleChange('birthYear')}
-                                   className={classes.formBirthYear}
-                                   type={'number'}
-
-                        />
-                    </div>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                    <TextField id="phone"
-                               required
-                               error={this.state.errors.indexOf('phone') > -1}
-                               label="Phone"
-                               value={this.state.phone}
-                               onChange={this.handleChange('phone')}
-                               className={classes.formControl}
-                    />
-                </Grid>
+                {this.state.selectedValue === 'player' ? (
+                    <Grid item xs={12} sm={6}>
+                        {/*show birth fields only if player it is*/}
+                        <div className={classes.birth}>
+                            <TextField id="birth_month"
+                                       required
+                                       error={this.state.errors.indexOf('birthMonth') > -1}
+                                       label="Month of birth"
+                                       value={this.state.birthMonth}
+                                       onChange={this.handleChange('birthMonth')}
+                                       className={classes.formBirthMonth}
+                                       type={'number'}
+                            />
+                            <TextField id="birth_year"
+                                       required
+                                       error={this.state.errors.indexOf('birthYear') > -1}
+                                       label="Year of birth "
+                                       value={this.state.birthYear}
+                                       onChange={this.handleChange('birthYear')}
+                                       className={classes.formBirthYear}
+                                       type={'number'}
+                            />
+                        </div>
+                    </Grid>) : ''}
+                {/*Email*/}
                 <Grid item xs={12} sm={6}>
                     <TextField id="email"
                                required
                                type="email"
                                error={this.state.errors.indexOf('email') > -1}
-                               label="Email"
+                               label="Email Address"
                                value={this.state.email}
                                onChange={this.handleChange('email')}
                                className={classes.formControl}
@@ -290,45 +284,87 @@ class PlayerForm extends Component {
                                type="password"
                                required
                                error={this.state.errors.indexOf('password_repeat') > -1}
-                               label="Confirm Password"
+                               label="Re-Type Password"
                                value={this.state.password_repeat}
                                onChange={this.handleChange('password_repeat')}
                                className={classes.formControl}
                     />
                 </Grid>
-                <div className={classes.agent}>
-                    <Typography type="subheading" className={classes.haveAgent}>I have an agent</Typography>
-                    <FormGroup className={classes.radio_buttons_group}>
-                        <FormControlLabel
-                            control={
-                                <Radio
-                                    checked={this.state.yes_no_agent === 'yes'}
-                                    onChange={this.handleChange('yes_no_agent')}
-                                    value="yes"
-                                    className={classes.yes_no_agent}
+                {/*this block shows, player or scout registering*/}
+                {this.state.selectedValue === 'player' ? (
+                    <div style={{display: 'inline-block'}}>
+                        {/* player registering*/}
+                        <div className={classes.agent}>
+                            <Typography type="subheading" className={classes.haveAgent}>I have an agent</Typography>
+                            <FormGroup className={classes.radio_buttons_group}>
+                                <FormControlLabel
+                                    control={
+                                        <Radio
+                                            checked={this.state.yes_no_agent === 'yes'}
+                                            onChange={this.handleChange('yes_no_agent')}
+                                            value="yes"
+                                            className={classes.yes_no_agent}
+                                        />
+                                    }
+                                    label="Yes"
+                                    className={classes.player_label}
                                 />
-                            }
-                            label="Yes"
-                            className={classes.player_label}
-                        />
-                        <FormControlLabel
-                            control={
-                                <Radio
-                                    checked={this.state.yes_no_agent === 'no'}
-                                    onChange={this.handleChange('yes_no_agent')}
-                                    value="no"
-                                    className={classes.yes_no_agent}
+                                <FormControlLabel
+                                    control={
+                                        <Radio
+                                            checked={this.state.yes_no_agent === 'no'}
+                                            onChange={this.handleChange('yes_no_agent')}
+                                            value="no"
+                                            className={classes.yes_no_agent}
+                                        />
+                                    }
+                                    label="No"
                                 />
-                            }
-                            label="No"
+                            </FormGroup>
+                        </div>
+                        <Grid item xs={12} sm={6}>
+                            <Typography type="caption" className={classes.text_agent}>If you have an agent, scouts will
+                                contact
+                                your agent
+                                directly.</Typography>
+                        </Grid>
+                    </div>) : ''}
+
+                {this.state.selectedValue === 'scout' ? (<Grid item xs={12} sm={6}>
+                    {/* scout registering*/}
+                    {/*League*/}
+                    <TextField id="league"
+                               required
+                               error={this.state.errors.indexOf('league') > -1}
+                               label="League"
+                               value={this.state.league}
+                               onChange={this.handleChange('league')}
+                               className={classes.formControl}
+                    /> </Grid>) : ''}
+
+                {this.state.selectedValue === 'scout' ? ( <Grid item xs={12} sm={6}>
+                    <TextField id="team"
+                               required
+                               error={this.state.errors.indexOf('team') > -1}
+                               label="Team"
+                               value={this.state.team}
+                               onChange={this.handleChange('team')}
+                               className={classes.formControl}
+                    />
+                </Grid>) : ''}
+                {/*Agent Email*/}
+                {this.state.selectedValue === 'player' && this.state.yes_no_agent === 'yes' ? (
+                    <Grid item xs={12} sm={6}>
+                        <TextField id="agent_email"
+                                   required
+                                   type="email"
+                                   error={this.state.errors.indexOf('agentEmail') > -1}
+                                   label="Agent's Email Address"
+                                   value={this.state.agentEmail}
+                                   onChange={this.handleChange('agentEmail')}
+                                   className={classes.formControl}
                         />
-                    </FormGroup>
-                </div>
-                <Grid item xs={12} sm={6}>
-                    <Typography type="caption" className={classes.text_agent}>If you have an agent, scouts will contact
-                        your agent
-                        directly.</Typography>
-                </Grid>
+                    </Grid>) : ''}
                 <Grid item xs={12} className={classes.check_box}>
                     <FormGroup>
                         <div className={classes.terms}>
@@ -340,8 +376,9 @@ class PlayerForm extends Component {
                                         value={this.state.terms === 'yes' ? 'no' : 'yes'}
                                     />
                                 }
-
+                                label=''
                             />
+
                             <div className={classes.termsPolicy}>
                                 <Typography type="body1" className={classes.text}>{'I agree with\u00A0'}</Typography>
                                 <Link to="/termsofservice">
@@ -362,6 +399,7 @@ class PlayerForm extends Component {
                                         value={this.state.news === 'yes' ? 'no' : 'yes'}
                                     />
                                 }
+                                label=''
                             />
                             <Typography type="body1">Subscribe to our Newsletter.</Typography>
                         </div>

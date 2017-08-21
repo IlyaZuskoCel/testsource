@@ -24,7 +24,7 @@ const styleSheet = createStyleSheet('Footer', theme => ({
 
         zIndex: 1,
         [theme.breakpoints.down('sm')]: {
-            marginBottom: -660,
+            marginBottom: -630,
             height: 376,
            // position: 'absolute',
            //  width: '100%',
