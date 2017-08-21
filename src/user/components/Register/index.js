@@ -12,9 +12,9 @@ const styleSheet = createStyleSheet('Register', theme => ({
     root: {
         backgroundColor: '#ffffff',
         marginTop: -32,
-        marginRight:32,
+        marginRight: 32,
         [theme.breakpoints.up('sm')]: {
-           marginLeft: -24,
+            marginLeft: -24,
         },
     },
 }));
@@ -32,6 +32,13 @@ class Register extends Component {
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+    }
+
+    componentDidMount() {
+        console.log('this.props.getLeagues()');
+        this.props.getLeagues();
+        console.log('props', this.props);
+
     }
 
     handleChange(name) {

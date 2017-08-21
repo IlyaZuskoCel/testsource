@@ -9,15 +9,16 @@ import {connect} from 'react-redux';
 
 import Register from '../components/Register';
 
-import {registerPlayer, registerScout} from '../actions';
+import {registerPlayer, registerScout, getLeagues} from '../actions';
 import {go} from '../../common/actions';
 
 const mapStateToProps = (state) => ({});
 const mapDispatchToProps = (dispatch) => ({
     registerPlayer: (user) => dispatch(registerPlayer(user)),
     registerScout: (user) => dispatch(registerScout(user)),
-    goLogin: () =>  dispatch(go('/sign/in')),
-    goRegister: () =>  dispatch(go('/sign/up')),
+    goLogin: () => dispatch(go('/sign/in')),
+    goRegister: () => dispatch(go('/sign/up')),
+    getLeagues: () => dispatch(getLeagues()),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Register))

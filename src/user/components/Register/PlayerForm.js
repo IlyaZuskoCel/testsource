@@ -154,12 +154,13 @@ class PlayerForm extends Component {
             news: 'no',
             agentEmail: '',
             league: '',
-            team:'',
+            team: '',
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
+
 
     handleChange(name) {
 
@@ -382,6 +383,7 @@ class PlayerForm extends Component {
                         <Autosuggest
                             suggestions={optionsTeams}
                             onSuggestionsFetchRequested={() => {
+                                console.log('suggestion was requested');
                             }}
                             onSuggestionsClearRequested={() => {
                             }}
