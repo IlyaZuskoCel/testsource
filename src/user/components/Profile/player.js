@@ -941,15 +941,14 @@ class PlayerProfile extends Component {
                 </Hidden>
             </div>
 
-            <
-            /div>
+        </div>
 
-            }
-            }
+    }
+};
 
-            PlayerProfile.propTypes = {
-            children: PropTypes.node,
-            classes: PropTypes.object.isRequired,
-        };
+PlayerProfile.propTypes = {
+    children: PropTypes.node,
+    classes: PropTypes.object.isRequired,
+};
 
-            export default compose(withStyles(styleSheet), withWidth())(PlayerProfile);
+export default compose(withStyles(styleSheet), withWidth())(PlayerProfile);
