@@ -99,19 +99,15 @@ class Pagination extends Component {
 
                 ]}
 
-
                 <Button onClick={this.onChange(currentPage - 1)} className={classes.button}>{currentPage - 1}</Button>
                 <Button onClick={this.onChange(currentPage)}
                         className={classNames(classes.button, classes.current)}>{currentPage}</Button>
                 <Button onClick={this.onChange(currentPage + 1)} className={classes.button}>{currentPage + 1}</Button>
 
-
                 {currentPage < countPages - 3 && [
                     <span className={classes.points}>...</span>,
                     <Button onClick={this.onChange(countPages)} className={classes.button}>{countPages}</Button>
                 ]}
-
-
             </div>
         )
     }
