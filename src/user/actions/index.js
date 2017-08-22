@@ -9,7 +9,7 @@ import {get, post, auth} from '../../common/helpers/api';
 
 
 import {ERROR_ALERT, SUCCESS_ALERT} from '../../common/constants/actions';
-import {LOGIN, LOGOUT, SET_CURRENT, SET_USER} from '../constants/actions';
+import {LOGIN, LOGOUT, SET_CURRENT, SET_USER, SET_USER_FAVORITE, UNSET_USER_FAVORITE} from '../constants/actions';
 import {LOAD} from '../../common/constants/actions';
 
 
@@ -84,11 +84,13 @@ export const getUser = (id) => dispatch => {
 export const addFavorite = (id) => dispatch => {
     return post(`/api/v2/activity/follow`, {id_user_player: id})
         .then(result => {
-            if (result.success)
+            if (result.success) {
+
                 return dispatch({
-                    type: SUCCESS_ALERT,
-                    payload: {message: "Player was successfully added to shortlist!"}
+                    type: SET_USER_FAVORITE,
+                    payload: id
                 });
+            }
             return dispatch({type: ERROR_ALERT, payload: {message: "Player wasn't added to shortlist!"}});
 
         })
@@ -100,11 +102,12 @@ export const addFavorite = (id) => dispatch => {
 export const removeFavorite = (id) => dispatch => {
     return post(`/api/v2/activity/unfollow`, {id_user_player: id})
         .then(result => {
-            if (result.success)
+            if (result.success) {
                 return dispatch({
-                    type: SUCCESS_ALERT,
-                    payload: {message: "Player was successfully removed from shortlist"}
+                    type: UNSET_USER_FAVORITE,
+                    payload: id
                 });
+            }
             return dispatch({type: ERROR_ALERT, payload: {message: "Player wasn't removed from shortlist"}});
 
         })

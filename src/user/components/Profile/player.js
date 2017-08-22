@@ -310,6 +310,14 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
         '-webkitBackgroundClip': 'text',
         textFillColor: 'transparent',
         color: 'transparent',
+        [theme.breakpoints.down('sm')]: {
+            fontSize: 42,
+            top: -21,
+            marginLeft: -19,
+            width: 38,
+            height: 42,
+            lineHeight: '42px',
+        },
     },
 
 
@@ -322,7 +330,14 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
         height: 48,
         color: '#fff',
         verticalAlign: 'middle',
-        lineHeight: '48px'
+        lineHeight: '48px',
+        [theme.breakpoints.down('sm')]: {
+            top: -21,
+            marginLeft: -19,
+            width: 38,
+            height: 42,
+            lineHeight: '42px',
+        },
 
     },
     infoCardTeam: {},
