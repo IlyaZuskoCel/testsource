@@ -19,8 +19,10 @@ import './assets/css/font/UnitedSansReg-Medium/styles.css';
 import './assets/css/font/UnitedSerifCond-Black/styles.css';
 import './assets/css/font/UnitedSerifCond-Bold/styles.css';
 import './assets/css/font/UnitedSansReg-Bold/styles.css';
-//import './assets/css/font/UnitedSerifCond-Medium/styles.css;
-//import './assets/css/font/UnitedSerifCond-Heavy/styles.css;
+import './assets/css/font/UnitedSerifCond-Heavy/styles.css';
+import './assets/css/font/UnitedSerifCond-Medium/styles.css';
+import './assets/css/font/UnitedSansSemiCond-Heavy/styles.css';
+
 const theme = (outerTheme) => {
     const typography = {
         fontFamily: "UnitedSansReg-Medium",
@@ -83,7 +85,7 @@ const theme = (outerTheme) => {
             fontWeight: 900,
             letterSpacing: 0.4,
             color: '#000',
-            fontFamily: "UnitedSansReg-Heavy",
+            fontFamily: "UnitedSerifCond-Heavy",
             [outerTheme.breakpoints.down('sm')]: {
                 fontSize: 32,
                 letterSpacing: 0.2,
@@ -95,7 +97,7 @@ const theme = (outerTheme) => {
             fontWeight: 500,
             letterSpacing: 0.4,
             color: '#000',
-            fontFamily: "UnitedSansReg-Medium",
+            fontFamily: "UnitedSerifCond-Medium",
             [outerTheme.breakpoints.down('sm')]: {
                 fontSize: 24,
                 letterSpacing: 0.2,
@@ -106,7 +108,7 @@ const theme = (outerTheme) => {
             fontWeight: 900,
             letterSpacing: 0.7,
             color: '#000',
-            fontFamily: "UnitedSansReg-Heavy",
+            fontFamily: "UnitedSerifCond-Heavy",
             [outerTheme.breakpoints.down('sm')]: {
                 fontSize: 20,
                 letterSpacing: 0.6,
@@ -132,7 +134,7 @@ const theme = (outerTheme) => {
             fontSize: 20,
             textTransform: 'uppercase',
             fontWeight: 900,
-            fontFamily: 'UnitedSansReg-Bold',
+            fontFamily: 'UnitedSansSemiCond-Heavy',
             letterSpacing: '0.4px',
             [outerTheme.breakpoints.down('sm')]: {
                 fontSize: 16,
@@ -207,10 +209,10 @@ const theme = (outerTheme) => {
 
             MuiButton: {
                 root: {
+                    ...typography.button,
                     height: 40,
                     backgroundColor: 'transparent',
                     borderRadius: 0,
-                    fontFamily: 'UnitedSansReg-Bold',
                     lineHeight: '20px',
                     fontWeight: 900,
                     textAlign: 'center',
