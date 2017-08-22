@@ -41,7 +41,7 @@ export const getLeagues = () => dispatch => {
 };
 // /v2/team/get-list[?fields=id,name]
 export const getTeams = () => dispatch => {
-    return get(`/api/v2/team/get-list?fields=id,name`)
+    return get(`/api/v2/team/get-list?fields=id,id_league,name`)
         .then(teams => {
             if ('error' in teams)
                 return dispatch({type: ERROR_ALERT, payload: {message: teams.error.message}});

@@ -19,19 +19,8 @@ import Typography from 'material-ui/Typography';
 import Link from '../../../common/components/Link';
 import {Autosuggest} from "../../../common/components/index";
 
-let leagues = [{label: 'None'},
-    {label: 'Atria'},
-    {label: 'Callisto'},];
-
-let teams = [
-    {label: 'None'},
-    {label: 'Atria'},
-    {label: 'Callisto'},
-    {label: 'Dione'},
-    {label: 'Ganymede'},
-    {label: 'Hangouts Call'},
-    {label: 'Luna'},
-];
+let leagues = [];
+let teams = [];
 const styleSheet = createStyleSheet('PlayerForm', theme => ({
 
     form: {
@@ -151,7 +140,6 @@ class PlayerForm extends Component {
             news: 'no',
             agentEmail: '',
             league: '',
-            leagueId: '',
             team: '',
         };
 
@@ -208,20 +196,27 @@ class PlayerForm extends Component {
         return false;
     }
 
-    getLeagueId = (name) => {
+    getTeams = (name) => {
+        if (!name) {
+            teams = [];
+            return;
+        }
         if (leagues.length === 0) return;
         let league = leagues.find(el => el.label === name);
-        return league ? league.id : '';
+        if (!league) {
+            teams = [];
+            return;
+        }
+        teams = this.props.teams.filter(team => team.id_league == league.id).map(team => {
+            return {label: team.name, id: team.id, id_league: team.id_league}
+        });
     };
 
     render() {
         if (this.props.leagues) leagues = this.props.leagues.map(league => {
             return {label: league.name, id: league.id};
         });
-        if (this.props.teams) teams = this.props.teams.filter(team => {
-            return {label: team.name, id: team.id,leagueId:team.id_league,};
-        });
-        console.log('this props ', this.props);
+        console.log('props of PlayerForm ', this.props);
         const classes = this.props.classes;
         return <form className={classes.form} onSubmit={this.handleSubmit}>
             <Grid container gutter={24} direction={'column'} className={classes.grid_container}>
@@ -383,10 +378,13 @@ class PlayerForm extends Component {
                             inputProps={{
                                 label: "League",
                                 value: this.state.league,
-                                onChange: (event, {newValue}) => this.setState({
-                                    league: newValue,
-                                    leagueId: this.getLeagueId(newValue)
-                                }),
+                                onChange: (event, {newValue}) => {
+                                    this.getTeams(newValue);
+                                    this.setState({
+                                        league: newValue,
+                                        team: '',
+                                    });
+                                },
                             }}
                             className={classes.formControl}
                         />
