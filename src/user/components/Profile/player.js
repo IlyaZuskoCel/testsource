@@ -887,10 +887,12 @@ class PlayerProfile extends Component {
                             </div>
                         )}
 
+                        {user.id === currentUser.id && (
+                            <Button fab color="primary" raised className={classes.addVideoFloat}>
+                                <Icon>plus</Icon>
+                            </Button>
+                        )}
 
-                        <Button fab color="primary" raised className={classes.addVideoFloat}>
-                            <Icon>plus</Icon>
-                        </Button>
                     </Paper>
 
 
