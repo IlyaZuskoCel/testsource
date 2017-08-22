@@ -19,7 +19,6 @@ import Typography from 'material-ui/Typography';
 import Link from '../../../common/components/Link';
 import {Autosuggest} from "../../../common/components/index";
 
-let leagues = [];
 let teams = [];
 const styleSheet = createStyleSheet('PlayerForm', theme => ({
 
@@ -201,22 +200,16 @@ class PlayerForm extends Component {
             teams = [];
             return;
         }
-        if (leagues.length === 0) return;
-        let league = leagues.find(el => el.label === name);
+        if (this.props.leagues.length === 0) return;
+        let league = this.props.leagues.find(el => el.label === name);
         if (!league) {
             teams = [];
             return;
         }
-        teams = this.props.teams.filter(team => team.id_league == league.id).map(team => {
-            return {label: team.name, id: team.id, id_league: team.id_league}
-        });
+        teams = this.props.teams.filter(team => team.leagueId == league.id);
     };
 
     render() {
-        if (this.props.leagues) leagues = this.props.leagues.map(league => {
-            return {label: league.name, id: league.id};
-        });
-        console.log('props of PlayerForm ', this.props);
         const classes = this.props.classes;
         return <form className={classes.form} onSubmit={this.handleSubmit}>
             <Grid container gutter={24} direction={'column'} className={classes.grid_container}>
@@ -370,7 +363,7 @@ class PlayerForm extends Component {
                         {/* scout registering*/}
                         {/*League*/}
                         <Autosuggest
-                            suggestions={leagues}
+                            suggestions={this.props.leagues}
                             onSuggestionsFetchRequested={() => {
                             }}
                             onSuggestionsClearRequested={() => {

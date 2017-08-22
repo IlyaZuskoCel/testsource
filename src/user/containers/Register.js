@@ -13,9 +13,11 @@ import {registerPlayer, registerScout} from '../actions';
 import {getLeagues, getTeams} from '../../common/actions';
 import {go} from '../../common/actions';
 
+import {selectLeagues, selectTeams,} from '../selectors'
+
 const mapStateToProps = (state) => ({
-    leagues: state.common.leagues,
-    teams: state.common.teams,
+    leagues: selectLeagues(state.common.leagues),
+    teams: selectTeams(state.common.teams),
 });
 const mapDispatchToProps = (dispatch) => ({
     registerPlayer: (user) => dispatch(registerPlayer(user)),
