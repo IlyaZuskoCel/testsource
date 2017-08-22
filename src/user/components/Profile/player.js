@@ -190,11 +190,21 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
     videoListWrap: {
         padding: '56px 80px'
     },
+    descTitle: {
+        [theme.breakpoints.down('sm')]: {
+            paddingTop: 32,
+            paddingBottom: 8,
+        },
+    },
     desc: {
         padding: '16px 0'
     },
     point: {
-        paddingTop: 32
+        paddingTop: 32,
+        [theme.breakpoints.down('sm')]: {
+            paddingBottom: 96,
+            color: '#9b9b9b'
+        },
     },
     addVideoButtonDesc: {
         margin: '8px 16px'
@@ -366,12 +376,11 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         [theme.breakpoints.down('sm')]: {
             marginLeft: 24,
             marginRight: 24,
             justifyContent: 'space-around',
-            alignItems: 'flex-start',
         },
         [theme.breakpoints.down('xs')]: {
             marginLeft: 0,
@@ -439,6 +448,25 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
     tabContent: {
         padding: 16,
         paddingTop: 24,
+    },
+    addVideoFloat: {
+        position: 'fixed',
+        bottom: 16,
+        right: 16,
+        zIndex: 1000,
+        backgroundImage: 'linear-gradient(315deg, #f55e58, #c9011b)'
+    },
+    addVideoFloatDesc: {
+        position: 'relative',
+        bottom: 'auto',
+        right: 'auto',
+        backgroundColor: '#e2e2e2',
+        backgroundImage: 'none',
+        boxShadow: '0 0 7px 0 rgba(0, 0, 0, 0.3)',
+        width: 36,
+        height: 36,
+        marginLeft: 10,
+        marginRight: 10,
     }
 }));
 
@@ -594,7 +622,7 @@ class PlayerProfile extends Component {
                         <div className={classes.infoCardLeagueLine}>
                             <Icon className={classes.infoCardLeagueShield}>shield</Icon>
                             <Typography type="body2" align="center"
-                                        className={classes.infoCardLeague}>{user.position_short}</Typography>
+                                        className={classes.infoCardLeague}>{user.position_short || '/'}</Typography>
 
                         </div>
                         <div className={classes.infoCardData}>
@@ -716,17 +744,19 @@ class PlayerProfile extends Component {
 
                         {this.state.tab === 0 && user.videos.length <= 0 && user.id === currentUser.id && (
                             <div className={classes.tabContent}>
-                                <Typography type="subheading">Your profile is
+                                <Typography type="subheading" align="center" className={classes.descTitle}>Your profile
+                                    is
                                     incomplete!</Typography>
-                                <Typography type="body1" className={classes.desc}>
+                                <Typography type="body1" align="center" className={classes.desc}>
                                     Scouts are actively looking for talents like you. Here is what
                                     they look for:
                                 </Typography>
-                                <Typography type="body1" className={classes.point}> Tap
-                                    <Button color="primary" raised
-                                            className={classNames(classes.addVideoButton, classes.addVideoButtonDesc)}>
-                                        Add a Video
-                                    </Button> to upload a video
+                                <Typography type="body1" align="center" className={classes.point}> Tap
+                                    <Button fab color="primary" raised
+                                            className={classNames(classes.addVideoFloat, classes.addVideoFloatDesc)}>
+                                        <Icon>plus</Icon>
+                                    </Button>
+                                    to upload a video
                                 </Typography>
                             </div>
                         )}
@@ -843,7 +873,12 @@ class PlayerProfile extends Component {
                         )}
 
 
+                        <Button fab color="primary" raised className={classes.addVideoFloat}>
+                            <Icon>plus</Icon>
+                        </Button>
                     </Paper>
+
+
                 </Hidden>
 
                 <Hidden only={['xs']}>
@@ -953,6 +988,8 @@ class PlayerProfile extends Component {
                         )}
                     </div>
                 </Hidden>
+
+
             </div>
 
         </div>

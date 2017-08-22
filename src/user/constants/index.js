@@ -5,7 +5,7 @@
 
 
 export const PLAYER_ROLE = 'Player';
-export const SCOUT_ROLE = 'Scout';
+export const SCOUT_ROLE = 'General Manager/Head Coach';
 
 
 export const GENDER_MALE = '1';
