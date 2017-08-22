@@ -289,6 +289,20 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
         position: 'relative'
 
     },
+    infoCardLeagueShield: {
+        position: 'absolute',
+        top: -24,
+        left: '50%',
+        marginLeft: -22,
+        fontSize: 48,
+        backgroundImage: 'linear-gradient(312deg, #c39e3d, #ddc674)',
+        backgroundClip: 'text',
+        '-webkitBackgroundClip': 'text',
+        textFillColor: 'transparent',
+        color: 'transparent',
+    },
+
+
     infoCardLeague: {
         position: 'absolute',
         top: -24,
@@ -296,7 +310,6 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
         marginLeft: -22,
         width: 44,
         height: 48,
-        backgroundImage: 'linear-gradient(318deg, #c39e3d, #ddc674)',
         color: '#fff',
         verticalAlign: 'middle',
         lineHeight: '48px'
@@ -579,6 +592,7 @@ class PlayerProfile extends Component {
 
                         </div>
                         <div className={classes.infoCardLeagueLine}>
+                            <Icon className={classes.infoCardLeagueShield}>shield</Icon>
                             <Typography type="body2" align="center"
                                         className={classes.infoCardLeague}>{user.position_short}</Typography>
 
