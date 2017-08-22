@@ -34,7 +34,10 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
         maxWidth: 1168,
         marginTop: 56,
         width: '100%',
-        margin: 'auto'
+        margin: 'auto',
+        [theme.breakpoints.down('sm')]: {
+            marginTop: 0,
+        },
     },
     backgroundImg: {
         zIndex: -1,
@@ -198,7 +201,10 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        marginTop: 12
+        marginTop: 12,
+        [theme.breakpoints.down('sm')]: {
+            marginBottom: 32,
+        },
     },
     infoCard: {
         width: 270,
@@ -206,7 +212,12 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
         marginLeft: 144,
         marginRight: 20,
         backgroundColor: '#f7f7f7',
-        position: 'relative'
+        position: 'relative',
+        [theme.breakpoints.down('sm')]: {
+            marginLeft: 20,
+            height: 324,
+            width: 218,
+        },
 
     },
     infoCardData: {
@@ -216,6 +227,14 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+
+        [theme.breakpoints.down('sm')]: {
+            height: 132,
+            backgroundImage: 'none',
+            backgroundColor: '#ffffff'
+
+
+        },
     },
 
     infoCardPhotoWrap: {
@@ -226,13 +245,22 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
         justifyContent: 'flex-end',
         alignItems: 'center',
 
+        [theme.breakpoints.down('sm')]: {
+            height: 192,
+            width: 218,
+        },
+
     },
     infoCardPhotoDefaultWrap: {
         justifyContent: 'center',
     },
     infoCardPhoto: {
         maxWidth: 270,
-        maxHeight: 270
+        maxHeight: 270,
+        [theme.breakpoints.down('sm')]: {
+            height: 192,
+            width: 218,
+        },
     },
     infoCardPhotoDefault: {
         width: 176
@@ -257,7 +285,11 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
 
     },
     infoCardTeam: {},
-
+    infoCardDataSeparator: {
+        margin: '4px auto',
+        width: 26,
+        border: 'solid 1px #c2a24d'
+    },
     infoRight: {
         width: 566,
         marginLeft: 20,
@@ -267,13 +299,31 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
     infoRightAbout: {
         fontSize: 16,
         lineHeight: 1.5,
-        marginTop: 38
+        marginTop: 38,
+        [theme.breakpoints.down('sm')]: {
+            marginTop: 0,
+            fontSize: 14,
+            lineHeight: 1.71,
+        }
 
     },
     profileIncomplete: {
         marginTop: 38
+    },
+    mobileContent: {},
+    tabContent: {
+        padding: 16,
+        paddingTop: 24,
+    },
+    descTitle: {
+        [theme.breakpoints.down('sm')]: {
+            paddingTop: 32,
+            paddingBottom: 8,
+        },
+    },
+    descBottom: {
+        paddingBottom: 64
     }
-
 }));
 
 
@@ -303,9 +353,8 @@ class ScoutProfile extends Component {
 
         const {classes, user, currentUser} = this.props;
 
-        return <Grid container gutter={8} className={classes.root}>
+        return <div className={classes.root}>
             <img className={classes.backgroundImg} src={scoutBg}/>
-
             <div className={classes.backgroundRight}/>
             <div className={classes.backgroundLeft}/>
 
@@ -358,7 +407,17 @@ class ScoutProfile extends Component {
 
                         </div>
                         <div className={classes.infoCardLeagueLine}/>
+
                         <div className={classes.infoCardData}>
+                            <Hidden smUp>
+                                <div>
+                                    <Typography type="title" align="center"
+                                                className={classes.infoCardName}>{user.first_name} {user.last_name}</Typography>
+                                    {user.job_title && (
+                                        <Typography type="body1" align="center">{user.job_title}</Typography>)}
+                                    <div className={classes.infoCardDataSeparator}/>
+                                </div>
+                            </Hidden>
                             <Typography type="subheading" align="center" className={classes.infoCardTeam}>
                                 {user.team || 'Team Unknown'}
                             </Typography>
@@ -368,37 +427,74 @@ class ScoutProfile extends Component {
 
                         </div>
                     </Paper>
-                    <div className={classes.infoRight}>
-                        <Typography type="headline" className={classes.infoRightName}>{user.first_name} {user.last_name}</Typography>
+                    <Hidden xsDown>
+                        <div className={classes.infoRight}>
+                            <Typography type="headline"
+                                        className={classes.infoRightName}>{user.first_name} {user.last_name}</Typography>
 
-                        <Typography type="body2">{user.job_title || 'Title Unknown'}</Typography>
+                            <Typography type="body2">{user.job_title || 'Title Unknown'}</Typography>
 
-                        {user.biography && (
-                            <Typography type="body1" className={classes.infoRightAbout}>{user.biography}</Typography>
-                        )}
+                            {user.biography && (
+                                <Typography type="body1"
+                                            className={classes.infoRightAbout}>{user.biography}</Typography>
+                            )}
 
-                        {user.id === currentUser.id && (!user.biography || !user.profile_picture) && (
-                            <div className={classes.profileIncomplete}>
-                                <Typography type="subheading">Your profile is incomplete!</Typography>
+                            {user.id === currentUser.id && (!user.biography || !user.profile_picture) && (
+                                <div className={classes.profileIncomplete}>
+                                    <Typography type="subheading">Your profile is incomplete!</Typography>
 
-                                <Typography type="body1" className={classes.point}>
-                                    <Link to="/user/edit" disabledUnderline>
-                                        <Button className={classes.editButton}>
-                                            <Icon className={classes.editIcon}>pencil</Icon>
-                                            <span>Edit</span>
-                                        </Button>
-                                    </Link> your profile information
-                                </Typography>
-                            </div>
-                        )}
+                                    <Typography type="body1" className={classes.point}>
+                                        <Link to="/user/edit" disabledUnderline>
+                                            <Button className={classes.editButton}>
+                                                <Icon className={classes.editIcon}>pencil</Icon>
+                                                <span>Edit</span>
+                                            </Button>
+                                        </Link> your profile information
+                                    </Typography>
+                                </div>
+                            )}
 
-                    </div>
+                        </div>
+                    </Hidden>
                 </div>
 
 
+                <Hidden smUp>
+                    <Paper square className={classes.mobileContent}>
+                        <div className={classes.tabContent}>
+
+                            {(!user.biography || !currentUser.is_verify) && (
+                                <Typography type="subheading" align="center" className={classes.descTitle}>
+                                    Your profile is incomplete!
+                                </Typography>
+                            )}
+
+                            {!currentUser.is_verify && (
+                                <div>
+                                    <Typography type="body1" align="center" className={classes.desc}>
+                                        You must be a verified scout before contacting players.
+                                    </Typography>
+                                    <Typography type="caption" align="center"
+                                                className={classNames(classes.desc, classes.descBottom)}>
+                                        Please go to your <Link to="/setting">Settings</Link> to request to get
+                                        verified.
+                                    </Typography>
+                                </div>
+                            )}
+
+
+                            {user.biography && (
+                                <Typography type="body1" className={classes.infoRightAbout}>
+                                    {user.biography}
+                                </Typography>
+                            )}
+
+                        </div>
+                    </Paper>
+                </Hidden>
             </div>
 
-        </Grid>
+        </div>
 
     }
 }

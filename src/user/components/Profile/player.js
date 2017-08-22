@@ -622,7 +622,7 @@ class PlayerProfile extends Component {
                         <div className={classes.infoCardLeagueLine}>
                             <Icon className={classes.infoCardLeagueShield}>shield</Icon>
                             <Typography type="body2" align="center"
-                                        className={classes.infoCardLeague}>{user.position_short}</Typography>
+                                        className={classes.infoCardLeague}>{user.position_short || '/'}</Typography>
 
                         </div>
                         <div className={classes.infoCardData}>
