@@ -31,7 +31,6 @@ const styleSheet = createStyleSheet('DefaultRoute', theme => ({
         paddingTop: 70,
         [theme.breakpoints.down('sm')]: {
             minHeight: window.innerHeight - 60,
-            height: 60,
         }
     },
 
