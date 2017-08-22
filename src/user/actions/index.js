@@ -126,15 +126,3 @@ export const sendEmail = (id, subject, text) => dispatch => {
         })
 };
 
-export const getLeagues = () => dispatch => {
-    dispatch({type: LOAD, payload: null});
-    return get(`/api/v2/league/get-list`)
-        .then(leagues => {
-            if ('error' in leagues)
-                return dispatch({type: ERROR_ALERT, payload: {message: leagues.error.message}});
-            dispatch({type: LOAD, payload: leagues});
-        })
-        .catch((message) => {
-            dispatch({type: ERROR_ALERT, payload: {message}});
-        })
-};

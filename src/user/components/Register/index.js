@@ -35,10 +35,8 @@ class Register extends Component {
     }
 
     componentDidMount() {
-        console.log('this.props.getLeagues()');
-        this.props.getLeagues();
-        console.log('props', this.props);
 
+        //this.props.getTeams();
     }
 
     handleChange(name) {
@@ -58,10 +56,12 @@ class Register extends Component {
     }
 
     render() {
+        //console.log('props', this.props.leagues);
         const classes = this.props.classes;
         return (<div className={classes.root}>
             {this.state.index === 0 && <PlayerForm onSubmit={this.props.registerPlayer}/>}
-            {this.state.index === 1 && <ScoutForm onSubmit={this.props.registerScout}/>}
+            {this.state.index === 1 && <ScoutForm onSubmit={this.props.registerScout}
+                                                  /*leagues={this.props.leagues}*//>}
         </div>);
     }
 }

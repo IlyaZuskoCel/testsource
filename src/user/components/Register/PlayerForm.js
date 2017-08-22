@@ -17,15 +17,12 @@ import FormControl from 'material-ui/Form/FormControl';
 import TextField from 'material-ui/TextField';
 import Typography from 'material-ui/Typography';
 import Link from '../../../common/components/Link';
-//import {Autosuggest} from '../../../common/components/Autosuggest';
 import {Autosuggest} from "../../../common/components/index";
 
-const optionsLeagues = [
-    {label: 'North Atlantic'},
-    {label: 'European'},
-    {label: 'South American'},
+let leagues=[{label: 'None'},
+    {label: 'Atria'},
+    {label: 'Callisto'},];
 
-];
 const optionsTeams = [
     {label: 'None'},
     {label: 'Atria'},
@@ -153,14 +150,17 @@ class PlayerForm extends Component {
             terms: 'no',
             news: 'no',
             agentEmail: '',
-            league: '',
-            team: '',
+            league: {},
+            team: {},
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
 
+    componentDidMount() {
+
+    }
 
     handleChange(name) {
 
@@ -211,6 +211,8 @@ class PlayerForm extends Component {
     }
 
     render() {
+        //if (this.props.leagues) leagues = this.props.leagues;
+        console.log('Props in Player', this.props);
         const classes = this.props.classes;
         return <form className={classes.form} onSubmit={this.handleSubmit}>
             <Grid container gutter={24} direction={'column'} className={classes.grid_container}>
@@ -364,14 +366,14 @@ class PlayerForm extends Component {
                         {/* scout registering*/}
                         {/*League*/}
                         <Autosuggest
-                            suggestions={optionsLeagues}
+                            suggestions={leagues?leagues:[{1:1}]}
                             onSuggestionsFetchRequested={() => {
                             }}
                             onSuggestionsClearRequested={() => {
                             }}
                             inputProps={{
                                 label: "League",
-                                value: this.state.league,
+                                value: this.state.league.name,
                                 onChange: (event, {newValue}) => this.setState({league: newValue}),
                             }}
                             className={classes.formControl}
@@ -381,7 +383,7 @@ class PlayerForm extends Component {
                 {this.state.selectedValue === 'scout' ? (
                     <Grid item xs={12} sm={6}>
                         <Autosuggest
-                            suggestions={optionsTeams}
+                            suggestions={optionsTeams?optionsTeams:[{1:1}]}
                             onSuggestionsFetchRequested={() => {
                                 console.log('suggestion was requested');
                             }}
