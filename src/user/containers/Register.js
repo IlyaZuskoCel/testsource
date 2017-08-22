@@ -15,7 +15,7 @@ import {go} from '../../common/actions';
 
 const mapStateToProps = (state) => ({
     leagues: state.common.leagues,
-    //teams: state.common.teams,
+    teams: state.common.teams,
 });
 const mapDispatchToProps = (dispatch) => ({
     registerPlayer: (user) => dispatch(registerPlayer(user)),
@@ -23,7 +23,7 @@ const mapDispatchToProps = (dispatch) => ({
     goLogin: () => dispatch(go('/sign/in')),
     goRegister: () => dispatch(go('/sign/up')),
     getLeagues: () => dispatch(getLeagues()),
-    //getTeams: () => dispatch(getTeams()),
+    getTeams: () => dispatch(getTeams()),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Register))

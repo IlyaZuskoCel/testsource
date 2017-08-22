@@ -23,7 +23,7 @@ let leagues = [{label: 'None'},
     {label: 'Atria'},
     {label: 'Callisto'},];
 
-const optionsTeams = [
+let teams = [
     {label: 'None'},
     {label: 'Atria'},
     {label: 'Callisto'},
@@ -159,9 +159,6 @@ class PlayerForm extends Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
-    componentDidMount() {
-
-    }
 
     handleChange(name) {
 
@@ -211,11 +208,20 @@ class PlayerForm extends Component {
         return false;
     }
 
+    getLeagueId = (name) => {
+        if (leagues.length === 0) return;
+        let league = leagues.find(el => el.label === name);
+        return league ? league.id : '';
+    };
+
     render() {
         if (this.props.leagues) leagues = this.props.leagues.map(league => {
             return {label: league.name, id: league.id};
         });
-        console.log('selected league', this.state.league);
+        if (this.props.teams) teams = this.props.teams.filter(team => {
+            return {label: team.name, id: team.id,leagueId:team.id_league,};
+        });
+        console.log('this props ', this.props);
         const classes = this.props.classes;
         return <form className={classes.form} onSubmit={this.handleSubmit}>
             <Grid container gutter={24} direction={'column'} className={classes.grid_container}>
@@ -377,7 +383,10 @@ class PlayerForm extends Component {
                             inputProps={{
                                 label: "League",
                                 value: this.state.league,
-                                onChange: (event, {newValue}) => this.setState({league: newValue}),
+                                onChange: (event, {newValue}) => this.setState({
+                                    league: newValue,
+                                    leagueId: this.getLeagueId(newValue)
+                                }),
                             }}
                             className={classes.formControl}
                         />
@@ -386,7 +395,7 @@ class PlayerForm extends Component {
                 {this.state.selectedValue === 'scout' ? (
                     <Grid item xs={12} sm={6}>
                         <Autosuggest
-                            suggestions={optionsTeams}
+                            suggestions={teams}
                             onSuggestionsFetchRequested={() => {
                                 console.log('suggestion was requested');
                             }}
