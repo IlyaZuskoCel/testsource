@@ -14,7 +14,7 @@ import Sign from './containers/Sign';
 
 const routes = [
     <DefaultLayout key="1" path="/sign/:type" component={Sign}/>,
-    <PrivateRoute key="2" path="/profile" component={Profile} hideBackgroundTopHeader/>
+    <PrivateRoute key="2" path="/profile/:id?" component={Profile} hideBackgroundTopHeader/>
 ];
 
 export default routes;

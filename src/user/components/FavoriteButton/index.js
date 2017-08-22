@@ -18,7 +18,7 @@ const styleSheet = createStyleSheet('FavoriteButton', theme => ({
     default: {
         backgroundColor: '#ffffff',
         boxShadow: '0 0 7px 0 rgba(0, 0, 0, 0.3)',
-        minWidth: 208,
+        minWidth: 160,
 
         [theme.breakpoints.down('sm')]: {
             padding: 0,

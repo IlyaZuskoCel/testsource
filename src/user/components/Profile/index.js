@@ -13,21 +13,19 @@ import {PLAYER_ROLE, SCOUT_ROLE} from '../../constants';
 import PlayerProfile from './player';
 import ScoutProfile from './scout';
 
-const styleSheet = createStyleSheet('Profile', theme => ({
-}));
+const styleSheet = createStyleSheet('Profile', theme => ({}));
 
 
 class Profile extends Component {
     componentDidMount() {
-        const id = this.props.currentUser.id;
-        this.props.getUser(id);
+        this.props.getUser(this.props.id);
     }
 
     render() {
         if (!this.props.user)
             return null;
 
-        if( this.props.user.role === SCOUT_ROLE)
+        if (this.props.user.role === SCOUT_ROLE)
             return <ScoutProfile {...this.props} />;
         else
             return <PlayerProfile {...this.props}/>;

@@ -12,9 +12,10 @@ import Profile from '../components/Profile';
 import {getUser, sendEmail} from '../actions';
 import {goBack} from '../../common/actions';
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, props) => ({
     currentUser: state.user.current,
-    user: state.user.user
+    user: state.user.user,
+    id: props.match.params.id || state.user.current.id
 });
 const mapDispatchToProps = (dispatch) => ({
     getUser: id => dispatch(getUser(id)),
