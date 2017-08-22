@@ -155,6 +155,9 @@ const theme = (outerTheme) => {
             A700: '#c2a24d',
             500: '#c2a24d'
         },
+        accent: {
+            ...outerTheme.palette.accent,
+        },
         input: {
             ...outerTheme.palette.input,
             bottomLine: '#cbcbcb'
@@ -491,8 +494,8 @@ const theme = (outerTheme) => {
                 },
                 label: {}
             },
-            MuiTabs:{
-                flexContainer:{
+            MuiTabs: {
+                flexContainer: {
                     borderBottom: 'solid 1px #cbcbcb60'
                 }
             }
