@@ -85,10 +85,6 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
     second_check: {
         marginTop: 20
     },
-    iam: {
-        display: 'inline',
-        marginLeft: 16,
-    },
     haveAgent: {
         display: 'inline-block',
         marginLeft: 12,
@@ -133,7 +129,6 @@ class PlayerForm extends Component {
             password: '',
             password_repeat: '',
             errors: [],
-            player_scout: 'player',
             have_agent: 'no',
             agree: 'no',
             subscribe: 'no',
@@ -162,57 +157,57 @@ class PlayerForm extends Component {
     };
 
     handleSubmit = (e) => {
-        console.log('inside handle submit ');
         e.preventDefault();
-        if (!this.state.first_name)
-            return this.setState({errors: ['first_name']});
+        /*   console.log(1);
+            if (!this.state.first_name)
+                return this.setState({errors: ['first_name']});
+           // console.log(2);
+            if (!this.state.last_name)
+                return this.setState({errors: ['last_name']});
+          //  console.log(3);
+            if (this.props.index === 0 && !this.state.birthMonth)
+                return this.setState({errors: ['birthMonth']});
+           // console.log(4);
+            if (this.props.index === 0 && !this.state.birthYear)
+                return this.setState({errors: ['birthYear']});
+          //  console.log(5);
+            if (!this.state.email)
+                return this.setState({errors: ['email']});
+            //console.log(6);
+            if (!this.state.password)
+                return this.setState({errors: ['password']});
+            //console.log(7);
+            if (!this.state.password_repeat)
+                return this.setState({errors: ['password_repeat']});
 
-        if (!this.state.last_name)
-            return this.setState({errors: ['last_name']});
+         console.log('before passwords comparing');
+         if (this.state.password !== this.state.password_repeat)
+             return this.setState({errors: ['password_repeat', 'password']});
 
-        if (!this.state.birthMonth)
-            return this.setState({errors: ['birthMonth']});
+         console.log('before agree', this.state.agree);
+         if (this.state.agree === 'no')
+             return this.setState({errors: ['agree']});
 
-        if (!this.state.birthYear)
-            return this.setState({errors: ['birthYear']});
+         console.log('before agent_email');
+         if (this.state.have_agent === 'yes' && !this.state.agent_email)
+             return this.setState({errors: ['agent_email']});
 
-        if (!this.state.email)
-            return this.setState({errors: ['email']});
-
-        if (!this.state.password)
-            return this.setState({errors: ['password']});
-
-        if (!this.state.password_repeat)
-            return this.setState({errors: ['password_repeat']});
-
-        // console.log('before passwords comparing');
-        // if (this.state.password !== this.state.password_repeat)
-        //     return this.setState({errors: ['password_repeat', 'password']});
-
-        // console.log('before agree', this.state.agree);
-        // if (this.state.agree === 'no')
-        //     return this.setState({errors: ['agree']});
-
-        // console.log('before agent_email');
-        // if (this.state.have_agent === 'yes' && !this.state.agent_email)
-        //     return this.setState({errors: ['agent_email']});
-
-        console.log('all fields are ok, before submitting ');
+         console.log('all fields are ok, before submitting ');*/
         let user = Object.assign({}, this.state);
-        // for player registration
-        /*
-            "first_name":"Fedor",
-            "last_name":"Fedorov",
-            "email":"fedor@ss.ss",
-            "password":"123456",
-            "password_repeat":"123456",
-            "birthday":"1989-11",
-            "have_agent":"1",
-            "agent_email":"agent@mail.mail",
-            "agree":"1",
-            "subscribe":"1"
-        */
-        if (this.state.player_scout === 'player') {
+        // player registration
+        /**
+         "first_name":"Fedor",
+         "last_name":"Fedorov",
+         "email":"fedor@ss.ss",
+         "password":"123456",
+         "password_repeat":"123456",
+         "birthday":"1989-11",
+         "have_agent":"1",
+         "agent_email":"agent@mail.mail",
+         "agree":"1",
+         "subscribe":"1"
+         */
+        if (this.props.index === 0) {
             user.agree = user.agree === 'yes' ? 1 : 0;
             user.subscribe = user.subscribe === 'yes' ? 1 : 0;
             user.have_agent = user.have_agent === 'yes' ? 1 : 0;
@@ -222,29 +217,29 @@ class PlayerForm extends Component {
             delete user.birthYear;
             delete user.league;
             delete user.team;
-            delete user.player_scout;
             delete user.errors;
+            console.log('user', user);
             this.props.onSubmit(user);
         }
-        // for scout registration
-        /*
-            "first_name":"Ivan",
-            "last_name":"Ivanov",
-            "email":"ivan@ss.ss",
-            "password":"123456",
-            "password_repeat":"123456",
-            "id_league":"1",
-            "id_team_current":"20",
-            "agree":"1",
-            "subscribe":"1"
-        */
+        // scout registration
+        /**
+         "first_name":"Ivan",
+         "last_name":"Ivanov",
+         "email":"ivan@ss.ss",
+         "password":"123456",
+         "password_repeat":"123456",
+         "id_league":"1",
+         "id_team_current":"20",
+         "agree":"1",
+         "subscribe":"1"
+         */
         else {
             user.agree = user.agree === 'yes' ? 1 : 0;
             user.subscribe = user.subscribe === 'yes' ? 1 : 0;
             let id_league = (this.props.leagues.find(league => league.label === this.state.league)).id;
             let id_team_current = (this.props.teams.find(team => team.label === this.state.team)).id;
-            console.log('id_league',id_league);
-            console.log('id_team',id_team_current);
+            console.log('id_league', id_league);
+            console.log('id_team', id_team_current);
             user.id_league = id_league;
             user.id_team_current = id_team_current;
             delete user.showingTeams;
@@ -252,13 +247,14 @@ class PlayerForm extends Component {
             delete user.birthYear;
             delete user.league;
             delete user.team;
-            delete user.player_scout;
             delete user.errors;
             delete user.have_agent;
             delete user.agent_email;
+            console.log('user', user);
             this.props.onSubmit(user);
         }
-        console.log('user', user);
+
+        return false;
     };
 
     getShowingTeams = (name) => {
@@ -277,36 +273,10 @@ class PlayerForm extends Component {
     };
 
     render() {
-        console.log('agree ', this.state.agree);
         const classes = this.props.classes;
+        //console.log('props of Player',this.props);
         return <form className={classes.form} onSubmit={this.handleSubmit}>
             <Grid container gutter={24} direction={'column'} className={classes.grid_container}>
-                <div className={classes.agent}>
-                    <Typography type="subheading" className={classes.iam}>I am a</Typography>
-                    <FormGroup className={classes.radio_buttons_group}>
-                        <FormControlLabel
-                            control={
-                                <Radio
-                                    checked={this.state.player_scout === 'player'}
-                                    onChange={this.handleChange('player_scout')}
-                                    value="player"
-                                />
-                            }
-                            label="Player"
-                            className={classes.player_label}
-                        />
-                        <FormControlLabel
-                            control={
-                                <Radio
-                                    checked={this.state.player_scout === 'scout'}
-                                    onChange={this.handleChange('player_scout')}
-                                    value="scout"
-                                />
-                            }
-                            label="Scout"
-                        />
-                    </FormGroup>
-                </div>
                 <Grid item xs={12} sm={6}>
                     <TextField id="first_name"
                                required
@@ -325,10 +295,9 @@ class PlayerForm extends Component {
                                value={this.state.last_name}
                                onChange={this.handleChange('last_name')}
                                className={classes.formControl}
-
                     />
                 </Grid>
-                {this.state.player_scout === 'player' ? (
+                {this.props.index === 0 ? (
                     <Grid item xs={12} sm={6}>
                         {/*show birth fields only if player it is*/}
                         <div className={classes.birth}>
@@ -387,7 +356,7 @@ class PlayerForm extends Component {
                     />
                 </Grid>
                 {/*this block shows, player or scout registering*/}
-                {this.state.player_scout === 'player' ? (
+                {this.props.index === 0 ? (
                     <div style={{display: 'inline-block'}}>
                         {/* player registering*/}
                         <div className={classes.agent}>
@@ -426,7 +395,7 @@ class PlayerForm extends Component {
                         </Grid>
                     </div>) : ''}
 
-                {this.state.player_scout === 'scout' ? (
+                {this.props.index === 1 ? (
                     <Grid item xs={12} sm={6}>
                         {/* scout registering*/}
                         {/*League*/}
@@ -444,8 +413,7 @@ class PlayerForm extends Component {
                             className={classes.formControl}
                         />
                     </Grid>) : ''}
-
-                {this.state.player_scout === 'scout' ? (
+                {this.props.index === 1 ? (
                     <Grid item xs={12} sm={6}>
                         <Autosuggest
                             suggestions={this.state.showingTeams}
@@ -463,7 +431,7 @@ class PlayerForm extends Component {
                         />
                     </Grid>) : ''}
                 {/*Agent Email*/}
-                {this.state.player_scout === 'player' && this.state.have_agent === 'yes' ? (
+                {this.props.index === 0 && this.state.have_agent === 'yes' ? (
                     <Grid item xs={12} sm={6}>
                         <TextField id="agent_email"
                                    required
@@ -488,7 +456,6 @@ class PlayerForm extends Component {
                                 }
                                 label=''
                             />
-
                             <div className={classes.termsPolicy}>
                                 <Typography type="body1" className={classes.text}>{'I agree with\u00A0'}</Typography>
                                 <Link to="/termsofservice">

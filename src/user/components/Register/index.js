@@ -7,6 +7,9 @@ import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import PlayerForm from './PlayerForm';
 import ScoutForm from './PlayerForm';
+import Typography from 'material-ui/Typography';
+import {FormGroup, FormControlLabel} from 'material-ui/Form';
+import Radio from 'material-ui/Radio';
 
 const styleSheet = createStyleSheet('Register', theme => ({
     root: {
@@ -16,6 +19,23 @@ const styleSheet = createStyleSheet('Register', theme => ({
         [theme.breakpoints.up('sm')]: {
             marginLeft: -24,
         },
+    },
+    iam: {
+        display: 'inline',
+        marginLeft: 16,
+    },
+    radio_buttons_group: {
+        display: 'inline-block',
+        top: 11,
+    }, agent: {
+        display: 'flex',
+        marginTop: 72,
+        marginLeft: 48,
+        height: 0,
+    }, player_label: {
+        marginLeft: 16,
+        marginTop: 8,
+
     },
 }));
 
@@ -27,7 +47,8 @@ class Register extends Component {
             index: 0,
             username: '',
             password: '',
-            errors: []
+            errors: [],
+
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -40,7 +61,7 @@ class Register extends Component {
     }
 
     handleChange(name) {
-        return event => this.setState({[name]: event.target.value});
+        return event => this.setState({[name]: parseInt(event.target.value)});
     }
 
     handleSubmit(e) {
@@ -50,24 +71,52 @@ class Register extends Component {
 
         if (!this.state.password)
             return this.setState({errors: ['password']});
-
-        this.props.logIn(this.state.username, this.state.password);
+        this.props.logIn(this.state.email, this.state.password);
         return false;
     }
 
     render() {
-        // console.log('props of Register', this.props);
         const classes = this.props.classes;
-        return (<div className={classes.root}>
-            {this.state.index === 0 && <PlayerForm onSubmit={this.props.registerPlayer}
-                                                   leagues={this.props.leagues}
-                                                   teams={this.props.teams}
-                                                   />}
-            {this.state.index === 1 && <ScoutForm onSubmit={this.props.registerScout}
-                                                  leagues={this.props.leagues}
-                                                  teams={this.props.teams}
-                                                  />}
-        </div>);
+        //console.log('props of Register',this.props.logIn);
+        return (
+            <div className={classes.root}>
+                <div className={classes.agent}>
+                    <Typography type="subheading" className={classes.iam}>I am a</Typography>
+                    <FormGroup className={classes.radio_buttons_group}>
+                        <FormControlLabel
+                            control={
+                                <Radio
+                                    checked={this.state.index === 0}
+                                    onChange={this.handleChange('index')}
+                                    value="0"
+                                />
+                            }
+                            label="Player"
+                            className={classes.player_label}
+                        />
+                        <FormControlLabel
+                            control={
+                                <Radio
+                                    checked={this.state.index === 1}
+                                    onChange={this.handleChange('index')}
+                                    value="1"
+                                />
+                            }
+                            label="Scout"
+                        />
+                    </FormGroup>
+                </div>
+                {this.state.index === 0 && <PlayerForm onSubmit={this.props.registerPlayer}
+                                                       leagues={this.props.leagues}
+                                                       teams={this.props.teams}
+                                                       index={this.state.index}
+                />}
+                {this.state.index === 1 && <ScoutForm onSubmit={this.props.registerScout}
+                                                      leagues={this.props.leagues}
+                                                      teams={this.props.teams}
+                                                      index={this.state.index}
+                />}
+            </div>);
     }
 }
 
