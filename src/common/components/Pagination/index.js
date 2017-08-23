@@ -35,7 +35,6 @@ const styleSheet = createStyleSheet('Pagination', (theme) => ({
         [theme.breakpoints.down('sm')]: {
             width: '100%',
         }
-
     },
     current: {
         borderBottom: 'solid 3px #d7001e',
@@ -64,6 +63,13 @@ class Pagination extends Component {
     };
 
 
+    componentDidMount() {
+        this.setState({screenWidth : window.innerWidth} , () => {
+            console.log(this.state.screenWidth);
+        });
+    }
+
+
     render() {
         const {currentPage, total, perPage, classes, width} = this.props;
 
@@ -89,7 +95,6 @@ class Pagination extends Component {
                 </Grid>
             )
         }
-
 
         return (
             <div>
