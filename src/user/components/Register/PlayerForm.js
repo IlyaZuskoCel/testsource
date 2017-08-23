@@ -143,12 +143,10 @@ class PlayerForm extends Component {
             team: '',
         };
 
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
     }
 
 
-    handleChange(name) {
+    handleChange = (name) => {
 
         return event => {
             if (name === 'birthMonth') {
@@ -161,18 +159,16 @@ class PlayerForm extends Component {
             }
             return this.setState({[name]: event.target.value});
         };
-    }
+    };
 
-    handleSubmit(e) {
+    handleSubmit = (e) => {
+        console.log('inside handle submit ');
         e.preventDefault();
         if (!this.state.first_name)
             return this.setState({errors: ['first_name']});
 
         if (!this.state.last_name)
             return this.setState({errors: ['last_name']});
-
-        if (!this.state.phone)
-            return this.setState({errors: ['phone']});
 
         if (!this.state.birthMonth)
             return this.setState({errors: ['birthMonth']});
@@ -189,12 +185,22 @@ class PlayerForm extends Component {
         if (!this.state.password_repeat)
             return this.setState({errors: ['password_repeat']});
 
-        if (this.state.password !== this.state.password_repeat)
+        if (this.state.password != this.state.password_repeat)
             return this.setState({errors: ['password_repeat', 'password']});
 
-        this.props.onSubmit(this.state);
+        if (this.state.terms !== 'yes')
+            return this.setState({errors: ['terms']});
+
+        if (this.state.yes_no_agent && !this.state.agentEmail)
+            return this.setState({errors: ['agent_email']});
+
+
+        let user = Object.assign({}, this.state);
+        delete user.showingTeams;
+        let statusSubmit = this.props.onSubmit(user);
+        console.log('status of submitting ', statusSubmit);
         return false;
-    }
+    };
 
     getShowingTeams = (name) => {
         if (!name || this.props.leagues.length === 0 || this.props.teams.length === 0) return [];
@@ -212,11 +218,7 @@ class PlayerForm extends Component {
     };
 
     render() {
-        // console.log('league ', this.state.league);
-        // console.log('team ', this.state.team);
-        // console.log(this.props.leagues);
-        // console.log(this.props.teams);
-        // console.log(this.state.showingTeams);
+        // console.log('props of PlayerForm', this.props);
         const classes = this.props.classes;
         return <form className={classes.form} onSubmit={this.handleSubmit}>
             <Grid container gutter={24} direction={'column'} className={classes.grid_container}>

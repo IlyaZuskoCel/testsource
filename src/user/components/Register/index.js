@@ -56,14 +56,17 @@ class Register extends Component {
     }
 
     render() {
+        // console.log('props of Register', this.props);
         const classes = this.props.classes;
         return (<div className={classes.root}>
             {this.state.index === 0 && <PlayerForm onSubmit={this.props.registerPlayer}
                                                    leagues={this.props.leagues}
-                                                   teams={this.props.teams}/>}
+                                                   teams={this.props.teams}
+                                                   />}
             {this.state.index === 1 && <ScoutForm onSubmit={this.props.registerScout}
                                                   leagues={this.props.leagues}
-                                                  teams={this.props.teams}/>}
+                                                  teams={this.props.teams}
+                                                  />}
         </div>);
     }
 }
