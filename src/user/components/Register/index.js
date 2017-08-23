@@ -14,10 +14,10 @@ import Radio from 'material-ui/Radio';
 const styleSheet = createStyleSheet('Register', theme => ({
     root: {
         backgroundColor: '#ffffff',
-        marginTop: -32,
-        marginRight: 32,
+        // marginTop: -32,
+        // marginRight: 32,
         [theme.breakpoints.up('sm')]: {
-            marginLeft: -24,
+
         },
     },
     iam: {
