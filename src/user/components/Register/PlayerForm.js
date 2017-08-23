@@ -19,7 +19,7 @@ import Typography from 'material-ui/Typography';
 import Link from '../../../common/components/Link';
 import {Autosuggest} from "../../../common/components/index";
 
-let teams = [];
+
 const styleSheet = createStyleSheet('PlayerForm', theme => ({
 
     form: {
@@ -138,6 +138,7 @@ class PlayerForm extends Component {
             terms: 'no',
             news: 'no',
             agentEmail: '',
+            showingTeams: [],
             league: '',
             team: '',
         };
@@ -195,21 +196,27 @@ class PlayerForm extends Component {
         return false;
     }
 
-    getTeams = (name) => {
-        if (!name) {
-            teams = [];
-            return;
-        }
-        if (this.props.leagues.length === 0) return;
+    getShowingTeams = (name) => {
+        if (!name || this.props.leagues.length === 0 || this.props.teams.length === 0) return [];
         let league = this.props.leagues.find(el => el.label === name);
-        if (!league) {
-            teams = [];
-            return;
-        }
-        teams = this.props.teams.filter(team => team.leagueId == league.id);
+        if (!league) return [];
+        return this.props.teams.filter(team => team.leagueId === league.id);
+    };
+
+    handleLeagueChange = (event, {newValue}) => {
+        this.setState({
+            league: newValue,
+            team: '',
+            showingTeams: this.getShowingTeams(newValue),
+        });
     };
 
     render() {
+        // console.log('league ', this.state.league);
+        // console.log('team ', this.state.team);
+        // console.log(this.props.leagues);
+        // console.log(this.props.teams);
+        // console.log(this.state.showingTeams);
         const classes = this.props.classes;
         return <form className={classes.form} onSubmit={this.handleSubmit}>
             <Grid container gutter={24} direction={'column'} className={classes.grid_container}>
@@ -371,13 +378,7 @@ class PlayerForm extends Component {
                             inputProps={{
                                 label: "League",
                                 value: this.state.league,
-                                onChange: (event, {newValue}) => {
-                                    this.getTeams(newValue);
-                                    this.setState({
-                                        league: newValue,
-                                        team: '',
-                                    });
-                                },
+                                onChange: this.handleLeagueChange
                             }}
                             className={classes.formControl}
                         />
@@ -386,7 +387,7 @@ class PlayerForm extends Component {
                 {this.state.selectedValue === 'scout' ? (
                     <Grid item xs={12} sm={6}>
                         <Autosuggest
-                            suggestions={teams}
+                            suggestions={this.state.showingTeams}
                             onSuggestionsFetchRequested={() => {
                                 console.log('suggestion was requested');
                             }}

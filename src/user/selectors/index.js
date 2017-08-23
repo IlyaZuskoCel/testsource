@@ -1,4 +1,4 @@
 
 
-export const selectLeagues = data => data.map(item=>({label:item.name, id:item.id}));
-export const selectTeams = data => data.map(item=>({label:item.name, id:item.id, leagueId:item.id_league}));
+export const selectLeagues = leagues => leagues.map(league=>({label:league.name.trim(), id:league.id}));
+export const selectTeams = teams => teams.map(team=>({label:team.name.trim(), id:team.id, leagueId:team.id_league}));
