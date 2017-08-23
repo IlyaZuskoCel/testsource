@@ -18,7 +18,8 @@ import Checkbox from 'material-ui/Checkbox';
 import Button from 'material-ui/Button';
 
 
-import {Autosuggest} from '../';
+import {Autosuggest, Pagination} from '../';
+
 
 const styleSheet = createStyleSheet('Typography', theme => ({
     root: {
@@ -148,6 +149,13 @@ class Form extends Component {
                     <span style={{margin: 40}}/>
                     <Button raised>secondary</Button>
                 </Grid>
+
+
+                <Grid item xs={12}>
+                    <Typography type="body1">Pagination</Typography>
+                    <Pagination currentPage={2} perPage={10} total={60}/>
+                </Grid>
+                <span style={{margin: 40}}/>
             </Grid>
         )
     }
