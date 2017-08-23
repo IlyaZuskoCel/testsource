@@ -51,7 +51,6 @@ class Register extends Component {
 
         };
 
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
 
@@ -62,17 +61,6 @@ class Register extends Component {
 
     handleChange(name) {
         return event => this.setState({[name]: parseInt(event.target.value)});
-    }
-
-    handleSubmit(e) {
-        e.preventDefault();
-        if (!this.state.username)
-            return this.setState({errors: ['username']});
-
-        if (!this.state.password)
-            return this.setState({errors: ['password']});
-        this.props.logIn(this.state.email, this.state.password);
-        return false;
     }
 
     render() {

@@ -443,7 +443,7 @@ class PlayerForm extends Component {
                                    className={classes.formControl}
                         />
                     </Grid>) : ''}
-                <Grid item xs={12} className={classes.check_box}>
+                <Grid item xs={12} sm={6} className={classes.check_box}>
                     <FormGroup>
                         <div className={classes.terms}>
                             <FormControlLabel

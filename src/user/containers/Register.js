@@ -20,7 +20,7 @@ const mapStateToProps = (state) => ({
     teams: selectTeams(state.common.teams),
 });
 const mapDispatchToProps = (dispatch) => ({
-    logIn: (email, password) => dispatch(logIn(email, password)),
+    // logIn: (email, password) => dispatch(logIn(email, password)),
     registerPlayer: (user) => dispatch(registerPlayer(user)),
     registerScout: (user) => dispatch(registerScout(user)),
     goLogin: () => dispatch(go('/sign/in')),
