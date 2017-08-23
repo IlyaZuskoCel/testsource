@@ -16,7 +16,7 @@ import Form from './components/Form';
 const routes = [
     <DefaultLayout key="1" path="/typography" component={Typography}/>,
     <DefaultLayout key="2" path="/form" component={Form}/>,
-    <DefaultLayout key="20" component={NoMatch}/>
+    <PrivateRoute key="20" component={NoMatch}/>
 ];
 
 export default routes;
