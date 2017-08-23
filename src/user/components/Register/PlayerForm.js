@@ -29,18 +29,18 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
 
     },
     formControl: {
-        minWidth: '200%',
+        minWidth: '100%',
         marginLeft: 20,
-        alignSelf: 'center',
+        //alignSelf: 'center',
 
     },
     formBirthMonth: {
-        display: 'inline-table',
-        width: '100%',
+        display: 'table',
+
     },
     formBirthYear: {
-        display: 'inline-table',
-        width: 'calc(92%-20)',
+        display: 'table',
+
         marginLeft: 20
     },
     button: {
@@ -50,9 +50,6 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
     },
     grid_container: {
         marginTop: 60,
-    },
-    grid_flex: {
-        display: 'inline-flex'
     },
     radio_buttons_group: {
         display: 'inline-block',
