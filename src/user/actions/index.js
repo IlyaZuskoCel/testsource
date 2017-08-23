@@ -128,3 +128,4 @@ export const sendEmail = (id, subject, text) => dispatch => {
             dispatch({type: ERROR_ALERT, payload: {message}});
         })
 };
+

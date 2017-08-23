@@ -12,9 +12,9 @@ const styleSheet = createStyleSheet('Register', theme => ({
     root: {
         backgroundColor: '#ffffff',
         marginTop: -32,
-        marginRight:32,
+        marginRight: 32,
         [theme.breakpoints.up('sm')]: {
-           marginLeft: -24,
+            marginLeft: -24,
         },
     },
 }));
@@ -34,6 +34,11 @@ class Register extends Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
+    componentDidMount() {
+        this.props.getLeagues();
+        this.props.getTeams();
+    }
+
     handleChange(name) {
         return event => this.setState({[name]: event.target.value});
     }
@@ -51,10 +56,17 @@ class Register extends Component {
     }
 
     render() {
+        // console.log('props of Register', this.props);
         const classes = this.props.classes;
         return (<div className={classes.root}>
-            {this.state.index === 0 && <PlayerForm onSubmit={this.props.registerPlayer}/>}
-            {this.state.index === 1 && <ScoutForm onSubmit={this.props.registerScout}/>}
+            {this.state.index === 0 && <PlayerForm onSubmit={this.props.registerPlayer}
+                                                   leagues={this.props.leagues}
+                                                   teams={this.props.teams}
+                                                   />}
+            {this.state.index === 1 && <ScoutForm onSubmit={this.props.registerScout}
+                                                  leagues={this.props.leagues}
+                                                  teams={this.props.teams}
+                                                  />}
         </div>);
     }
 }
