@@ -113,7 +113,7 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
         position: 'absolute',
         width: '100%',
     },
-    yes_no_agent: {
+    have_agent: {
         width: 16,
         height: 16,
     },
@@ -133,11 +133,11 @@ class PlayerForm extends Component {
             password: '',
             password_repeat: '',
             errors: [],
-            selectedValue: 'player',
-            yes_no_agent: 'no',
-            terms: 'no',
-            news: 'no',
-            agentEmail: '',
+            player_scout: 'player',
+            have_agent: 'no',
+            agree: 'no',
+            subscribe: 'no',
+            agent_email: '',
             showingTeams: [],
             league: '',
             team: '',
@@ -185,28 +185,87 @@ class PlayerForm extends Component {
         if (!this.state.password_repeat)
             return this.setState({errors: ['password_repeat']});
 
-        if (this.state.password != this.state.password_repeat)
-            return this.setState({errors: ['password_repeat', 'password']});
+        // console.log('before passwords comparing');
+        // if (this.state.password !== this.state.password_repeat)
+        //     return this.setState({errors: ['password_repeat', 'password']});
 
-        if (this.state.terms !== 'yes')
-            return this.setState({errors: ['terms']});
+        // console.log('before agree', this.state.agree);
+        // if (this.state.agree === 'no')
+        //     return this.setState({errors: ['agree']});
 
-        if (this.state.yes_no_agent && !this.state.agentEmail)
-            return this.setState({errors: ['agent_email']});
+        // console.log('before agent_email');
+        // if (this.state.have_agent === 'yes' && !this.state.agent_email)
+        //     return this.setState({errors: ['agent_email']});
 
-
+        console.log('all fields are ok, before submitting ');
         let user = Object.assign({}, this.state);
-        delete user.showingTeams;
-        let statusSubmit = this.props.onSubmit(user);
-        console.log('status of submitting ', statusSubmit);
-        return false;
+        // for player registration
+        /*
+            "first_name":"Fedor",
+            "last_name":"Fedorov",
+            "email":"fedor@ss.ss",
+            "password":"123456",
+            "password_repeat":"123456",
+            "birthday":"1989-11",
+            "have_agent":"1",
+            "agent_email":"agent@mail.mail",
+            "agree":"1",
+            "subscribe":"1"
+        */
+        if (this.state.player_scout === 'player') {
+            user.agree = user.agree === 'yes' ? 1 : 0;
+            user.subscribe = user.subscribe === 'yes' ? 1 : 0;
+            user.have_agent = user.have_agent === 'yes' ? 1 : 0;
+            user.birthday = user.birthYear + '-' + user.birthMonth;
+            delete user.showingTeams;
+            delete user.birthMonth;
+            delete user.birthYear;
+            delete user.league;
+            delete user.team;
+            delete user.player_scout;
+            delete user.errors;
+            this.props.onSubmit(user);
+        }
+        // for scout registration
+        /*
+            "first_name":"Ivan",
+            "last_name":"Ivanov",
+            "email":"ivan@ss.ss",
+            "password":"123456",
+            "password_repeat":"123456",
+            "id_league":"1",
+            "id_team_current":"20",
+            "agree":"1",
+            "subscribe":"1"
+        */
+        else {
+            user.agree = user.agree === 'yes' ? 1 : 0;
+            user.subscribe = user.subscribe === 'yes' ? 1 : 0;
+            let id_league = (this.props.leagues.find(league => league.label === this.state.league)).id;
+            let id_team_current = (this.props.teams.find(team => team.label === this.state.team)).id;
+            console.log('id_league',id_league);
+            console.log('id_team',id_team_current);
+            user.id_league = id_league;
+            user.id_team_current = id_team_current;
+            delete user.showingTeams;
+            delete user.birthMonth;
+            delete user.birthYear;
+            delete user.league;
+            delete user.team;
+            delete user.player_scout;
+            delete user.errors;
+            delete user.have_agent;
+            delete user.agent_email;
+            this.props.onSubmit(user);
+        }
+        console.log('user', user);
     };
 
     getShowingTeams = (name) => {
         if (!name || this.props.leagues.length === 0 || this.props.teams.length === 0) return [];
         let league = this.props.leagues.find(el => el.label === name);
         if (!league) return [];
-        return this.props.teams.filter(team => team.leagueId === league.id);
+        return this.props.teams.filter(team => team.id_league === league.id);
     };
 
     handleLeagueChange = (event, {newValue}) => {
@@ -218,7 +277,7 @@ class PlayerForm extends Component {
     };
 
     render() {
-        // console.log('props of PlayerForm', this.props);
+        console.log('agree ', this.state.agree);
         const classes = this.props.classes;
         return <form className={classes.form} onSubmit={this.handleSubmit}>
             <Grid container gutter={24} direction={'column'} className={classes.grid_container}>
@@ -228,8 +287,8 @@ class PlayerForm extends Component {
                         <FormControlLabel
                             control={
                                 <Radio
-                                    checked={this.state.selectedValue === 'player'}
-                                    onChange={this.handleChange('selectedValue')}
+                                    checked={this.state.player_scout === 'player'}
+                                    onChange={this.handleChange('player_scout')}
                                     value="player"
                                 />
                             }
@@ -239,8 +298,8 @@ class PlayerForm extends Component {
                         <FormControlLabel
                             control={
                                 <Radio
-                                    checked={this.state.selectedValue === 'scout'}
-                                    onChange={this.handleChange('selectedValue')}
+                                    checked={this.state.player_scout === 'scout'}
+                                    onChange={this.handleChange('player_scout')}
                                     value="scout"
                                 />
                             }
@@ -269,7 +328,7 @@ class PlayerForm extends Component {
 
                     />
                 </Grid>
-                {this.state.selectedValue === 'player' ? (
+                {this.state.player_scout === 'player' ? (
                     <Grid item xs={12} sm={6}>
                         {/*show birth fields only if player it is*/}
                         <div className={classes.birth}>
@@ -328,7 +387,7 @@ class PlayerForm extends Component {
                     />
                 </Grid>
                 {/*this block shows, player or scout registering*/}
-                {this.state.selectedValue === 'player' ? (
+                {this.state.player_scout === 'player' ? (
                     <div style={{display: 'inline-block'}}>
                         {/* player registering*/}
                         <div className={classes.agent}>
@@ -337,10 +396,10 @@ class PlayerForm extends Component {
                                 <FormControlLabel
                                     control={
                                         <Radio
-                                            checked={this.state.yes_no_agent === 'yes'}
-                                            onChange={this.handleChange('yes_no_agent')}
+                                            checked={this.state.have_agent === 'yes'}
+                                            onChange={this.handleChange('have_agent')}
                                             value="yes"
-                                            className={classes.yes_no_agent}
+                                            className={classes.have_agent}
                                         />
                                     }
                                     label="Yes"
@@ -349,10 +408,10 @@ class PlayerForm extends Component {
                                 <FormControlLabel
                                     control={
                                         <Radio
-                                            checked={this.state.yes_no_agent === 'no'}
-                                            onChange={this.handleChange('yes_no_agent')}
+                                            checked={this.state.have_agent === 'no'}
+                                            onChange={this.handleChange('have_agent')}
                                             value="no"
-                                            className={classes.yes_no_agent}
+                                            className={classes.have_agent}
                                         />
                                     }
                                     label="No"
@@ -367,7 +426,7 @@ class PlayerForm extends Component {
                         </Grid>
                     </div>) : ''}
 
-                {this.state.selectedValue === 'scout' ? (
+                {this.state.player_scout === 'scout' ? (
                     <Grid item xs={12} sm={6}>
                         {/* scout registering*/}
                         {/*League*/}
@@ -386,7 +445,7 @@ class PlayerForm extends Component {
                         />
                     </Grid>) : ''}
 
-                {this.state.selectedValue === 'scout' ? (
+                {this.state.player_scout === 'scout' ? (
                     <Grid item xs={12} sm={6}>
                         <Autosuggest
                             suggestions={this.state.showingTeams}
@@ -404,15 +463,15 @@ class PlayerForm extends Component {
                         />
                     </Grid>) : ''}
                 {/*Agent Email*/}
-                {this.state.selectedValue === 'player' && this.state.yes_no_agent === 'yes' ? (
+                {this.state.player_scout === 'player' && this.state.have_agent === 'yes' ? (
                     <Grid item xs={12} sm={6}>
                         <TextField id="agent_email"
                                    required
                                    type="email"
-                                   error={this.state.errors.indexOf('agentEmail') > -1}
+                                   error={this.state.errors.indexOf('agent_email') > -1}
                                    label="Agent's Email Address"
-                                   value={this.state.agentEmail}
-                                   onChange={this.handleChange('agentEmail')}
+                                   value={this.state.agent_email}
+                                   onChange={this.handleChange('agent_email')}
                                    className={classes.formControl}
                         />
                     </Grid>) : ''}
@@ -422,9 +481,9 @@ class PlayerForm extends Component {
                             <FormControlLabel
                                 control={
                                     <Checkbox
-                                        checked={this.state.terms === 'yes'}
-                                        onChange={this.handleChange('terms')}
-                                        value={this.state.terms === 'yes' ? 'no' : 'yes'}
+                                        checked={this.state.agree === 'yes'}
+                                        onChange={this.handleChange('agree')}
+                                        value={this.state.agree === 'yes' ? 'no' : 'yes'}
                                     />
                                 }
                                 label=''
@@ -445,9 +504,9 @@ class PlayerForm extends Component {
                             <FormControlLabel
                                 control={
                                     <Checkbox
-                                        checked={this.state.news === 'yes'}
-                                        onChange={this.handleChange('news')}
-                                        value={this.state.news === 'yes' ? 'no' : 'yes'}
+                                        checked={this.state.subscribe === 'yes'}
+                                        onChange={this.handleChange('subscribe')}
+                                        value={this.state.subscribe === 'yes' ? 'no' : 'yes'}
                                     />
                                 }
                                 label=''
