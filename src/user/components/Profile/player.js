@@ -568,7 +568,7 @@ class PlayerProfile extends Component {
                     <div className={classes.topNavigate}>
                         <ShareButton/>
                         <div className={classes.rightNavigate}>
-                            <Link to="/user/edit" disabledUnderline>
+                            <Link to="/profile/edit" disabledUnderline>
                                 <Button className={classes.editButton}>
                                     <Icon className={classes.editIcon}>pencil</Icon>
                                     <span>Edit</span>
@@ -927,7 +927,7 @@ class PlayerProfile extends Component {
                                             </Button> to highlight your skills
                                         </Typography>
                                         <Typography type="body1" className={classes.point}>2.
-                                            <Link to="/user/edit" disabledUnderline>
+                                            <Link to="/profile/edit" disabledUnderline>
                                                 <Button className={classes.editButton}>
                                                     <Icon className={classes.editIcon}>pencil</Icon>
                                                     <span>Edit</span>

@@ -35,13 +35,13 @@ const TypographyPage = ({location, classes}) => (
 
 
         <Grid item xs={12} className={classes.row}>
-            <Typography type="body1">headline</Typography>
+            <Typography type="body1">headline (h1 d / h1 m)</Typography>
             <Typography type="headline">This is a big header</Typography>
         </Grid>
 
         <Grid item xs={12} style={{backgroundColor: 'black', paddingTop: 20, paddingBottom: 20}}
               className={classes.row}>
-            <Typography type="body1" style={{color: 'white'}}>headline </Typography>
+            <Typography type="body1" style={{color: 'white'}}>headline (h1 d / h1 m)</Typography>
             <Typography type="headline" style={{color: 'white'}}>
                 This is a big header on dark background
             </Typography>
