@@ -351,7 +351,8 @@ class Header extends Component {
                                     className={classNames(classes.menuItem, classes.profileButton)}
                                     aria-owns="simple-menu"
                                     aria-haspopup="true" onClick={this.handleMenuClick}>
-                                    <Avatar alt={user.full_name} className={classes.avatar} src={DefaultAvatarImg}/>
+                                    <Avatar alt={user.full_name} className={classes.avatar}
+                                            src={user.profile_picture || DefaultAvatarImg}/>
                                     <Hidden xsDown><span
                                         className={classes.username}>{user.first_name} {user.last_name}</span></Hidden>
                                 </Button>

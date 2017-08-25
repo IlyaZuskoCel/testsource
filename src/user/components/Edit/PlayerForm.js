@@ -49,7 +49,7 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
             paddingRight: 16,
         },
         [theme.breakpoints.down('sm')]: {
-            marginTop: 0,
+            marginTop: 48,
             width: 'auto',
         },
     },
@@ -143,9 +143,11 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
     },
     headerNavigation: {
         height: 48,
-        marginLeft: -16,
-        marginRight: -16,
-        marginTop: -60,
+        zIndex: 500,
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
         paddingTop: 60,
         paddingLeft: 16,
         paddingRight: 16,

@@ -178,6 +178,7 @@ class ScoutForm extends Component {
 
         this.state = {
             ...getUserState(props.user),
+            isUpdate: false,
             errors: []
         };
     }
@@ -203,7 +204,7 @@ class ScoutForm extends Component {
     };
 
     handleChange = name => event => {
-        return this.setState({[name]: event.target.value})
+        return this.setState({[name]: event.target.value, isUpdate: true})
     };
     submit = event => {
         event.preventDefault();
