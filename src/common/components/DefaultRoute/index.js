@@ -50,11 +50,13 @@ const styleSheet = createStyleSheet('DefaultRoute', theme => ({
 }));
 
 
-const DefaultRoute = ({component: Component, isAuthenticated, alert, hideAlert, classes, hideBackgroundTopHeader, ...rest}) => (
+const DefaultRoute = ({component: Component, isAuthenticated, alert, hideAlert, classes, hideBackgroundTopHeader, hideBackgroundTopMobileHeader, ...rest}) => (
     <Route {...rest} render={props => (
         <div>
-            <Grid className={classNames(classes.root, {[classes.hideBackgroundTopHeader]: hideBackgroundTopHeader})}>
-                <Header hideBackgroundTopHeader={hideBackgroundTopHeader}/>
+            <Grid
+                className={classNames(classes.root, {[classes.hideBackgroundTopHeader]: hideBackgroundTopHeader || hideBackgroundTopMobileHeader})}>
+                <Header hideBackgroundTopHeader={hideBackgroundTopHeader}
+                        hideBackgroundTopMobileHeader={hideBackgroundTopMobileHeader}/>
                 <Component {...props} />
                 <Footer/>
             </Grid>

@@ -8,10 +8,13 @@ import {Route, Redirect} from 'react-router-dom';
 
 import DefaultLayout from '../../containers/DefaultRoute';
 
-const PrivateRoute = ({component: Component, isAuthenticated, hideBackgroundTopHeader, ...rest}) => (
+const PrivateRoute = ({component: Component, isAuthenticated, hideBackgroundTopHeader, hideBackgroundTopMobileHeader, ...rest}) => (
     <Route {...rest} render={props => (
         isAuthenticated ? (
-            <DefaultLayout component={Component} hideBackgroundTopHeader={hideBackgroundTopHeader} {...props}/>
+            <DefaultLayout component={Component}
+                           hideBackgroundTopHeader={hideBackgroundTopHeader}
+                           hideBackgroundTopMobileHeader={hideBackgroundTopMobileHeader}
+                           {...props}/>
         ) : (
             <Redirect to={{
                 pathname: '/sign/in',

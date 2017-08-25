@@ -177,7 +177,7 @@ const styleSheet = createStyleSheet('Header', theme => ({
             opacity: 0.6,
         }
     },
-    searchButtonHideBackground:{
+    searchButtonHideBackground: {
         color: '#000',
         opacity: 1,
     },
@@ -319,7 +319,9 @@ class Header extends Component {
 
         }
 
-        const hideBackground = this.props.hideBackgroundTopHeader && !this.state.scroll;
+
+        const hideBackground = (this.props.hideBackgroundTopHeader && !this.state.scroll)
+            || (this.props.hideBackgroundTopMobileHeader && width === 'xs');
 
         return (
             <AppBar position="fixed" className={classNames(classes.container, {[classes.hideShadow]: hideBackground})}>
@@ -338,7 +340,8 @@ class Header extends Component {
                             <div className={classNames(classes.menu)}>
                                 <Link to="/" disabledUnderline
                                       className={classNames(classes.menuItem)}>
-                                    <Button className={classNames(classes.searchButton, {[classes.searchButtonHideBackground]:hideBackground})}>
+                                    <Button
+                                        className={classNames(classes.searchButton, {[classes.searchButtonHideBackground]: hideBackground && !this.props.hideBackgroundTopMobileHeader})}>
                                         <ScoutIcon className={classes.searchIcon}>search</ScoutIcon>
                                         <span>Discover</span>
                                     </Button>
@@ -349,13 +352,13 @@ class Header extends Component {
                                     aria-owns="simple-menu"
                                     aria-haspopup="true" onClick={this.handleMenuClick}>
                                     <Avatar alt={user.full_name} className={classes.avatar} src={DefaultAvatarImg}/>
-                                    <Hidden xsDown><span className={classes.username}>{user.first_name} {user.last_name}</span></Hidden>
+                                    <Hidden xsDown><span
+                                        className={classes.username}>{user.first_name} {user.last_name}</span></Hidden>
                                 </Button>
                                 {DropMenu}
                             </div>
                         ) : (
-                            <div className={classNames(classes.menu)}>
-                            </div>
+                            <div className={classNames(classes.menu)}/>
                         )}
                     </Grid>
                 </Grid>

@@ -10,7 +10,7 @@ import {withRouter} from 'react-router-dom'
 import ScoutForm from '../components/Edit/ScoutForm';
 
 import {goBack, getLeagues, getTeams} from '../../common/actions';
-import {update} from '../actions';
+import {update, uploadPhoto} from '../actions';
 import {mapOptions, map} from '../selectors';
 
 const mapStateToProps = (state, props) => ({
@@ -27,6 +27,7 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(getTeams());
     },
     cancel: () => dispatch(goBack()),
+    uploadPicture: (file) => dispatch(uploadPhoto(file)),
     save: (data) => dispatch(update(data)),
 });
 
