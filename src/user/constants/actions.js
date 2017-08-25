@@ -7,6 +7,7 @@
 export const LOGIN = 'user:Login';
 export const LOGOUT = 'user:Logout';
 export const SET_CURRENT = 'user:setCurrent';
+export const SET_CURRENT_PHOTO = 'user:setCurrentPhoto';
 
 export const SET_USER = 'user:setUser';
 export const SET_USER_FAVORITE = 'user:setUserFavorite';

@@ -100,6 +100,18 @@ const styleSheet = createStyleSheet('Edit', theme => ({
             marginLeft: 24,
         },
     },
+    uploadWrap: {
+        position: 'relative'
+    },
+    uploadInput: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,
+        opacity: 0,
+        cursor: 'pointer',
+    },
     formWrap: {
         marginLeft: 88,
         paddingBottom: 96,
@@ -131,10 +143,15 @@ class Edit extends Component {
     }
 
     onUploadPicture = event => {
+        event.preventDefault();
+        if (!event.target.files.length) return;
+
+        this.props.uploadPicture(event.target.files[0]);
 
     };
     onDeletePicture = event => {
-
+        event.preventDefault();
+        this.props.uploadPicture(null);
     };
 
 
@@ -160,12 +177,15 @@ class Edit extends Component {
                     </div>
 
                     <div className={classes.pictureLinks}>
-                        <Typography type="body1" onClick={this.onUploadPicture} className={classes.link}>
+                        <Typography type="body1" className={classNames(classes.link, classes.uploadWrap)}>
                             Update profile picture
+                            <input autoComplete="off" type="file" onChange={this.onUploadPicture}
+                                   className={classes.uploadInput}/>
                         </Typography>
                         <Typography type="body1" onClick={this.onDeletePicture} className={classes.link}>
                             Delete profile picture
                         </Typography>
+
                     </div>
                 </div>
                 {this.props.user.role === SCOUT_ROLE && (

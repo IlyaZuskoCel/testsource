@@ -16,6 +16,16 @@ const getHeaders = () => {
     return headers;
 };
 
+const getFormHeaders = () => {
+    let headers = new Headers();
+
+    const token = localStorage.getItem('token');
+    if (token)
+        headers.append('Authorization', `Bearer ${token}`);
+
+    return headers;
+};
+
 export const get = (url, options) => {
     return fetch(url, {
         headers: getHeaders(),
@@ -36,6 +46,24 @@ export const post = (url, data, options = {}) => {
         method: 'post',
         body: JSON.stringify(data),
         headers: getHeaders(),
+        ...options,
+
+    })
+        .then(response => {
+            if (response.status !== 200) {
+                throw 'error';
+            }
+            return response.json();
+        })
+};
+
+
+export const postForm = (url, form, options = {}) => {
+
+    return fetch(url, {
+        method: 'post',
+        body: form,
+        headers: getFormHeaders(),
         ...options,
 
     })
