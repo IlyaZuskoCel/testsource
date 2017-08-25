@@ -9,7 +9,6 @@ import PropTypes from 'prop-types';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
-import TextField from 'material-ui/TextField';
 import Typography from 'material-ui/Typography';
 import withWidth from 'material-ui/utils/withWidth';
 import {Link, Icon, Pagination , Autosuggest} from '../../../common/components';
@@ -18,7 +17,9 @@ import {withStyles, createStyleSheet} from 'material-ui/styles';
 import defaultPhoto from './assets/images/default-photo.png';
 
 import Players from './players';
-import Scouts from './scouts'
+import Scouts from './scouts';
+import ScoutFilter from './scoutFilter';
+
 
 const styleSheet = createStyleSheet('Search' , theme => ({
     root: {},
@@ -43,11 +44,6 @@ const styleSheet = createStyleSheet('Search' , theme => ({
     tabs: {
       fontSize: 40,
     },
-
-    textField: {
-        width: 360,
-        margin: [0, 44, 44, 0]
-    }
 }));
 
 const splitSearchQuery = (q) => {
@@ -107,8 +103,9 @@ class Search extends Component {
                         </Tabs>
                     </div>
 
-                    <div className={classes.content}>
-                    </div>
+                    {/*<div className={classes.content}>*/}
+                        {/*{this.props.type === 'player' && <ScoutFilter />}*/}
+                    {/*</div>*/}
 
                 </header>
 
