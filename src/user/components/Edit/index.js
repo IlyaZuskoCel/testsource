@@ -7,11 +7,12 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 import classNames from 'classnames';
+import withWidth from 'material-ui/utils/withWidth';
+import compose from 'recompose/compose';
 
 import {withStyles, createStyleSheet} from 'material-ui/styles';
-import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
-import TextField from 'material-ui/TextField';
+import Hidden from 'material-ui/Hidden';
 
 
 import {Link, Autosuggest} from '../../../common/components';
@@ -22,6 +23,7 @@ import {PLAYER_ROLE, SCOUT_ROLE} from '../../constants';
 import defaultPhoto from './assets/images/default-photo.png';
 
 import PlayerForm from '../../containers/EditPlayerForm';
+import ScoutForm from '../../containers/EditScoutForm';
 
 const styleSheet = createStyleSheet('Edit', theme => ({
     root: {
@@ -29,8 +31,13 @@ const styleSheet = createStyleSheet('Edit', theme => ({
         maxWidth: 1168,
         margin: 'auto',
         marginTop: 56,
+        [theme.breakpoints.down('lg')]: {
+            paddingLeft: 16,
+            paddingRight: 16,
+        },
         [theme.breakpoints.down('sm')]: {
             marginTop: 0,
+            width: 'auto',
         },
     },
     content: {
@@ -58,8 +65,8 @@ const styleSheet = createStyleSheet('Edit', theme => ({
         alignItems: 'center',
 
         [theme.breakpoints.down('sm')]: {
-            height: 192,
-            width: 218,
+            height: 72,
+            width: 72,
         },
     },
     pictureDefaultWrap: {
@@ -69,12 +76,15 @@ const styleSheet = createStyleSheet('Edit', theme => ({
         maxWidth: 270,
         maxHeight: 270,
         [theme.breakpoints.down('sm')]: {
-            height: 192,
-            width: 218,
+            height: 72,
+            width: 72,
         },
     },
     pictureDefault: {
-        width: 176
+        width: 176,
+        [theme.breakpoints.down('sm')]: {
+            width: 72,
+        },
     },
     pictureLinks: {
         display: 'flex',
@@ -84,10 +94,15 @@ const styleSheet = createStyleSheet('Edit', theme => ({
         color: '#eb3941',
         cursor: 'pointer',
         textDecoration: 'underline',
-        marginTop: 24
+        marginTop: 24,
+        [theme.breakpoints.down('sm')]: {
+            marginTop: 8,
+            marginLeft: 24,
+        },
     },
     formWrap: {
         marginLeft: 88,
+        paddingBottom: 96,
         [theme.breakpoints.down('md')]: {
             marginLeft: 40,
             marginRight: 40,
@@ -95,6 +110,8 @@ const styleSheet = createStyleSheet('Edit', theme => ({
         [theme.breakpoints.down('sm')]: {
             marginLeft: 0,
             marginRight: 0,
+            marginTop: 40,
+            paddingBottom: 40,
         },
         width: '100%',
         maxWidth: 688
@@ -127,7 +144,10 @@ class Edit extends Component {
         // const Form = PlayerForm;
 
         return <div className={classes.root}>
-            <Typography type="headline">Edit Profile</Typography>
+
+            <Hidden xsDown>
+                <Typography type="headline">Edit Profile</Typography>
+            </Hidden>
             <div className={classes.content}>
                 <div className={classes.left}>
 
@@ -148,7 +168,13 @@ class Edit extends Component {
                         </Typography>
                     </div>
                 </div>
-                <PlayerForm className={classes.formWrap}/>
+                {this.props.user.role === SCOUT_ROLE && (
+                    <ScoutForm className={classes.formWrap}/>
+                )}
+                {this.props.user.role === PLAYER_ROLE && (
+                    <PlayerForm className={classes.formWrap}/>
+                )}
+
             </div>
         </div>
     }
@@ -159,4 +185,5 @@ Edit.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styleSheet)(Edit);
+
+export default compose(withStyles(styleSheet), withWidth())(Edit);

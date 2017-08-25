@@ -386,7 +386,7 @@ class ScoutProfile extends Component {
                     <div className={classes.topNavigate}>
                         <ShareButton/>
                         <div className={classes.rightNavigate}>
-                            <Link to="/user/edit" disabledUnderline>
+                            <Link to="/profile/edit" disabledUnderline>
                                 <Button className={classes.editButton}>
                                     <Icon className={classes.editIcon}>pencil</Icon>
                                     <span>Edit</span>
@@ -444,7 +444,7 @@ class ScoutProfile extends Component {
                                     <Typography type="subheading">Your profile is incomplete!</Typography>
 
                                     <Typography type="body1" className={classes.point}>
-                                        <Link to="/user/edit" disabledUnderline>
+                                        <Link to="/profile/edit" disabledUnderline>
                                             <Button className={classes.editButton}>
                                                 <Icon className={classes.editIcon}>pencil</Icon>
                                                 <span>Edit</span>
@@ -459,39 +459,55 @@ class ScoutProfile extends Component {
                 </div>
 
 
-                <Hidden smUp>
-                    <Paper square className={classes.mobileContent}>
-                        <div className={classes.tabContent}>
+                {(user.id === currentUser.id || user.biography) && (
+                    <Hidden smUp>
+                        <Paper square className={classes.mobileContent}>
+                            <div className={classes.tabContent}>
 
-                            {(!user.biography || !currentUser.is_verify) && (
-                                <Typography type="subheading" align="center" className={classes.descTitle}>
-                                    Your profile is incomplete!
-                                </Typography>
-                            )}
-
-                            {!currentUser.is_verify && (
-                                <div>
-                                    <Typography type="body1" align="center" className={classes.desc}>
-                                        You must be a verified scout before contacting players.
+                                {(!user.biography || !user.profile_picture || !currentUser.is_verify) && (
+                                    <Typography type="subheading" align="center" className={classes.descTitle}>
+                                        Your profile is incomplete!
                                     </Typography>
-                                    <Typography type="caption" align="center"
-                                                className={classNames(classes.desc, classes.descBottom)}>
-                                        Please go to your <Link to="/setting">Settings</Link> to request to get
-                                        verified.
+                                )}
+
+                                {user.id === currentUser.id && (!user.biography || !user.profile_picture) && (
+
+                                    <Typography type="body1" className={classes.point}>
+                                        <Link to="/profile/edit" disabledUnderline>
+                                            <Button className={classes.editButton}>
+                                                <Icon className={classes.editIcon}>pencil</Icon>
+                                                <span>Edit</span>
+                                            </Button>
+                                        </Link> your profile information
                                     </Typography>
-                                </div>
-                            )}
+                                )}
 
 
-                            {user.biography && (
-                                <Typography type="body1" className={classes.infoRightAbout}>
-                                    {user.biography}
-                                </Typography>
-                            )}
+                                {user.id === currentUser.id && !currentUser.is_verify && (
+                                    <div>
+                                        <Typography type="body1" align="center" className={classes.desc}>
+                                            You must be a verified scout before contacting players.
+                                        </Typography>
+                                        <Typography type="caption" align="center"
+                                                    className={classNames(classes.desc, classes.descBottom)}>
+                                            Please go to your <Link to="/setting">Settings</Link> to request to get
+                                            verified.
+                                        </Typography>
+                                    </div>
+                                )}
 
-                        </div>
-                    </Paper>
-                </Hidden>
+
+                                {user.biography && (
+                                    <Typography type="body1" className={classes.infoRightAbout}>
+                                        {user.biography}
+                                    </Typography>
+                                )}
+
+                            </div>
+                        </Paper>
+                    </Hidden>
+                )}
+
             </div>
 
         </div>
