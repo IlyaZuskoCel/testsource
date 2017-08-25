@@ -42,6 +42,9 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
     subTitle: {marginTop: 80, marginBottom: 40},
     buttons: {
         marginTop: 56
+    },
+    rememberTitle: {
+        paddingBottom: 24
     }
 }));
 
@@ -251,7 +254,8 @@ class PlayerForm extends Component {
 
 
             <Typography type="subheading" className={classes.subTitle}>About Me</Typography>
-            <Typography type="caption">Remember, scouts will be reading this before they decide to contact
+            <Typography type="caption" className={classes.rememberTitle}>Remember, scouts will be reading this before
+                they decide to contact
                 you.</Typography>
             <Grid container>
                 <Grid item xs={12} md={12}>
@@ -259,7 +263,7 @@ class PlayerForm extends Component {
                                error={this.state.errors.indexOf('weight') > -1}
                                multiline
                                rowsMax="4"
-                               rows="2"
+                               rows="1"
                                label="Tell us about yourself"
                                value={this.state.biography || ''}
                                onChange={this.handleChange('biography')}/>

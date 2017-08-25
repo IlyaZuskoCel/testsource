@@ -332,8 +332,10 @@ const theme = (outerTheme) => {
                     '&::-ms-input-placeholder': MuiInputPlaceholder, // Edge
                 },
                 inputMultiline: {
+                    ...typography.body1,
                     paddingLeft: 8,
                     paddingRight: 8,
+
                 },
                 disabled: {
                     '&:parent': {
