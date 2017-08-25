@@ -10,17 +10,15 @@ import {connect} from 'react-redux';
 import Edit from '../components/Edit';
 
 import {getCurrent} from '../actions';
-import {goBack} from '../../common/actions';
 
 const mapStateToProps = (state, props) => ({
     user: state.user.current,
 });
+
 const mapDispatchToProps = (dispatch) => ({
     getUser: id => dispatch(getCurrent()),
-    cancel: () => dispatch(goBack()),
-    save: () => dispatch(goBack()),
-    uploadPicture: () => dispatch(goBack()),
-    deletePicture: () => dispatch(goBack()),
+    uploadPicture: () => dispatch(getCurrent()),
+    deletePicture: () => dispatch(getCurrent()),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Edit))

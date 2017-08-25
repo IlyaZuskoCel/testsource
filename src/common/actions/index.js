@@ -5,7 +5,7 @@
 
 import {push as routerGo, goBack as routerBack} from 'react-router-redux';
 
-import {SUCCESS_ALERT, ERROR_ALERT, REMOVE_ALERT, SET_LEAGUES, SET_TEAMS} from '../constants/actions';
+import {SUCCESS_ALERT, ERROR_ALERT, REMOVE_ALERT, SET_LEAGUES, SET_TEAMS, SET_COUNTRIES} from '../constants/actions';
 
 import {get} from '../helpers/api';
 
@@ -46,6 +46,18 @@ export const getTeams = () => dispatch => {
             if ('error' in teams)
                 return dispatch({type: ERROR_ALERT, payload: {message: teams.error.message}});
             dispatch({type: SET_TEAMS, payload: teams});
+        })
+        .catch((message) => {
+            dispatch({type: ERROR_ALERT, payload: {message}});
+        })
+};
+
+export const getCountries = () => dispatch => {
+    return get(`/api/v2/country/get-list`)
+        .then(data => {
+            if ('error' in data)
+                return dispatch({type: ERROR_ALERT, payload: {message: data.error.message}});
+            dispatch({type: SET_COUNTRIES, payload: data});
         })
         .catch((message) => {
             dispatch({type: ERROR_ALERT, payload: {message}});

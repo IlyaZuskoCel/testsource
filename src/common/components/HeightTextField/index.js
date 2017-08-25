@@ -12,26 +12,23 @@ import classNames from 'classnames';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 
 
-const parseDate = value => {
+const parse = value => {
     if (!value) return {
-        year: '',
-        month: '',
-        day: '',
+        f: '',
+        i: '',
     };
-    let date = value.split('-');
     return {
-        year: parseInt(date[0]) || '',
-        month: parseInt(date[1]) || '',
-        day: parseInt(date[2]) || '',
+        f: value[0] || '',
+        i: value[1] || '',
     }
 
 };
 
-const getDate = ({year, month, day}) => {
-    return `${year}-${month}-${day}`;
+const get = ({f, i}) => {
+    return [f, i];
 };
 
-const styleSheet = createStyleSheet('DateTextField', theme => {
+const styleSheet = createStyleSheet('HeightTextField', theme => {
 
     const placeholderForm = {
         opacity: '0 !important',
@@ -72,47 +69,26 @@ const styleSheet = createStyleSheet('DateTextField', theme => {
 });
 
 
-class DateTextField extends Component {
+class HeightTextField extends Component {
     constructor(props) {
         super(props);
 
         this.state = {focused: false};
     }
 
-    handleChangeMonth = event => {
+    handleChange = name => event => {
         event.preventDefault();
-        let value = parseInt(event.target.value);
-        if (value > 12 || value < 0)
-            return false;
 
-        let date = parseDate(this.props.value);
+        let data = parse(this.props.value);
 
-        date.month = `${value < 10 ? '0' : ''}${value}`;
+        data[name] = event.target.value;
 
-        const dateValue = getDate(date);
+        const dataValue = get(data);
 
-        if (dateValue === this.props.value)
-            return;
-        this.props.onChange({target: {value: dateValue}});
+        this.props.onChange({target: {value: dataValue}});
         return false;
     };
-    handleChangeYear = event => {
-        event.preventDefault();
-        let value = parseInt(event.target.value);
-        if (value > 2100 || value < 0)
-            return false;
 
-        let date = parseDate(this.props.value);
-
-        date.year = '' + value;
-
-        const dateValue = getDate(date);
-
-        if (dateValue === this.props.value)
-            return;
-        this.props.onChange({target: {value: dateValue}});
-        return false;
-    };
     handleFocus = event => {
         if (this.props.onFocus) {
             this.props.onFocus(event);
@@ -150,7 +126,7 @@ class DateTextField extends Component {
             value,
         } = this.props;
 
-        const date = parseDate(value);
+        const data = parse(value);
         return (
             <div>
                 <FormControl
@@ -164,26 +140,26 @@ class DateTextField extends Component {
                 >
                     {label &&
                     <InputLabel className={labelClassName} {...InputLabelProps}
-                                shrink={!!date.month || !!date.year || this.state.focused}>
+                                shrink={!!data.f || !!data.i || this.state.focused}>
                         {label}
                     </InputLabel>}
 
                     <Input
-                        className={classNames(classes.input, classes.leftInput, {[classes.hidePlaceholder]: date.month || (!this.state.focused && !date.month && !date.year)})}
+                        className={classNames(classes.input, classes.leftInput, {[classes.hidePlaceholder]: data.f || (!this.state.focused && !data.f && !data.i)})}
                         disabled={disabled}
-                        name="month"
-                        value={date.month}
-                        placeholder="MM"
-                        onChange={this.handleChangeMonth}
+                        name="f"
+                        value={data.f}
+                        placeholder="ft"
+                        onChange={this.handleChange('f')}
                     />
 
                     <Input
-                        className={classNames(classes.input, classes.rightInput, {[classes.hidePlaceholder]: date.year || (!this.state.focused && !date.month && !date.year)})}
+                        className={classNames(classes.input, classes.rightInput, {[classes.hidePlaceholder]: data.i || (!this.state.focused && !data.f && !data.i)})}
                         disabled={disabled}
-                        name="year"
-                        value={date.year}
-                        placeholder="YYYY"
-                        onChange={this.handleChangeYear}
+                        name="i"
+                        value={data.i}
+                        placeholder="in"
+                        onChange={this.handleChange('i')}
 
                     />
 
@@ -198,8 +174,8 @@ class DateTextField extends Component {
     }
 }
 
-DateTextField.defaultProps = {
+HeightTextField.defaultProps = {
     required: false,
 };
 
-export default withStyles(styleSheet)(DateTextField);
+export default withStyles(styleSheet)(HeightTextField);

@@ -9,10 +9,12 @@ import load from './load';
 import alert from './alert';
 import leagues from './leagues';
 import teams from './teams';
+import countries from './countries';
 
 export default combineReducers({
     load,
     alert,
     leagues,
     teams,
+    countries,
 });

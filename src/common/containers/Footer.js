@@ -8,9 +8,17 @@ import {connect} from 'react-redux';
 
 import Footer from '../components/Footer';
 
+import {logOut} from '../../user/actions';
+import {go} from '../actions';
 
 const mapStateToProps = (state) => ({
     isAuthenticated: state.user.current !== null
 });
 
-export default withRouter(connect(mapStateToProps)(Footer))
+
+const mapDispatchToProps = (dispatch) => ({
+    logOut: (username, password) => dispatch(logOut()),
+    go: page => dispatch(go(page)),
+});
+
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Footer))

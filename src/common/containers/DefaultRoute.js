@@ -15,6 +15,8 @@ const mapStateToProps = (state) => ({
     alert: state.common.alert
 });
 
+
+
 const mapDispatchToProps = (dispatch) => ({
     hideAlert: () => dispatch(removeAlert()),
 });

@@ -21,7 +21,7 @@ import TextField from 'material-ui/TextField';
 import Tabs, {Tab} from 'material-ui/Tabs';
 
 import {Link, Icon} from '../../../common/components';
-import {PLAYER_ROLE, SCOUT_ROLE, GENDER_FEMALE, GENDER_MALE, SHOT_LEFT, SHOT_RIGHT, POS_LIST} from '../../constants';
+import {PLAYER_ROLE, SCOUT_ROLE, GENDER_FEMALE, GENDER_MALE, SHOT_LEFT, SHOT_RIGHT, POS_LIST, SHOT_LIST} from '../../constants';
 
 import FavoriteButton from '../../containers/FavoriteButton';
 import ShareButton from '../ShareButton';
@@ -614,7 +614,7 @@ class PlayerProfile extends Component {
                                 <div className={classes.infoRow}>
                                     <Typography type="caption" className={classes.infoCaption}>Shot</Typography>
                                     <Typography type="body2" className={classes.infoValue}>
-                                        {user.shot === SHOT_RIGHT ? 'Right' : 'Left'}
+                                        {SHOT_LIST[user.shot]}
                                     </Typography>
 
                                 </div>
@@ -664,7 +664,7 @@ class PlayerProfile extends Component {
                                         Birth Date
                                     </Typography>
                                     <Typography type="subheading" className={classes.infoRightValue}>
-                                        {user.birthday || 'Unknown'}
+                                        {user.birthday ? moment(user.birthday).format('MMM. YYYY') : 'Unknown'}
                                     </Typography>
                                 </div>
                                 <div>
@@ -699,7 +699,7 @@ class PlayerProfile extends Component {
                                 Birth Date
                             </Typography>
                             <Typography type="subheading" className={classes.infoRightValue}>
-                                {user.birthday || 'Unknown'}
+                                {user.birthday ? moment(user.birthday).format('MMM. YYYY') : 'Unknown'}
                             </Typography>
                         </div>
                         <div>
@@ -814,7 +814,7 @@ class PlayerProfile extends Component {
                                         <div className={classes.infoRow}>
                                             <Typography type="caption" className={classes.infoCaption}>Shot</Typography>
                                             <Typography type="body2" className={classes.infoValue}>
-                                                {user.shot === SHOT_RIGHT ? 'Right' : 'Left'}
+                                                {SHOT_LIST[user.shot]}
                                             </Typography>
 
                                         </div>

@@ -11,7 +11,15 @@ function current(state = null, action) {
     switch (action.type) {
         case LOGIN:
         case SET_CURRENT:
-            return action.payload;
+            return {
+                gender: action.payload.gender_short === 'M' ? '1' : '2',
+                nationality: '1',
+                position: '1',
+                id_league: '1',
+                id_team_current: '1',
+                player_num: action.payload.jersey_number,
+                ...action.payload
+            };
         case LOGOUT:
             return null;
         default:

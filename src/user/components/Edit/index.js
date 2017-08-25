@@ -21,7 +21,7 @@ import {PLAYER_ROLE, SCOUT_ROLE} from '../../constants';
 
 import defaultPhoto from './assets/images/default-photo.png';
 
-import PlayerForm from './player';
+import PlayerForm from '../../containers/EditPlayerForm';
 
 const styleSheet = createStyleSheet('Edit', theme => ({
     root: {
@@ -124,7 +124,7 @@ class Edit extends Component {
     render() {
         const {classes, user} = this.props;
 
-        const Form = PlayerForm;
+        // const Form = PlayerForm;
 
         return <div className={classes.root}>
             <Typography type="headline">Edit Profile</Typography>
@@ -148,10 +148,7 @@ class Edit extends Component {
                         </Typography>
                     </div>
                 </div>
-                <Form className={classes.formWrap}
-                      user={user}
-                      onSave={this.props.save}
-                      onCancel={this.props.cancel}/>
+                <PlayerForm className={classes.formWrap}/>
             </div>
         </div>
     }

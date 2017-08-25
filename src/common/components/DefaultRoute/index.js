@@ -54,7 +54,6 @@ const DefaultRoute = ({component: Component, isAuthenticated, alert, hideAlert, 
     <Route {...rest} render={props => (
         <div>
             <Grid className={classNames(classes.root, {[classes.hideBackgroundTopHeader]: hideBackgroundTopHeader})}>
-
                 <Header hideBackgroundTopHeader={hideBackgroundTopHeader}/>
                 <Component {...props} />
                 <Footer/>

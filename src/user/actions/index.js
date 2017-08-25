@@ -81,6 +81,21 @@ export const getUser = (id) => dispatch => {
             dispatch({type: ERROR_ALERT, payload: {message}});
         })
 };
+
+export const update = (data) => dispatch => {
+    return post(`/api/v2/profile/update`, {...data, feet: data.height[0], inches: data.height[1]})
+        .then(result => {
+            if ('error' in result)
+                return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
+            dispatch({type: SET_CURRENT, payload: result});
+            dispatch(push('/profile'));
+        })
+        .catch((message) => {
+            dispatch({type: ERROR_ALERT, payload: {message}});
+        })
+};
+
+
 export const addFavorite = (id) => dispatch => {
     return post(`/api/v2/activity/follow`, {id_user_player: id})
         .then(result => {
