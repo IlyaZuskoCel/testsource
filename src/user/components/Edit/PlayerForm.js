@@ -46,18 +46,38 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
 }));
 
 
+const getUserState = user => ({
+    first_name: user.first_name,
+    last_name: user.last_name,
+    birthday: user.birthday,
+    gender: user.gender,
+    nationality: user.nationality,
+    position: user.position,
+    shot: user.shot,
+    player_num: user.player_num,
+    height: user.height,
+    weight: user.weight,
+    id_league: user.id_league,
+    id_team_current: user.id_team_current,
+    biography: user.biography,
+});
+
 class PlayerForm extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            ...props.user,
+            ...getUserState(props.user),
             errors: []
         };
     }
 
     componentDidMount() {
         this.props.fetchData();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState(getUserState(nextProps.user))
     }
 
     handleChange = name => event => {
