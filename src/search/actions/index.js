@@ -3,8 +3,7 @@
  * moonion.com
  */
 
-import {push, goBack} from 'react-router-redux';
-
+import {go} from '../../common/actions';
 import {get, post, auth} from '../../common/helpers/api';
 
 import {ERROR_ALERT, SUCCESS_ALERT} from '../../common/constants/actions';
@@ -30,9 +29,7 @@ const addRequestParams = (url , params) => {
 export const uploadPlayers = (params) => dispatch => {
     dispatch({type: CLEAR_LIST});
 
- //   console.log(addRequestParams('api/v2/user/player-search' , params));
-
-    post(addRequestParams('api/v2/user/player-search' , params) , {} )
+    post(addRequestParams('/api/v2/user/player-search' , params) , {})
         .then(players => {
             console.log(players);
             dispatch({type: SET_PLAYERS , payload: players});
@@ -44,11 +41,21 @@ export const uploadPlayers = (params) => dispatch => {
 
 export const uploadScouts = (params) => dispatch => {
     dispatch({type: CLEAR_LIST});
-    post(addRequestParams('api/v2/user/scout-search', params) , {})
+    post(addRequestParams('/api/v2/user/scout-search', params) , {})
         .then(scouts => {
            dispatch({type: SET_SCOUTS , payload: scouts})
         })
         .catch((message) => {
             dispatch({type: ERROR_ALERT , payload: {message}})
+        });
+}
+
+export const getLeagues = () => dispatch => {
+    get('/api/v2/league/get-list')
+        .then(leagues => {
+            console.log(leagues);
+        })
+        .catch(message => {
+            dispatch({type: ERROR_ALERT, payload: {message}});
         });
 }

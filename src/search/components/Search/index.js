@@ -9,14 +9,13 @@ import PropTypes from 'prop-types';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
+import TextField from 'material-ui/TextField';
 import Typography from 'material-ui/Typography';
 import withWidth from 'material-ui/utils/withWidth';
-import {Link, Icon} from '../../../common/components';
-import Pagination from '../../../common/components/Pagination';
+import {Link, Icon, Pagination , Autosuggest} from '../../../common/components';
 
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import defaultPhoto from './assets/images/default-photo.png';
-
 
 import Players from './players';
 import Scouts from './scouts'
@@ -31,6 +30,7 @@ const styleSheet = createStyleSheet('Search' , theme => ({
     },
     header: {
         backgroundColor: '#f5f5f5',
+        marginTop: 44,
     },
     footer: {
         display: 'flex',
@@ -39,7 +39,27 @@ const styleSheet = createStyleSheet('Search' , theme => ({
         justifyContent: 'center',
         margin: [70, 0],
     },
+
+    tabs: {
+      fontSize: 40,
+    },
+
+    textField: {
+        width: 360,
+        margin: [0, 44, 44, 0]
+    }
 }));
+
+const splitSearchQuery = (q) => {
+    let result = {};
+
+    q.slice(1).split('&').map(item => {
+        let splitItem = item.split('=');
+        result[splitItem[0]] = splitItem[1];
+    });
+
+    return result;
+}
 
 
 class Search extends Component {
@@ -48,50 +68,30 @@ class Search extends Component {
         super(props);
 
         this.state = {
-            players: null,
-            scouts: null,
-            activeTab: 0,
+            activeTab:  this.props.type && this.props.type === 'scout' ? 1 : 0,
             activePage: 1,
+            DropdownValue: '',
         }
 
         this.handleChange = this.handleChange.bind(this);
         this.changePagination = this.changePagination.bind(this);
-        this.uploadData = this.uploadData.bind(this);
     }
 
     componentDidMount() {
-        this.props.upload({page : 2 , per_page : 16});
+       this.props.upload(this.props.type , {page : 1 , per_page : 16});
+       this.props.getLeagues();
     }
-
-    componentWillReceiveProps(nextProp) {
-
-        console.log(nextProp);
-        this.setState({results : nextProp.results , width: nextProp.width});
-
-    }
-
-    uploadData(value) {
-        let params = {
-            page: this.state.activePage,
-            per_page: 16,
-        };
-
-        if (value === 0) {
-            this.props.uploadPlayers(params);
-        } else if (value === 1) {
-            this.props.uploadScouts(params);
-        }
-    }
-
 
     handleChange(event , value) {
-        this.setState({activeTab : value});
-        this.uploadData(value);
+            this.setState({activeTab : value} , ()  => {
+                this.props.history.push(value === 1 ? '/search/scout' : '/search/player');
+                this.props.upload(value === 1 ? 'scout' : 'player' , {page : 1});
+            });
     }
 
     changePagination(page) {
         this.setState({activePage : page} , () => {
-            this.uploadData(this.state.activeTab);
+           this.props.upload(this.props.type , {page : page , per_page: 16});
         });
     }
 
@@ -101,18 +101,22 @@ class Search extends Component {
         return (<div className={classes.root}>
                 <header className={classes.header}>
                     <div className={classes.content}>
-                        <Tabs index={this.state.activeTab} indicatorColor="#d7001e"  textColor="#d7001e" onChange={this.handleChange} width={this.state.width}>
+                        <Tabs index={this.state.activeTab} indicatorColor="#d7001e"  textColor="#d7001e" onChange={this.handleChange} width={this.state.width} className={classes.tabs}>
                             <Tab label="Players" />
                             <Tab label="Scouts" />
                         </Tabs>
                     </div>
+
+                    <div className={classes.content}>
+                    </div>
+
                 </header>
 
-            {this.state.activeTab === 0 &&
-                <Players players={this.state.results} />
+            {this.props.type === 'player' &&
+                <Players players={this.props.results} />
             }
-            {this.state.activeTab === 1 &&
-                <Scouts scouts={this.state.results} />
+            {this.props.type === 'scout' &&
+                <Scouts scouts={this.props.results} />
             }
 
             <footer className={classes.footer}>
@@ -126,6 +130,7 @@ class Search extends Component {
 Search.propTypes = {
     children: PropTypes.node,
     classes: PropTypes.object.isRequired,
+    width: PropTypes.string,
 
 };
 
