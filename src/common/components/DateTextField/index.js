@@ -28,7 +28,7 @@ const parseDate = value => {
 };
 
 const getDate = ({year, month, day}) => {
-    return `${year}-${month}-${day}`;
+    return `${year}-${month}-${day || '01'}`;
 };
 
 const styleSheet = createStyleSheet('DateTextField', theme => {
