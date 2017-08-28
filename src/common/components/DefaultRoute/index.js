@@ -28,7 +28,7 @@ const styleSheet = createStyleSheet('DefaultRoute', theme => ({
         justifyContent: 'space-between',
         minHeight: window.innerHeight - 70,
         overflowX: 'hidden',
-        //paddingTop: 70,
+        paddingTop: 70,
         [theme.breakpoints.down('sm')]: {
             minHeight: window.innerHeight - 60,
             paddingTop: 60,
