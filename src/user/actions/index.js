@@ -16,7 +16,8 @@ import {
     SET_USER,
     SET_USER_FAVORITE,
     UNSET_USER_FAVORITE,
-    SET_CURRENT_PHOTO
+    SET_CURRENT_PHOTO,
+    SET_CURRENT_PHONE
 } from '../constants/actions';
 import {LOAD} from '../../common/constants/actions';
 
@@ -91,18 +92,27 @@ export const getUser = (id) => dispatch => {
 };
 
 export const update = (data) => dispatch => {
-
-    let req = {...data};
-    if (data.height) {
-        req.feet = data.height[0];
-        req.inches = data.height[1];
-    }
-    return post(`/api/v2/profile/update`, req)
+    return post(`/api/v2/profile/update`, data)
         .then(result => {
             if ('error' in result)
                 return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
             dispatch({type: SET_CURRENT, payload: result});
             dispatch(push('/profile'));
+            dispatch({type: SUCCESS_ALERT, payload: {message: 'Profile was updated successfully'}});
+        })
+        .catch((message) => {
+            dispatch({type: ERROR_ALERT, payload: {message}});
+        })
+};
+
+export const deleteProfile = (password, why) => dispatch => {
+    return post(`/api/v2/profile/delete-profile`, {password, why})
+        .then(result => {
+            if ('error' in result)
+                return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
+
+            dispatch({type: SUCCESS_ALERT, payload: {message: 'Profile was deleted successfully'}});
+            dispatch(logOut());
         })
         .catch((message) => {
             dispatch({type: ERROR_ALERT, payload: {message}});
@@ -175,3 +185,43 @@ export const sendEmail = (id, subject, text) => dispatch => {
         })
 };
 
+export const verifyScout = phone => dispatch => {
+    return post(`/api/v2/message/verify-message`, {phone})
+        .then(result => {
+            if (result.success) {
+                dispatch({type: SET_CURRENT_PHONE, payload: phone});
+                return dispatch({type: SUCCESS_ALERT, payload: {message: "Your message was successfully sent!"}});
+            }
+            return dispatch({type: ERROR_ALERT, payload: {message: "Your message wasn't sent!"}});
+        })
+        .catch((message) => {
+            dispatch({type: ERROR_ALERT, payload: {message}});
+        })
+};
+
+export const changePassword = (password_old, password_new) => dispatch => {
+    return post(`/api/v2/profile/change-password`, {password_old, password_new})
+        .then(result => {
+            if ('error' in result)
+                return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
+
+            dispatch(goBack());
+            return dispatch({type: SUCCESS_ALERT, payload: {message: "Your password was updated successfully!"}});
+        })
+        .catch((message) => {
+            dispatch({type: ERROR_ALERT, payload: {message}});
+        })
+};
+
+export const resetPassword = () => dispatch => {
+    return post(`/api/v2/profile/reset-password`, {})
+        .then(result => {
+            if ('error' in result)
+                return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
+
+            return dispatch({type: SUCCESS_ALERT, payload: {message: "We emailed you a temporary password"}});
+        })
+        .catch((message) => {
+            dispatch({type: ERROR_ALERT, payload: {message}});
+        })
+};

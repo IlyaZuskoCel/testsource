@@ -151,9 +151,87 @@ class Form extends Component {
                 </Grid>
 
 
+
+                <Grid item xs={12}>
+                    <Typography type="body1">Pagination</Typography>
+                    <Pagination currentPage={1} perPage={10} total={30}/>
+                </Grid>
+                <Grid item xs={12}>
+                    <Typography type="body1">Pagination</Typography>
+                    <Pagination currentPage={2} perPage={10} total={30}/>
+                </Grid>
+                <Grid item xs={12}>
+                    <Typography type="body1">Pagination</Typography>
+                    <Pagination currentPage={3} perPage={10} total={30}/>
+                </Grid>
+
+
+
+                <Grid item xs={12}>
+                    <Typography type="body1">Pagination</Typography>
+                    <Pagination currentPage={1} perPage={10} total={60}/>
+                </Grid>
                 <Grid item xs={12}>
                     <Typography type="body1">Pagination</Typography>
                     <Pagination currentPage={2} perPage={10} total={60}/>
+                </Grid>
+                <Grid item xs={12}>
+                    <Typography type="body1">Pagination</Typography>
+                    <Pagination currentPage={3} perPage={10} total={60}/>
+                </Grid>
+
+                <Grid item xs={12}>
+                    <Typography type="body1">Pagination</Typography>
+                    <Pagination currentPage={4} perPage={10} total={60}/>
+                </Grid>
+                <Grid item xs={12}>
+                    <Typography type="body1">Pagination</Typography>
+                    <Pagination currentPage={5} perPage={10} total={60}/>
+                </Grid>
+                <Grid item xs={12}>
+                    <Typography type="body1">Pagination</Typography>
+                    <Pagination currentPage={6} perPage={10} total={60}/>
+                </Grid>
+
+                <Grid item xs={12}>
+                    <Typography type="body1">Pagination</Typography>
+                    <Pagination currentPage={1} perPage={10} total={100}/>
+                </Grid>
+                <Grid item xs={12}>
+                    <Typography type="body1">Pagination</Typography>
+                    <Pagination currentPage={2} perPage={10} total={100}/>
+                </Grid>
+                <Grid item xs={12}>
+                    <Typography type="body1">Pagination</Typography>
+                    <Pagination currentPage={3} perPage={10} total={100}/>
+                </Grid>
+                <Grid item xs={12}>
+                    <Typography type="body1">Pagination</Typography>
+                    <Pagination currentPage={4} perPage={10} total={100}/>
+                </Grid>
+                <Grid item xs={12}>
+                    <Typography type="body1">Pagination</Typography>
+                    <Pagination currentPage={5} perPage={10} total={100}/>
+                </Grid>
+                <Grid item xs={12}>
+                    <Typography type="body1">Pagination</Typography>
+                    <Pagination currentPage={6} perPage={10} total={100}/>
+                </Grid>
+                <Grid item xs={12}>
+                    <Typography type="body1">Pagination</Typography>
+                    <Pagination currentPage={7} perPage={10} total={100}/>
+                </Grid>
+                <Grid item xs={12}>
+                    <Typography type="body1">Pagination</Typography>
+                    <Pagination currentPage={8} perPage={10} total={100}/>
+                </Grid>
+                <Grid item xs={12}>
+                    <Typography type="body1">Pagination</Typography>
+                    <Pagination currentPage={9} perPage={10} total={100}/>
+                </Grid>
+                <Grid item xs={12}>
+                    <Typography type="body1">Pagination</Typography>
+                    <Pagination currentPage={10} perPage={10} total={100}/>
                 </Grid>
                 <span style={{margin: 40}}/>
             </Grid>

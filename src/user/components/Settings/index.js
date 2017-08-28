@@ -4,30 +4,28 @@
  */
 
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-
-import {withStyles, createStyleSheet} from 'material-ui/styles';
 
 import {PLAYER_ROLE, SCOUT_ROLE} from '../../constants';
 
-
-const styleSheet = createStyleSheet('Settings', theme => ({}));
-
+import PlayerForm from '../../containers/SettingsPlayerForm';
+import ScoutForm from '../../containers/SettingsScoutForm';
 
 class Settings extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+
     componentDidMount() {
         this.props.getUser();
     }
 
     render() {
-
-        return <div>Settings</div>
+        if (this.props.user.role === PLAYER_ROLE)
+            return <PlayerForm/>;
+        if (this.props.user.role === SCOUT_ROLE)
+            return <ScoutForm/>;
     }
 }
 
-Settings.propTypes = {
-    children: PropTypes.node,
-    classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styleSheet)(Settings);
+export default Settings;
