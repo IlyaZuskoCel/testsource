@@ -16,7 +16,8 @@ import {
     SET_USER,
     SET_USER_FAVORITE,
     UNSET_USER_FAVORITE,
-    SET_CURRENT_PHOTO
+    SET_CURRENT_PHOTO,
+    SET_CURRENT_PHONE
 } from '../constants/actions';
 import {LOAD} from '../../common/constants/actions';
 
@@ -97,6 +98,7 @@ export const update = (data) => dispatch => {
                 return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
             dispatch({type: SET_CURRENT, payload: result});
             dispatch(push('/profile'));
+            dispatch({type: SUCCESS_ALERT, payload: {message: 'Profile was updated successfully'}});
         })
         .catch((message) => {
             dispatch({type: ERROR_ALERT, payload: {message}});
@@ -163,6 +165,20 @@ export const sendEmail = (id, subject, text) => dispatch => {
                 return dispatch({type: SUCCESS_ALERT, payload: {message: "Your message was successfully sent!"}});
             return dispatch({type: ERROR_ALERT, payload: {message: "Your message wasn't sent!"}});
 
+        })
+        .catch((message) => {
+            dispatch({type: ERROR_ALERT, payload: {message}});
+        })
+};
+
+export const verifyScout = phone => dispatch => {
+    return post(`/api/v2/message/verify-message`, {phone})
+        .then(result => {
+            if (result.success) {
+                dispatch({type: SET_CURRENT_PHONE, payload: phone});
+                return dispatch({type: SUCCESS_ALERT, payload: {message: "Your message was successfully sent!"}});
+            }
+            return dispatch({type: ERROR_ALERT, payload: {message: "Your message wasn't sent!"}});
         })
         .catch((message) => {
             dispatch({type: ERROR_ALERT, payload: {message}});

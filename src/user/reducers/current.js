@@ -4,11 +4,13 @@
  */
 
 
-import {LOGIN, LOGOUT, SET_CURRENT, SET_CURRENT_PHOTO} from '../constants/actions';
+import {LOGIN, LOGOUT, SET_CURRENT, SET_CURRENT_PHOTO, SET_CURRENT_PHONE} from '../constants/actions';
 
 
 function current(state = null, action) {
     switch (action.type) {
+        case SET_CURRENT_PHONE:
+            return {...state, phone: action.payload};
         case SET_CURRENT_PHOTO:
             return {...state, profile_picture: action.payload};
         case LOGIN:
