@@ -20,6 +20,9 @@ const styleSheet = createStyleSheet('Sign', theme => ({
     root: {
         backgroundColor: '#ffffff',
     },
+    root2: {
+        maxWidth: 1440,
+    },
     grid: {
         display: 'inline-block',
 
@@ -286,10 +289,9 @@ class Sign extends Component {
             || (this.props.hideBackgroundTopMobileHeader && width === 'xs');
         return (
             <div>
-                <AppBar position="fixed" className={classNames(classes.container, {[classes.hideShadow]: hideBackground})}>
+                <AppBar position='absolute' className={classNames(classes.container, {[classes.hideShadow]: hideBackground})}>
                     <div className={classNames({[classes.leftBg]: !hideBackground})}/>
-                    <div className={classNames({[classes.rightBg]: !hideBackground})}/>
-                    <Grid container gutter={8} className={classes.root}>
+                    <Grid container gutter={8} className={classes.root2}>
                         <Grid item xs={4}>
                             <Link to="/"
                                   className={classNames(classes.logoLink)}
@@ -297,33 +299,7 @@ class Sign extends Component {
                                 <ScoutIcon className={classes.logo}>scoutzoo-symbol</ScoutIcon>
                             </Link>
                         </Grid>
-                        <Grid item xs={8} className={classes.right}>
-                            {/*{DropMenu ? (*/}
-                                {/*<div className={classNames(classes.menu)}>*/}
-                                    {/*<Link to="/" disabledUnderline*/}
-                                          {/*className={classNames(classes.menuItem)}>*/}
-                                        {/*<Button*/}
-                                            {/*className={classNames(classes.searchButton, {[classes.searchButtonHideBackground]: hideBackground && !this.props.hideBackgroundTopMobileHeader})}>*/}
-                                            {/*<ScoutIcon className={classes.searchIcon}>search</ScoutIcon>*/}
-                                            {/*<span>Discover</span>*/}
-                                        {/*</Button>*/}
-                                    {/*</Link>*/}
 
-                                    {/*<Button*/}
-                                        {/*className={classNames(classes.menuItem, classes.profileButton)}*/}
-                                        {/*aria-owns="simple-menu"*/}
-                                        {/*aria-haspopup="true" onClick={this.handleMenuClick}>*/}
-                                        {/*<Avatar alt={user.full_name} className={classes.avatar}*/}
-                                                {/*src={user.profile_picture || DefaultAvatarImg}/>*/}
-                                        {/*<Hidden xsDown><span*/}
-                                            {/*className={classes.username}>{user.first_name} {user.last_name}</span></Hidden>*/}
-                                    {/*</Button>*/}
-                                    {/*{DropMenu}*/}
-                                {/*</div>*/}
-                            {/*) : (*/}
-                                {/*<div className={classNames(classes.menu)}/>*/}
-                            {/*)}*/}
-                        </Grid>
                     </Grid>
 
                 </AppBar>
