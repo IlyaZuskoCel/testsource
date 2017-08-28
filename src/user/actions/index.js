@@ -91,13 +91,7 @@ export const getUser = (id) => dispatch => {
 };
 
 export const update = (data) => dispatch => {
-
-    let req = {...data};
-    if (data.height) {
-        req.feet = data.height[0];
-        req.inches = data.height[1];
-    }
-    return post(`/api/v2/profile/update`, req)
+    return post(`/api/v2/profile/update`, data)
         .then(result => {
             if ('error' in result)
                 return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
