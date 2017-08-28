@@ -8,23 +8,27 @@ import Login from '../../containers/Login';
 import Grid from 'material-ui/Grid';
 import Hidden from 'material-ui/Hidden';
 import hockeyMen from './image/signup.jpg';
+import logo from './image/mstile.png';
+import AppBar from 'material-ui/AppBar';
+import Menu, {MenuItem} from 'material-ui/Menu';
+import Avatar from 'material-ui/Avatar';
 
-const styleSheet = createStyleSheet('Main', theme => ({
+const styleSheet = createStyleSheet('Sign', theme => ({
     root: {
         backgroundColor: '#ffffff',
-        //left: '11%',
-       // width: '74%',
-        //marginLeft: 50,
+    },
+    grid: {
+        display: 'inline-block',
+
     },
     header: {
-        marginTop: 120,
-        marginLeft: 124,
+        marginTop: 111,
+        marginLeft: '30%',
 
         [theme.breakpoints.down('md')]: {
-            //marginLeft: '30%',
+            marginLeft: 192,
         },
     },
-
     text: {
         color: '#d7001e'
     },
@@ -41,10 +45,37 @@ const styleSheet = createStyleSheet('Main', theme => ({
         width: 1600,
         height: 992,
     },
-    grid: {
-        display: 'inline-block',
 
-    }
+
+    avatar: {
+        position: 'absolute',
+        left: 30,
+        top: -29,
+        width: 150,
+        height: 150,
+    },
+    container: {
+        //display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        height: 70,
+        backgroundColor: '#ffffff',
+        boxShadow: '0 0 0px 0 rgba(0, 0, 0, 0.2)',
+    },
+    leftBg: {
+        position: 'absolute',
+        left: -20,
+        top: 0,
+        height: 70,
+
+        backgroundImage: 'linear-gradient(290deg, rgb(216, 23, 15), #da261e)',
+        transform: 'skew(-20deg)',
+        width: '196px',
+        minWidth: 196,
+
+    },
+
 }));
 
 function TabContainer(props) {
@@ -58,7 +89,6 @@ function TabContainer(props) {
 TabContainer.propTypes = {
     children: PropTypes.node.isRequired,
 };
-
 
 class Sign extends Component {
     constructor(props) {
@@ -80,45 +110,57 @@ class Sign extends Component {
     render() {
         const {classes} = this.props;
         return (
-            <Grid container direction={'row'} className={classes.root}>
-                <Grid item lg={6} md={7} className={classes.grid}>
-                    <Tabs className={classes.header}
-                          index={this.props.type === 'in' ? 0 : 1}
-                          onChange={this.handleChangeTab}
-                    >
-                        <Tab label={
-                            <Typography className={classes.text} type="body2">
-                                Log In
-                            </Typography>
-                        }/>
-                        <Tab label={
-                            <Typography className={classes.text} type="body2">
-                                Sign up
-                            </Typography>
-                        }/>
-                    </Tabs>
-                    {this.props.type === 'in' ? (
-                        <TabContainer>
-                            <Login/>
-                        </TabContainer>
-                    ) : (
-                        <TabContainer>
-                            <Register/>
-                        </TabContainer>
-                    )}
+            <div>
+                <AppBar position="absolute" className={classes.container}>
+                    <div className={classes.leftBg}>
+                        <Avatar src={logo} className={classes.avatar}>
 
+                        </Avatar>
+                    </div>
+
+                </AppBar>
+
+
+                <Grid container direction={'row'} className={classes.root}>
+                    <Grid item lg={6} md={7} className={classes.grid}>
+                        <Tabs className={classes.header}
+                              index={this.props.type === 'in' ? 0 : 1}
+                              onChange={this.handleChangeTab}
+                        >
+                            <Tab label={
+                                <Typography className={classes.text} type="body2">
+                                    Log In
+                                </Typography>
+                            }/>
+                            <Tab label={
+                                <Typography className={classes.text} type="body2">
+                                    Sign up
+                                </Typography>
+                            }/>
+                        </Tabs>
+                        {this.props.type === 'in' ? (
+                            <TabContainer>
+                                <Login/>
+                            </TabContainer>
+                        ) : (
+                            <TabContainer>
+                                <Register/>
+                            </TabContainer>
+                        )}
+
+                    </Grid>
+                    <Grid item lg={6} md={4}>
+                        <Hidden smDown>
+                            <div className={classes.crop}>
+                                <img className={classes.crop_img}
+                                     src={hockeyMen}
+                                     alt='HockeyMen'
+                                />
+                            </div>
+                        </Hidden>
+                    </Grid>
                 </Grid>
-                <Grid item lg={6} md={4} >
-                    <Hidden smDown>
-                        <div className={classes.crop}>
-                            <img className={classes.crop_img}
-                                 src={hockeyMen}
-                                 alt='HockeyMen'
-                            />
-                        </div>
-                    </Hidden>
-                </Grid>
-            </Grid>);
+            </div>);
     }
 }
 

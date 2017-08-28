@@ -28,7 +28,7 @@ const styleSheet = createStyleSheet('DefaultRoute', theme => ({
         justifyContent: 'space-between',
         minHeight: window.innerHeight - 70,
         overflowX: 'hidden',
-        paddingTop: 70,
+        //paddingTop: 70,
         [theme.breakpoints.down('sm')]: {
             minHeight: window.innerHeight - 60,
             paddingTop: 60,
@@ -56,7 +56,7 @@ const DefaultRoute = ({component: Component, isAuthenticated, alert, hideAlert, 
             <Grid
                 className={classNames(classes.root, {[classes.hideBackgroundTopHeader]: hideBackgroundTopHeader || hideBackgroundTopMobileHeader})}>
                 {!hideHeader && <Header hideBackgroundTopHeader={hideBackgroundTopHeader}
-                        hideBackgroundTopMobileHeader={hideBackgroundTopMobileHeader}/>}
+                                        hideBackgroundTopMobileHeader={hideBackgroundTopMobileHeader}/>}
                 <Component {...props} />
                 <Footer/>
             </Grid>
