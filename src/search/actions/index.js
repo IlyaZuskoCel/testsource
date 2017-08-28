@@ -7,7 +7,10 @@ import {go} from '../../common/actions';
 import {get, post, auth} from '../../common/helpers/api';
 
 import {ERROR_ALERT, SUCCESS_ALERT} from '../../common/constants/actions';
-import {SET_PLAYERS, SET_SCOUTS , CLEAR_LIST} from "../constants/actions";
+import {SET_PLAYERS,
+        SET_SCOUTS ,
+        CLEAR_LIST ,
+        SET_LEAGUES} from "../constants/actions";
 import {LOAD} from '../../common/constants/actions';
 
 
@@ -26,12 +29,11 @@ const addRequestParams = (url , params) => {
 };
 
 
-export const uploadPlayers = (params) => dispatch => {
+export const uploadPlayers = (params , requestBody) => dispatch => {
     dispatch({type: CLEAR_LIST});
 
-    post(addRequestParams('/api/v2/user/player-search' , params) , {})
+    return get(addRequestParams('/api/v2/user/player-search' , params) , requestBody)
         .then(players => {
-            console.log(players);
             dispatch({type: SET_PLAYERS , payload: players});
         })
         .catch((message) => {
@@ -39,9 +41,10 @@ export const uploadPlayers = (params) => dispatch => {
         });
 }
 
-export const uploadScouts = (params) => dispatch => {
+export const uploadScouts = (params , requestBody) => dispatch => {
     dispatch({type: CLEAR_LIST});
-    post(addRequestParams('/api/v2/user/scout-search', params) , {})
+
+    return get(addRequestParams('/api/v2/user/scout-search', params) , requestBody)
         .then(scouts => {
            dispatch({type: SET_SCOUTS , payload: scouts})
         })
@@ -53,7 +56,20 @@ export const uploadScouts = (params) => dispatch => {
 export const getLeagues = () => dispatch => {
     get('/api/v2/league/get-list')
         .then(leagues => {
-            console.log(leagues);
+            dispatch({type: SET_LEAGUES , payload: leagues});
+        })
+        .catch(message => {
+            dispatch({type: ERROR_ALERT, payload: {message}});
+        });
+}
+
+export const filterScouts = (params , requestBody , queryString) => dispatch => {
+
+    console.log(params , requestBody , queryString);
+
+    dispatch(uploadScouts(params , requestBody))
+        .then(result => {
+            go('/search/scout' + queryString.slice(0, -1));
         })
         .catch(message => {
             dispatch({type: ERROR_ALERT, payload: {message}});

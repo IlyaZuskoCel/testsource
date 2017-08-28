@@ -7,10 +7,12 @@ import {combineReducers} from 'redux';
 
 import test from './test';
 import people from './people'
+import options from './options'
 
 
 
 export default combineReducers({
     test: test,
     people: people,
+    options: options,
 });

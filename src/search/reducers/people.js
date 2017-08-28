@@ -11,7 +11,7 @@ function players(state = [], action) {
             state = action.payload;
             return state;
         case SET_SCOUTS:
-            state = action.payload
+            state = action.payload;
             return state;
         case CLEAR_LIST:
             state = [];

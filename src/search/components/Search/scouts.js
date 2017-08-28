@@ -11,6 +11,7 @@ import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import withWidth from 'material-ui/utils/withWidth';
 import {Link, Icon} from '../../../common/components';
+import classNames from 'classnames';
 
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import defaultPhoto from './assets/images/default-photo.png';
@@ -107,16 +108,23 @@ const styleSheet = createStyleSheet('Scout', theme => ({
         }
     },
     nameFont: {
-        fontSize: 32,
-        marginTop: 15,
+        lineHeight: 1,
         letterSpacing: 0.4,
+        textAlign: 'left',
+
+    },
+
+    nameFontFirst: {
+        marginTop: 15,
 
         [theme.breakpoints.down('md')]: {
             marginTop: 10,
         },
+
     },
     scoutRole: {
-        margin: [10 , 0]
+        margin: [1 , 0 , 2, 0],
+        lineHeight: 1.33,
     },
     photoContainer: {
         flexDirection: 'column',
@@ -177,9 +185,14 @@ class Scouts extends Component {
 
                                         <div className={classes.playerNameContainer}>
                                             <div className={classes.nameColumn}>
-                                                <Typography type='title' className={classes.nameFont}>
-                                                    {scout.first_name} {scout.last_name}
+                                                <Typography type='title' className={classNames(classes.nameFont , classes.nameFontFirst)}>
+                                                    {scout.first_name}
                                                 </Typography>
+                                                <Typography type='title' className={classes.nameFont}>
+                                                    {scout.last_name}
+                                                </Typography>
+
+
                                                 <Typography type="body1" className={classes.scoutRole}>{this.roleShortener(scout.user_role) || 'Unknown'}</Typography>
                                                 <Typography type='caption' className={classes.playerLeague}>{scout.league || 'Unknown'}</Typography>
                                             </div>
