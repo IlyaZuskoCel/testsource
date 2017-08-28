@@ -17,7 +17,7 @@ import Delete from './containers/Delete';
 import ChangePassword from './containers/ChangePassword';
 
 const routes = [
-    <DefaultLayout key="Sign" path="/sign/:type" component={Sign}/>,
+    <DefaultLayout key="Sign" path="/sign/:type" component={Sign} hideHeader/>,
     <PrivateRoute key="Settings" path="/settings" component={Settings}/>,
     <PrivateRoute key="ChangePassword" path="/settings/password" component={ChangePassword}/>,
     <PrivateRoute key="Edit" path="/profile/edit" component={Edit} hideBackgroundTopMobileHeader/>,

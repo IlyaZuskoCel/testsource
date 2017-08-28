@@ -26,22 +26,14 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
         display: 'flex',
         flexDirection: 'column',
         marginLeft: 40,
-
+        marginTop: 32,
     },
     formControl: {
         minWidth: '100%',
-        marginLeft: 20,
+        //marginLeft: 20,
+        marginTop: 24,
         //alignSelf: 'center',
 
-    },
-    formBirthMonth: {
-        display: 'table',
-
-    },
-    formBirthYear: {
-        display: 'table',
-
-        marginLeft: 20
     },
     button: {
         maxWidth: 160,
@@ -55,6 +47,10 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
         display: 'inline-block',
         top: 11,
     },
+    have_agent: {
+        width: 16,
+        height: 16,
+    },
     player_label: {
         marginLeft: 16,
         marginTop: 8,
@@ -62,34 +58,54 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
     },
     birth: {
         display: 'flex',
-        marginLeft: 20,
+        //marginLeft: 20,
         width: '100%',
+        marginTop: 24,
+    },
+    formBirthMonth: {
+        display: 'flex',
+        minWidth: '45%',
+        //width:100,
+
+    },
+    betweenMonthYear: {
+        display: 'flex',
+        minWidth: '10%',
+
+    },
+    formBirthYear: {
+        display: 'flex',
+        minWidth: '45%',
+        //marginTop: 24,
+        //width:,
+        //marginLeft: 20
     },
     agent: {
         display: 'inline-block',
         marginTop: 30,
-        marginLeft: 20,
+        //marginLeft: 20,
     },
     text_agent: {
         width: 400,
-        marginLeft: 32,
+        marginLeft: 8,
         marginTop: 18,
     },
     check_box: {
         marginTop: 30,
-        marginLeft: 8
+        marginLeft: -8,
+    },
+    terms: {
+        display: 'inline',
+        marginTop: 20,
     },
     second_check: {
         marginTop: 20
     },
     haveAgent: {
         display: 'inline-block',
-        marginLeft: 12,
+        marginLeft: 8,
     },
-    terms: {
-        display: 'inline',
-        marginTop: 20,
-    },
+
     subscribe: {
         display: 'inline-flex',
         marginTop: 10,
@@ -106,10 +122,7 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
         position: 'absolute',
         width: '100%',
     },
-    have_agent: {
-        width: 16,
-        height: 16,
-    },
+
 }));
 
 
@@ -155,41 +168,10 @@ class PlayerForm extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        /*   console.log(1);
-            if (!this.state.first_name)
-                return this.setState({errors: ['first_name']});
-           // console.log(2);
-            if (!this.state.last_name)
-                return this.setState({errors: ['last_name']});
-          //  console.log(3);
-            if (this.props.index === 0 && !this.state.birthMonth)
-                return this.setState({errors: ['birthMonth']});
-           // console.log(4);
-            if (this.props.index === 0 && !this.state.birthYear)
-                return this.setState({errors: ['birthYear']});
-          //  console.log(5);
-            if (!this.state.email)
-                return this.setState({errors: ['email']});
-            //console.log(6);
-            if (!this.state.password)
-                return this.setState({errors: ['password']});
-            //console.log(7);
-            if (!this.state.password_repeat)
-                return this.setState({errors: ['password_repeat']});
-
-         console.log('before passwords comparing');
-         if (this.state.password !== this.state.password_repeat)
-             return this.setState({errors: ['password_repeat', 'password']});
-
-         console.log('before agree', this.state.agree);
-         if (this.state.agree === 'no')
-             return this.setState({errors: ['agree']});
-
-         console.log('before agent_email');
-         if (this.state.have_agent === 'yes' && !this.state.agent_email)
-             return this.setState({errors: ['agent_email']});
-
-         console.log('all fields are ok, before submitting ');*/
+        if (this.state.agree === 'no')
+            return this.setState({errors: ['agree']});
+        if (this.state.have_agent === 'yes' && !this.state.agent_email)
+            return this.setState({errors: ['agent_email']});
         let user = Object.assign({}, this.state);
         // player registration
         /**
@@ -272,89 +254,93 @@ class PlayerForm extends Component {
     render() {
         const classes = this.props.classes;
         //console.log('props of Player',this.props);
-        return <form className={classes.form} onSubmit={this.handleSubmit}>
-            <Grid container gutter={24} direction={'column'} className={classes.grid_container}>
-                <Grid item xs={12} sm={6}>
-                    <TextField id="first_name"
-                               required
-                               error={this.state.errors.indexOf('first_name') > -1}
-                               label="First Name"
-                               value={this.state.first_name}
-                               onChange={this.handleChange('first_name')}
-                               className={classes.formControl}
-                    />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                    <TextField id="last_name"
-                               required
-                               error={this.state.errors.indexOf('last_name') > -1}
-                               label="Last Name"
-                               value={this.state.last_name}
-                               onChange={this.handleChange('last_name')}
-                               className={classes.formControl}
-                    />
-                </Grid>
+        return (
+            <form className={classes.form} onSubmit={this.handleSubmit}>
+                {/*<Grid container gutter={24} direction={'column'} className={classes.grid_container}>*/}
+                {/*<Grid item xs={12} sm={6}>*/}
+                <TextField id="first_name"
+                           required
+                           error={this.state.errors.indexOf('first_name') > -1}
+                           label="First Name"
+                           value={this.state.first_name}
+                           onChange={this.handleChange('first_name')}
+                           className={classes.formControl}
+                />
+                {/*</Grid>*/}
+                {/*<Grid item xs={12} sm={6}>*/}
+                <TextField id="last_name"
+                           required
+                           error={this.state.errors.indexOf('last_name') > -1}
+                           label="Last Name"
+                           value={this.state.last_name}
+                           onChange={this.handleChange('last_name')}
+                           className={classes.formControl}
+                />
+                {/*</Grid>*/}
                 {this.props.index === 0 ? (
-                    <Grid item xs={12} sm={6}>
+
+                    <div className={classes.birth}>
                         {/*show birth fields only if player it is*/}
-                        <div className={classes.birth}>
-                            <TextField id="birth_month"
-                                       required
-                                       error={this.state.errors.indexOf('birthMonth') > -1}
-                                       label="Month of birth"
-                                       value={this.state.birthMonth}
-                                       onChange={this.handleChange('birthMonth')}
-                                       className={classes.formBirthMonth}
-                                       type={'number'}
-                            />
-                            <TextField id="birth_year"
-                                       required
-                                       error={this.state.errors.indexOf('birthYear') > -1}
-                                       label="Year of birth "
-                                       value={this.state.birthYear}
-                                       onChange={this.handleChange('birthYear')}
-                                       className={classes.formBirthYear}
-                                       type={'number'}
-                            />
-                        </div>
-                    </Grid>) : ''}
+                        <TextField id="birth_month"
+                                   required
+                                   error={this.state.errors.indexOf('birthMonth') > -1}
+                                   label="Month of birth"
+                                   value={this.state.birthMonth}
+                                   onChange={this.handleChange('birthMonth')}
+                                   className={classes.formBirthMonth}
+                                   type={'number'}
+                        />
+                        <div id="empty"
+                             className={classes.betweenMonthYear}
+
+                        />
+                        <TextField id="birth_year"
+                                   required
+                                   error={this.state.errors.indexOf('birthYear') > -1}
+                                   label="Year of birth"
+                                   value={this.state.birthYear}
+                                   onChange={this.handleChange('birthYear')}
+                                   className={classes.formBirthYear}
+                                   type={'number'}
+                        />
+                    </div>) : ''}
                 {/*Email*/}
-                <Grid item xs={12} sm={6}>
-                    <TextField id="email"
-                               required
-                               type="email"
-                               error={this.state.errors.indexOf('email') > -1}
-                               label="Email Address"
-                               value={this.state.email}
-                               onChange={this.handleChange('email')}
-                               className={classes.formControl}
-                    />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                    <TextField id="password"
-                               type="password"
-                               required
-                               error={this.state.errors.indexOf('password') > -1}
-                               label="Password"
-                               value={this.state.password}
-                               onChange={this.handleChange('password')}
-                               className={classes.formControl}
-                    />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                    <TextField id="password_repeat"
-                               type="password"
-                               required
-                               error={this.state.errors.indexOf('password_repeat') > -1}
-                               label="Re-Type Password"
-                               value={this.state.password_repeat}
-                               onChange={this.handleChange('password_repeat')}
-                               className={classes.formControl}
-                    />
-                </Grid>
+                {/*<Grid item xs={12} sm={6}>*/}
+                <TextField id="email"
+                           required
+                           type="email"
+                           error={this.state.errors.indexOf('email') > -1}
+                           label="Email Address"
+                           value={this.state.email}
+                           onChange={this.handleChange('email')}
+                           className={classes.formControl}
+                />
+                {/*</Grid>*/}
+                {/*<Grid item xs={12} sm={6}>*/}
+                <TextField id="password"
+                           type="password"
+                           required
+                           error={this.state.errors.indexOf('password') > -1}
+                           label="Password"
+                           value={this.state.password}
+                           onChange={this.handleChange('password')}
+                           className={classes.formControl}
+                />
+                {/*</Grid>*/}
+                {/*<Grid item xs={12} sm={6}>*/}
+                <TextField id="password_repeat"
+                           type="password"
+                           required
+                           error={this.state.errors.indexOf('password_repeat') > -1}
+                           label="Re-Type Password"
+                           value={this.state.password_repeat}
+                           onChange={this.handleChange('password_repeat')}
+                           className={classes.formControl}
+                />
+                {/*</Grid>*/}
                 {/*this block shows, player or scout registering*/}
                 {this.props.index === 0 ? (
-                    <div style={{display: 'inline-block'}}>
+                    <div style={{display: 'inline-block',marginLeft:4}}>
                         {/* player registering*/}
                         <div className={classes.agent}>
                             <Typography type="subheading" className={classes.haveAgent}>I have an agent</Typography>
@@ -384,63 +370,59 @@ class PlayerForm extends Component {
                                 />
                             </FormGroup>
                         </div>
-                        <Grid item xs={12} sm={6}>
-                            <Typography type="caption" className={classes.text_agent}>If you have an agent, scouts will
-                                contact
-                                your agent
-                                directly.</Typography>
-                        </Grid>
+                        {/*<Grid item xs={12} sm={6}>*/}
+                        <Typography type="caption" className={classes.text_agent}>If you have an agent, scouts will
+                            contact
+                            your agent
+                            directly.</Typography>
+                        {/*</Grid>*/}
                     </div>) : ''}
-
+                {/* scout registering*/}
+                {/*League*/}
                 {this.props.index === 1 ? (
-                    <Grid item xs={12} sm={6}>
-                        {/* scout registering*/}
-                        {/*League*/}
-                        <Autosuggest
-                            suggestions={this.props.leagues}
-                            onSuggestionsFetchRequested={() => {
-                            }}
-                            onSuggestionsClearRequested={() => {
-                            }}
-                            inputProps={{
-                                label: "League",
-                                value: this.state.league,
-                                onChange: this.handleLeagueChange
-                            }}
-                            className={classes.formControl}
-                        />
-                    </Grid>) : ''}
+                    <Autosuggest
+                        suggestions={this.props.leagues}
+                        onSuggestionsFetchRequested={() => {
+                        }}
+                        onSuggestionsClearRequested={() => {
+                        }}
+                        inputProps={{
+                            label: "League",
+                            value: this.state.league,
+                            onChange: this.handleLeagueChange
+                        }}
+                        className={classes.formControl}
+                    />
+                ) : ''}
                 {this.props.index === 1 ? (
-                    <Grid item xs={12} sm={6}>
-                        <Autosuggest
-                            suggestions={this.state.showingTeams}
-                            onSuggestionsFetchRequested={() => {
-                                console.log('suggestion was requested');
-                            }}
-                            onSuggestionsClearRequested={() => {
-                            }}
-                            inputProps={{
-                                label: "Team",
-                                value: this.state.team,
-                                onChange: (event, {newValue}) => this.setState({team: newValue}),
-                            }}
-                            className={classes.formControl}
-                        />
-                    </Grid>) : ''}
+                    <Autosuggest
+                        suggestions={this.state.showingTeams}
+                        onSuggestionsFetchRequested={() => {
+                            console.log('suggestion was requested');
+                        }}
+                        onSuggestionsClearRequested={() => {
+                        }}
+                        inputProps={{
+                            label: "Team",
+                            value: this.state.team,
+                            onChange: (event, {newValue}) => this.setState({team: newValue}),
+                        }}
+                        className={classes.formControl}
+                    />
+                ) : ''}
                 {/*Agent Email*/}
                 {this.props.index === 0 && this.state.have_agent === 'yes' ? (
-                    <Grid item xs={12} sm={6}>
-                        <TextField id="agent_email"
-                                   required
-                                   type="email"
-                                   error={this.state.errors.indexOf('agent_email') > -1}
-                                   label="Agent's Email Address"
-                                   value={this.state.agent_email}
-                                   onChange={this.handleChange('agent_email')}
-                                   className={classes.formControl}
-                        />
-                    </Grid>) : ''}
-                <Grid item xs={12} sm={6} className={classes.check_box}>
+                    <TextField id="agent_email"
+                               required
+                               type="email"
+                               error={this.state.errors.indexOf('agent_email') > -1}
+                               label="Agent's Email Address"
+                               value={this.state.agent_email}
+                               onChange={this.handleChange('agent_email')}
+                               className={classes.formControl}
+                    />
+                ) : ''}
+                <div className={classes.check_box}>
                     <FormGroup>
                         <div className={classes.terms}>
                             <FormControlLabel
@@ -478,14 +460,14 @@ class PlayerForm extends Component {
                             <Typography type="body1">Subscribe to our Newsletter.</Typography>
                         </div>
                     </FormGroup>
-                </Grid>
-            </Grid>
-            <FormControl className={classes.formControl}>
-                <Button raised type="submit" color="primary" className={classes.button}>
-                    Sign up
-                </Button>
-            </FormControl>
-        </form>
+                </div>
+                {/*</Grid>*/}
+                <FormControl className={classes.formControl}>
+                    <Button raised type="submit" color="primary" className={classes.button}>
+                        Sign up
+                    </Button>
+                </FormControl>
+            </form>)
     }
 }
 
