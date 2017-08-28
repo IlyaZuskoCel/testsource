@@ -9,17 +9,17 @@ import {connect} from 'react-redux';
 
 import ChangePassword from '../components/ChangePassword';
 
-import {getCurrent} from '../actions';
+import {changePassword, resetPassword} from '../actions';
+
 import {goBack} from '../../common/actions';
 
 const mapStateToProps = (state, props) => ({
     user: state.user.current,
 });
 const mapDispatchToProps = (dispatch) => ({
-    getUser: id => dispatch(getCurrent()),
     cancel: () => dispatch(goBack()),
-    save: () => dispatch(goBack()),
-    sendTemporaryPassword: () => dispatch(goBack()),
+    save: (password_old, password_new) => dispatch(changePassword(password_old, password_new)),
+    sendTemporaryPassword: () => dispatch(resetPassword()),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ChangePassword))

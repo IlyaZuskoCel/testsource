@@ -185,3 +185,29 @@ export const verifyScout = phone => dispatch => {
         })
 };
 
+export const changePassword = (password_old, password_new) => dispatch => {
+    return post(`/api/v2/profile/change-password`, {password_old, password_new})
+        .then(result => {
+            if ('error' in result)
+                return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
+
+            dispatch(goBack());
+            return dispatch({type: SUCCESS_ALERT, payload: {message: "Your password was updated successfully!"}});
+        })
+        .catch((message) => {
+            dispatch({type: ERROR_ALERT, payload: {message}});
+        })
+};
+
+export const resetPassword = () => dispatch => {
+    return post(`/api/v2/profile/reset-password`, {})
+        .then(result => {
+            if ('error' in result)
+                return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
+
+            return dispatch({type: SUCCESS_ALERT, payload: {message: "Email was was successfully sent!"}});
+        })
+        .catch((message) => {
+            dispatch({type: ERROR_ALERT, payload: {message}});
+        })
+};
