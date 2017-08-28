@@ -13,26 +13,32 @@ import Radio from 'material-ui/Radio';
 
 const styleSheet = createStyleSheet('Register', theme => ({
     root: {
-        backgroundColor: '#ffffff',
-        // marginTop: -32,
-        // marginRight: 32,
-        [theme.breakpoints.up('sm')]: {
+        backgroundColor: theme.palette.background.paper,
 
-        },
     },
     iam: {
         display: 'inline',
-        marginLeft: 16,
+        marginLeft: 8,
     },
     radio_buttons_group: {
         display: 'inline-block',
         top: 11,
-    }, agent: {
+    },
+    role:{
+        width: 20,
+        height: 20,
+        [theme.breakpoints.down('sm')]:{
+            width: 16,
+            height: 16,
+        },
+    },
+    agent: {
         display: 'flex',
         marginTop: 72,
         marginLeft: 48,
         height: 0,
-    }, player_label: {
+    },
+    player_label: {
         marginLeft: 16,
         marginTop: 8,
 
@@ -77,6 +83,7 @@ class Register extends Component {
                                     checked={this.state.index === 0}
                                     onChange={this.handleChange('index')}
                                     value="0"
+                                    className={classes.role}
                                 />
                             }
                             label="Player"
@@ -88,6 +95,7 @@ class Register extends Component {
                                     checked={this.state.index === 1}
                                     onChange={this.handleChange('index')}
                                     value="1"
+                                    className={classes.role}
                                 />
                             }
                             label="Scout"

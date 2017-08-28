@@ -16,14 +16,13 @@ import Link from '../../../common/components/Link';
 const styleSheet = createStyleSheet('Login', theme => ({
     root: {
         backgroundColor: theme.palette.background.paper,
-        // marginLeft: -20,
-        // marginTop: -1,
-        // marginRight: 32,
+        minWidth: 456,
     },
     form: {
         display: 'flex',
         flexDirection: 'column',
         marginLeft: 40,
+
     },
     formControl: {
         minWidth: '100%',
@@ -118,7 +117,6 @@ class Login extends Component {
                             Login
                         </Button>
                     </FormControl>
-
                 </form>
             </div>
         )
