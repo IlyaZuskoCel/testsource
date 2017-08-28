@@ -12,30 +12,19 @@ import hockeyMen from './image/signup.jpg';
 const styleSheet = createStyleSheet('Main', theme => ({
     root: {
         backgroundColor: '#ffffff',
-        marginTop: -8,
-        left: '11%',
-        width: '74%',
-        marginLeft: 50,
-        [theme.breakpoints.up('sm')]: {},
+        //left: '11%',
+       // width: '74%',
+        //marginLeft: 50,
     },
     header: {
         marginTop: 120,
-        marginLeft: '23%',
+        marginLeft: 124,
 
         [theme.breakpoints.down('md')]: {
-            marginLeft: '30%',
+            //marginLeft: '30%',
         },
     },
-    card: {
-        maxWidth: 345,
-    },
-    media: {
-        height: 200,
-    },
-    blocks: {
-        display: 'inline-block',
-        float: 'left'
-    },
+
     text: {
         color: '#d7001e'
     },
@@ -96,24 +85,17 @@ class Sign extends Component {
                     <Tabs className={classes.header}
                           index={this.props.type === 'in' ? 0 : 1}
                           onChange={this.handleChangeTab}
-
                     >
                         <Tab label={
                             <Typography className={classes.text} type="body2">
                                 Log In
                             </Typography>
-                        }>
-
-                        </Tab>
+                        }/>
                         <Tab label={
                             <Typography className={classes.text} type="body2">
                                 Sign up
                             </Typography>
-
-                        }
-                        >
-
-                        </Tab>
+                        }/>
                     </Tabs>
                     {this.props.type === 'in' ? (
                         <TabContainer>
@@ -126,7 +108,7 @@ class Sign extends Component {
                     )}
 
                 </Grid>
-                <Grid item lg={6} md={5}>
+                <Grid item lg={6} md={4} >
                     <Hidden smDown>
                         <div className={classes.crop}>
                             <img className={classes.crop_img}

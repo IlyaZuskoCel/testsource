@@ -43,3 +43,13 @@ export const POS_LIST = {
     [POS_DR]: 'Right Defense',
     [POS_G]: 'Goalie',
 };
+
+export const SHOT_LIST = {
+    [SHOT_RIGHT]: 'Right',
+    [SHOT_LEFT]: 'Left',
+};
+
+export const GENDER_LIST = {
+    [GENDER_MALE]: 'Male',
+    [GENDER_FEMALE]: 'Female',
+};

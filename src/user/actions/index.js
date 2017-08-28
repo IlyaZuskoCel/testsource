@@ -5,11 +5,19 @@
 
 import {push, goBack} from 'react-router-redux';
 
-import {get, post, auth} from '../../common/helpers/api';
+import {get, post, postForm, auth} from '../../common/helpers/api';
 
 
 import {ERROR_ALERT, SUCCESS_ALERT} from '../../common/constants/actions';
-import {LOGIN, LOGOUT, SET_CURRENT, SET_USER, SET_USER_FAVORITE, UNSET_USER_FAVORITE} from '../constants/actions';
+import {
+    LOGIN,
+    LOGOUT,
+    SET_CURRENT,
+    SET_USER,
+    SET_USER_FAVORITE,
+    UNSET_USER_FAVORITE,
+    SET_CURRENT_PHOTO
+} from '../constants/actions';
 import {LOAD} from '../../common/constants/actions';
 
 
@@ -81,6 +89,44 @@ export const getUser = (id) => dispatch => {
             dispatch({type: ERROR_ALERT, payload: {message}});
         })
 };
+
+export const update = (data) => dispatch => {
+
+    let req = {...data};
+    if (data.height) {
+        req.feet = data.height[0];
+        req.inches = data.height[1];
+    }
+    return post(`/api/v2/profile/update`, req)
+        .then(result => {
+            if ('error' in result)
+                return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
+            dispatch({type: SET_CURRENT, payload: result});
+            dispatch(push('/profile'));
+        })
+        .catch((message) => {
+            dispatch({type: ERROR_ALERT, payload: {message}});
+        })
+};
+
+
+export const uploadPhoto = (file) => dispatch => {
+    let form = new FormData();
+    if (file)
+        form.append('UploadForm', file);
+
+    return postForm(`/api/v2/profile/image/profile`, form)
+        .then(result => {
+            if ('error' in result)
+                return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
+            dispatch({type: SET_CURRENT_PHOTO, payload: result.profile_picture});
+            dispatch({type: SUCCESS_ALERT, payload: {message: 'Profile picture was uploaded successfully'}});
+        })
+        .catch((message) => {
+            dispatch({type: ERROR_ALERT, payload: {message}});
+        })
+};
+
 export const addFavorite = (id) => dispatch => {
     return post(`/api/v2/activity/follow`, {id_user_player: id})
         .then(result => {
@@ -128,3 +174,4 @@ export const sendEmail = (id, subject, text) => dispatch => {
             dispatch({type: ERROR_ALERT, payload: {message}});
         })
 };
+

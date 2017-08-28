@@ -3,12 +3,18 @@
  * moonion.com
  */
 
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Grid from 'material-ui/Grid';
 
-import Typography from 'material-ui/Typography';
+
+import classNames from 'classnames';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
+import withWidth from 'material-ui/utils/withWidth';
+import compose from 'recompose/compose';
+
+import Grid from 'material-ui/Grid';
+import Typography from 'material-ui/Typography';
+
 
 import {Link, Icon} from '../'
 
@@ -105,59 +111,70 @@ const styleSheet = createStyleSheet('Footer', theme => ({
     }
 }));
 
+class Footer extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
 
-const Footer = ({user, classes}) => (
-    <footer className={classes.root}>
-        <Grid container gutter={8} className={classes.footer}>
-            <Grid item xs={6} sm={4} md={2} lg={2}>
-                <Link to="/" className={classes.logoLink} disabledUnderline>
-                    <Icon className={classes.logo}>scoutzoo-symbol</Icon>
-                </Link>
-            </Grid>
-            <Grid item xs={6} sm={8} md={6} lg={8} className={classes.links}>
-                <Link to="/about" disabledUnderline className={classes.link}>
-                    <Typography type="caption">About Us</Typography>
-                </Link>
-                <Link to="/contact" disabledUnderline className={classes.link}>
-                    <Typography type="caption">Contact Us</Typography>
-                </Link>
-                <Link to="/privacy" disabledUnderline className={classes.link}>
-                    <Typography type="caption">Privacy Policy</Typography>
-                </Link>
-                <Link to="/terms" disabledUnderline className={classes.link}>
-                    <Typography type="caption">Terms & Conditions</Typography>
-                </Link>
-            </Grid>
-            <Grid item xs={6} sm={10} md={2} lg={1} className={classes.followContainer}>
-                <Typography type="caption">
-                    Follow Us On
-                </Typography>
-            </Grid>
-            <Grid item xs={6} sm={2} md={1} lg={1} className={classes.followContainerLinks}>
-                <Link to="/" disabledUnderline>
-                    <Icon className={classes.socialLogo}>facebook-filled</Icon>
-                </Link>
-                <Link to="/" disabledUnderline>
-                    <Icon className={classes.socialLogo}>twitter-fill</Icon>
-                </Link>
-                <Link to="/" disabledUnderline>
-                    <Icon className={classes.socialLogo}>instagram-fill</Icon>
-                </Link>
+    render() {
+        const {user, classes, width} = this.props;
+        return (
+            <footer className={classes.root}>
+                <Grid container gutter={8} className={classes.footer}>
+                    <Grid item xs={6} sm={4} md={2} lg={2}>
+                        <Link to="/" className={classes.logoLink} disabledUnderline>
+                            <Icon className={classes.logo}>scoutzoo-symbol</Icon>
+                        </Link>
+                    </Grid>
+                    <Grid item xs={6} sm={8} md={6} lg={8} className={classes.links}>
+                        <Link to="/about" disabledUnderline className={classes.link}>
+                            <Typography type="caption">About Us</Typography>
+                        </Link>
+                        <Link to="/contact" disabledUnderline className={classes.link}>
+                            <Typography type="caption">Contact Us</Typography>
+                        </Link>
+                        <Link to="/privacy" disabledUnderline className={classes.link}>
+                            <Typography type="caption">Privacy Policy</Typography>
+                        </Link>
+                        <Link to="/terms" disabledUnderline className={classes.link}>
+                            <Typography type="caption">Terms & Conditions</Typography>
+                        </Link>
+                    </Grid>
+                    <Grid item xs={6} sm={10} md={2} lg={1} className={classes.followContainer}>
+                        <Typography type="caption">
+                            Follow Us On
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={6} sm={2} md={1} lg={1} className={classes.followContainerLinks}>
+                        <Link to="/" disabledUnderline>
+                            <Icon className={classes.socialLogo}>facebook-filled</Icon>
+                        </Link>
+                        <Link to="/" disabledUnderline>
+                            <Icon className={classes.socialLogo}>twitter-fill</Icon>
+                        </Link>
+                        <Link to="/" disabledUnderline>
+                            <Icon className={classes.socialLogo}>instagram-fill</Icon>
+                        </Link>
 
-            </Grid>
-        </Grid>
-        <Grid container gutter={8} className={classes.logoSkyrocketContainer}>
-            <Typography type="caption">
-                Copyright © Scout Zoo. Built by
-            </Typography>
-            <Icon className={classes.logoSkyrocket}>skyrocket-avatar</Icon>
-        </Grid>
-    </footer>
-);
+                    </Grid>
+                </Grid>
+                <Grid container gutter={8} className={classes.logoSkyrocketContainer}>
+                    <Typography type="caption">
+                        Copyright © Scout Zoo. Built by
+                    </Typography>
+                    <Icon className={classes.logoSkyrocket}>skyrocket-avatar</Icon>
+                </Grid>
+            </footer>
+
+        )
+    }
+}
 
 Footer.propTypes = {
     children: PropTypes.node,
     classes: PropTypes.object.isRequired,
+    width: PropTypes.string,
 };
 
-export default withStyles(styleSheet)(Footer);
+export default compose(withStyles(styleSheet), withWidth())(Footer);

@@ -56,20 +56,20 @@ function renderSuggestionsContainer(options) {
 }
 
 function getSuggestionValue(suggestion) {
-    return typeof(suggestion.value) !== "undefined" ?suggestion.value: suggestion.label;
+    return typeof(suggestion.value) !== "undefined" ? suggestion.value : suggestion.label;
 }
 
 
 const styleSheet = createStyleSheet(theme => ({
     root: {
-        maxWidth: 286,
+        // maxWidth: 286,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center'
     },
     container: {
-        flexGrow: 1,
+        width: '100%',
         position: 'relative',
     },
     suggestionsContainerOpen: {
@@ -85,6 +85,8 @@ const styleSheet = createStyleSheet(theme => ({
     suggestionsList: {
         margin: 0,
         padding: 0,
+        maxHeight: 240,
+        overflowX: 'scroll',
         listStyleType: 'none',
     },
     textField: {
