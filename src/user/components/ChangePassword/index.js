@@ -20,7 +20,7 @@ import Hidden from 'material-ui/Hidden';
 import {Link, Icon} from '../../../common/components';
 
 
-const styleSheet = createStyleSheet('PlayerForm', theme => ({
+const styleSheet = createStyleSheet('ChangePassword', theme => ({
     root: {
         width: '100%',
         maxWidth: 1168,
@@ -117,7 +117,7 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
 }));
 
 
-class ScoutForm extends Component {
+class ChangePassword extends Component {
     constructor(props) {
         super(props);
 
@@ -222,9 +222,9 @@ class ScoutForm extends Component {
     }
 }
 
-ScoutForm.propTypes = {
+ChangePassword.propTypes = {
     children: PropTypes.node,
     classes: PropTypes.object.isRequired,
 };
 
-export default compose(withStyles(styleSheet), withWidth())(ScoutForm);
+export default compose(withStyles(styleSheet), withWidth())(ChangePassword);

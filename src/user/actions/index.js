@@ -105,6 +105,20 @@ export const update = (data) => dispatch => {
         })
 };
 
+export const deleteProfile = (password, why) => dispatch => {
+    return post(`/api/v2/profile/delete-profile`, {password, why})
+        .then(result => {
+            if ('error' in result)
+                return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
+
+            dispatch({type: SUCCESS_ALERT, payload: {message: 'Profile was deleted successfully'}});
+            dispatch(logOut());
+        })
+        .catch((message) => {
+            dispatch({type: ERROR_ALERT, payload: {message}});
+        })
+};
+
 
 export const uploadPhoto = (file) => dispatch => {
     let form = new FormData();
@@ -205,7 +219,7 @@ export const resetPassword = () => dispatch => {
             if ('error' in result)
                 return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
 
-            return dispatch({type: SUCCESS_ALERT, payload: {message: "Email was was successfully sent!"}});
+            return dispatch({type: SUCCESS_ALERT, payload: {message: "We emailed you a temporary password"}});
         })
         .catch((message) => {
             dispatch({type: ERROR_ALERT, payload: {message}});
