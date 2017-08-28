@@ -20,11 +20,22 @@ import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
 import Tabs, {Tab} from 'material-ui/Tabs';
 
+
 import {Link, Icon} from '../../../common/components';
-import {PLAYER_ROLE, SCOUT_ROLE, GENDER_FEMALE, GENDER_MALE, SHOT_LEFT, SHOT_RIGHT, POS_LIST, SHOT_LIST} from '../../constants';
+import {
+    PLAYER_ROLE,
+    SCOUT_ROLE,
+    GENDER_FEMALE,
+    GENDER_MALE,
+    SHOT_LEFT,
+    SHOT_RIGHT,
+    POS_LIST,
+    SHOT_LIST
+} from '../../constants';
 
 import FavoriteButton from '../../containers/FavoriteButton';
 import ShareButton from '../ShareButton';
+import ReportButton from '../../containers/ReportButton';
 
 
 import playerBg from './assets/images/profile-player-background.jpg';
@@ -529,6 +540,11 @@ class PlayerProfile extends Component {
 
     handleChange = name => event => this.setState({[name]: event.target.value});
 
+    handleReport = () => {
+
+    };
+
+
     render() {
 
         const {classes, user, currentUser} = this.props;
@@ -560,7 +576,7 @@ class PlayerProfile extends Component {
                                 anchorEl={this.state.anchorUserMenuEl}
                                 open={this.state.openUserMenu}
                                 onRequestClose={this.toggleUserMenu}>
-                                <MenuItem onClick={this.report}>Report</MenuItem>
+                                <ReportButton onClose={this.toggleUserMenu} user={user.id} username={`${user.first_name} ${user.last_name}`}>Report</ReportButton>
                             </Menu>
                         </div>
                     </div>
@@ -1008,6 +1024,7 @@ class PlayerProfile extends Component {
 
 
             </div>
+
 
         </div>
 

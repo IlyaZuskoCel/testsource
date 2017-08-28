@@ -281,7 +281,6 @@ const theme = (outerTheme) => {
                         fontSize: 16,
                         letterSpacing: '0.3px',
                         textAlign: 'center',
-                        padding: '32px 12px',
                         justifyContent: 'center',
                         borderBottom: 'solid 2px #e2e2e2',
                     },

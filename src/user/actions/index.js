@@ -225,3 +225,16 @@ export const resetPassword = () => dispatch => {
             dispatch({type: ERROR_ALERT, payload: {message}});
         })
 };
+export const report = (id_violator, type, message) => dispatch => {
+    return post(`/api/v2/activity/report`, {id_violator, type, message})
+        .then(result => {
+            if ('error' in result)
+                return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
+
+            return dispatch({type: SUCCESS_ALERT, payload: {message: "Report message was sent successfully! "}});
+        })
+        .catch((message) => {
+            dispatch({type: ERROR_ALERT, payload: {message}});
+        })
+};
+
