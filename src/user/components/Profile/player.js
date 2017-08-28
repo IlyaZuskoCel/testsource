@@ -53,9 +53,11 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
 
 
     },
-    backgroundImg: {
+
+
+    backgroundImgWrap: {
         zIndex: -1,
-        minWidth: '100%',
+        width: '100%',
         height: 688,
         [theme.breakpoints.down('sm')]: {
             height: 536,
@@ -65,8 +67,23 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
         left: 0,
         opacity: 0.5,
         backgroundImage: 'linear-gradient(196deg, #f3f3f3, rgba(255, 255, 255, 0.74) 53%, rgba(250, 250, 250, 0.86) 74%, #f3f3f3)',
-
+        overflow: 'hidden'
     },
+    backgroundImg: {
+        minWidth: '100%',
+        height: 1155,
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        marginTop: -578,
+        marginLeft: -1066,
+        [theme.breakpoints.down('sm')]: {
+            height: 770,
+            marginTop: -385,
+            marginLeft: -866,
+        },
+    },
+
     backgroundLeft: {
         zIndex: -1,
         position: 'absolute',
@@ -268,8 +285,9 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
         '-webkitBackgroundClip': 'text',
         textFillColor: 'transparent',
         color: 'transparent',
-
+        fontSize: 48,
         [theme.breakpoints.down('sm')]: {
+            fontSize: 40,
             top: 8,
             left: 8,
         },
@@ -540,17 +558,15 @@ class PlayerProfile extends Component {
 
     handleChange = name => event => this.setState({[name]: event.target.value});
 
-    handleReport = () => {
-
-    };
-
 
     render() {
 
         const {classes, user, currentUser} = this.props;
 
         return <div className={classes.root}>
-            <img className={classes.backgroundImg} src={playerBg}/>
+            <div className={classes.backgroundImgWrap}>
+                <img className={classes.backgroundImg} src={playerBg}/>
+            </div>
             <div className={classes.backgroundRight}/>
             <div className={classes.backgroundLeft}/>
             <div className={classes.content}>
@@ -576,7 +592,8 @@ class PlayerProfile extends Component {
                                 anchorEl={this.state.anchorUserMenuEl}
                                 open={this.state.openUserMenu}
                                 onRequestClose={this.toggleUserMenu}>
-                                <ReportButton onClose={this.toggleUserMenu} user={user.id} username={`${user.first_name} ${user.last_name}`}>Report</ReportButton>
+                                <ReportButton onClose={this.toggleUserMenu} user={user.id}
+                                              username={`${user.first_name} ${user.last_name}`}>Report</ReportButton>
                             </Menu>
                         </div>
                     </div>
@@ -640,7 +657,7 @@ class PlayerProfile extends Component {
                     <Paper className={classes.infoCard} square>
                         {user.jersey_number && (
                             <Typography className={classes.infoCardNumber}
-                                        type="title">{user.jersey_number}</Typography>)}
+                                        type="headline">{user.jersey_number}</Typography>)}
 
 
                         <div
@@ -665,7 +682,7 @@ class PlayerProfile extends Component {
                                 {user.team || 'Team Unknown'}
                             </Typography>
                             <Typography type="body1" align="center">
-                                {user.team_location || user.team_country || 'Location Unknown'}
+                                {(user.team_location !== 'n/a' && user.team_location) || user.team_country || 'Location Unknown'}
                             </Typography>
 
                         </div>
