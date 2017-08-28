@@ -93,21 +93,39 @@ class Pagination extends Component {
 
         return (
             <div>
-                {currentPage > 3 && [
-                    <Button onClick={this.onChange(1)} className={classes.button}>1</Button>,
-                    <span className={classes.points}>...</span>
+                {(currentPage > 2) && (
+                    <Button onClick={this.onChange(1)} className={classes.button}>1</Button>
+                )}
+                {currentPage > 3 && (<span className={classes.points}>...</span>)}
 
-                ]}
 
-                <Button onClick={this.onChange(currentPage - 1)} className={classes.button}>{currentPage - 1}</Button>
+                {currentPage > 2 && currentPage === countPages && countPages > 3 && (
+                    <Button onClick={this.onChange(currentPage - 2)}
+                            className={classes.button}>{currentPage - 2}</Button>
+                )}
+
+                {currentPage > 1 && currentPage !== countPages - 2 && (
+                    <Button onClick={this.onChange(currentPage - 1)}
+                            className={classes.button}>{currentPage - 1}</Button>
+                )}
                 <Button onClick={this.onChange(currentPage)}
                         className={classNames(classes.button, classes.current)}>{currentPage}</Button>
-                <Button onClick={this.onChange(currentPage + 1)} className={classes.button}>{currentPage + 1}</Button>
 
-                {currentPage < countPages - 3 && [
-                    <span className={classes.points}>...</span>,
+                {currentPage < countPages && currentPage !== 3 && (
+                    <Button onClick={this.onChange(currentPage + 1)}
+                            className={classes.button}>{currentPage + 1}</Button>
+                )}
+                {currentPage === 1 && countPages > 3 && (
+                    <Button onClick={this.onChange(currentPage + 2)}
+                            className={classes.button}>{currentPage + 2}</Button>
+                )}
+
+
+                {currentPage <= countPages - 3 && (<span className={classes.points}>...</span>)}
+
+                {currentPage <= countPages - 2 && (
                     <Button onClick={this.onChange(countPages)} className={classes.button}>{countPages}</Button>
-                ]}
+                )}
             </div>
         )
     }

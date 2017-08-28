@@ -9,16 +9,13 @@ import {connect} from 'react-redux';
 
 import Delete from '../components/Delete';
 
-import {getCurrent} from '../actions';
+import {deleteProfile} from '../actions';
 import {goBack} from '../../common/actions';
 
-const mapStateToProps = (state, props) => ({
-    user: state.user.current,
-});
+const mapStateToProps = (state, props) => ({});
 const mapDispatchToProps = (dispatch) => ({
-    getUser: id => dispatch(getCurrent()),
     cancel: () => dispatch(goBack()),
-    save: () => dispatch(goBack()),
+    save: (password, why) => dispatch(deleteProfile(password, why)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Delete))

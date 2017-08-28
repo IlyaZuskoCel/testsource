@@ -53,3 +53,18 @@ export const GENDER_LIST = {
     [GENDER_MALE]: 'Male',
     [GENDER_FEMALE]: 'Female',
 };
+
+
+
+export const REPORT_VIDEO = '34'; // Inappropriate video
+export const REPORT_PROFILE = '35'; // Inappropriate profile
+export const REPORT_ACCOUNT = '36'; // Fake account
+export const REPORT_OTHER = '37'; // Other
+export const REPORT_DEFAULT = REPORT_PROFILE; // Inappropriate video
+
+export const REPORT_LIST = {
+    [REPORT_VIDEO]: 'Inappropriate video',
+    [REPORT_PROFILE]: 'Inappropriate profile',
+    [REPORT_ACCOUNT]: 'Fake account',
+    [REPORT_OTHER]: 'Other',
+};
