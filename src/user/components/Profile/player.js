@@ -74,13 +74,11 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
         height: 1155,
         position: 'absolute',
         top: '50%',
-        left: '50%',
+        right: 0,
         marginTop: -578,
-        marginLeft: -1066,
         [theme.breakpoints.down('sm')]: {
             height: 770,
             marginTop: -385,
-            marginLeft: -866,
         },
     },
 
