@@ -148,7 +148,7 @@ class ScoutForm extends Component {
                                          onSuggestionsClearRequested={() => {
                                          }}
                                          inputProps={{
-                                             label: "CLeague",
+                                             label: "League",
                                              value: this.props.leagues[this.state.id_league] || '',
                                              onChange: (event, {newValue}) => this.setState({id_league: newValue}),
                                          }}

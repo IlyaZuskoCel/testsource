@@ -25,6 +25,7 @@ function renderInput(inputProps) {
     return (
         <TextField
             className={classes.textField}
+            InputClassName={classes.InputClassName}
             value={value}
             label={label}
             inputRef={ref}
@@ -86,15 +87,24 @@ const styleSheet = createStyleSheet(theme => ({
         margin: 0,
         padding: 0,
         maxHeight: 240,
-        overflowX: 'scroll',
+        overflowX: 'none',
+        overflowY: 'scroll',
         listStyleType: 'none',
+        cursor: 'pointer'
     },
     textField: {
         width: '100%',
 
     },
+    InputClassName: {
+        paddingRight: 24
+    },
     input: {
-        maxWidth: 266,
+        paddingRight: 16,
+        cursor: 'pointer',
+        outline: 'none',
+        color: 'transparent',
+        textShadow: '0 0 0 #000'
     },
     icon: {
         marginLeft: -16
@@ -102,7 +112,14 @@ const styleSheet = createStyleSheet(theme => ({
 }));
 
 class IntegrationAutosuggest extends Component {
+    state = {
+        open: false
+    };
 
+    toggleOpen = () => {
+        console.log(this.state.open);
+        this.setState({open: !this.state.open});
+    };
 
     render() {
         const {classes, inputProps, className, ...props} = this.props;
@@ -126,6 +143,7 @@ class IntegrationAutosuggest extends Component {
                         classes,
                         ...inputProps
                     }}
+                    alwaysRenderSuggestions={this.state.open}
                     {...props}
                 />
                 <ScoutIcon className={classes.icon}>dropdown-arrows</ScoutIcon>
