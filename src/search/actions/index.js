@@ -13,6 +13,7 @@ import {SET_PLAYERS,
         SET_LEAGUES} from "../constants/actions";
 import {LOAD} from '../../common/constants/actions';
 
+import queryString from 'query-string';
 
 const addRequestParams = (url , params) => {
     if (Object.keys(params).length === 0) {
@@ -29,10 +30,10 @@ const addRequestParams = (url , params) => {
 };
 
 
-export const uploadPlayers = (params , requestBody) => dispatch => {
+export const uploadPlayers = (params) => dispatch => {
     dispatch({type: CLEAR_LIST});
 
-    return get(addRequestParams('/api/v2/user/player-search' , params) , requestBody)
+    return get(addRequestParams('/api/v2/user/player-search' , params))
         .then(players => {
             dispatch({type: SET_PLAYERS , payload: players});
         })
@@ -41,10 +42,11 @@ export const uploadPlayers = (params , requestBody) => dispatch => {
         });
 }
 
-export const uploadScouts = (params , requestBody) => dispatch => {
+export const uploadScouts = (params) => dispatch => {
     dispatch({type: CLEAR_LIST});
 
-    return get(addRequestParams('/api/v2/user/scout-search', params) , requestBody)
+
+    return get(addRequestParams('/api/v2/user/scout-search', params))
         .then(scouts => {
            dispatch({type: SET_SCOUTS , payload: scouts})
         })
@@ -63,15 +65,25 @@ export const getLeagues = () => dispatch => {
         });
 }
 
-export const filterScouts = (params , requestBody , queryString) => dispatch => {
+export const filterScouts = (params) => dispatch => {
+    dispatch({type: CLEAR_LIST});
 
-    console.log(params , requestBody , queryString);
-
-    dispatch(uploadScouts(params , requestBody))
-        .then(result => {
-            go('/search/scout' + queryString.slice(0, -1));
+    get('/api/v2/user/scout-search' + params )
+        .then(scouts => {
+            dispatch({type: SET_SCOUTS , payload: scouts});
+            dispatch(go('/search/scout' + params));
         })
-        .catch(message => {
-            dispatch({type: ERROR_ALERT, payload: {message}});
-        });
+}
+
+
+export const filterPlayers = (params) => dispatch => {
+    dispatch({type: CLEAR_LIST});
+
+    console.log(params);
+
+    get('/api/v2/user/player-search' + params)
+        .then(players => {
+            dispatch({type: SET_PLAYERS , payload: players});
+            dispatch(go('/search/player' + params));
+        })
 }

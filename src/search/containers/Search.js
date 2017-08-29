@@ -2,7 +2,7 @@
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux';
 
-import {uploadPlayers, uploadScouts , getLeagues, filterScouts} from '../actions';
+import {uploadPlayers, uploadScouts , getLeagues, filterScouts, filterPlayers} from '../actions';
 import {go} from '../../common/actions';
 
 
@@ -14,16 +14,17 @@ const mapStateToProps = (state, props) => ({
     results : state.search.people,
     leagues: state.search.options.leagues,
     type: props.match.params.type || 'player',
+    query: props.location.search,
 });
 
 const mapDispatchToProps = (dispatch , props) => ({
-        upload: (page , params , requestBody) => page && page === 'scout' ? dispatch(uploadScouts(params, requestBody)) : dispatch(uploadPlayers(params, requestBody)),
+        upload: (page , params ) => page && page === 'scout' ? dispatch(uploadScouts(params)) : dispatch(uploadPlayers(params)),
         uploadPlayers: (params) => dispatch(uploadPlayers(params)),
         uploadScouts: (params) => dispatch(uploadScouts(params)),
         getLeagues: () => dispatch(getLeagues()),
         go: (url) => dispatch(go(url)),
-        filterScouts: (params , requestBody , queryString) => dispatch(filterScouts(params , requestBody , queryString)),
-
+        filterScouts: (params) => dispatch(filterScouts(params)),
+        filterPlayers: (params) => dispatch(filterPlayers(params)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Search))

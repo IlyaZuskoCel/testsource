@@ -52,6 +52,7 @@ class ScoutFilter extends Component {
         this.changeName = this.changeName.bind(this);
         this.changeTeam = this.changeTeam.bind(this);
         this.makeFilterRequest = this.makeFilterRequest.bind(this);
+        this.handleRequestClearedSuggestions = this.handleRequestClearedSuggestions.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -63,8 +64,6 @@ class ScoutFilter extends Component {
     }
 
     filterBySuggestion(suggestion) {
-
-        console.log(suggestion);
 
         if (suggestion.value === "") {
             this.setState({
@@ -80,19 +79,18 @@ class ScoutFilter extends Component {
             return league.label.startsWith(filterWord);
         });
 
-        console.log(filteredLeagues);
 
         this.setState({leagues : filteredLeagues});
     }
 
-    suggestionChanged(event, {newValue}) {
+    suggestionChanged(event, {newValue , method}) {
+
         this.setState({
             DropdownValue: newValue,
         } , () => {
-            this.makeFilterRequest();
+            method !== 'type' ? this.makeFilterRequest() : null;
         });
     }
-
 
     changeName(event) {
         this.setState({name : event.target.value} , () => {
@@ -106,6 +104,9 @@ class ScoutFilter extends Component {
         })
     }
 
+    handleRequestClearedSuggestions() {
+        this.props.filterScouts('');
+    }
 
     makeFilterRequest() {
         let queryString = '';
@@ -115,11 +116,11 @@ class ScoutFilter extends Component {
         let options = {
             id_league : this.state.DropdownValue &&  leag ? leag.id : null,
             team : this.state.team ? this.state.team : null,
-            name : this.state.name ? this.state.name : null,
+            'name_search' : this.state.name ? this.state.name : null,
         };
 
 
-        if (this.state.DropdownValue || this.state.name || this.state.type) {
+        if (this.state.DropdownValue || this.state.name || this.state.team) {
             queryString += '?';
 
             for (let key in options) {
@@ -130,7 +131,7 @@ class ScoutFilter extends Component {
             }
         }
 
-        // this.props.go('/search/scout' + queryString.slice(0, -1));
+        this.props.filterScouts(queryString.slice(0 , -1));
     }
 
     render() {
@@ -142,7 +143,7 @@ class ScoutFilter extends Component {
                     <Autosuggest
                         suggestions={this.state.leagues}
                         onSuggestionsFetchRequested={this.filterBySuggestion}
-                        onSuggestionsClearRequested={(boom) => {}}
+                        onSuggestionsClearRequested={this.handleRequestClearedSuggestions}
                         inputProps={{
                             label: "League",
                             value: this.state.DropdownValue,
