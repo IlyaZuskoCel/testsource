@@ -419,7 +419,10 @@ class PlayerForm extends Component {
                                          inputProps={{
                                              label: "Current or Most Recent League",
                                              value: this.props.leagues[this.state.id_league] || '',
-                                             onChange: (event, {newValue}) => this.setState({id_league: newValue}),
+                                             onChange: (event, {newValue}) => this.setState({
+                                                 id_league: newValue,
+                                                 id_team_current: ''
+                                             }),
                                          }}
                             />
                         </Grid>

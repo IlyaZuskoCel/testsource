@@ -150,7 +150,8 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
         marginBottom: 16
     },
     phoneTextField: {
-        marginRight: 24
+        marginRight: 24,
+        maxWidth: 340
     },
     verifiedProgress: {
         marginBottom: 16
@@ -264,6 +265,7 @@ class ScoutForm extends Component {
                             <Typography type="subheading" className={classes.subTitle}>Get Verified</Typography>
                             <div className={classes.verifiedWrap}>
                                 <TextField required
+                                           fullWidth
                                            error={this.state.errors.indexOf('phone') > -1}
                                            label="Coach's Phone Number"
                                            value={this.state.phone}

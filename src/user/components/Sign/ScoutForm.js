@@ -69,10 +69,10 @@ class ScoutForm extends Component {
 
 
     handleChange = (name) => event => {
-        return this.setState({[name]: event.target.value, errors:[]});
+        return this.setState({[name]: event.target.value, errors: []});
     };
     handleChangeCheckbox = (name) => event => {
-        return this.setState({[name]: this.state[name] === '1' ? '0' : '1', errors:[]});
+        return this.setState({[name]: this.state[name] === '1' ? '0' : '1', errors: []});
     };
     handleSubmit = e => {
         e.preventDefault();
@@ -84,7 +84,7 @@ class ScoutForm extends Component {
         return false;
     };
     handleRadio = name => (event, value) => {
-        return this.setState({[name]: parseInt(value), errors:[]})
+        return this.setState({[name]: parseInt(value), errors: []})
     };
 
     render() {
@@ -150,7 +150,10 @@ class ScoutForm extends Component {
                                          inputProps={{
                                              label: "League",
                                              value: this.props.leagues[this.state.id_league] || '',
-                                             onChange: (event, {newValue}) => this.setState({id_league: newValue}),
+                                             onChange: (event, {newValue}) => this.setState({
+                                                 id_league: newValue,
+                                                 id_team_current: ''
+                                             }),
                                          }}
                             />
                         </Grid>
