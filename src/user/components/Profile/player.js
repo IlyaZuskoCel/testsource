@@ -271,8 +271,6 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
             height: 132,
             backgroundImage: 'none',
             backgroundColor: '#ffffff'
-
-
         },
     },
     infoCardNumber: {
