@@ -33,8 +33,11 @@ export const get = (url, options) => {
 
     })
         .then(response => {
+            if (response.status === 401) {
+                throw 'Unauthorized';
+            }
             if (response.status !== 200) {
-                throw 'error';
+                throw response.message || 'error';
             }
             return response.json();
         })

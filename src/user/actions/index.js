@@ -70,10 +70,16 @@ export const getCurrent = () => dispatch => {
             if ('error' in user)
                 return dispatch({type: ERROR_ALERT, payload: {message: user.error.message}});
 
+
             dispatch({type: SET_CURRENT, payload: user});
             dispatch({type: LOAD});
         })
-        .catch(() => {
+        .catch((message) => {
+            if (message === 'Unauthorized') {
+                auth('');
+                dispatch({type: LOGOUT});
+                dispatch(push('/sign/in'));
+            }
             dispatch({type: LOAD});
         })
 };
@@ -87,6 +93,11 @@ export const getUser = (id) => dispatch => {
             dispatch({type: SET_USER, payload: user});
         })
         .catch((message) => {
+            if (message === 'Unauthorized') {
+                auth('');
+                dispatch({type: LOGOUT});
+                dispatch(push('/sign/in'));
+            }
             dispatch({type: ERROR_ALERT, payload: {message}});
         })
 };
