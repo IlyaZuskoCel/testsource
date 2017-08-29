@@ -54,13 +54,13 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
         height: 1155,
         position: 'absolute',
         top: '50%',
-        left: '50%',
+        right: '50%',
         marginTop: -578,
-        marginLeft: -1066,
+        marginRight: -848,
         [theme.breakpoints.down('sm')]: {
             height: 770,
             marginTop: -385,
-            marginLeft: -866,
+            marginRight: -466,
         },
 
 
