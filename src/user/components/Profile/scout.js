@@ -54,13 +54,11 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
         height: 1155,
         position: 'absolute',
         top: '50%',
-        right: '50%',
+        right: 0,
         marginTop: -578,
-        marginRight: -848,
         [theme.breakpoints.down('sm')]: {
             height: 770,
             marginTop: -385,
-            marginRight: -466,
         },
 
 
@@ -436,7 +434,7 @@ class ScoutProfile extends Component {
                                 {user.team || 'Team Unknown'}
                             </Typography>
                             <Typography type="body1" align="center">
-                                {user.team_location || user.team_country || 'Location Unknown'}
+                                {(user.team_location !== 'n/a' && user.team_location) || user.team_country || 'Location Unknown'}
                             </Typography>
 
                         </div>
