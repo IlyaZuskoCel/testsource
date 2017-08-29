@@ -497,7 +497,7 @@ const theme = (outerTheme) => {
             },
             MuiTabs: {
                 flexContainer: {
-                    borderBottom: 'solid 1px #cbcbcb60'
+                    // borderBottom: 'solid 1px #cbcbcb60'
                 }
             }
 
