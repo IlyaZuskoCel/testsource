@@ -21,11 +21,14 @@ import thunk from 'redux-thunk'
 
 import CommonReducer from './common/reducers';
 import UserReducer from './user/reducers';
+import SerachReducer from './search/reducers';
 
 import CommonRouters from './common';
 import UserRouters from './user';
+import SearchRouters from './search';
 
 import {getCurrent as getCurrentUser} from './user/actions'
+
 
 
 const history = createHistory();
@@ -34,6 +37,7 @@ const history = createHistory();
 const AppReducer = combineReducers({
     common: CommonReducer,
     user: UserReducer,
+    search: SerachReducer,
     router: routerReducer
 });
 
@@ -61,6 +65,7 @@ class Layout extends Component {
         return <ConnectedRouter history={history}>
             <Switch>
                 {UserRouters}
+                {SearchRouters}
                 {CommonRouters}
             </Switch>
         </ConnectedRouter>

@@ -147,6 +147,8 @@ class IntegrationAutosuggest extends Component {
                     {...props}
                 />
                 <ScoutIcon className={classes.icon}>dropdown-arrows</ScoutIcon>
+
+
             </div>
         );
     }

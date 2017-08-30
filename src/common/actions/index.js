@@ -17,7 +17,6 @@ export const goBack = () => dispatch => {
     dispatch(routerBack());
 };
 
-
 export const removeAlert = () => dispatch => {
     dispatch({type: REMOVE_ALERT});
 };
