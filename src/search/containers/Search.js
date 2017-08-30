@@ -15,6 +15,7 @@ const mapStateToProps = (state, props) => ({
     leagues: state.search.options,
     type: props.match.params.type || 'player',
     query: props.location.search,
+    headers: state.search.headers,
 });
 
 
