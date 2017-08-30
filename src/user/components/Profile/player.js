@@ -38,8 +38,12 @@ import ShareButton from '../ShareButton';
 import ReportButton from '../../containers/ReportButton';
 
 
+import VideoList from './VideoList';
+
+
 import playerBg from './assets/images/profile-player-background.jpg';
 import defaultPhoto from './assets/images/default-photo.png';
+
 
 const styleSheet = createStyleSheet('PlayerProfile', theme => ({
     root: {},
@@ -603,8 +607,13 @@ class PlayerProfile extends Component {
                                     <span>Edit</span>
                                 </Button>
                             </Link>
-                            <Hidden xsDown><Button color="primary" raised className={classes.addVideoButton}>Add a
-                                Video</Button></Hidden>
+                            <Hidden xsDown>
+                                <Link to="/video/add" disabledUnderline>
+                                    <Button color="primary" raised className={classes.addVideoButton}>
+                                        Add a Video
+                                    </Button>
+                                </Link>
+                            </Hidden>
                         </div>
                     </div>
                 )}
@@ -774,7 +783,7 @@ class PlayerProfile extends Component {
 
                         {this.state.tab === 0 && user.videos.length > 0 && (
                             <div className={classes.tabContent}>
-                                <div className={classes.videoListWrap}/>
+                                <VideoList className={classes.videoListWrap} videos={user.videos}/>
                             </div>
                         )}
 
@@ -796,10 +805,12 @@ class PlayerProfile extends Component {
                                     they look for:
                                 </Typography>
                                 <Typography type="body1" align="center" className={classes.point}> Tap
-                                    <Button fab color="primary" raised
-                                            className={classNames(classes.addVideoFloat, classes.addVideoFloatDesc)}>
-                                        <Icon>plus</Icon>
-                                    </Button>
+                                    <Link to="/video/add" disabledUnderline>
+                                        <Button fab color="primary" raised
+                                                className={classNames(classes.addVideoFloat, classes.addVideoFloatDesc)}>
+                                            <Icon>plus</Icon>
+                                        </Button>
+                                    </Link>
                                     to upload a video
                                 </Typography>
                             </div>
@@ -917,9 +928,11 @@ class PlayerProfile extends Component {
                         )}
 
                         {user.id === currentUser.id && (
-                            <Button fab color="primary" raised className={classes.addVideoFloat}>
-                                <Icon>plus</Icon>
-                            </Button>
+                            <Link to="/video/add" disabledUnderline>
+                                <Button fab color="primary" raised className={classes.addVideoFloat}>
+                                    <Icon>plus</Icon>
+                                </Button>
+                            </Link>
                         )}
 
                     </Paper>
@@ -932,7 +945,9 @@ class PlayerProfile extends Component {
                         <Paper className={classes.videoList} square>
 
 
-                            {user.videos.length > 0 ? ( <div className={classes.videoListWrap}/>) : (
+                            {user.videos.length > 0 ? (
+                                <VideoList className={classes.videoListWrap} videos={user.videos}/>
+                            ) : (
 
                                 user.id !== currentUser.id ? (
                                     <div className={classes.videoListWrap}>
@@ -950,10 +965,12 @@ class PlayerProfile extends Component {
                                             they look for:
                                         </Typography>
                                         <Typography type="body1" className={classes.point}>1.
-                                            <Button color="primary" raised
-                                                    className={classNames(classes.addVideoButton, classes.addVideoButtonDesc)}>
-                                                Add a Video
-                                            </Button> to highlight your skills
+                                            <Link to="/video/add" disabledUnderline>
+                                                <Button color="primary" raised
+                                                        className={classNames(classes.addVideoButton, classes.addVideoButtonDesc)}>
+                                                    Add a Video
+                                                </Button>
+                                            </Link> to highlight your skills
                                         </Typography>
                                         <Typography type="body1" className={classes.point}>2.
                                             <Link to="/profile/edit" disabledUnderline>

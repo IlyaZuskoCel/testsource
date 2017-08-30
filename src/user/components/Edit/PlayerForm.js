@@ -273,7 +273,9 @@ class PlayerForm extends Component {
                     <div className={classes.pictureLinks}>
                         <Typography type="body1" className={classNames(classes.link, classes.uploadWrap)}>
                             Update profile picture
-                            <input autoComplete="off" type="file" onChange={this.onUploadPicture}
+                            <input autoComplete="off" type="file"
+                                   accept="image/*"
+                                   onChange={this.onUploadPicture}
                                    className={classes.uploadInput}/>
                         </Typography>
                         <Typography type="body1" onClick={this.onDeletePicture} className={classes.link}>

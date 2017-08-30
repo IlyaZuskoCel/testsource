@@ -232,7 +232,8 @@ const theme = (outerTheme) => {
                         backgroundColor: '#f5f5f5',
                         color: '#d7001e',
                         '&$disabled': {
-                            backgroundColor: 'transparent',
+                            backgroundColor: '#cbcbcb',
+                            color: '#fff',
                         },
                     }
                 },
@@ -247,6 +248,10 @@ const theme = (outerTheme) => {
                     color: '#d7001e',
                     '&:hover': {
                         backgroundColor: '#f5f5f5'
+                    },
+                    '&$disabled': {
+                        color: '#fff',
+                        backgroundColor: '#cbcbcb',
                     },
                 },
                 raisedPrimary: {
