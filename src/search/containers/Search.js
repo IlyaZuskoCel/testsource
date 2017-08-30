@@ -12,10 +12,11 @@ const mapStateToProps = (state, props) => ({
     currentUser: state.user.current,
     user: state.user.user,
     results : state.search.people,
-    leagues: state.search.options.leagues,
+    leagues: state.search.options,
     type: props.match.params.type || 'player',
     query: props.location.search,
 });
+
 
 const mapDispatchToProps = (dispatch , props) => ({
         upload: (page , params ) => page && page === 'scout' ? dispatch(uploadScouts(params)) : dispatch(uploadPlayers(params)),
@@ -28,3 +29,4 @@ const mapDispatchToProps = (dispatch , props) => ({
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Search))
+

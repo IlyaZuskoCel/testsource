@@ -9,3 +9,4 @@ export {default as Autosuggest} from './Autosuggest';
 export {default as DateTextField} from './DateTextField';
 export {default as HeightTextField} from './HeightTextField';
 export {default as Pagination} from './Pagination';
+export {default as RangeSlider} from './RangeSlider';

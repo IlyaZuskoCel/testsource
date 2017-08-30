@@ -14,6 +14,8 @@ import {Link, Icon} from '../../../common/components';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import defaultPhoto from './assets/images/default-photo.png';
 
+
+
 const styleSheet = createStyleSheet('Search', theme => ({
     content: {
         maxWidth: 1168,

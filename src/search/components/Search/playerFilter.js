@@ -11,7 +11,9 @@ import {Link, Icon, Pagination , Autosuggest} from '../../../common/components';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import withWidth from 'material-ui/utils/withWidth';
 
+
 import queryParse from 'query-string';
+import {RangeSlider} from '../../../common/components';
 
 const styleSheet = createStyleSheet('ScoutFilter' , theme => ({
     row: {
@@ -43,6 +45,7 @@ class PlayerFilter extends Component {
             year: '',
             position: '',
             leagues: [],
+            values: [1980 , 2017]
         };
 
         this.suggestionChanged = this.suggestionChanged.bind(this);
@@ -55,6 +58,7 @@ class PlayerFilter extends Component {
         this.onChangePosition = this.onChangePosition.bind(this);
         this.onChangeYear = this.onChangeYear.bind(this);
         this.onChangeTeam = this.onChangeTeam.bind(this);
+        this.getRange = this.getRange.bind(this);
     }
 
     onChangeTeam(event) {
@@ -115,6 +119,12 @@ class PlayerFilter extends Component {
         });
     }
 
+    getRange(value) {
+       this.setState({values : value} , () => {
+           this.makeFilterRequest();
+       })
+    }
+
     makeFilterRequest() {
         let queryString = '';
         let leag = this.props.leagues.find(league =>  league.short_name === this.state.DropdownValue );
@@ -123,12 +133,10 @@ class PlayerFilter extends Component {
             id_league : this.state.DropdownValue &&  leag ? leag.id : null,
             team : this.state.team ? this.state.team : null,
             position : this.state.position ? this.state.position : null,
-            born: this.state.year ? this.state.year.split(',') : null,
             'name_search' : this.state.name ? this.state.name : null,
         };
 
-
-        if (this.state.DropdownValue || this.state.name || this.state.team || this.state.year || this.state.position) {
+        if (this.state.DropdownValue || this.state.name || this.state.team || this.state.year || this.state.position || this.state.values) {
             queryString += '?';
 
             for (let key in options) {
@@ -136,6 +144,10 @@ class PlayerFilter extends Component {
                     continue;
 
                 queryString += key + '=' + options[key] + '&'
+            }
+
+            if (this.state.values || (this.state.values[0] != 1980 && this.state.values[0] != 2017)) {
+                queryString += `born[0]=${this.state.values[0]}&born[1]=${this.state.values[1]}&`;
             }
         }
 
@@ -153,8 +165,9 @@ class PlayerFilter extends Component {
 
     render() {
         const {classes} = this.props;
+
         return (<div className={classes.row}>
-            <Grid container gutter={16}>
+            <Grid container gutter={40}>
                 <Grid item xs={12} sm={6} md={4}>
                     <Autosuggest
                         suggestions={this.state.leagues}
@@ -186,13 +199,7 @@ class PlayerFilter extends Component {
                     />
                 </Grid>
                 <Grid item xs={12} sm={6} md={4}>
-                    <TextField
-                        id="year"
-                        label="Year born"
-                        value={this.state.year}
-                        className={classes.textField}
-                        onChange={this.onChangeYear}
-                    />
+                    <RangeSlider min={1988} max={2017} value={this.state.values} onChange={this.getRange}/>
                 </Grid>
                 <Grid item xs={12} sm={6} md={4}>
                     <TextField
@@ -207,7 +214,6 @@ class PlayerFilter extends Component {
         </div>);
     }
 }
-
 
 PlayerFilter.propTypes = {
     children: PropTypes.node,

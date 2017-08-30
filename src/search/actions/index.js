@@ -4,7 +4,7 @@
  */
 
 import {go} from '../../common/actions';
-import {get, post, auth} from '../../common/helpers/api';
+import {get, post, auth, getPage} from '../../common/helpers/api';
 
 import {ERROR_ALERT, SUCCESS_ALERT} from '../../common/constants/actions';
 import {SET_PLAYERS,
@@ -45,7 +45,6 @@ export const uploadPlayers = (params) => dispatch => {
 export const uploadScouts = (params) => dispatch => {
     dispatch({type: CLEAR_LIST});
 
-
     return get(addRequestParams('/api/v2/user/scout-search', params))
         .then(scouts => {
            dispatch({type: SET_SCOUTS , payload: scouts})
@@ -58,6 +57,7 @@ export const uploadScouts = (params) => dispatch => {
 export const getLeagues = () => dispatch => {
     get('/api/v2/league/get-list')
         .then(leagues => {
+
             dispatch({type: SET_LEAGUES , payload: leagues});
         })
         .catch(message => {

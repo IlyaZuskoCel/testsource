@@ -26,7 +26,6 @@ import PlayerFilter from './playerFilter';
 
 import queryString from 'query-string';
 
-
 const styleSheet = createStyleSheet('Search' , theme => ({
     root: {},
     content: {
@@ -98,6 +97,8 @@ const styleSheet = createStyleSheet('Search' , theme => ({
     buttonFilter: {
         color: '#ffffff',
     }
+
+
 }));
 
 const splitSearchQuery = (q) => {
