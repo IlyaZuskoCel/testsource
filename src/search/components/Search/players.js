@@ -15,7 +15,6 @@ import {withStyles, createStyleSheet} from 'material-ui/styles';
 import defaultPhoto from './assets/images/default-photo.png';
 
 
-
 const styleSheet = createStyleSheet('Search', theme => ({
     content: {
         maxWidth: 1168,
@@ -24,7 +23,7 @@ const styleSheet = createStyleSheet('Search', theme => ({
         margin: 'auto',
     },
     resultContainer: {
-        padding: [40 , 0],
+        padding: [40, 0],
 
         [theme.breakpoints.down('md')]: {
             padding: [40, 15]
@@ -106,7 +105,7 @@ const styleSheet = createStyleSheet('Search', theme => ({
 
     },
     nameFont: {
-        fontSize: 40 ,
+        fontSize: 40,
         marginTop: 20,
 
         [theme.breakpoints.down('md')]: {
@@ -114,7 +113,7 @@ const styleSheet = createStyleSheet('Search', theme => ({
         },
 
         [theme.breakpoints.down('xs')]: {
-          marginTop: 0,
+            marginTop: 0,
         }
     },
     playerLeague: {},
@@ -126,14 +125,14 @@ const styleSheet = createStyleSheet('Search', theme => ({
         alignItems: 'center',
         height: 40,
         backgroundColor: '#fff',
-        padding: [0 , 14]
+        padding: [0, 14]
     },
 
     playerBottomDivider: {
         width: 1,
         height: 18,
         borderLeft: 'solid 1px #cbcbcb',
-        margin: [0 , 8],
+        margin: [0, 8],
     },
 
     bottomPlayerText: {
@@ -171,7 +170,7 @@ class Players extends Component {
     }
 
     componentWillReceiveProps(nextProp) {
-        this.setState({players : nextProp.players});
+        this.setState({players: nextProp.players});
     }
 
     render() {
@@ -180,49 +179,61 @@ class Players extends Component {
         return (<div className={classes.content}>
 
                 <div className={classes.resultContainer}>
-                    <Grid container  gutter={40}>
+                    <Grid container gutter={40}>
 
                         {this.state.players && this.state.players.map(player => {
                             return <Grid item xs={12} md={4} sm={6} key={player.id}>
-                                <Paper classes={{root: classes.resultCard}} elevation={1}>
-                                    <div className={classes.leftStripe}></div>
+                                <Link to={`/profile/${player.id}`} disabledUnderline>
+                                    <Paper classes={{root: classes.resultCard}} elevation={1}>
+                                        <div className={classes.leftStripe}></div>
 
-                                    <div className={classes.playerInfo}>
-                                        <img src={player.profile_picture || defaultPhoto} className={classes.playerPhoto}  alt="Player's photo"/>
+                                        <div className={classes.playerInfo}>
+                                            <img src={player.profile_picture || defaultPhoto}
+                                                 className={classes.playerPhoto} alt="Player's photo"/>
 
-                                        <div className={classes.playerNameContainer}>
-                                            <div className={classes.nameColumn}>
-                                                <Typography type='title' className={classes.nameFont}>
-                                                    {player.first_name} {player.last_name}
-                                                </Typography>
-                                                <Typography type='caption' className={classes.playerLeague}>{player.league || 'Unknown'}</Typography>
+                                            <div className={classes.playerNameContainer}>
+                                                <div className={classes.nameColumn}>
+                                                    <Typography type='title' className={classes.nameFont}>
+                                                        {player.first_name} {player.last_name}
+                                                    </Typography>
+                                                    <Typography type='caption'
+                                                                className={classes.playerLeague}>{player.league || 'Unknown'}</Typography>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div className={classes.playerBottomInfo}>
+                                        <div className={classes.playerBottomInfo}>
 
-                                        {player.position_short !== 'n/a' && <Typography type='body1' className={classes.bottomPlayerText}>{ player.position_short }</Typography>}
-                                        {player.position_short !== 'n/a' && <div className={classes.playerBottomDivider}></div>}
+                                            {player.position_short !== 'n/a' && <Typography type='body1'
+                                                                                            className={classes.bottomPlayerText}>{player.position_short}</Typography>}
+                                            {player.position_short !== 'n/a' &&
+                                            <div className={classes.playerBottomDivider}></div>}
 
-                                        {player.height && <Typography type='body1' className={classes.bottomPlayerText}>{player.height[0] + "'" + player.height[1] + '"'}</Typography>}
-                                        {player.height && <div className={classes.playerBottomDivider}></div>}
+                                            {player.height && <Typography type='body1'
+                                                                          className={classes.bottomPlayerText}>{player.height[0] + "'" + player.height[1] + '"'}</Typography>}
+                                            {player.height && <div className={classes.playerBottomDivider}></div>}
 
-                                        {player.weight && <Typography type='body1' className={classes.bottomPlayerText}>{parseInt(player.weight) + ' lbs'}</Typography>}
-                                        {player.weight && <div className={classes.playerBottomDivider}></div>}
+                                            {player.weight && <Typography type='body1'
+                                                                          className={classes.bottomPlayerText}>{parseInt(player.weight) + ' lbs'}</Typography>}
+                                            {player.weight && <div className={classes.playerBottomDivider}></div>}
 
-                                        {player.birthday !== 'n/a' && <Typography type='body1' className={classes.bottomPlayerText}>{player.birthday}</Typography>}
+                                            {player.birthday !== 'n/a' && <Typography type='body1'
+                                                                                      className={classes.bottomPlayerText}>{player.birthday}</Typography>}
 
-                                        <div className={classes.lastItemInRow}>
-                                            <div className={classes.playerBottomDivider}></div>
-                                            {
-                                                player.is_tagged ?  <div className={classes.iconWrapper}><Icon className={classes.editIcon}>star-full</Icon></div> : <div className={classes.iconWrapper}><Icon className={classes.editIcon}>star-empty</Icon></div>
-                                            }
+                                            <div className={classes.lastItemInRow}>
+                                                <div className={classes.playerBottomDivider}></div>
+                                                {
+                                                    player.is_tagged ? <div className={classes.iconWrapper}><Icon
+                                                            className={classes.editIcon}>star-full</Icon></div> :
+                                                        <div className={classes.iconWrapper}><Icon
+                                                            className={classes.editIcon}>star-empty</Icon></div>
+                                                }
+                                            </div>
+
                                         </div>
 
-                                    </div>
-
-                                </Paper>
+                                    </Paper>
+                                </Link>
                             </Grid>
                         })}
                     </Grid>
