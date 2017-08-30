@@ -73,17 +73,23 @@ export const filterScouts = (params) => dispatch => {
             dispatch({type: SET_SCOUTS , payload: scouts});
             dispatch(go('/search/scout' + params));
         })
+        .catch(error => {
+            dispatch({type: ERROR_ALERT, payload: {error}});
+        });
 }
 
 
 export const filterPlayers = (params) => dispatch => {
     dispatch({type: CLEAR_LIST});
 
-    console.log(params);
-
     get('/api/v2/user/player-search' + params)
         .then(players => {
             dispatch({type: SET_PLAYERS , payload: players});
             dispatch(go('/search/player' + params));
         })
+        .catch(error => {
+            dispatch({type: ERROR_ALERT, payload: {error}});
+        })
 }
+
+
