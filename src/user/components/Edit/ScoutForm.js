@@ -249,7 +249,9 @@ class ScoutForm extends Component {
                     <div className={classes.pictureLinks}>
                         <Typography type="body1" className={classNames(classes.link, classes.uploadWrap)}>
                             Update profile picture
-                            <input autoComplete="off" type="file" onChange={this.onUploadPicture}
+                            <input autoComplete="off" type="file"
+                                   onChange={this.onUploadPicture}
+                                   accept="image/*"
                                    className={classes.uploadInput}/>
                         </Typography>
                         <Typography type="body1" onClick={this.onDeletePicture} className={classes.link}>
@@ -302,7 +304,10 @@ class ScoutForm extends Component {
                                          inputProps={{
                                              label: "Current League",
                                              value: this.props.leagues[this.state.id_league] || '',
-                                             onChange: (event, {newValue}) => this.setState({id_league: newValue}),
+                                             onChange: (event, {newValue}) => this.setState({
+                                                 id_league: newValue,
+                                                 id_team_current: ''
+                                             }),
                                          }}
                             />
                         </Grid>

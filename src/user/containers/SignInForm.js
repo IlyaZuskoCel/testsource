@@ -7,7 +7,7 @@
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux';
 
-import Login from '../components/Login';
+import SignInForm from '../components/Sign/InForm';
 
 import {logIn} from '../actions';
 
@@ -18,4 +18,4 @@ const mapDispatchToProps = (dispatch) => ({
     logIn: (username, password) => dispatch(logIn(username, password))
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignInForm))

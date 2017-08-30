@@ -232,7 +232,8 @@ const theme = (outerTheme) => {
                         backgroundColor: '#f5f5f5',
                         color: '#d7001e',
                         '&$disabled': {
-                            backgroundColor: 'transparent',
+                            backgroundColor: '#cbcbcb',
+                            color: '#fff',
                         },
                     }
                 },
@@ -247,6 +248,10 @@ const theme = (outerTheme) => {
                     color: '#d7001e',
                     '&:hover': {
                         backgroundColor: '#f5f5f5'
+                    },
+                    '&$disabled': {
+                        color: '#fff',
+                        backgroundColor: '#cbcbcb',
                     },
                 },
                 raisedPrimary: {
@@ -281,7 +286,6 @@ const theme = (outerTheme) => {
                         fontSize: 16,
                         letterSpacing: '0.3px',
                         textAlign: 'center',
-                        padding: '32px 12px',
                         justifyContent: 'center',
                         borderBottom: 'solid 2px #e2e2e2',
                     },
@@ -498,7 +502,7 @@ const theme = (outerTheme) => {
             },
             MuiTabs: {
                 flexContainer: {
-                    borderBottom: 'solid 1px #cbcbcb60'
+                    // borderBottom: 'solid 1px #cbcbcb60'
                 }
             }
 

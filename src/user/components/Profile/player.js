@@ -20,15 +20,30 @@ import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
 import Tabs, {Tab} from 'material-ui/Tabs';
 
+
 import {Link, Icon} from '../../../common/components';
-import {PLAYER_ROLE, SCOUT_ROLE, GENDER_FEMALE, GENDER_MALE, SHOT_LEFT, SHOT_RIGHT, POS_LIST, SHOT_LIST} from '../../constants';
+import {
+    PLAYER_ROLE,
+    SCOUT_ROLE,
+    GENDER_FEMALE,
+    GENDER_MALE,
+    SHOT_LEFT,
+    SHOT_RIGHT,
+    POS_LIST,
+    SHOT_LIST
+} from '../../constants';
 
 import FavoriteButton from '../../containers/FavoriteButton';
 import ShareButton from '../ShareButton';
+import ReportButton from '../../containers/ReportButton';
+
+
+import VideoList from './VideoList';
 
 
 import playerBg from './assets/images/profile-player-background.jpg';
 import defaultPhoto from './assets/images/default-photo.png';
+
 
 const styleSheet = createStyleSheet('PlayerProfile', theme => ({
     root: {},
@@ -42,9 +57,11 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
 
 
     },
-    backgroundImg: {
+
+
+    backgroundImgWrap: {
         zIndex: -1,
-        minWidth: '100%',
+        width: '100%',
         height: 688,
         [theme.breakpoints.down('sm')]: {
             height: 536,
@@ -54,8 +71,21 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
         left: 0,
         opacity: 0.5,
         backgroundImage: 'linear-gradient(196deg, #f3f3f3, rgba(255, 255, 255, 0.74) 53%, rgba(250, 250, 250, 0.86) 74%, #f3f3f3)',
-
+        overflow: 'hidden'
     },
+    backgroundImg: {
+        minWidth: '100%',
+        height: 1155,
+        position: 'absolute',
+        top: '50%',
+        right: 0,
+        marginTop: -578,
+        [theme.breakpoints.down('sm')]: {
+            height: 770,
+            marginTop: -385,
+        },
+    },
+
     backgroundLeft: {
         zIndex: -1,
         position: 'absolute',
@@ -243,8 +273,6 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
             height: 132,
             backgroundImage: 'none',
             backgroundColor: '#ffffff'
-
-
         },
     },
     infoCardNumber: {
@@ -257,8 +285,9 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
         '-webkitBackgroundClip': 'text',
         textFillColor: 'transparent',
         color: 'transparent',
-
+        fontSize: 48,
         [theme.breakpoints.down('sm')]: {
+            fontSize: 40,
             top: 8,
             left: 8,
         },
@@ -529,12 +558,15 @@ class PlayerProfile extends Component {
 
     handleChange = name => event => this.setState({[name]: event.target.value});
 
+
     render() {
 
         const {classes, user, currentUser} = this.props;
 
         return <div className={classes.root}>
-            <img className={classes.backgroundImg} src={playerBg}/>
+            <div className={classes.backgroundImgWrap}>
+                <img className={classes.backgroundImg} src={playerBg}/>
+            </div>
             <div className={classes.backgroundRight}/>
             <div className={classes.backgroundLeft}/>
             <div className={classes.content}>
@@ -560,7 +592,8 @@ class PlayerProfile extends Component {
                                 anchorEl={this.state.anchorUserMenuEl}
                                 open={this.state.openUserMenu}
                                 onRequestClose={this.toggleUserMenu}>
-                                <MenuItem onClick={this.report}>Report</MenuItem>
+                                <ReportButton onClose={this.toggleUserMenu} user={user.id}
+                                              username={`${user.first_name} ${user.last_name}`}>Report</ReportButton>
                             </Menu>
                         </div>
                     </div>
@@ -574,8 +607,13 @@ class PlayerProfile extends Component {
                                     <span>Edit</span>
                                 </Button>
                             </Link>
-                            <Hidden xsDown><Button color="primary" raised className={classes.addVideoButton}>Add a
-                                Video</Button></Hidden>
+                            <Hidden xsDown>
+                                <Link to="/video/add" disabledUnderline>
+                                    <Button color="primary" raised className={classes.addVideoButton}>
+                                        Add a Video
+                                    </Button>
+                                </Link>
+                            </Hidden>
                         </div>
                     </div>
                 )}
@@ -624,7 +662,7 @@ class PlayerProfile extends Component {
                     <Paper className={classes.infoCard} square>
                         {user.jersey_number && (
                             <Typography className={classes.infoCardNumber}
-                                        type="title">{user.jersey_number}</Typography>)}
+                                        type="headline">{user.jersey_number}</Typography>)}
 
 
                         <div
@@ -649,7 +687,7 @@ class PlayerProfile extends Component {
                                 {user.team || 'Team Unknown'}
                             </Typography>
                             <Typography type="body1" align="center">
-                                {user.team_location || user.team_country || 'Location Unknown'}
+                                {(user.team_location !== 'n/a' && user.team_location) || user.team_country || 'Location Unknown'}
                             </Typography>
 
                         </div>
@@ -745,7 +783,7 @@ class PlayerProfile extends Component {
 
                         {this.state.tab === 0 && user.videos.length > 0 && (
                             <div className={classes.tabContent}>
-                                <div className={classes.videoListWrap}/>
+                                <VideoList className={classes.videoListWrap} videos={user.videos}/>
                             </div>
                         )}
 
@@ -767,10 +805,12 @@ class PlayerProfile extends Component {
                                     they look for:
                                 </Typography>
                                 <Typography type="body1" align="center" className={classes.point}> Tap
-                                    <Button fab color="primary" raised
-                                            className={classNames(classes.addVideoFloat, classes.addVideoFloatDesc)}>
-                                        <Icon>plus</Icon>
-                                    </Button>
+                                    <Link to="/video/add" disabledUnderline>
+                                        <Button fab color="primary" raised
+                                                className={classNames(classes.addVideoFloat, classes.addVideoFloatDesc)}>
+                                            <Icon>plus</Icon>
+                                        </Button>
+                                    </Link>
                                     to upload a video
                                 </Typography>
                             </div>
@@ -888,9 +928,11 @@ class PlayerProfile extends Component {
                         )}
 
                         {user.id === currentUser.id && (
-                            <Button fab color="primary" raised className={classes.addVideoFloat}>
-                                <Icon>plus</Icon>
-                            </Button>
+                            <Link to="/video/add" disabledUnderline>
+                                <Button fab color="primary" raised className={classes.addVideoFloat}>
+                                    <Icon>plus</Icon>
+                                </Button>
+                            </Link>
                         )}
 
                     </Paper>
@@ -903,7 +945,9 @@ class PlayerProfile extends Component {
                         <Paper className={classes.videoList} square>
 
 
-                            {user.videos.length > 0 ? ( <div className={classes.videoListWrap}/>) : (
+                            {user.videos.length > 0 ? (
+                                <VideoList className={classes.videoListWrap} videos={user.videos}/>
+                            ) : (
 
                                 user.id !== currentUser.id ? (
                                     <div className={classes.videoListWrap}>
@@ -921,10 +965,12 @@ class PlayerProfile extends Component {
                                             they look for:
                                         </Typography>
                                         <Typography type="body1" className={classes.point}>1.
-                                            <Button color="primary" raised
-                                                    className={classNames(classes.addVideoButton, classes.addVideoButtonDesc)}>
-                                                Add a Video
-                                            </Button> to highlight your skills
+                                            <Link to="/video/add" disabledUnderline>
+                                                <Button color="primary" raised
+                                                        className={classNames(classes.addVideoButton, classes.addVideoButtonDesc)}>
+                                                    Add a Video
+                                                </Button>
+                                            </Link> to highlight your skills
                                         </Typography>
                                         <Typography type="body1" className={classes.point}>2.
                                             <Link to="/profile/edit" disabledUnderline>
@@ -1008,6 +1054,7 @@ class PlayerProfile extends Component {
 
 
             </div>
+
 
         </div>
 

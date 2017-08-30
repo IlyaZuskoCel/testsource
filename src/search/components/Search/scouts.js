@@ -5,7 +5,7 @@
 import React, {Component} from 'react';
 import compose from 'recompose/compose';
 import PropTypes from 'prop-types';
-import Tabs, { Tab } from 'material-ui/Tabs';
+import Tabs, {Tab} from 'material-ui/Tabs';
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
@@ -24,7 +24,7 @@ const styleSheet = createStyleSheet('Scout', theme => ({
         margin: 'auto',
     },
     resultContainer: {
-        padding: [40 , 0],
+        padding: [40, 0],
 
         [theme.breakpoints.down('md')]: {
             padding: [40, 15]
@@ -123,7 +123,7 @@ const styleSheet = createStyleSheet('Scout', theme => ({
 
     },
     scoutRole: {
-        margin: [1 , 0 , 2, 0],
+        margin: [1, 0, 2, 0],
         lineHeight: 1.33,
     },
     photoContainer: {
@@ -151,14 +151,14 @@ class Scouts extends Component {
     }
 
     componentWillReceiveProps(nextProp) {
-        this.setState({scouts : nextProp.scouts});
+        this.setState({scouts: nextProp.scouts});
     }
 
 
     roleShortener(role) {
         let result;
         if (/\//.test(role)) {
-            result =  role.split('/')[0];
+            result = role.split('/')[0];
         }
 
         return result ? result : role;
@@ -171,36 +171,41 @@ class Scouts extends Component {
             <div className={classes.content}>
 
                 <div className={classes.resultContainer}>
-                    <Grid container  gutter={40}>
+                    <Grid container gutter={40}>
 
                         {this.state.scouts && this.state.scouts.map(scout => {
                             return <Grid item xs={12} md={4} sm={6} key={scout.id}>
-                                <Paper classes={{root: classes.resultCard}} elevation={1}>
-                                    <div className={classes.leftStripe}></div>
+                                <Link to={`/profile/${scout.id}`} disabledUnderline>
+                                    <Paper classes={{root: classes.resultCard}} elevation={1}>
+                                        <div className={classes.leftStripe}></div>
 
-                                    <div className={classes.playerInfo}>
-                                        <div className={classes.photoContainer}>
-                                            <img src={scout.profile_picture || defaultPhoto} className={classes.playerPhoto}  alt="Player's photo"/>
-                                        </div>
+                                        <div className={classes.playerInfo}>
+                                            <div className={classes.photoContainer}>
+                                                <img src={scout.profile_picture || defaultPhoto}
+                                                     className={classes.playerPhoto} alt="Player's photo"/>
+                                            </div>
 
-                                        <div className={classes.playerNameContainer}>
-                                            <div className={classes.nameColumn}>
-                                                <Typography type='title' className={classNames(classes.nameFont , classes.nameFontFirst)}>
-                                                    {scout.first_name}
-                                                </Typography>
-                                                <Typography type='title' className={classes.nameFont}>
-                                                    {scout.last_name}
-                                                </Typography>
+                                            <div className={classes.playerNameContainer}>
+                                                <div className={classes.nameColumn}>
+                                                    <Typography type='title'
+                                                                className={classNames(classes.nameFont, classes.nameFontFirst)}>
+                                                        {scout.first_name}
+                                                    </Typography>
+                                                    <Typography type='title' className={classes.nameFont}>
+                                                        {scout.last_name}
+                                                    </Typography>
 
 
-                                                <Typography type="body1" className={classes.scoutRole}>{this.roleShortener(scout.user_role) || 'Unknown'}</Typography>
-                                                <Typography type='caption' className={classes.playerLeague}>{scout.league || 'Unknown'}</Typography>
+                                                    <Typography type="body1"
+                                                                className={classes.scoutRole}>{this.roleShortener(scout.user_role) || 'Unknown'}</Typography>
+                                                    <Typography type='caption'
+                                                                className={classes.playerLeague}>{scout.league || 'Unknown'}</Typography>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-
-                                </Paper>
+                                    </Paper>
+                                </Link>
                             </Grid>
                         })}
                     </Grid>

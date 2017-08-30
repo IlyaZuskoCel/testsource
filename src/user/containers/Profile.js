@@ -19,7 +19,6 @@ const mapStateToProps = (state, props) => ({
 });
 const mapDispatchToProps = (dispatch) => ({
     getUser: id => dispatch(getUser(id)),
-    report: id => dispatch(getUser(id)),
     sendEmail: (id, subject, text) => dispatch(sendEmail(id, subject, text)),
     goBack: () => dispatch(goBack()),
 });

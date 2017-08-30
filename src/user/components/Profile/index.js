@@ -21,6 +21,11 @@ class Profile extends Component {
         this.props.getUser(this.props.id);
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.id !== this.props.id)
+            this.props.getUser(nextProps.id);
+    }
+
     render() {
         if (!this.props.user)
             return null;

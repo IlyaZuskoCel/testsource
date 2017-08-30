@@ -5,23 +5,19 @@
 
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import classNames from 'classnames';
 import Typography from 'material-ui/Typography';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import withWidth from 'material-ui/utils/withWidth';
 import compose from 'recompose/compose';
 import Hidden from 'material-ui/Hidden';
-import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import IconButton from 'material-ui/IconButton';
 import Menu, {MenuItem} from 'material-ui/Menu';
 import Button from 'material-ui/Button';
 
 import {Link, Icon} from '../../../common/components';
-import {PLAYER_ROLE, SCOUT_ROLE, GENDER_FEMALE, GENDER_MALE, SHOT_LEFT, SHOT_RIGHT, POS_LIST} from '../../constants';
 
-import FavoriteButton from '../../containers/FavoriteButton';
 import ShareButton from '../ShareButton';
 
 import scoutBg from './assets/images/profile-scout-background.jpg';
@@ -39,9 +35,9 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
             marginTop: 0,
         },
     },
-    backgroundImg: {
+    backgroundImgWrap: {
         zIndex: -1,
-        minWidth: '100%',
+        width: '100%',
         height: 688,
         [theme.breakpoints.down('sm')]: {
             height: 536,
@@ -51,6 +47,20 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
         left: 0,
         opacity: 0.5,
         backgroundImage: 'linear-gradient(196deg, #f3f3f3, rgba(255, 255, 255, 0.74) 53%, rgba(250, 250, 250, 0.86) 74%, #f3f3f3)',
+        overflow: 'hidden'
+    },
+    backgroundImg: {
+        minWidth: '100%',
+        height: 1155,
+        position: 'absolute',
+        top: '50%',
+        right: 0,
+        marginTop: -578,
+        [theme.breakpoints.down('sm')]: {
+            height: 770,
+            marginTop: -385,
+        },
+
 
     },
     backgroundLeft: {
@@ -354,7 +364,9 @@ class ScoutProfile extends Component {
         const {classes, user, currentUser} = this.props;
 
         return <div className={classes.root}>
-            <img className={classes.backgroundImg} src={scoutBg}/>
+            <div className={classes.backgroundImgWrap}>
+                <img className={classes.backgroundImg} src={scoutBg}/>
+            </div>
             <div className={classes.backgroundRight}/>
             <div className={classes.backgroundLeft}/>
 
@@ -422,7 +434,7 @@ class ScoutProfile extends Component {
                                 {user.team || 'Team Unknown'}
                             </Typography>
                             <Typography type="body1" align="center">
-                                {user.team_location || user.team_country || 'Location Unknown'}
+                                {(user.team_location !== 'n/a' && user.team_location) || user.team_country || 'Location Unknown'}
                             </Typography>
 
                         </div>

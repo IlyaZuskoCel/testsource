@@ -229,6 +229,12 @@ const styleSheet = createStyleSheet('Header', theme => ({
             right: -20
         },
 
+    },
+    MenuItem: {
+        [theme.breakpoints.down('sm')]: {
+            padding: '32px 12px',
+
+        },
     }
 }));
 
@@ -284,14 +290,20 @@ class Header extends Component {
         if (user) {
             let items = [
                 <MenuItem key="profile"
-                          onClick={this.handleMenuRequestClose('/profile')}><span>Profile</span></MenuItem>,
-                <MenuItem key="settings" onClick={this.handleMenuRequestClose('/settings')}>Settings</MenuItem>,
-                <MenuItem key="logout" onClick={this.props.logOut}>Log Out</MenuItem>,
+                          className={classes.MenuItem}
+                          onClick={this.handleMenuRequestClose('/profile')}>Profile</MenuItem>,
+                <MenuItem key="settings"
+                          className={classes.MenuItem}
+                          onClick={this.handleMenuRequestClose('/settings')}>Settings</MenuItem>,
+                <MenuItem key="logout"
+                          className={classes.MenuItem}
+                          onClick={this.props.logOut}>Log Out</MenuItem>,
 
             ];
 
             if (user.role === SCOUT_ROLE)
                 items.unshift(<MenuItem key="favorite"
+                                        className={classes.MenuItem}
                                         onClick={this.handleMenuRequestClose('/favorite')}>ShortList</MenuItem>);
 
 

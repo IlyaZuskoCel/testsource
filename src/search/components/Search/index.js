@@ -128,7 +128,7 @@ class Search extends Component {
 
     componentDidMount() {
         this.props.upload(this.props.type , {page : 1 , 'per-page' : 16 , ...this.state.query});
-        this.props.getLeagues();
+        this.props.fetchData();
     }
 
     componentWillReceiveProps(nextProps) {
@@ -171,7 +171,10 @@ class Search extends Component {
                                                                      filterScouts={this.props.filterScouts}
                                                                      activePage={this.state.activePage}/>}
 
-                        {this.props.type === 'player' && <PlayerFilter leagues={this.props.leagues ? this.props.leagues : []}
+                        {this.props.type === 'player' && <PlayerFilter leagues={this.props.leagues}
+                                                                       leagueOptions={this.props.leagueOptions}
+                                                                       teams={this.props.teams}
+                                                                       teamOptions={this.props.teamOptions}
                                                                        filterPlayers={this.props.filterPlayers}
                                                                        activePage={this.state.activePage}/>}
                     </div>
