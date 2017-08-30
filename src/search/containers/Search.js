@@ -18,6 +18,7 @@ const mapStateToProps = (state, props) => ({
     teamOptions: mapOptions(state.common.teams),
     type: props.match.params.type || 'player',
     query: props.location.search,
+    headers: state.search.headers,
 });
 
 

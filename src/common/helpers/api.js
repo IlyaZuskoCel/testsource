@@ -88,13 +88,14 @@ export const getPage = (url, options) => {
             if (response.status !== 200) {
                 throw 'error';
             }
-            return {
-                items:response.json(),
+
+            return response.json().then(items => ({
+                items,
                 count:response.headers.get('X-Pagination-Total-Count'),
                 pageCount:response.headers.get('X-Pagination-Page-Count'),
                 page:response.headers.get('X-Pagination-Current-Page'),
                 perPage:response.headers.get('X-Pagination-Per-Page'),
-            };
+            }));
         })
 };
 

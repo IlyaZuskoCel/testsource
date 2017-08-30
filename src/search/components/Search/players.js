@@ -23,7 +23,7 @@ const styleSheet = createStyleSheet('Search', theme => ({
         margin: 'auto',
     },
     resultContainer: {
-        padding: [40, 0],
+        padding: [40 , 0],
 
         [theme.breakpoints.down('md')]: {
             padding: [40, 15]
@@ -105,7 +105,7 @@ const styleSheet = createStyleSheet('Search', theme => ({
 
     },
     nameFont: {
-        fontSize: 40,
+        fontSize: 40 ,
         marginTop: 20,
 
         [theme.breakpoints.down('md')]: {
@@ -113,7 +113,7 @@ const styleSheet = createStyleSheet('Search', theme => ({
         },
 
         [theme.breakpoints.down('xs')]: {
-            marginTop: 0,
+          marginTop: 0,
         }
     },
     playerLeague: {},
@@ -125,14 +125,14 @@ const styleSheet = createStyleSheet('Search', theme => ({
         alignItems: 'center',
         height: 40,
         backgroundColor: '#fff',
-        padding: [0, 14]
+        padding: [0 , 14]
     },
 
     playerBottomDivider: {
         width: 1,
         height: 18,
         borderLeft: 'solid 1px #cbcbcb',
-        margin: [0, 8],
+        margin: [0 , 8],
     },
 
     bottomPlayerText: {

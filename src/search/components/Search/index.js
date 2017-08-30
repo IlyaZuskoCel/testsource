@@ -97,8 +97,6 @@ const styleSheet = createStyleSheet('Search' , theme => ({
     buttonFilter: {
         color: '#ffffff',
     }
-
-
 }));
 
 const splitSearchQuery = (q) => {
@@ -140,7 +138,6 @@ class Search extends Component {
 
             this.setState({query : parsedQuery});
         }
-
     }
 
     handleChange(event , value) {
@@ -209,7 +206,7 @@ class Search extends Component {
             }
 
             <footer className={classes.footer}>
-                <Pagination currentPage={this.state.activePage} total={140}  perPage={16} onChange={this.changePagination}  />
+                <Pagination currentPage={this.state.activePage} total={this.props.headers ? parseInt(this.props.headers.count) : 0}  perPage={10} onChange={this.changePagination}  />
             </footer>
 
         </div>)
