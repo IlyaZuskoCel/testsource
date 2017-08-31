@@ -15,7 +15,6 @@ import {Link, Icon, Pagination , Autosuggest} from '../../../common/components';
 import Hidden from 'material-ui/Hidden';
 import Button from 'material-ui/Button';
 
-
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import defaultPhoto from './assets/images/default-photo.png';
 
@@ -25,6 +24,7 @@ import ScoutFilter from './scoutFilter';
 import PlayerFilter from './playerFilter';
 
 import queryString from 'query-string';
+import './assets/style.css';
 
 const styleSheet = createStyleSheet('Search' , theme => ({
     root: {},
@@ -76,7 +76,6 @@ const styleSheet = createStyleSheet('Search' , theme => ({
     headerMobTab: {
         fontSize: 20,
         letterSpacing: 0.6,
-        color: '#ffffff',
         leftAlign: 'center',
     },
     tabWrapper: {
@@ -96,7 +95,24 @@ const styleSheet = createStyleSheet('Search' , theme => ({
     },
     buttonFilter: {
         color: '#ffffff',
+    },
+
+    shadowContent: {
+        boxShadow: '0 1px 8px 0 rgba(0, 0, 0, 0.2)',
+    },
+
+    navItem: {
+        marginTop: 40
+    },
+
+    tabColor: {
+        color: '#cbcbcb'
+    },
+
+    activeTab: {
+        color: '#d7001e',
     }
+
 }));
 
 const splitSearchQuery = (q) => {
@@ -129,7 +145,7 @@ class Search extends Component {
     }
 
     componentDidMount() {
-        this.props.upload(this.props.type , {page : 1 , 'per-page' : 16 , ...this.state.query});
+        this.props.upload(this.props.type , {page : 1 , 'per-page' : 12 , ...this.state.query});
         this.props.fetchData();
     }
 
@@ -144,15 +160,16 @@ class Search extends Component {
     }
 
     handleChange(event , value) {
+        console.log(value);
             this.setState({activeTab : value} , ()  => {
                 this.props.go(value === 1 ? '/search/scout' : '/search/player');
-                this.props.upload(value === 1 ? 'scout' : 'player' , {page : 1 , 'per-page' : 16});
+                this.props.upload(value === 1 ? 'scout' : 'player' , {page : 1 , 'per-page' : 12});
             });
     }
 
     changePagination(page) {
         this.setState({activePage : page} , () => {
-           this.props.upload(this.props.type , {page : page , 'per-page': 16 , ...this.state.query});
+           this.props.upload(this.props.type , {page : page , 'per-page': 12 , ...this.state.query});
         });
     }
 
@@ -163,13 +180,13 @@ class Search extends Component {
 
                 <Hidden xsDown><header className={classes.header}>
                     <div className={classNames(classes.content , classes.noMargin)}>
-                        <Tabs index={this.state.activeTab} indicatorColor="#d7001e"  onChange={this.handleChange} width={this.state.width} className={classes.tabs}>
-                            <Tab label={<Typography type="title">Players</Typography>}  />
-                            <Tab label={<Typography type={"title"}>Scouts</Typography>} />
+                        <Tabs index={this.state.activeTab}   indicatorClassName="indicatorxsDown"	 textColor={'#cbcbcb'}  onChange={this.handleChange} width={this.state.width} >
+                            <Tab label={<Typography type={"title"} className={classNames(this.state.activeTab === 0 ? classes.activeTab : classes.tabColor)}>Players</Typography>}   className={classes.navItem} />
+                            <Tab label={<Typography type={"title"} className={classNames(this.state.activeTab === 1 ? classes.activeTab : classes.tabColor)}>Scouts</Typography>} className={classes.navItem} />
                         </Tabs>
                     </div>
 
-                    <div className={classes.content}>
+                    <div className={classNames(classes.content)}>
                         {this.props.type === 'scout' && <ScoutFilter leagues={this.props.leagues}
                                                                      leagueOptions={this.props.leagueOptions}
                                                                      teams={this.props.teams}
@@ -191,7 +208,7 @@ class Search extends Component {
             </Hidden>
             <Hidden smUp>
                 <div className={classes.headerMobNav}>
-                    <Tabs index={this.state.activeTab} indicatorColor="#ffffff" textColor="#ffffff" onChange={this.handleChange} className={classes.navigationWrapper}
+                    <Tabs index={this.state.activeTab} onChange={this.handleChange} className={classes.navigationWrapper}
                           centered classes={{flexContainer : classes.headerMobCointainer}}>
                         <Tab label={<Typography type='body2' className={classNames(classes.headerMobTab, classes.firstMobTab)}>Players</Typography>} style={{marginRight: 100}}/>
                         <Tab label={<Typography type='body2' className={classes.headerMobTab}>Scouts</Typography>} />
@@ -212,7 +229,7 @@ class Search extends Component {
             }
 
             <footer className={classes.footer}>
-                <Pagination currentPage={this.state.activePage} total={this.props.headers ? parseInt(this.props.headers.count) : 0}  perPage={10} onChange={this.changePagination}  />
+                <Pagination currentPage={this.state.activePage} total={this.props.headers ? parseInt(this.props.headers.count) : 0}  perPage={12} onChange={this.changePagination}  />
             </footer>
 
         </div>)

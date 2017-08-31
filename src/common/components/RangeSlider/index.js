@@ -35,12 +35,6 @@ class RangeSlider extends Component {
     }
 
     onAfterChange(value) {
-        // this.props.onChange(value);
-        // console.log(value);
-        // this.setState({range : value} , () => {
-        //     console.log(this.state.range);
-        // })
-
         this.props.onChange(value);
     }
 
