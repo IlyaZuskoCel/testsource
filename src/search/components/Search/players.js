@@ -10,15 +10,18 @@ import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import withWidth from 'material-ui/utils/withWidth';
 import {Link, Icon} from '../../../common/components';
+import classNames from 'classnames';
 
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import defaultPhoto from './assets/images/default-photo.png';
+
+import moment from 'moment';
 
 
 const styleSheet = createStyleSheet('Search', theme => ({
     content: {
         maxWidth: 1168,
-        marginTop: 56,
+        maxWidth: 1168,
         width: '100%',
         margin: 'auto',
     },
@@ -155,7 +158,11 @@ const styleSheet = createStyleSheet('Search', theme => ({
     iconWrapper: {
         width: 20,
         height: 19,
-    }
+    },
+
+    shadowContent: {
+        boxShadow: '0 1px 8px 0 rgba(0, 0, 0, 0.2)',
+    },
 
 }));
 
@@ -171,12 +178,13 @@ class Players extends Component {
 
     componentWillReceiveProps(nextProp) {
         this.setState({players: nextProp.players});
+
     }
 
     render() {
         const {classes} = this.props;
 
-        return (<div className={classes.content}>
+        return (<div className={classNames(classes.content)}>
                 <Typography type="caption">{this.props.total ? this.props.total : 0} scouts found</Typography>
                 <div className={classes.resultContainer}>
                     <Grid container gutter={40}>
@@ -197,7 +205,7 @@ class Players extends Component {
                                                         {player.first_name} {player.last_name}
                                                     </Typography>
                                                     <Typography type='caption'
-                                                                className={classes.playerLeague}>{player.league || 'Unknown'}</Typography>
+                                                                className={classes.playerLeague}>{player.team ? player.team : ''}  {player.league_short ? player.league_short : ''}</Typography>
                                                 </div>
                                             </div>
                                         </div>
@@ -217,10 +225,10 @@ class Players extends Component {
                                                                           className={classes.bottomPlayerText}>{parseInt(player.weight) + ' lbs'}</Typography>}
                                             {player.weight && <div className={classes.playerBottomDivider}></div>}
 
-                                            {player.birthday !== 'n/a' && <Typography type='body1'
-                                                                                      className={classes.bottomPlayerText}>{player.birthday}</Typography>}
+                                            {player.birthday && <Typography type='body1'
+                                                                                      className={classes.bottomPlayerText}>{moment(player.birthday).format("MMM. YYYY")}</Typography>}
 
-                                            <div className={classes.lastItemInRow}>
+                                            {this.props.role && this.props.role !== 'Player' && <div className={classes.lastItemInRow}>
                                                 <div className={classes.playerBottomDivider}></div>
                                                 {
                                                     player.is_tagged ? <div className={classes.iconWrapper}><Icon
@@ -228,7 +236,7 @@ class Players extends Component {
                                                         <div className={classes.iconWrapper}><Icon
                                                             className={classes.editIcon}>star-empty</Icon></div>
                                                 }
-                                            </div>
+                                            </div>}
 
                                         </div>
 
