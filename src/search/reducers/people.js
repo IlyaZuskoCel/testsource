@@ -3,7 +3,7 @@
  * moonion.com
  */
 
-import {SET_PLAYERS, SET_SCOUTS , CLEAR_LIST} from "../constants/actions";
+import {SET_PLAYERS, SET_SCOUTS , CLEAR_LIST , SET_AGE_BOUNDARIES} from "../constants/actions";
 
 function players(state = [], action) {
     switch (action.type) {
@@ -12,6 +12,9 @@ function players(state = [], action) {
             return state;
         case SET_SCOUTS:
             state = action.payload;
+            return state;
+        case SET_AGE_BOUNDARIES:
+            console.log(action.payload);
             return state;
         case CLEAR_LIST:
             state = [];

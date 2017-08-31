@@ -11,9 +11,12 @@ import {Link, Icon, Pagination, Autosuggest} from '../../../common/components';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import withWidth from 'material-ui/utils/withWidth';
 
+import {PlAYER_MAX_AGE , PLAYER_MIN_AGE} from "../../../common/constants/playerSettings";
+
 
 import queryParse from 'query-string';
 import {RangeSlider} from '../../../common/components';
+import {filterOnReg} from "../../helpers/helpers";
 
 import {POS_LIST} from '../../../user/constants';
 
@@ -52,38 +55,23 @@ class PlayerFilter extends Component {
             year: '',
             position: '',
             leagues: [],
-            values: [1980, 2017]
+            born: [PLAYER_MIN_AGE , PlAYER_MAX_AGE]
         };
 
-        this.suggestionChanged = this.suggestionChanged.bind(this);
-        this.filterBySuggestion = this.filterBySuggestion.bind(this);
-        this.handleRequestClearedSuggestions = this.handleRequestClearedSuggestions.bind(this);
         this.makeFilterRequest = this.makeFilterRequest.bind(this);
 
-
         this.onChangeName = this.onChangeName.bind(this);
-        this.onChangeYear = this.onChangeYear.bind(this);
-        this.onChangeTeam = this.onChangeTeam.bind(this);
         this.getRange = this.getRange.bind(this);
     }
 
-    onChangeTeam(event) {
-        this.setState({team: event.target.value}, () => {
-            this.makeFilterRequest();
-        });
-    }
 
     onChangeAutosuggest = name => (event, {newValue}) => {
-        this.setState({[name]: newValue}, () => {
+
+        this.setState({[name]: filterOnReg(/^[0-9]+/ ,newValue) }, () => {
             this.makeFilterRequest();
         });
     };
 
-    onChangeYear(event) {
-        this.setState({year: event.target.value}, () => {
-            this.makeFilterRequest();
-        });
-    }
 
     onChangeName(event) {
         this.setState({name: event.target.value}, () => {
@@ -91,44 +79,12 @@ class PlayerFilter extends Component {
         });
     }
 
-    filterBySuggestion(suggestion) {
-
-        if (suggestion.value === "") {
-            this.setState({
-                leagues: this.props.leagues.map(league => ({label: league.short_name}))
-            });
-
-            return;
-        }
-
-        let filterWord = suggestion.value.toUpperCase();
-
-        let filteredLeagues = this.state.leagues.filter(league => {
-            return league.label.startsWith(filterWord);
-        });
-
-
-        this.setState({leagues: filteredLeagues});
-    }
-
-    handleRequestClearedSuggestions() {
-        this.props.filterPlayers('');
-    }
-
-
-    suggestionChanged(event, {newValue, method}) {
-
-        this.setState({
-            DropdownValue: newValue,
-        }, () => {
-            method !== 'type' ? this.makeFilterRequest() : null
-        });
-    }
-
     getRange(value) {
-        this.setState({values: value}, () => {
-            this.makeFilterRequest();
-        })
+        if (this.state.born[0] !== value[0] || this.state.born[1] !== value[1]) {
+            this.setState({born: value} , () => {
+                this.makeFilterRequest();
+            })
+        }
     }
 
     makeFilterRequest() {
@@ -141,7 +97,7 @@ class PlayerFilter extends Component {
             'name_search': this.state.name ? this.state.name : null,
         };
 
-        if (this.state.name || this.state.id_league || this.state.id_team_current  || this.state.year || this.state.position || this.state.values) {
+        if (this.state.name || this.state.id_league || this.state.id_team_current  || this.state.year || this.state.position || this.state.values || this.state.born) {
             queryString += '?';
 
             for (let key in options) {
@@ -151,10 +107,9 @@ class PlayerFilter extends Component {
                 queryString += key + '=' + options[key] + '&'
             }
 
-            if (this.state.values || (this.state.values[0] != 1980 && this.state.values[0] != 2017)) {
-                queryString += `born[0]=${this.state.values[0]}&born[1]=${this.state.values[1]}&`;
-            }
+            queryString += `born[0]=${this.state.born[0]}&born[1]=${this.state.born[1]}&`;
         }
+
 
         this.props.filterPlayers(queryString.slice(0, -1));
     }
@@ -191,6 +146,7 @@ class PlayerFilter extends Component {
                     <Autosuggest fullWidth
                                  suggestions={this.state.id_league ? this.props.teamOptions.filter(i => i.item.id_league === parseInt(this.state.id_league)) : this.props.teamOptions}
                                  onSuggestionsFetchRequested={() => {
+
                                  }}
                                  onSuggestionsClearRequested={() => {
                                  }}
@@ -218,7 +174,7 @@ class PlayerFilter extends Component {
 
                 </Grid>
                 <Grid item xs={12} sm={6} md={4}>
-                    <RangeSlider min={1988} max={2017} value={this.state.values} onChange={this.getRange}/>
+                    <RangeSlider  value={this.state.values} onChange={this.getRange} values={this.state.born}/>
                 </Grid>
                 <Grid item xs={12} sm={6} md={4}>
                     <TextField
@@ -227,6 +183,7 @@ class PlayerFilter extends Component {
                         value={this.state.name}
                         className={classes.textField}
                         onChange={this.onChangeName}
+
                     />
                 </Grid>
             </Grid>

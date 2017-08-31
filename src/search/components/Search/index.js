@@ -115,6 +115,8 @@ class Search extends Component {
     constructor(props) {
         super(props);
 
+
+
         this.state = {
             activeTab:  this.props.type && this.props.type === 'scout' ? 1 : 0,
             activePage: 1,
@@ -138,6 +140,7 @@ class Search extends Component {
 
             this.setState({query : parsedQuery});
         }
+
     }
 
     handleChange(event , value) {
@@ -167,7 +170,10 @@ class Search extends Component {
                     </div>
 
                     <div className={classes.content}>
-                        {this.props.type === 'scout' && <ScoutFilter leagues={this.props.leagues ? this.props.leagues : []}
+                        {this.props.type === 'scout' && <ScoutFilter leagues={this.props.leagues}
+                                                                     leagueOptions={this.props.leagueOptions}
+                                                                     teams={this.props.teams}
+                                                                     teamOptions={this.props.teamOptions}
                                                                      filterScouts={this.props.filterScouts}
                                                                      activePage={this.state.activePage}/>}
 
@@ -199,10 +205,10 @@ class Search extends Component {
             </Hidden>
 
             {this.props.type === 'player' &&
-                <Players players={this.props.results} />
+                <Players players={this.props.results} total={this.props.headers ? this.props.headers.count : 0}/>
             }
             {this.props.type === 'scout' &&
-                <Scouts scouts={this.props.results} />
+                <Scouts scouts={this.props.results} total={this.props.headers ? this.props.headers.count : 0}/>
             }
 
             <footer className={classes.footer}>
