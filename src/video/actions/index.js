@@ -5,7 +5,10 @@
 
 import {push, goBack} from 'react-router-redux';
 
-import {get, post, postForm, auth} from '../../common/helpers/api';
+import {get, post, postForm} from '../../common/helpers/api';
+
+
+import {logOut} from '../../user/actions';
 
 
 import {ERROR_ALERT, SUCCESS_ALERT} from '../../common/constants/actions';
@@ -25,6 +28,9 @@ export const fetch = id => dispatch => {
             dispatch({type: SET_VIDEO, payload: video});
         })
         .catch((message) => {
+            if (message === 'Unauthorized') {
+                dispatch(logOut());
+            }
             dispatch({type: ERROR_ALERT, payload: {message}});
         })
 };
@@ -47,6 +53,9 @@ export const upload = file => dispatch => {
             // dispatch({type: SET_VIDEO, payload: result});
         })
         .catch((message) => {
+            if (message === 'Unauthorized') {
+                dispatch(logOut());
+            }
             dispatch({type: ERROR_ALERT, payload: {message}});
         })
 
@@ -64,6 +73,9 @@ export const update = (data) => dispatch => {
             dispatch({type: SUCCESS_ALERT, payload: {message: 'Video was posted successfully'}});
         })
         .catch((message) => {
+            if (message === 'Unauthorized') {
+                dispatch(logOut());
+            }
             dispatch({type: ERROR_ALERT, payload: {message}});
         })
 };
@@ -78,6 +90,9 @@ export const deleteVideo = id_video => dispatch => {
             dispatch({type: SUCCESS_ALERT, payload: {message: 'Video was deleted successfully'}});
         })
         .catch((message) => {
+            if (message === 'Unauthorized') {
+                dispatch(logOut());
+            }
             dispatch({type: ERROR_ALERT, payload: {message}});
         })
 };
@@ -95,6 +110,9 @@ export const fetchTags = () => dispatch => {
             dispatch({type: SET_TAGS, payload: data});
         })
         .catch((message) => {
+            if (message === 'Unauthorized') {
+                dispatch(logOut());
+            }
             dispatch({type: ERROR_ALERT, payload: {message}});
         })
 };

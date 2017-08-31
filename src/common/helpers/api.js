@@ -9,7 +9,7 @@ const getHeaders = () => {
 
     headers.append('Content-Type', 'application/json');
 
-    const token = localStorage.getItem('token');
+    const token = getAuth();
     if (token)
         headers.append('Authorization', `Bearer ${token}`);
 
@@ -53,6 +53,9 @@ export const post = (url, data, options = {}) => {
 
     })
         .then(response => {
+            if (response.status === 401) {
+                throw 'Unauthorized';
+            }
             if (response.status !== 200) {
                 throw 'error';
             }
@@ -71,6 +74,9 @@ export const postForm = (url, form, options = {}) => {
 
     })
         .then(response => {
+            if (response.status === 401) {
+                throw 'Unauthorized';
+            }
             if (response.status !== 200) {
                 throw 'error';
             }
@@ -85,16 +91,19 @@ export const getPage = (url, options) => {
 
     })
         .then(response => {
+            if (response.status === 401) {
+                throw 'Unauthorized';
+            }
             if (response.status !== 200) {
                 throw 'error';
             }
 
             return response.json().then(items => ({
                 items,
-                count:response.headers.get('X-Pagination-Total-Count'),
-                pageCount:response.headers.get('X-Pagination-Page-Count'),
-                page:response.headers.get('X-Pagination-Current-Page'),
-                perPage:response.headers.get('X-Pagination-Per-Page'),
+                count: response.headers.get('X-Pagination-Total-Count'),
+                pageCount: response.headers.get('X-Pagination-Page-Count'),
+                page: response.headers.get('X-Pagination-Current-Page'),
+                perPage: response.headers.get('X-Pagination-Per-Page'),
             }));
         })
 };
@@ -104,4 +113,9 @@ export const auth = token => {
         localStorage.setItem('token', token);
     else
         localStorage.removeItem('token');
+};
+
+
+export const getAuth = () => {
+    return localStorage.getItem('token');
 };

@@ -7,6 +7,8 @@ import {push as routerGo, goBack as routerBack} from 'react-router-redux';
 
 import {SUCCESS_ALERT, ERROR_ALERT, REMOVE_ALERT, SET_LEAGUES, SET_TEAMS, SET_COUNTRIES} from '../constants/actions';
 
+import {logOut} from '../../user/actions'
+
 import {get} from '../helpers/api';
 
 export const go = page => dispatch => {
@@ -35,6 +37,9 @@ export const getLeagues = () => dispatch => {
             dispatch({type: SET_LEAGUES, payload: leagues});
         })
         .catch((message) => {
+            if (message === 'Unauthorized') {
+                dispatch(logOut());
+            }
             dispatch({type: ERROR_ALERT, payload: {message}});
         })
 };
@@ -47,6 +52,9 @@ export const getTeams = () => dispatch => {
             dispatch({type: SET_TEAMS, payload: teams});
         })
         .catch((message) => {
+            if (message === 'Unauthorized') {
+                dispatch(logOut());
+            }
             dispatch({type: ERROR_ALERT, payload: {message}});
         })
 };
@@ -59,6 +67,9 @@ export const getCountries = () => dispatch => {
             dispatch({type: SET_COUNTRIES, payload: data});
         })
         .catch((message) => {
+            if (message === 'Unauthorized') {
+                dispatch(logOut());
+            }
             dispatch({type: ERROR_ALERT, payload: {message}});
         })
 };

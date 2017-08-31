@@ -32,7 +32,9 @@ export const logIn = (email, password) => dispatch => {
             dispatch({type: LOGIN, payload: user});
             dispatch(push('/profile'))
         })
-        .catch()
+        .catch((message) => {
+            dispatch({type: ERROR_ALERT, payload: {message}});
+        })
 };
 
 export const registerScout = user => dispatch => {
@@ -42,7 +44,9 @@ export const registerScout = user => dispatch => {
                 return dispatch({type: ERROR_ALERT, payload: {message: user.error.message}});
             dispatch(push('/sign/in'))
         })
-        .catch()
+        .catch((message) => {
+            dispatch({type: ERROR_ALERT, payload: {message}});
+        })
 };
 
 export const registerPlayer = user => dispatch => {
@@ -52,7 +56,9 @@ export const registerPlayer = user => dispatch => {
                 return dispatch({type: ERROR_ALERT, payload: {message: user.error.message}});
             dispatch(push('/sign/in'))
         })
-        .catch()
+        .catch((message) => {
+            dispatch({type: ERROR_ALERT, payload: {message}});
+        })
 };
 
 export const logOut = () => dispatch => {
@@ -62,6 +68,9 @@ export const logOut = () => dispatch => {
             dispatch({type: LOGOUT});
             dispatch(push('/sign/in'));
         })
+        .catch((message) => {
+            dispatch({type: ERROR_ALERT, payload: {message}});
+        })
 };
 
 export const getCurrent = () => dispatch => {
@@ -70,17 +79,12 @@ export const getCurrent = () => dispatch => {
             if ('error' in user)
                 return dispatch({type: ERROR_ALERT, payload: {message: user.error.message}});
 
-
             dispatch({type: SET_CURRENT, payload: user});
             dispatch({type: LOAD});
         })
         .catch((message) => {
-            if (message === 'Unauthorized') {
-                auth('');
-                dispatch({type: LOGOUT});
-                dispatch(push('/sign/in'));
-            }
             dispatch({type: LOAD});
+            dispatch({type: ERROR_ALERT, payload: {message}});
         })
 };
 
@@ -94,9 +98,7 @@ export const getUser = (id) => dispatch => {
         })
         .catch((message) => {
             if (message === 'Unauthorized') {
-                auth('');
-                dispatch({type: LOGOUT});
-                dispatch(push('/sign/in'));
+                dispatch(logOut());
             }
             dispatch({type: ERROR_ALERT, payload: {message}});
         })
@@ -112,6 +114,9 @@ export const update = (data) => dispatch => {
             dispatch({type: SUCCESS_ALERT, payload: {message: 'Profile was updated successfully'}});
         })
         .catch((message) => {
+            if (message === 'Unauthorized') {
+                dispatch(logOut());
+            }
             dispatch({type: ERROR_ALERT, payload: {message}});
         })
 };
@@ -126,6 +131,9 @@ export const deleteProfile = (password, why) => dispatch => {
             dispatch(logOut());
         })
         .catch((message) => {
+            if (message === 'Unauthorized') {
+                dispatch(logOut());
+            }
             dispatch({type: ERROR_ALERT, payload: {message}});
         })
 };
@@ -144,6 +152,9 @@ export const uploadPhoto = (file) => dispatch => {
             dispatch({type: SUCCESS_ALERT, payload: {message: 'Profile picture was uploaded successfully'}});
         })
         .catch((message) => {
+            if (message === 'Unauthorized') {
+                dispatch(logOut());
+            }
             dispatch({type: ERROR_ALERT, payload: {message}});
         })
 };
@@ -162,6 +173,9 @@ export const addFavorite = (id) => dispatch => {
 
         })
         .catch((message) => {
+            if (message === 'Unauthorized') {
+                dispatch(logOut());
+            }
             dispatch({type: ERROR_ALERT, payload: {message}});
         })
 };
@@ -179,6 +193,9 @@ export const removeFavorite = (id) => dispatch => {
 
         })
         .catch((message) => {
+            if (message === 'Unauthorized') {
+                dispatch(logOut());
+            }
             dispatch({type: ERROR_ALERT, payload: {message}});
         })
 };
@@ -192,6 +209,9 @@ export const sendEmail = (id, subject, text) => dispatch => {
 
         })
         .catch((message) => {
+            if (message === 'Unauthorized') {
+                dispatch(logOut());
+            }
             dispatch({type: ERROR_ALERT, payload: {message}});
         })
 };
@@ -206,6 +226,9 @@ export const verifyScout = phone => dispatch => {
             return dispatch({type: ERROR_ALERT, payload: {message: "Your message wasn't sent!"}});
         })
         .catch((message) => {
+            if (message === 'Unauthorized') {
+                dispatch(logOut());
+            }
             dispatch({type: ERROR_ALERT, payload: {message}});
         })
 };
@@ -220,6 +243,9 @@ export const changePassword = (password_old, password_new) => dispatch => {
             return dispatch({type: SUCCESS_ALERT, payload: {message: "Your password was updated successfully!"}});
         })
         .catch((message) => {
+            if (message === 'Unauthorized') {
+                dispatch(logOut());
+            }
             dispatch({type: ERROR_ALERT, payload: {message}});
         })
 };
@@ -233,6 +259,9 @@ export const resetPassword = () => dispatch => {
             return dispatch({type: SUCCESS_ALERT, payload: {message: "We emailed you a temporary password"}});
         })
         .catch((message) => {
+            if (message === 'Unauthorized') {
+                dispatch(logOut());
+            }
             dispatch({type: ERROR_ALERT, payload: {message}});
         })
 };
@@ -245,6 +274,9 @@ export const report = (id_violator, type, message) => dispatch => {
             return dispatch({type: SUCCESS_ALERT, payload: {message: "Report message was sent successfully! "}});
         })
         .catch((message) => {
+            if (message === 'Unauthorized') {
+                dispatch(logOut());
+            }
             dispatch({type: ERROR_ALERT, payload: {message}});
         })
 };
