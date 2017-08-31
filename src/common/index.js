@@ -14,10 +14,10 @@ import Typography from './components/Typography';
 import Form from './components/Form';
 
 const routes = [
-    <DefaultLayout key="1" path="/typography" component={Typography}/>,
-    <DefaultLayout key="2" path="/form" component={Form}/>,
-    <Redirect from="/" to="/search"/>,
-    <PrivateRoute key="20" component={NoMatch}/>
+    <DefaultLayout key="typography" path="/typography" component={Typography}/>,
+    <DefaultLayout key="form" path="/form" component={Form}/>,
+    <Redirect key="search-redirect" from="/" to="/search"/>,
+    <PrivateRoute key="NoMatch" component={NoMatch}/>
 ];
 
 export default routes;
