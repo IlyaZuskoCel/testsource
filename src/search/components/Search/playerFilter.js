@@ -20,7 +20,7 @@ import {filterOnReg} from "../../helpers/helpers";
 
 import {POS_LIST} from '../../../user/constants';
 
-const positionOptions = Object.keys(POS_LIST).map(value => ({
+let positionOptions = Object.keys(POS_LIST).map(value => ({
     label: POS_LIST[value],
     value
 }));
@@ -40,6 +40,9 @@ const styleSheet = createStyleSheet('ScoutFilter', theme => ({
         [theme.breakpoints.down('sm')]: {
             margin: [0, 15, 44, 15]
         }
+    },
+    yearLabel: {
+        position: 'relative',
     }
 }));
 
@@ -67,9 +70,9 @@ class PlayerFilter extends Component {
 
     onChangeAutosuggest = name => (event, {newValue}) => {
 
-        this.setState({[name]: filterOnReg(/^[0-9]+/ ,newValue) }, () => {
-            this.makeFilterRequest();
-        });
+            this.setState({[name]: filterOnReg(/^[0-9]+/ ,newValue) }, () => {
+                this.makeFilterRequest();
+            });
     };
 
 
@@ -174,7 +177,7 @@ class PlayerFilter extends Component {
 
                 </Grid>
                 <Grid item xs={12} sm={6} md={4}>
-                    <RangeSlider  value={this.state.values} onChange={this.getRange} values={this.state.born} />
+                    <RangeSlider  value={this.state.values} onChange={this.getRange} values={this.state.born} label={'Year born'} />
                 </Grid>
                 <Grid item xs={12} sm={6} md={4}>
                     <TextField
@@ -183,7 +186,6 @@ class PlayerFilter extends Component {
                         value={this.state.name}
                         className={classes.textField}
                         onChange={this.onChangeName}
-
                     />
                 </Grid>
             </Grid>

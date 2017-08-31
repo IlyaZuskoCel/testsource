@@ -44,6 +44,12 @@ const styleSheet = createStyleSheet('Search' , theme => ({
         justifyContent: 'center',
         margin: [70, 0],
     },
+
+    containerWrapper: {
+        backgroundColor: 'transparent',
+        padding: 56,
+        boxShadow: '0 -8px 8px -8px rgba(0, 0, 0, 0.2)',
+    },
     noMargin: {
         marginTop: 0,
     },
@@ -97,10 +103,6 @@ const styleSheet = createStyleSheet('Search' , theme => ({
         color: '#ffffff',
     },
 
-    shadowContent: {
-        boxShadow: '0 1px 8px 0 rgba(0, 0, 0, 0.2)',
-    },
-
     navItem: {
         marginTop: 40
     },
@@ -142,6 +144,7 @@ class Search extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.changePagination = this.changePagination.bind(this);
+
     }
 
     componentDidMount() {
@@ -155,12 +158,11 @@ class Search extends Component {
             let parsedQuery = queryString.parse(nextProps.query);
 
             this.setState({query : parsedQuery});
-        }
 
+        }
     }
 
     handleChange(event , value) {
-        console.log(value);
             this.setState({activeTab : value} , ()  => {
                 this.props.go(value === 1 ? '/search/scout' : '/search/player');
                 this.props.upload(value === 1 ? 'scout' : 'player' , {page : 1 , 'per-page' : 12});
@@ -221,12 +223,14 @@ class Search extends Component {
                 </div>
             </Hidden>
 
-            {this.props.type === 'player' &&
-                <Players players={this.props.results} total={this.props.headers ? this.props.headers.count : 0}/>
-            }
-            {this.props.type === 'scout' &&
-                <Scouts scouts={this.props.results} total={this.props.headers ? this.props.headers.count : 0}/>
-            }
+            <div className={classes.containerWrapper}>
+                {this.props.type === 'player' &&
+                    <Players players={this.props.results} total={this.props.headers ? this.props.headers.count : 0} role={this.props.currentUser ? this.props.currentUser.role : ''}/>
+                }
+                {this.props.type === 'scout' &&
+                    <Scouts scouts={this.props.results} total={this.props.headers ? this.props.headers.count : 0}/>
+                }
+            </div>
 
             <footer className={classes.footer}>
                 <Pagination currentPage={this.state.activePage} total={this.props.headers ? parseInt(this.props.headers.count) : 0}  perPage={12} onChange={this.changePagination}  />

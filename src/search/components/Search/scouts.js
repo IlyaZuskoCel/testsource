@@ -19,7 +19,6 @@ import defaultPhoto from './assets/images/default-photo.png';
 const styleSheet = createStyleSheet('Scout', theme => ({
     content: {
         maxWidth: 1168,
-        marginTop: 56,
         width: '100%',
         margin: 'auto',
     },
