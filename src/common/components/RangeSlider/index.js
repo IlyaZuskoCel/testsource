@@ -9,6 +9,8 @@ import Slider, { Range , createSliderWithTooltip } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import './assets/style.css';
 
+import {PlAYER_MAX_AGE , PLAYER_MIN_AGE} from "../../constants/playerSettings";
+
 const styleSheet = createStyleSheet('RangeSlider' , theme => ({
     root: {
         display: 'flex',
@@ -24,54 +26,42 @@ class RangeSlider extends Component {
     constructor(props) {
         super(props);
 
-        this.handleChange = this.handleChange.bind(this);
-        this.onChangeComplete = this.onChangeComplete.bind(this);
+        this.onAfterChange = this.onAfterChange.bind(this);
+
+
+        this.state = {
+            range: [PLAYER_MIN_AGE , PlAYER_MAX_AGE]
+        }
+    }
+
+    onAfterChange(value) {
+        // this.props.onChange(value);
+        // console.log(value);
+        // this.setState({range : value} , () => {
+        //     console.log(this.state.range);
+        // })
+
+        this.props.onChange(value);
     }
 
 
-    handleChange(value) {
-        this.setState({range : value});
-        console.log('We are changing input right now');
-    }
-
-    onChangeComplete() {
-        console.log('finishing validation');
-    }
 
     render() {
         const RangeTips = createSliderWithTooltip(Slider.Range);
-        const {
-            classes,
-            className,
-            disabled,
-            error,
-            id,
-            label,
-            labelClassName,
-            InputLabelProps,
-            helperText,
-            helperTextClassName,
-            FormHelperTextProps,
-            fullWidth,
-            required,
-            rootRef,
-            value,
-        } = this.props;
-
+        const {classes} = this.props;
 
         return (<div className={classes.root}>
                 <RangeTips allowCross={false}
-                       min={this.props.min}
-                       max={this.props.max}
-                       defaultValue={[this.props.min , this.props.max]}
-                           value={this.props.value}
+                       min={PLAYER_MIN_AGE}
+                       max={PlAYER_MAX_AGE}
+                       defaultValue={this.props.values}
                            tipFormatter={value => `${value}`}
-                           onChange={this.props.onChange}
+                           tipProps={this.topFormatter}
+                           onAfterChange={this.onAfterChange}
                 />
         </div>)
     }
 }
-
 
 RangeSlider.propTypes = {
     children: PropTypes.node,
