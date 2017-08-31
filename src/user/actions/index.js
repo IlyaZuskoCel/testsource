@@ -5,7 +5,7 @@
 
 import {push, goBack} from 'react-router-redux';
 
-import {get, post, postForm, auth} from '../../common/helpers/api';
+import {get, post, postForm, auth, getAuth} from '../../common/helpers/api';
 
 
 import {ERROR_ALERT, SUCCESS_ALERT} from '../../common/constants/actions';
@@ -76,8 +76,13 @@ export const logOut = () => dispatch => {
 export const getCurrent = () => dispatch => {
     return get('/api/v2/profile/get')
         .then(user => {
+
             if ('error' in user)
                 return dispatch({type: ERROR_ALERT, payload: {message: user.error.message}});
+
+            if (user.length === 0 && getAuth()) {
+                dispatch(logOut());
+            }
 
             dispatch({type: SET_CURRENT, payload: user});
             dispatch({type: LOAD});

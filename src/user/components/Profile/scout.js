@@ -361,7 +361,7 @@ class ScoutProfile extends Component {
 
     render() {
 
-        const {classes, user, currentUser} = this.props;
+        const {classes, user, currentUser, isCurrent} = this.props;
 
         return <div className={classes.root}>
             <div className={classes.backgroundImgWrap}>
@@ -372,7 +372,7 @@ class ScoutProfile extends Component {
 
             <div className={classes.content}>
 
-                {user.id !== currentUser.id ? (
+                {!isCurrent ? (
                     <div className={classes.topNavigate}>
                         <Link to="/" onClick={this.props.goBack} invert disabledUnderline className={classes.backLink}>
                             <Icon>previous</Icon>
@@ -451,7 +451,7 @@ class ScoutProfile extends Component {
                                             className={classes.infoRightAbout}>{user.biography}</Typography>
                             )}
 
-                            {user.id === currentUser.id && (!user.biography || !user.profile_picture) && (
+                            {isCurrent && (!user.biography || !user.profile_picture) && (
                                 <div className={classes.profileIncomplete}>
                                     <Typography type="subheading">Your profile is incomplete!</Typography>
 
@@ -471,18 +471,18 @@ class ScoutProfile extends Component {
                 </div>
 
 
-                {(user.id === currentUser.id || user.biography) && (
+                {(isCurrent || user.biography) && (
                     <Hidden smUp>
                         <Paper square className={classes.mobileContent}>
                             <div className={classes.tabContent}>
 
-                                {(!user.biography || !user.profile_picture || !currentUser.is_verify) && (
+                                {isCurrent && (!user.biography || !user.profile_picture || !currentUser.is_verify) && (
                                     <Typography type="subheading" align="center" className={classes.descTitle}>
                                         Your profile is incomplete!
                                     </Typography>
                                 )}
 
-                                {user.id === currentUser.id && (!user.biography || !user.profile_picture) && (
+                                {isCurrent && (!user.biography || !user.profile_picture) && (
 
                                     <Typography type="body1" className={classes.point}>
                                         <Link to="/profile/edit" disabledUnderline>
@@ -495,7 +495,7 @@ class ScoutProfile extends Component {
                                 )}
 
 
-                                {user.id === currentUser.id && !currentUser.is_verify && (
+                                {isCurrent && !currentUser.is_verify && (
                                     <div>
                                         <Typography type="body1" align="center" className={classes.desc}>
                                             You must be a verified scout before contacting players.

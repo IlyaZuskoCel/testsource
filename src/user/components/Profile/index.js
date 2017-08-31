@@ -18,12 +18,12 @@ const styleSheet = createStyleSheet('Profile', theme => ({}));
 
 class Profile extends Component {
     componentDidMount() {
-        this.props.getUser(this.props.id);
+        this.props.fetchData(this.props.id);
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.id !== this.props.id)
-            this.props.getUser(nextProps.id);
+            this.props.fetchData(nextProps.id);
     }
 
     render() {

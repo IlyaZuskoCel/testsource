@@ -28,6 +28,9 @@ const styleSheet = createStyleSheet('Video', theme => ({
         height: 264,
         boxShadow: '0 0px 4px 0 rgba(0, 0, 0, 0.3)',
     },
+    playControl:{
+
+    },
     bottom: {
         padding: 8
     },
@@ -47,14 +50,24 @@ const styleSheet = createStyleSheet('Video', theme => ({
 
 
 class Video extends Component {
+    state = {
+        isShow: false
+    };
+    handleShow = event => this.setState({isShow: true});
+
     render() {
         const {classes, video} = this.props;
         return <div className={classes.root}>
             <div className={classes.videoWrap}>
-                <video src={video.video_path}
-                       poster={video.overlay || video.thumb_lg}
-                       className={classes.video}
-                       controls/>
+                {this.state.isShow ? (
+                    <video src={video.video_path}
+                           className={classes.video}
+                           controls/>
+                ) : [
+                    <img src={video.overlay || video.thumb_lg} onClick={this.handleShow} className={classes.video}/>,
+                    <div className={classes.playControl}/>
+                ]}
+
             </div>
             <div className={classes.bottom}>
                 <div className={classNames.titleWrap}>
@@ -76,7 +89,7 @@ class Video extends Component {
                 </div>
                 {video.tags && video.tags.length > 0 && (
                     <Typography type="caption">
-                        {video.tags.map(i=>this.props.tags[i]).join(' | ')}
+                        {video.tags.map(i => this.props.tags[i]).join(' | ')}
                     </Typography>
                 )}
 

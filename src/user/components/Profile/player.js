@@ -561,7 +561,7 @@ class PlayerProfile extends Component {
 
     render() {
 
-        const {classes, user, currentUser} = this.props;
+        const {classes, user, currentUser, isCurrent} = this.props;
 
         return <div className={classes.root}>
             <div className={classes.backgroundImgWrap}>
@@ -571,13 +571,13 @@ class PlayerProfile extends Component {
             <div className={classes.backgroundLeft}/>
             <div className={classes.content}>
 
-                {user.id !== currentUser.id ? (
+                {!isCurrent ? (
                     <div className={classes.topNavigate}>
                         <Link to="/" onClick={this.props.goBack} invert disabledUnderline className={classes.backLink}>
                             <Icon>previous</Icon>
                             <Hidden xsDown><span className={classes.backTitle}>Back to search</span></Hidden></Link>
                         <div>
-                            {this.props.currentUser.role === SCOUT_ROLE &&
+                            {currentUser && currentUser.role === SCOUT_ROLE &&
                             <FavoriteButton user={user.id} active={user.is_tagged}/>}
 
                             <IconButton
@@ -761,7 +761,7 @@ class PlayerProfile extends Component {
                 </Hidden>
                 <Hidden smUp>
                     <Paper square className={classes.mobileContent}>
-                        {user.id !== currentUser.id && currentUser.role === SCOUT_ROLE ? (
+                        {!isCurrent && currentUser && currentUser.role === SCOUT_ROLE ? (
                             <Tabs index={this.state.tab}
                                   onChange={this.handleChangeTab}
                                   className={classes.tabs}
@@ -787,7 +787,7 @@ class PlayerProfile extends Component {
                             </div>
                         )}
 
-                        {this.state.tab === 0 && user.videos.length <= 0 && user.id !== currentUser.id && (
+                        {this.state.tab === 0 && user.videos.length <= 0 && !isCurrent && (
                             <div className={classes.tabContent}>
                                 <Typography type="subheading" align="center">
                                     This player hasn't uploaded any video yet.
@@ -795,7 +795,7 @@ class PlayerProfile extends Component {
                             </div>
                         )}
 
-                        {this.state.tab === 0 && user.videos.length <= 0 && user.id === currentUser.id && (
+                        {this.state.tab === 0 && user.videos.length <= 0 && isCurrent && (
                             <div className={classes.tabContent}>
                                 <Typography type="subheading" align="center" className={classes.descTitle}>Your profile
                                     is
@@ -868,7 +868,7 @@ class PlayerProfile extends Component {
                             </div>
                         )}
 
-                        {this.state.tab === 2 && user.id !== currentUser.id && currentUser.role === SCOUT_ROLE && (
+                        {this.state.tab === 2 && !isCurrent && (currentUser && currentUser.role === SCOUT_ROLE) && (
                             <div className={classes.tabContent}>
                                 <Grid container>
                                     <Grid item sm={3} xs={12}>
@@ -927,7 +927,7 @@ class PlayerProfile extends Component {
                             </div>
                         )}
 
-                        {user.id === currentUser.id && (
+                        {isCurrent && (
                             <Link to="/video/add" disabledUnderline>
                                 <Button fab color="primary" raised className={classes.addVideoFloat}>
                                     <Icon>plus</Icon>
@@ -949,7 +949,7 @@ class PlayerProfile extends Component {
                                 <VideoList className={classes.videoListWrap} videos={user.videos}/>
                             ) : (
 
-                                user.id !== currentUser.id ? (
+                                !currentUser ? (
                                     <div className={classes.videoListWrap}>
                                         <Typography type="subheading" align="center">
                                             This player hasn't uploaded any video yet.
@@ -988,7 +988,7 @@ class PlayerProfile extends Component {
 
                         </Paper>
 
-                        {user.id !== currentUser.id && currentUser.role === SCOUT_ROLE && (
+                        {!isCurrent && currentUser && currentUser.role === SCOUT_ROLE && (
 
                             <div className={classes.contactContainer}>
                                 <Typography type="title" className={classes.contactTitle}>

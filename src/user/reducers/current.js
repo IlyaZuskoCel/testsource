@@ -15,9 +15,9 @@ function current(state = null, action) {
             return {...state, profile_picture: action.payload};
         case LOGIN:
         case SET_CURRENT:
-            return {
+            return Object.keys(action.payload).length > 0 ? {
                 ...action.payload
-            };
+            } : null;
         case LOGOUT:
             return null;
         default:
