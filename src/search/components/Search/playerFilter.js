@@ -81,7 +81,7 @@ class PlayerFilter extends Component {
 
     getRange(value) {
         if (this.state.born[0] !== value[0] || this.state.born[1] !== value[1]) {
-            this.setState({born: value} , () => {
+            this.setState({born: value } , () => {
                 this.makeFilterRequest();
             })
         }
@@ -107,7 +107,7 @@ class PlayerFilter extends Component {
                 queryString += key + '=' + options[key] + '&'
             }
 
-            queryString += `born[0]=${this.state.born[0]}&born[1]=${this.state.born[1]}&`;
+            queryString += this.state.born[0] !== PLAYER_MIN_AGE || this.state.born[1] !== PlAYER_MAX_AGE  ? `born[0]=${this.state.born[0]}&born[1]=${this.state.born[1]}&` : '';
         }
 
 
