@@ -174,7 +174,7 @@ class PlayerFilter extends Component {
 
                 </Grid>
                 <Grid item xs={12} sm={6} md={4}>
-                    <RangeSlider  value={this.state.values} onChange={this.getRange} values={this.state.born}/>
+                    <RangeSlider  value={this.state.values} onChange={this.getRange} values={this.state.born} />
                 </Grid>
                 <Grid item xs={12} sm={6} md={4}>
                     <TextField
