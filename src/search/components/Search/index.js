@@ -164,8 +164,8 @@ class Search extends Component {
                 <Hidden xsDown><header className={classes.header}>
                     <div className={classNames(classes.content , classes.noMargin)}>
                         <Tabs index={this.state.activeTab} indicatorColor="#d7001e"  onChange={this.handleChange} width={this.state.width} className={classes.tabs}>
-                            <Tab label="Players"  />
-                            <Tab label="Scouts" />
+                            <Tab label={<Typography type="title">Players</Typography>}  />
+                            <Tab label={<Typography type={"title"}>Scouts</Typography>} />
                         </Tabs>
                     </div>
 
