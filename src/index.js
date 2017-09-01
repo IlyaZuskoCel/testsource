@@ -49,10 +49,12 @@ const AppReducer = combineReducers({
 const dpt = window.devicePixelRatio;
 const widthM = window.screen.width;
 const widthH = window.screen.height;
-if (widthM*dpt < 976) { document.write('<meta name="viewport" content="width=600, user-scalable=yes">');
+if (widthM*dpt < 976) {
+    document.write('<meta name="viewport" content="width=600, user-scalable=yes">');
+    alert(widthM*dpt);
 }
 
-
+alert(dpt+' '+widthM+' '+widthH+' '+(widthM*dpt)+' '+(widthH*dpt));
 
 
 const store = createStore(AppReducer, undefined,
