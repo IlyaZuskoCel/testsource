@@ -67,6 +67,7 @@ class Form extends Component {
                        onChange={this.handleChange('description')}/>
 
             <Autosuggest fullWidth
+                         multiSection
                          error={this.state.errors.indexOf('tags') > -1}
                          suggestions={this.props.tagOptions}
                          onSuggestionsFetchRequested={() => {

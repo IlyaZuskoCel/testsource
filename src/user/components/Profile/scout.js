@@ -18,6 +18,9 @@ import Button from 'material-ui/Button';
 
 import {Link, Icon} from '../../../common/components';
 
+import ReportButton from '../../containers/ReportButton';
+
+
 import ShareButton from '../ShareButton';
 
 import scoutBg from './assets/images/profile-scout-background.jpg';
@@ -355,9 +358,6 @@ class ScoutProfile extends Component {
         this.setState(state)
     };
 
-    report = () => {
-        this.props.report(this.props.user.id);
-    };
 
     render() {
 
@@ -390,7 +390,8 @@ class ScoutProfile extends Component {
                                 anchorEl={this.state.anchorUserMenuEl}
                                 open={this.state.openUserMenu}
                                 onRequestClose={this.toggleUserMenu}>
-                                <MenuItem onClick={this.report}>Report</MenuItem>
+                                <ReportButton onClose={this.toggleUserMenu} user={user.id}
+                                              username={`${user.first_name} ${user.last_name}`}>Report</ReportButton>
                             </Menu>
                         </div>
                     </div>

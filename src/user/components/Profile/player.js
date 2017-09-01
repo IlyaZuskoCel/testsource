@@ -544,10 +544,6 @@ class PlayerProfile extends Component {
         this.setState(state)
     };
 
-    report = () => {
-        this.props.report(this.props.user.id);
-    };
-
     sendMessage = (e) => {
         e.preventDefault();
         this.props.sendEmail(this.props.user.id, this.state.contactSubject, this.state.contactMessage);
