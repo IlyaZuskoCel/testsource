@@ -49,9 +49,7 @@ export const upload = file => dispatch => {
         .then(result => {
             if ('error' in result)
                 return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
-            dispatch({type: ERROR_ALERT, payload: {message: "Video wasn't converted"}});
-
-            // dispatch({type: SET_VIDEO, payload: result});
+            dispatch({type: SET_VIDEO, payload: result});
         })
         .catch((message) => {
             if (message === 'Unauthorized') {
