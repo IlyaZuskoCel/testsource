@@ -29,12 +29,12 @@ const styleSheet = createStyleSheet('RangeSlider', theme => ({
 }));
 
 
-const handle = (props) => {
+const handle = ({tipFormatter}) => (props) => {
     const {value, dragging, index, ...restProps} = props;
     return (
         <Tooltip
             prefixCls="rc-slider-tooltip"
-            overlay={value}
+            overlay={tipFormatter ? tipFormatter(value) : value}
             visible={true}
             placement="top"
             key={index}
@@ -45,15 +45,11 @@ const handle = (props) => {
 };
 
 class RangeSlider extends Component {
-
     constructor(props) {
         super(props);
 
     }
-
-
     render() {
-        const RangeTips = createSliderWithTooltip(Slider.Range);
         const {classes, label, ...props} = this.props;
 
         return (<div>
@@ -62,8 +58,7 @@ class RangeSlider extends Component {
             </div>}
             <div className={classes.root}>
                 <Slider.Range allowCross={false}
-                              handle={handle}
-                              tipFormatter={value => `${value}`}
+                              handle={handle(this.props)}
                               {...props}
                 />
             </div>

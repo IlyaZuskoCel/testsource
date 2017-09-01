@@ -22,6 +22,21 @@ import Button from 'material-ui/Button';
 import {Link, Icon as ScoutZooIcon} from '../../../common/components'
 
 
+const getTime = (start, end) => {
+    const value = end - start;
+
+    if (value === 0) return '0:00';
+
+    const duration = moment.duration(value);
+    let time = '';
+
+    time += ('0' + duration.get('minutes')).slice(-1) + ':';
+
+    time += ('00' + duration.get('seconds')).slice(-2);
+
+    return time;
+};
+
 const styleSheet = createStyleSheet('Video', theme => ({
     root: {},
     videoWrap: {
@@ -156,7 +171,7 @@ class Video extends Component {
         return <div className={classes.root}>
             <div className={classes.videoWrap}>
                 {this.state.isShow ? (
-                    <video src={video.video_path}
+                    <video src={video.trim_video_file_path || video.video_path}
                            className={classes.video}
                            autoPlay
                            controls/>
@@ -165,7 +180,7 @@ class Video extends Component {
                          className={classes.image}/>,
                     <Icon key="playControl" className={classes.playControl} onClick={this.handleShow}>play_arrow</Icon>,
                     <Typography key="duration" type="caption"
-                                className={classes.duration}>{video.duration || '0:54'}</Typography>
+                                className={classes.duration}>{getTime(video.time_start, video.time_end)}</Typography>
                 ]}
 
             </div>
@@ -241,7 +256,7 @@ class Video extends Component {
                     ignoreEscapeKeyUp>
                     <DialogTitle disableTypography>
                         <Typography type="subheading">
-                            Do you want to delete the video " {video.title}"?
+                            Do you want to delete the video "{video.title}"?
                         </Typography>
                     </DialogTitle>
                     <DialogActions>

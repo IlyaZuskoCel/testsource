@@ -17,6 +17,7 @@ import Button from 'material-ui/Button';
 
 
 import Upload from './Upload';
+import Trim from './Trim';
 import Form from './Form';
 
 const styleSheet = createStyleSheet('Add', theme => ({
@@ -73,7 +74,6 @@ class Add extends Component {
     handleNext = () => this.setState({tab: this.state.tab + 1});
     handlePrev = () => this.setState({tab: this.state.tab - 1});
     handleSubmit = () => {
-        console.log(this.props.video);
         this.props.update(this.props.video);
     };
 
@@ -95,7 +95,7 @@ class Add extends Component {
                                              1
                                          </Typography>
                                          <Typography
-                                             className={classNames(classes.tab, {[classes.activeTab]: this.state.tab === 0})}
+                                             className={classNames(classes.tab, {[classes.activeTab]: this.state.tab >= 0})}
                                              type="body2">
                                              Upload
 
@@ -110,7 +110,7 @@ class Add extends Component {
                                              2
                                          </Typography>
                                          <Typography
-                                             className={classNames(classes.tab, {[classes.activeTab]: this.state.tab === 1})}
+                                             className={classNames(classes.tab, {[classes.activeTab]: this.state.tab >= 1})}
                                              type="body2">
                                              Trim
 
@@ -125,7 +125,7 @@ class Add extends Component {
                                              3
                                          </Typography>
                                          <Typography
-                                             className={classNames(classes.tab, {[classes.activeTab]: this.state.tab === 2})}
+                                             className={classNames(classes.tab, {[classes.activeTab]: this.state.tab >= 2})}
                                              type="body2">
                                              Spotlight
 
@@ -139,6 +139,10 @@ class Add extends Component {
                         {this.state.tab === 0 && <Upload video={video}
                                                          onNext={this.handleNext}
                                                          upload={this.props.upload}/>}
+                        {this.state.tab === 1 && <Trim video={video}
+                                                       onNext={this.handleNext}
+                                                       updateField={this.props.updateField}
+                                                       onPrev={this.handlePrev}/>}
 
                     </Paper>
                 </Grid>
