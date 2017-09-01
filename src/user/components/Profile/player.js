@@ -38,7 +38,7 @@ import ShareButton from '../ShareButton';
 import ReportButton from '../../containers/ReportButton';
 
 
-import VideoList from './VideoList';
+import VideoList from '../../../video/containers/VideoList';
 
 
 import playerBg from './assets/images/profile-player-background.jpg';
@@ -214,11 +214,16 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
     videoList: {
         width: '100%',
         marginTop: 56,
-        marginBottom: 72
-
     },
     videoListWrap: {
-        padding: '56px 80px'
+        padding: '56px 80px',
+        marginBottom: 72,
+
+
+        [theme.breakpoints.down('sm')]: {
+            padding: 0,
+            marginBottom: 8
+        },
     },
     descTitle: {
         [theme.breakpoints.down('sm')]: {
@@ -783,7 +788,8 @@ class PlayerProfile extends Component {
 
                         {this.state.tab === 0 && user.videos.length > 0 && (
                             <div className={classes.tabContent}>
-                                <VideoList className={classes.videoListWrap} videos={user.videos}/>
+                                <VideoList className={classes.videoListWrap} videos={user.videos}
+                                           tagCounts={user.tags_isset}/>
                             </div>
                         )}
 
@@ -946,7 +952,8 @@ class PlayerProfile extends Component {
 
 
                             {user.videos.length > 0 ? (
-                                <VideoList className={classes.videoListWrap} videos={user.videos}/>
+                                <VideoList className={classes.videoListWrap} videos={user.videos}
+                                           tagCounts={user.tags_isset}/>
                             ) : (
 
                                 !currentUser ? (

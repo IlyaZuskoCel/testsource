@@ -7,7 +7,10 @@
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux';
 
+
 import Video from '../components/Video';
+
+import {go} from '../../common/actions'
 
 import {fetch, deleteVideo} from '../actions';
 
@@ -19,7 +22,8 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    deleteVideo: id => dispatch(deleteVideo(id)),
+    delete: id => dispatch(deleteVideo(id)),
+    edit: id => dispatch(go('/video/edit/' + id)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Video))

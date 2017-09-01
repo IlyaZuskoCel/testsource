@@ -15,7 +15,8 @@ import {ERROR_ALERT, SUCCESS_ALERT} from '../../common/constants/actions';
 import {
     SET_VIDEO,
     SET_TAGS,
-    SET_VIDEO_FIELD
+    SET_VIDEO_FIELD,
+    DELETE_VIDEO
 } from '../constants/actions';
 
 
@@ -87,7 +88,9 @@ export const deleteVideo = id_video => dispatch => {
             if ('error' in result)
                 return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
 
+            dispatch({type: DELETE_VIDEO, payload: id_video});
             dispatch({type: SUCCESS_ALERT, payload: {message: 'Video was deleted successfully'}});
+
         })
         .catch((message) => {
             if (message === 'Unauthorized') {
