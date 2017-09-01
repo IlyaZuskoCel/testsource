@@ -188,7 +188,8 @@ class ScoutForm extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState(getUserState(nextProps.user))
+        if (!this.props.user)
+            this.setState(getUserState(nextProps.user))
     }
 
     onUploadPicture = event => {
