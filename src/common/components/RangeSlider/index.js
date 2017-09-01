@@ -6,12 +6,11 @@ import withWidth from 'material-ui/utils/withWidth';
 
 import Slider, {Range, createSliderWithTooltip} from 'rc-slider';
 import Tooltip from 'rc-tooltip';
+
 const Handle = Slider.Handle;
 
 import 'rc-slider/assets/index.css';
 import './assets/style.css';
-
-import {PlAYER_MAX_AGE, PLAYER_MIN_AGE} from "../../constants/playerSettings";
 
 const styleSheet = createStyleSheet('RangeSlider', theme => ({
     root: {
@@ -50,21 +49,12 @@ class RangeSlider extends Component {
     constructor(props) {
         super(props);
 
-        this.onAfterChange = this.onAfterChange.bind(this);
-
-
-        this.state = {
-            range: [PLAYER_MIN_AGE, PlAYER_MAX_AGE]
-        }
     }
 
-    onAfterChange(value) {
-        this.props.onChange(value);
-    }
 
     render() {
         const RangeTips = createSliderWithTooltip(Slider.Range);
-        const {classes, label} = this.props;
+        const {classes, label, ...props} = this.props;
 
         return (<div>
             {label && <div className={classes.labelContainer}>
@@ -72,13 +62,9 @@ class RangeSlider extends Component {
             </div>}
             <div className={classes.root}>
                 <Slider.Range allowCross={false}
-                        min={PLAYER_MIN_AGE}
-                        max={PlAYER_MAX_AGE}
-                        defaultValue={this.props.values}
-                        handle={handle}
-                        tipFormatter={value => `${value}`}
-                        tipProps={this.topFormatter}
-                        onAfterChange={this.onAfterChange}
+                              handle={handle}
+                              tipFormatter={value => `${value}`}
+                              {...props}
                 />
             </div>
         </div>)
