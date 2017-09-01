@@ -166,7 +166,8 @@ class PlayerForm extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState(getUserState(nextProps.user))
+        if (!this.props.user)
+            this.setState(getUserState(nextProps.user))
     }
 
     handleChange = name => event => {
