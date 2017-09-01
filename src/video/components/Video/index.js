@@ -19,6 +19,10 @@ import Button from 'material-ui/Button';
 import Icon from 'material-ui/Icon';
 
 
+import {Link, Icon as ScoutZooIcon} from '../../../common/components'
+
+
+
 const styleSheet = createStyleSheet('Video', theme => ({
     root: {},
     videoWrap: {
@@ -48,7 +52,10 @@ const styleSheet = createStyleSheet('Video', theme => ({
         textShadow: '2px 2px 2px rgba(0, 0, 0, 0.2)',
     },
     duration: {
-        color: '#fff'
+        color: '#fff',
+        position: 'absolute',
+        bottom: 16,
+        right: 40
     },
     bottom: {
         padding: 8
@@ -75,7 +82,7 @@ class Video extends Component {
     handleShow = event => this.setState({isShow: true});
 
     render() {
-        const {classes, video} = this.props;
+        const {classes, video, currentUser} = this.props;
         return <div className={classes.root}>
             <div className={classes.videoWrap}>
                 {this.state.isShow ? (
@@ -95,6 +102,16 @@ class Video extends Component {
                     <Typography type="subheading">
                         {video.title}
                     </Typography>
+                    {currentUser.id === video.id_user && (
+                        <div>
+                            <Link to={`/video/edit/${video.id}`}>
+                                <ScoutZooIcon>pencil</ScoutZooIcon>
+                            </Link>
+                            <Link to={`/video/edit/${video.id}`}>
+                                <ScoutZooIcon>remove</ScoutZooIcon>
+                            </Link>
+                        </div>
+                    )}
                 </div>
                 <div>
                     {video.date && (

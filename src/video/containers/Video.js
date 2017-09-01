@@ -15,6 +15,7 @@ import {map, mapOptions} from '../selectors';
 
 const mapStateToProps = (state, props) => ({
     tags: map(state.video.tags),
+    currentUser: state.user.current,
 });
 
 const mapDispatchToProps = (dispatch) => ({
