@@ -111,13 +111,15 @@ class VideoList extends Component {
         console.log(sortVideo);
 
         return <div className={className}>
-            <div className={classes.tags}>
-                {tags.map(tag => (<Button key={tag.id}
-                                          onClick={this.toggleTag(tag.id)}
-                                          className={classNames(classes.button, {[classes.buttonActive]: this.state.tags.indexOf(tag.id) > -1})}>
-                    {`${tag.title} (${tag.count})`}
-                </Button>))}
-            </div>
+            {tags.length > 0 && (
+                <div className={classes.tags}>
+                    {tags.map(tag => (<Button key={tag.id}
+                                              onClick={this.toggleTag(tag.id)}
+                                              className={classNames(classes.button, {[classes.buttonActive]: this.state.tags.indexOf(tag.id) > -1})}>
+                        {`${tag.title} (${tag.count})`}
+                    </Button>))}
+                </div>
+            )}
             <Grid container gutter={40}>
                 {sortVideo.map(item => (
                     <Grid key={item.id} item xs={12} sm={6} className={classes.videoGrid}>
