@@ -4,14 +4,16 @@ import {withStyles, createStyleSheet} from 'material-ui/styles';
 import compose from 'recompose/compose';
 import withWidth from 'material-ui/utils/withWidth';
 
-import Slider, { Range , createSliderWithTooltip } from 'rc-slider';
+import Slider, {Range, createSliderWithTooltip} from 'rc-slider';
+import Tooltip from 'rc-tooltip';
+const Handle = Slider.Handle;
 
 import 'rc-slider/assets/index.css';
 import './assets/style.css';
 
-import {PlAYER_MAX_AGE , PLAYER_MIN_AGE} from "../../constants/playerSettings";
+import {PlAYER_MAX_AGE, PLAYER_MIN_AGE} from "../../constants/playerSettings";
 
-const styleSheet = createStyleSheet('RangeSlider' , theme => ({
+const styleSheet = createStyleSheet('RangeSlider', theme => ({
     root: {
         display: 'flex',
         width: '100%',
@@ -23,9 +25,25 @@ const styleSheet = createStyleSheet('RangeSlider' , theme => ({
     labelContainer: {
         fontFamily: 'UnitedSansReg-Medium',
         fontSize: 14,
-        color: '#9b9b9b',
+        color: '#9b9b9b;',
     }
 }));
+
+
+const handle = (props) => {
+    const {value, dragging, index, ...restProps} = props;
+    return (
+        <Tooltip
+            prefixCls="rc-slider-tooltip"
+            overlay={value}
+            visible={true}
+            placement="top"
+            key={index}
+        >
+            <Handle value={value} {...restProps} />
+        </Tooltip>
+    );
+};
 
 class RangeSlider extends Component {
 
@@ -36,15 +54,13 @@ class RangeSlider extends Component {
 
 
         this.state = {
-            range: [PLAYER_MIN_AGE , PlAYER_MAX_AGE]
+            range: [PLAYER_MIN_AGE, PlAYER_MAX_AGE]
         }
     }
 
     onAfterChange(value) {
         this.props.onChange(value);
     }
-
-
 
     render() {
         const RangeTips = createSliderWithTooltip(Slider.Range);
@@ -55,13 +71,14 @@ class RangeSlider extends Component {
                 {label}
             </div>}
             <div className={classes.root}>
-                <RangeTips allowCross={false}
-                       min={PLAYER_MIN_AGE}
-                       max={PlAYER_MAX_AGE}
-                       defaultValue={this.props.values}
-                           tipFormatter={value => `${value}`}
-                           tipProps={this.topFormatter}
-                           onAfterChange={this.onAfterChange}
+                <Slider.Range allowCross={false}
+                        min={PLAYER_MIN_AGE}
+                        max={PlAYER_MAX_AGE}
+                        defaultValue={this.props.values}
+                        handle={handle}
+                        tipFormatter={value => `${value}`}
+                        tipProps={this.topFormatter}
+                        onAfterChange={this.onAfterChange}
                 />
             </div>
         </div>)

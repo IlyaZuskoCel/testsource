@@ -1,7 +1,7 @@
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux';
 
-import {uploadPlayers, uploadScouts, filterScouts, filterPlayers} from '../actions';
+import {uploadPlayers, uploadScouts, filterScouts, filterPlayers , follow} from '../actions';
 import {go, getLeagues, getTeams} from '../../common/actions';
 
 import {mapOptions, map} from '../selectors';
@@ -33,6 +33,7 @@ const mapDispatchToProps = (dispatch, props) => ({
     go: (url) => dispatch(go(url)),
     filterScouts: (params) => dispatch(filterScouts(params)),
     filterPlayers: (params) => dispatch(filterPlayers(params)),
+    follow: (player) => dispatch(follow(player)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Search))

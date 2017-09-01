@@ -34,7 +34,7 @@ export const uploadPlayers = (params) => dispatch => {
         .catch((message) => {
             dispatch({type: ERROR_ALERT, payload: {message}});
         });
-}
+};
 
 export const uploadScouts = (params) => dispatch => {
     dispatch({type: CLEAR_LIST});
@@ -49,7 +49,7 @@ export const uploadScouts = (params) => dispatch => {
         .catch((message) => {
             dispatch({type: ERROR_ALERT , payload: {message}})
         });
-}
+};
 
 export const getLeagues = () => dispatch => {
 
@@ -61,7 +61,7 @@ export const getLeagues = () => dispatch => {
         .catch(message => {
             dispatch({type: ERROR_ALERT, payload: {message}});
         });
-}
+};
 
 export const filterScouts = (params) => dispatch => {
     dispatch({type: CLEAR_LIST});
@@ -78,7 +78,7 @@ export const filterScouts = (params) => dispatch => {
         .catch(message => {
             dispatch({type: ERROR_ALERT, payload: {message}});
         });
-}
+};
 
 
 export const filterPlayers = (params) => dispatch => {
@@ -96,4 +96,12 @@ export const filterPlayers = (params) => dispatch => {
         .catch(message => {
             dispatch({type: ERROR_ALERT, payload: {message}});
         })
-}
+};
+
+
+export const follow = (player) => dispatch => {
+        post(player.is_tagged ? '/api/v2/activity/unfollow' : '/api/v2/activity/follow' , {"id_user_player" : player.id})
+            .catch(message => {
+                dispatch({type: ERROR_ALERT, payload: {message}});
+            });
+};
