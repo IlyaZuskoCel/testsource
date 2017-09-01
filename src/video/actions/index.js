@@ -21,7 +21,7 @@ import {
 
 
 export const fetch = id => dispatch => {
-    dispatch({type: SET_VIDEO, payload: null});
+    dispatch({type: SET_VIDEO, payload: {}});
     return get(`/api/v2/video/get/${id}`)
         .then(video => {
             if ('error' in video)
@@ -62,7 +62,7 @@ export const upload = file => dispatch => {
 };
 
 
-export const update = (data) => dispatch => {
+export const postVideo = (data) => dispatch => {
     return post(`/api/v2/video/update-video`, data)
         .then(result => {
             if ('error' in result)
@@ -70,6 +70,23 @@ export const update = (data) => dispatch => {
             dispatch({type: SET_VIDEO, payload: {}});
             dispatch(push('/profile'));
             dispatch({type: SUCCESS_ALERT, payload: {message: 'Video was posted successfully'}});
+        })
+        .catch((message) => {
+            if (message === 'Unauthorized') {
+                dispatch(logOut());
+            }
+            dispatch({type: ERROR_ALERT, payload: {message}});
+        })
+};
+
+export const update = (data) => dispatch => {
+    return post(`/api/v2/video/update-video`, data)
+        .then(result => {
+            if ('error' in result)
+                return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
+            dispatch({type: SET_VIDEO, payload: {}});
+            dispatch(push('/profile'));
+            dispatch({type: SUCCESS_ALERT, payload: {message: 'Video was updated successfully'}});
         })
         .catch((message) => {
             if (message === 'Unauthorized') {
@@ -100,6 +117,9 @@ export const deleteVideo = id_video => dispatch => {
 
 export const updateVideoField = (field, value) => dispatch => {
     dispatch({type: SET_VIDEO_FIELD, payload: {field, value}});
+};
+export const clear = () => dispatch => {
+    dispatch({type: SET_VIDEO, payload: {}});
 };
 
 export const fetchTags = () => dispatch => {

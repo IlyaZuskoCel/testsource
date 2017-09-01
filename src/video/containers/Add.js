@@ -9,7 +9,7 @@ import {connect} from 'react-redux';
 
 import Add from '../components/Add';
 
-import {upload, update, fetchTags, updateVideoField} from '../actions';
+import {upload, clear, postVideo, fetchTags, updateVideoField} from '../actions';
 
 import {map, mapOptions} from '../selectors';
 
@@ -20,9 +20,12 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    fetchData: () => dispatch(fetchTags()),
+    fetchData: () => {
+        dispatch(clear());
+        dispatch(fetchTags());
+    },
     upload: file => dispatch(upload(file)),
-    update: data => dispatch(update(data)),
+    update: data => dispatch(postVideo(data)),
     updateField: (name, value) => dispatch(updateVideoField(name, value)),
 });
 
