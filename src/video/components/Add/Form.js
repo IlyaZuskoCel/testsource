@@ -30,7 +30,6 @@ const styleSheet = createStyleSheet('Form', theme => ({
     }
 }));
 
-
 class Form extends Component {
 
     state = {
@@ -43,8 +42,11 @@ class Form extends Component {
         return this.props.updateField('tags', [newValue]);
     };
 
+
+
     render() {
         const {classes, video} = this.props;
+
         return <div className={classes.root}>
 
             <TextField required
@@ -67,7 +69,6 @@ class Form extends Component {
                        onChange={this.handleChange('description')}/>
 
             <Autosuggest fullWidth
-                         multiSection
                          error={this.state.errors.indexOf('tags') > -1}
                          suggestions={this.props.tagOptions}
                          onSuggestionsFetchRequested={() => {
@@ -86,7 +87,8 @@ class Form extends Component {
                         Previous
                     </Button>
                 </Hidden>
-                <Button onClick={this.props.onSubmit} raised color={video.title && video.video_path ? 'primary' : 'default'}
+                <Button onClick={this.props.onSubmit} raised
+                        color={video.title && video.video_path ? 'primary' : 'default'}
                         disabled={!video.title || !video.video_path}>
                     Post the Video
                 </Button>

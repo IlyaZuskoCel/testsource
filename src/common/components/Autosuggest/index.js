@@ -107,7 +107,10 @@ const styleSheet = createStyleSheet(theme => ({
         textShadow: '0 0 0 #000'
     },
     icon: {
-        marginLeft: -16
+        cursor: 'pointer',
+        marginLeft: -16,
+        zIndex: 1000,
+        lineHeight: '40px'
     }
 }));
 
@@ -117,7 +120,6 @@ class IntegrationAutosuggest extends Component {
     };
 
     toggleOpen = () => {
-        console.log(this.state.open);
         this.setState({open: !this.state.open});
     };
 
@@ -146,7 +148,7 @@ class IntegrationAutosuggest extends Component {
                     alwaysRenderSuggestions={this.state.open}
                     {...props}
                 />
-                <ScoutIcon className={classes.icon}>dropdown-arrows</ScoutIcon>
+                <ScoutIcon className={classes.icon} onClick={this.toggleOpen}>dropdown-arrows</ScoutIcon>
 
 
             </div>
