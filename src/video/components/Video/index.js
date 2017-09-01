@@ -16,11 +16,13 @@ import Paper from 'material-ui/Paper';
 import Tabs, {Tab} from 'material-ui/Tabs';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
+import Icon from 'material-ui/Icon';
 
 
 const styleSheet = createStyleSheet('Video', theme => ({
     root: {},
     videoWrap: {
+        position: 'relative',
         width: '100%',
         textAlign: 'center'
     },
@@ -28,8 +30,25 @@ const styleSheet = createStyleSheet('Video', theme => ({
         height: 264,
         boxShadow: '0 0px 4px 0 rgba(0, 0, 0, 0.3)',
     },
-    playControl:{
+    image: {
+        height: 264,
+        boxShadow: '0 0px 4px 0 rgba(0, 0, 0, 0.3)',
+        cursor: 'pointer',
+    },
 
+    playControl: {
+        cursor: 'pointer',
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        color: '#fff',
+        fontSize: 80,
+        marginLeft: -40,
+        marginTop: -40,
+        textShadow: '2px 2px 2px rgba(0, 0, 0, 0.2)',
+    },
+    duration: {
+        color: '#fff'
     },
     bottom: {
         padding: 8
@@ -62,10 +81,12 @@ class Video extends Component {
                 {this.state.isShow ? (
                     <video src={video.video_path}
                            className={classes.video}
+                           autoPlay
                            controls/>
                 ) : [
-                    <img src={video.overlay || video.thumb_lg} onClick={this.handleShow} className={classes.video}/>,
-                    <div className={classes.playControl}/>
+                    <img src={video.overlay || video.thumb_lg} onClick={this.handleShow} className={classes.image}/>,
+                    <Icon className={classes.playControl} onClick={this.handleShow}>play_arrow</Icon>,
+                    <Typography type="caption" className={classes.duration}>{video.duration || '0:54'}</Typography>
                 ]}
 
             </div>
