@@ -174,7 +174,7 @@ class Video extends Component {
                     <Typography type="subheading">
                         {video.title}
                     </Typography>
-                    {currentUser.id === video.id_user && (
+                    {currentUser && currentUser.id === video.id_user && (
                         <div>
 
                             <Hidden smDown>
@@ -234,25 +234,26 @@ class Video extends Component {
                 </div>
 
             </div>
-
-            <Dialog
-                open={this.state.isDeleteOpen}
-                ignoreBackdropClick
-                ignoreEscapeKeyUp>
-                <DialogTitle disableTypography>
-                    <Typography type="subheading">
-                        Do you want to delete the video " {video.title}"?
-                    </Typography>
-                </DialogTitle>
-                <DialogActions>
-                    <Button onClick={this.handleDialogCancel}>
-                        Cancel
-                    </Button>
-                    <Button onClick={this.handleDialogDelete} color="primary">
-                        Delete
-                    </Button>
-                </DialogActions>
-            </Dialog>
+            {currentUser && currentUser.id === video.id_user && (
+                <Dialog
+                    open={this.state.isDeleteOpen}
+                    ignoreBackdropClick
+                    ignoreEscapeKeyUp>
+                    <DialogTitle disableTypography>
+                        <Typography type="subheading">
+                            Do you want to delete the video " {video.title}"?
+                        </Typography>
+                    </DialogTitle>
+                    <DialogActions>
+                        <Button onClick={this.handleDialogCancel}>
+                            Cancel
+                        </Button>
+                        <Button onClick={this.handleDialogDelete} color="primary">
+                            Delete
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            )}
 
         </div>;
     }
