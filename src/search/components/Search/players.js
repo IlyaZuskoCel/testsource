@@ -14,6 +14,8 @@ import classNames from 'classnames';
 
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import defaultPhoto from './assets/images/default-photo.png';
+import IconButton from 'material-ui/IconButton';
+
 
 import moment from 'moment';
 
@@ -26,7 +28,7 @@ const styleSheet = createStyleSheet('Search', theme => ({
         margin: 'auto',
     },
     resultContainer: {
-        padding: [40 , 0],
+        padding: [40, 0],
 
         [theme.breakpoints.down('md')]: {
             padding: [40, 15]
@@ -34,9 +36,17 @@ const styleSheet = createStyleSheet('Search', theme => ({
     },
     resultCard: {
         height: 192,
+        transition: theme.transitions.create('box-shadow', {
+            duration: theme.transitions.duration.shorter,
+            easing: theme.transitions.easing.ease,
+        }),
 
         [theme.breakpoints.down('sm')]: {
             height: 160,
+        },
+
+        "&:hover": {
+            boxShadow: "0px 3px 14px 0 rgba(0, 0, 0, 0.2)",
         }
     },
     playerInfo: {
@@ -67,12 +77,12 @@ const styleSheet = createStyleSheet('Search', theme => ({
     },
 
     playerPhoto: {
-        width: 126,
-        height: 126,
+        maxWidth: 126,
+        maxHeight: 126,
 
         [theme.breakpoints.down('sm')]: {
-            width: 96,
-            height: 96,
+            maxWidth: 96,
+            maxHeight: 96,
         }
     },
 
@@ -108,7 +118,7 @@ const styleSheet = createStyleSheet('Search', theme => ({
 
     },
     nameFont: {
-        fontSize: 40 ,
+        fontSize: 40,
         marginTop: 20,
 
         [theme.breakpoints.down('md')]: {
@@ -116,7 +126,7 @@ const styleSheet = createStyleSheet('Search', theme => ({
         },
 
         [theme.breakpoints.down('xs')]: {
-          marginTop: 0,
+            marginTop: 0,
         }
     },
     playerLeague: {},
@@ -128,14 +138,14 @@ const styleSheet = createStyleSheet('Search', theme => ({
         alignItems: 'center',
         height: 40,
         backgroundColor: '#fff',
-        padding: [0 , 14]
+        padding: [0, 14]
     },
 
     playerBottomDivider: {
         width: 1,
         height: 18,
         borderLeft: 'solid 1px #cbcbcb',
-        margin: [0 , 8],
+        margin: [0, 8],
     },
 
     bottomPlayerText: {
@@ -164,6 +174,18 @@ const styleSheet = createStyleSheet('Search', theme => ({
         boxShadow: '0 1px 8px 0 rgba(0, 0, 0, 0.2)',
     },
 
+    playerImage: {
+        display: 'flex',
+        justifyContent: 'cetner',
+        alignItems: 'center',
+    },
+
+    total: {
+        [theme.breakpoints.down('sm')]: {
+            padding: [0 , 20],
+        }
+    }
+
 }));
 
 class Players extends Component {
@@ -174,18 +196,29 @@ class Players extends Component {
         this.state = {
             players: null,
         }
+
+        this.follow = this.follow.bind(this);
     }
 
     componentWillReceiveProps(nextProp) {
         this.setState({players: nextProp.players});
-
     }
+
+
+    follow(event, player) {
+        event.preventDefault();
+        this.props.follow(player);
+        player.is_tagged = !player.is_tagged;
+
+        this.forceUpdate();
+    }
+
 
     render() {
         const {classes} = this.props;
 
         return (<div className={classNames(classes.content)}>
-                <Typography type="caption">{this.props.total ? this.props.total : 0} scouts found</Typography>
+                <Typography type="caption" className={classes.total}>{this.props.total ? this.props.total : 0} scouts found</Typography>
                 <div className={classes.resultContainer}>
                     <Grid container gutter={40}>
 
@@ -196,8 +229,10 @@ class Players extends Component {
                                         <div className={classes.leftStripe}></div>
 
                                         <div className={classes.playerInfo}>
-                                            <img src={player.profile_picture || defaultPhoto}
-                                                 className={classes.playerPhoto} alt="Player's photo"/>
+                                            <div className={classes.playerImage}>
+                                                <img src={player.profile_picture || defaultPhoto}
+                                                     className={classes.playerPhoto} alt="Player's photo"/>
+                                            </div>
 
                                             <div className={classes.playerNameContainer}>
                                                 <div className={classes.nameColumn}>
@@ -205,7 +240,7 @@ class Players extends Component {
                                                         {player.first_name} {player.last_name}
                                                     </Typography>
                                                     <Typography type='caption'
-                                                                className={classes.playerLeague}>{player.team ? player.team : ''}  {player.league_short ? player.league_short : ''}</Typography>
+                                                                className={classes.playerLeague}>{player.team ? player.team : ''} {player.league_short ? player.league_short : ''}</Typography>
                                                 </div>
                                             </div>
                                         </div>
@@ -226,15 +261,20 @@ class Players extends Component {
                                             {player.weight && <div className={classes.playerBottomDivider}></div>}
 
                                             {player.birthday && <Typography type='body1'
-                                                                                      className={classes.bottomPlayerText}>{moment(player.birthday).format("MMM. YYYY")}</Typography>}
+                                                                            className={classes.bottomPlayerText}>{moment(player.birthday).format("MMM. YYYY")}</Typography>}
 
-                                            {this.props.role && this.props.role !== 'Player' && <div className={classes.lastItemInRow}>
+                                            {this.props.role && this.props.role !== 'Player' &&
+                                            <div className={classes.lastItemInRow}>
                                                 <div className={classes.playerBottomDivider}></div>
                                                 {
-                                                    player.is_tagged ? <div className={classes.iconWrapper}><Icon
-                                                            className={classes.editIcon}>star-full</Icon></div> :
-                                                        <div className={classes.iconWrapper}><Icon
-                                                            className={classes.editIcon}>star-empty</Icon></div>
+                                                    player.is_tagged ? <IconButton onClick={(event) => {
+                                                            this.follow(event, player)
+                                                        }} className={classes.iconWrapper}><Icon
+                                                            className={classes.editIcon}>star-full</Icon></IconButton> :
+                                                        <IconButton onClick={(event) => {
+                                                            this.follow(event, player)
+                                                        }} className={classes.iconWrapper}><Icon
+                                                            className={classes.editIcon}>star-empty</Icon></IconButton>
                                                 }
                                             </div>}
 

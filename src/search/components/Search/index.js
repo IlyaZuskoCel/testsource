@@ -49,6 +49,10 @@ const styleSheet = createStyleSheet('Search' , theme => ({
         backgroundColor: 'transparent',
         padding: 56,
         boxShadow: '0 -8px 8px -8px rgba(0, 0, 0, 0.2)',
+
+        [theme.breakpoints.down('sm')]: {
+            padding: [56 , 0],
+        }
     },
     noMargin: {
         marginTop: 0,
@@ -133,8 +137,6 @@ class Search extends Component {
     constructor(props) {
         super(props);
 
-
-
         this.state = {
             activeTab:  this.props.type && this.props.type === 'scout' ? 1 : 0,
             activePage: 1,
@@ -148,7 +150,7 @@ class Search extends Component {
     }
 
     componentDidMount() {
-        this.props.upload(this.props.type , {page : 1 , 'per-page' : 12 , ...this.state.query});
+        this.props.upload(this.props.type , {page : 1 , 'per-page' : 18 , ...this.state.query});
         this.props.fetchData();
     }
 
@@ -158,21 +160,22 @@ class Search extends Component {
             let parsedQuery = queryString.parse(nextProps.query);
 
             this.setState({query : parsedQuery});
-
         }
     }
 
     handleChange(event , value) {
             this.setState({activeTab : value} , ()  => {
                 this.props.go(value === 1 ? '/search/scout' : '/search/player');
-                this.props.upload(value === 1 ? 'scout' : 'player' , {page : 1 , 'per-page' : 12});
+                this.props.upload(value === 1 ? 'scout' : 'player' , {page : 1 , 'per-page' : 18});
             });
     }
 
     changePagination(page) {
         this.setState({activePage : page} , () => {
-           this.props.upload(this.props.type , {page : page , 'per-page': 12 , ...this.state.query});
+           this.props.upload(this.props.type , {page : page , 'per-page': 18 , ...this.state.query});
         });
+
+        window.scroll(0 , 0);
     }
 
     render() {
@@ -225,7 +228,7 @@ class Search extends Component {
 
             <div className={classes.containerWrapper}>
                 {this.props.type === 'player' &&
-                    <Players players={this.props.results} total={this.props.headers ? this.props.headers.count : 0} role={this.props.currentUser ? this.props.currentUser.role : ''}/>
+                    <Players players={this.props.results} total={this.props.headers ? this.props.headers.count : 0} role={this.props.currentUser ? this.props.currentUser.role : ''} follow={this.props.follow}/>
                 }
                 {this.props.type === 'scout' &&
                     <Scouts scouts={this.props.results} total={this.props.headers ? this.props.headers.count : 0}/>
@@ -233,7 +236,7 @@ class Search extends Component {
             </div>
 
             <footer className={classes.footer}>
-                <Pagination currentPage={this.state.activePage} total={this.props.headers ? parseInt(this.props.headers.count) : 0}  perPage={12} onChange={this.changePagination}  />
+                <Pagination currentPage={this.props.headers ? parseInt(this.props.headers.page) : 1} total={this.props.headers ? parseInt(this.props.headers.count) : 0}  perPage={18} onChange={this.changePagination}  />
             </footer>
 
         </div>)

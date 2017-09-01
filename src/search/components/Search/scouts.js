@@ -135,6 +135,11 @@ const styleSheet = createStyleSheet('Scout', theme => ({
             height: '100%'
         }
     },
+    total: {
+        [theme.breakpoints.down('sm')]: {
+            padding: [0 , 20],
+        }
+    }
 }));
 
 class Scouts extends Component {
@@ -168,7 +173,7 @@ class Scouts extends Component {
 
         return (
             <div className={classes.content}>
-                <Typography type="caption">{this.props.total ? this.props.total : 0} scouts found</Typography>
+                <Typography type="caption" className={classes.total}>{this.props.total ? this.props.total : 0} scouts found</Typography>
                 <div className={classes.resultContainer}>
                     <Grid container gutter={40}>
 
