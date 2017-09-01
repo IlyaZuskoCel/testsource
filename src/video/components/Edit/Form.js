@@ -43,7 +43,6 @@ class Form extends Component {
     };
 
 
-
     render() {
         const {classes, video} = this.props;
 
