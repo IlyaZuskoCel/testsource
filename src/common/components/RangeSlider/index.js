@@ -18,6 +18,12 @@ const styleSheet = createStyleSheet('RangeSlider' , theme => ({
         height: '100%',
         justifyContent: 'center',
         alignItems: 'center',
+    },
+
+    labelContainer: {
+        fontFamily: 'UnitedSansReg-Medium',
+        fontSize: 14,
+        color: '#9b9b9b',
     }
 }));
 
@@ -35,12 +41,6 @@ class RangeSlider extends Component {
     }
 
     onAfterChange(value) {
-        // this.props.onChange(value);
-        // console.log(value);
-        // this.setState({range : value} , () => {
-        //     console.log(this.state.range);
-        // })
-
         this.props.onChange(value);
     }
 
@@ -48,9 +48,13 @@ class RangeSlider extends Component {
 
     render() {
         const RangeTips = createSliderWithTooltip(Slider.Range);
-        const {classes} = this.props;
+        const {classes, label} = this.props;
 
-        return (<div className={classes.root}>
+        return (<div>
+            {label && <div className={classes.labelContainer}>
+                {label}
+            </div>}
+            <div className={classes.root}>
                 <RangeTips allowCross={false}
                        min={PLAYER_MIN_AGE}
                        max={PlAYER_MAX_AGE}
@@ -59,6 +63,7 @@ class RangeSlider extends Component {
                            tipProps={this.topFormatter}
                            onAfterChange={this.onAfterChange}
                 />
+            </div>
         </div>)
     }
 }
