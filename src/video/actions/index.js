@@ -20,7 +20,7 @@ import {
 } from '../constants/actions';
 
 
-export const fetch = id => dispatch => {
+export const fetchVideo = id => dispatch => {
     dispatch({type: SET_VIDEO, payload: {}});
     return get(`/api/v2/video/get/${id}`)
         .then(video => {
@@ -43,7 +43,6 @@ export const upload = file => dispatch => {
     if (file)
         form.append('UploadForm', file);
 
-    form.append('test', '123');
 
     return postForm(`/api/v2/video/upload`, form)
         .then(result => {
@@ -63,10 +62,30 @@ export const upload = file => dispatch => {
 
 
 export const postVideo = (data) => dispatch => {
-    return post(`/api/v2/video/update-video`, data)
+    const overlayUri = data.overlayUri;
+    return post(`/api/v2/video/update-video`,  {...data, overlayUri: null})
         .then(result => {
             if ('error' in result)
                 return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
+
+            if (overlayUri) {
+                return fetch(overlayUri)
+                    .then(res => res.blob())
+                    .then(blob => {
+                        let form = new FormData();
+                        form.append('UploadForm', blob);
+                        form.append('video_id', data.id);
+                        return postForm(`/api/v2/video/overlay`, form)
+                    })
+                    .then(() => {
+                        dispatch({type: SET_VIDEO, payload: {}});
+                        dispatch(push('/profile'));
+                        dispatch({type: SUCCESS_ALERT, payload: {message: 'Video was posted successfully'}});
+                    })
+                    .catch(console.log);
+            }
+
+
             dispatch({type: SET_VIDEO, payload: {}});
             dispatch(push('/profile'));
             dispatch({type: SUCCESS_ALERT, payload: {message: 'Video was posted successfully'}});
@@ -80,10 +99,29 @@ export const postVideo = (data) => dispatch => {
 };
 
 export const update = (data) => dispatch => {
-    return post(`/api/v2/video/update-video`, data)
+    const overlayUri = data.overlayUri;
+
+    return post(`/api/v2/video/update-video`, {...data, overlayUri: null})
         .then(result => {
             if ('error' in result)
                 return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
+
+            if (overlayUri) {
+                return fetch(overlayUri)
+                    .then(res => res.blob())
+                    .then(blob => {
+                        let form = new FormData();
+                        form.append('UploadForm', blob);
+                        form.append('video_id', data.id);
+                        return postForm(`/api/v2/video/overlay`, form)
+                    })
+                    .then(() => {
+                        dispatch({type: SET_VIDEO, payload: {}});
+                        dispatch(push('/profile'));
+                        dispatch({type: SUCCESS_ALERT, payload: {message: 'Video was updated successfully'}});
+                    })
+                    .catch(console.log);
+            }
             dispatch({type: SET_VIDEO, payload: {}});
             dispatch(push('/profile'));
             dispatch({type: SUCCESS_ALERT, payload: {message: 'Video was updated successfully'}});

@@ -18,8 +18,9 @@ import Button from 'material-ui/Button';
 
 import Trim from './Trim';
 import Form from './Form';
+import Spotlight from './Spotlight';
 
-const styleSheet = createStyleSheet('Add', theme => ({
+const styleSheet = createStyleSheet('Edit', theme => ({
     root: {
         maxWidth: 1168,
         width: '100%',
@@ -55,7 +56,7 @@ const styleSheet = createStyleSheet('Add', theme => ({
 }));
 
 
-class Add extends Component {
+class Edit extends Component {
     state = {
         tab: 0
     };
@@ -125,6 +126,10 @@ class Add extends Component {
                                                        onNext={this.handleNext}
                                                        updateField={this.props.updateField}
                                                        onPrev={this.handlePrev}/>}
+                        {this.state.tab === 1 && <Spotlight video={video}
+                                                            updateField={this.props.updateField}
+                                                            onPrev={this.handlePrev}
+                                                            onNext={this.handleNext}/>}
 
                     </Paper>
                 </Grid>
@@ -141,9 +146,9 @@ class Add extends Component {
     }
 }
 
-Add.propTypes = {
+Edit.propTypes = {
     children: PropTypes.node,
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styleSheet)(Add);
+export default withStyles(styleSheet)(Edit);

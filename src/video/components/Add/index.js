@@ -19,6 +19,7 @@ import Button from 'material-ui/Button';
 import Upload from './Upload';
 import Trim from './Trim';
 import Form from './Form';
+import Spotlight from './Spotlight';
 
 const styleSheet = createStyleSheet('Add', theme => ({
     root: {
@@ -128,7 +129,6 @@ class Add extends Component {
                                              className={classNames(classes.tab, {[classes.activeTab]: this.state.tab >= 2})}
                                              type="body2">
                                              Spotlight
-
                                          </Typography>
                                      </div>
 
@@ -143,6 +143,12 @@ class Add extends Component {
                                                        onNext={this.handleNext}
                                                        updateField={this.props.updateField}
                                                        onPrev={this.handlePrev}/>}
+
+                        {this.state.tab === 2 && <Spotlight video={video}
+                                                            updateField={this.props.updateField}
+                                                            onPrev={this.handlePrev}
+                                                            onNext={this.handleNext}/>}
+
 
                     </Paper>
                 </Grid>

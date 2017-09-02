@@ -63,12 +63,6 @@ class Pagination extends Component {
     };
 
 
-    componentDidMount() {
-        this.setState({screenWidth : window.innerWidth} , () => {
-            console.log(this.state.screenWidth);
-        });
-    }
-
 
     render() {
         const {currentPage, total, perPage, classes, width} = this.props;

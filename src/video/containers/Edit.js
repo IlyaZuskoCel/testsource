@@ -9,7 +9,7 @@ import {connect} from 'react-redux';
 
 import Edit from '../components/Edit';
 
-import {fetch, update, fetchTags, updateVideoField} from '../actions';
+import {fetchVideo, update, fetchTags, updateVideoField} from '../actions';
 
 import {map, mapOptions} from '../selectors';
 
@@ -22,7 +22,7 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     fetchData: (id) => {
-        dispatch(fetch(id));
+        dispatch(fetchVideo(id));
         dispatch(fetchTags());
     },
     update: data => dispatch(update(data)),

@@ -88,8 +88,6 @@ class Upload extends Component {
                                className={classes.uploadInput}/>
                     </div>
 
-
-
                 )}
                 {video.video_path && (
                     <video src={video.video_path} className={classes.video} controls/>

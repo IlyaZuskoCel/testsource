@@ -92,7 +92,6 @@ class VideoList extends Component {
     render() {
         const {classes, videos, className, tagCounts} = this.props;
 
-        console.log(this.props);
         const tags = Object.keys(tagCounts)
             .filter(id => tagCounts[id] > 0)
             .sort(sortTags(tagCounts))
@@ -101,14 +100,12 @@ class VideoList extends Component {
                 title: this.props.tags[id],
                 count: tagCounts[id]
             }));
-        console.log(tags);
 
         const sortVideo = videos.map(v => ({
             ...v,
             tagCount: v.video_tags.reduce((a, c) => a + (this.state.tags.indexOf('' + c.id) > -1 ? 1 : 0), 0)
         })).sort(sortVideoTags);
 
-        console.log(sortVideo);
 
         return <div className={className}>
             {tags.length > 0 && (
