@@ -109,7 +109,7 @@ class Upload extends Component {
             </Typography>
 
 
-            {!video.video_path && !video.progress && (  <Paper className={classes.uploadWrap}>
+            {!video.video_path && typeof video.progress === 'undefined' && (  <Paper className={classes.uploadWrap}>
                     <Icon className={classes.uploadIcon}>file_upload</Icon>
                     <div className={classes.uploadInputWrap}>
                         <Button raised color="primary">
@@ -123,7 +123,7 @@ class Upload extends Component {
                 </Paper>
             )}
 
-            {!video.video_path && video.progress > 0 && ( <Paper className={classes.uploadWrap}>
+            {!video.video_path && video.progress >= 0 && ( <Paper className={classes.uploadWrap}>
                 {video.progress < 100 ? (
                     <Typography type="headline"
                                 className={classes.progress}>{video.progress}%</Typography>
@@ -131,7 +131,8 @@ class Upload extends Component {
                     <Icon className={classes.uploadIcon}>movie</Icon>
                 )}
 
-                <LinearProgress color="accent" mode="determinate" value={video.progress}
+                <LinearProgress color="accent" mode={video.progress < 100 ? "determinate" : 'indeterminate'}
+                                value={video.progress}
                                 className={classes.linearProgress}/>
                 <Typography type="body1"
                             className={classes.progressTitle}>{video.progress < 100 ? 'Upload in progress' : 'Convert in progress'}</Typography>
