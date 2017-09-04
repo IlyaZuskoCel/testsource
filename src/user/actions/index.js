@@ -19,8 +19,11 @@ import {
     SET_CURRENT_PHOTO,
     SET_CURRENT_PHONE
 } from '../constants/actions';
+
+
 import {LOAD} from '../../common/constants/actions';
 
+import {SCOUT_ROLE, PLAYER_ROLE} from '../constants'
 
 export const logIn = (email, password) => dispatch => {
     return post('/api/v2/profile/login', {email, password})
@@ -30,7 +33,10 @@ export const logIn = (email, password) => dispatch => {
 
             auth(user.access_token);
             dispatch({type: LOGIN, payload: user});
-            dispatch(push('/profile'))
+            if (user.role === SCOUT_ROLE)
+                return dispatch(push('/search/player'));
+
+            return dispatch(push('/profile'));
         })
         .catch((message) => {
             dispatch({type: ERROR_ALERT, payload: {message}});

@@ -64,8 +64,8 @@ class ScoutForm extends Component {
     }
 
     componentDidMount() {
-        if(!this.props.leagues.length || !this.props.leagueOptions.length || !this.props.teams.length || !this.props.teamOptions.length)
-        this.props.fetchData();
+        if (!this.props.leagues.length || !this.props.leagueOptions.length || !this.props.teams.length || !this.props.teamOptions.length)
+            this.props.fetchData();
     }
 
 
@@ -187,8 +187,10 @@ class ScoutForm extends Component {
                                     />
                                 }
                                 label={<Typography type="body1">
-                                    I agree to the <a className={classes.link}>Terms of Service</a> and <a
-                                    className={classes.link}>Privacy Policy</a>.
+                                    I agree to the <a className={classes.link} href="https://scoutzoo.com/term"
+                                                      target="_blank">Terms of Service</a> and <a
+                                    className={classes.link} href="https://scoutzoo.com/policy" target="_blank">
+                                    Privacy Policy</a>.
                                 </Typography>}/>
                         </Grid>
 

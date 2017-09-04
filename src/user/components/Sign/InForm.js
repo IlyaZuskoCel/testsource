@@ -19,10 +19,7 @@ const styleSheet = createStyleSheet('InForm', theme => ({
         marginTop: 64,
         [theme.breakpoints.down('sm')]: {
             marginTop: 0,
-
         }
-
-
     },
     buttons: {
         textAlign: 'center',
