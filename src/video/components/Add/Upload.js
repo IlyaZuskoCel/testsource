@@ -123,7 +123,7 @@ class Upload extends Component {
                 </Paper>
             )}
 
-            {!video.video_path && video.progress && ( <Paper className={classes.uploadWrap}>
+            {!video.video_path && video.progress > 0 && ( <Paper className={classes.uploadWrap}>
                 {video.progress < 100 ? (
                     <Typography type="headline"
                                 className={classes.progress}>{video.progress}%</Typography>
