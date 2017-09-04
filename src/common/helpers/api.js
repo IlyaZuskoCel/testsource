@@ -84,6 +84,28 @@ export const postForm = (url, form, options = {}) => {
         })
 };
 
+export const uploadForm = (url, form, onProgress) => {
+    return new Promise((resolve, reject) => {
+        let request = new XMLHttpRequest();
+
+        const token = localStorage.getItem('token');
+        request.open('POST', url, true);
+
+        if (token)
+            request.setRequestHeader('Authorization', `Bearer ${token}`);
+
+        request.upload.addEventListener("loadstart", (event) => onProgress(0));
+        request.upload.addEventListener("progress", (event) => onProgress(event.loaded / event.total));
+        request.upload.addEventListener("load", (event) => onProgress(event.loaded / event.total));
+        request.addEventListener("readystatechange", () => request.readyState === 4 && request.status === 200 ? resolve(JSON.parse(request.responseText)) : null);
+        request.addEventListener("error", reject);
+        request.addEventListener("abort", reject);
+
+        request.send(form);
+    });
+};
+
+
 export const getPage = (url, options) => {
     return fetch(url, {
         headers: getHeaders(),
@@ -107,6 +129,7 @@ export const getPage = (url, options) => {
             }));
         })
 };
+
 
 export const auth = token => {
     if (token)

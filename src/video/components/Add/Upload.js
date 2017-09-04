@@ -11,6 +11,9 @@ import {withStyles, createStyleSheet} from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import Paper from 'material-ui/Paper';
+import {LinearProgress} from 'material-ui/Progress';
+import Icon from 'material-ui/Icon';
+
 
 const styleSheet = createStyleSheet('Upload', theme => ({
     root: {},
@@ -21,7 +24,6 @@ const styleSheet = createStyleSheet('Upload', theme => ({
 
     },
     uploadWrap: {
-        boxShadow: 'none',
         margin: 16,
         display: 'flex',
         flexDirection: 'column',
@@ -29,7 +31,30 @@ const styleSheet = createStyleSheet('Upload', theme => ({
         alignItems: 'center',
     },
     uploadInputWrap: {
-        position: 'relative'
+        position: 'relative',
+        marginBottom: 32
+    },
+    uploadIcon: {
+        fontSize: 72,
+        color: '#e2e2e2',
+        margin: 32
+    },
+    progress: {
+        color: '#e2e2e2',
+        margin: 32
+    },
+    linearProgress: {
+
+        width: '80%',
+        height: 40
+    },
+    progressTitle: {
+        marginTop: -40,
+        lineHeight: '40px',
+        marginBottom: 32,
+        textTransform: 'uppercase',
+        color: '#fff',
+        zIndex: 1000
     },
     uploadInput: {
         position: 'absolute',
@@ -76,8 +101,8 @@ class Upload extends Component {
             </Typography>
 
 
-            <Paper className={classes.uploadWrap}>
-                {!video.video_path && (
+            {!video.video_path && !video.progress && (  <Paper className={classes.uploadWrap}>
+                    <Icon className={classes.uploadIcon}>file_upload</Icon>
                     <div className={classes.uploadInputWrap}>
                         <Button raised color="primary">
                             Choose a video to upload
@@ -87,13 +112,27 @@ class Upload extends Component {
                                onChange={this.onUploadPicture}
                                className={classes.uploadInput}/>
                     </div>
+                </Paper>
+            )}
 
+            {!video.video_path && video.progress && ( <Paper className={classes.uploadWrap}>
+                {video.progress < 100 ? (
+                    <Typography type="headline"
+                                className={classes.progress}>{video.progress}%</Typography>
+                ) : (
+                    <Icon className={classes.uploadIcon}>movie</Icon>
                 )}
-                {video.video_path && (
+
+                <LinearProgress color="accent" mode="determinate" value={video.progress}
+                                className={classes.linearProgress}/>
+                <Typography type="body1"
+                            className={classes.progressTitle}>{video.progress < 100 ? 'Upload in progress' : 'Convert in progress'}</Typography>
+            </Paper>)}
+
+            {video.video_path && (<Paper className={classes.uploadWrap}>
                     <video src={video.video_path} className={classes.video} controls/>
-                )}
-
-            </Paper>
+                </Paper>
+            )}
 
 
             <div className={classes.buttons}>

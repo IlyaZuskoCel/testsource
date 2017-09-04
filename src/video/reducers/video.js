@@ -4,13 +4,15 @@
  */
 
 
-import {SET_VIDEO, SET_VIDEO_FIELD} from '../constants/actions';
+import {SET_VIDEO, SET_VIDEO_FIELD, SET_VIDEO_PROGRESS} from '../constants/actions';
 
 
 function video(state = {}, action) {
     switch (action.type) {
         case SET_VIDEO_FIELD:
             return {...state, [action.payload.field]: action.payload.value};
+        case SET_VIDEO_PROGRESS:
+            return {...state, progress: Math.round(action.payload * 100)};
         case SET_VIDEO:
             return action.payload;
         default:

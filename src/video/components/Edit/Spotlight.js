@@ -279,8 +279,8 @@ class Trim extends Component {
 
             const uri = getImage(imageObj, x, y, r, border);
 
-            this.props.updateField('overlayX', x);
-            this.props.updateField('overlayY', y);
+            this.props.updateField('overlay_x', x);
+            this.props.updateField('overlay_y', y);
             this.props.updateField('overlayUri', uri);
 
         };

@@ -43,7 +43,6 @@ class Form extends Component {
     };
 
 
-
     render() {
         const {classes, video} = this.props;
 
@@ -87,11 +86,14 @@ class Form extends Component {
                         Previous
                     </Button>
                 </Hidden>
-                <Button onClick={this.props.onSubmit} raised
-                        color={video.title && video.video_path ? 'primary' : 'default'}
-                        disabled={!video.title || !video.video_path}>
-                    Post the Video
-                </Button>
+                {!this.props.hideButton && (
+                    <Button onClick={this.props.onSubmit} raised
+                            color={video.title && video.video_path ? 'primary' : 'default'}
+                            disabled={!video.title || !video.video_path}>
+                        Post the Video
+                    </Button>
+                )}
+
             </div>
         </div>;
     }
