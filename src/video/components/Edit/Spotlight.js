@@ -177,7 +177,29 @@ class Trim extends Component {
             context.drawImage(video, 0, 0, width, height);
 
             this.image = canvas.toDataURL("image/png");
-            this.setState({image: true})
+            this.setState({image: true}, () => {
+                const circle = document.getElementById("circle");
+                const imageCircle = document.getElementById("imageCircle");
+
+
+                const image = document.getElementById("imageSrc");
+
+                if (image.width !== imageCircle.width)
+                    imageCircle.width = image.width;
+                if (image.height !== imageCircle.height)
+                    imageCircle.height = image.height;
+
+
+                const left = this.props.video.overlay_x * image.width / width-2;
+                const top = this.props.video.overlay_y * image.height / height-2;
+
+
+                circle.style['margin-left'] = left + 'px';
+                circle.style['margin-top'] = top + 'px';
+
+                imageCircle.style.left = (-1 * (left + 2)) + 'px';
+                imageCircle.style.top = (-1 * (top + 2)) + 'px';
+            });
 
         };
         video.src = this.props.video.video_path;
@@ -279,8 +301,8 @@ class Trim extends Component {
 
             const uri = getImage(imageObj, x, y, r, border);
 
-            this.props.updateField('overlay_x', x);
-            this.props.updateField('overlay_y', y);
+            this.props.updateField('overlay_x', Math.round(x));
+            this.props.updateField('overlay_y', Math.round(y));
             this.props.updateField('overlayUri', uri);
 
         };
