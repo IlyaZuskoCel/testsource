@@ -17,8 +17,15 @@ import {Autosuggest, DateTextField} from '../../../common/components';
 
 const styleSheet = createStyleSheet('Form', theme => ({
     root: {
-        marginTop: 40,
-        marginLeft: 80
+        [theme.breakpoints.up('sm')]: {
+            marginTop: 40,
+            marginLeft: 80,
+        },
+        [theme.breakpoints.down('sm')]: {
+            paddingLeft: 16,
+            paddingRight: 16,
+        }
+
     },
 
     buttons: {

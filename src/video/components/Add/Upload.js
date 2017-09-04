@@ -16,15 +16,28 @@ import Icon from 'material-ui/Icon';
 
 
 const styleSheet = createStyleSheet('Upload', theme => ({
-    root: {},
-    title: {},
+    root: {
+        [theme.breakpoints.down('sm')]: {
+            paddingLeft: 16,
+            paddingRight: 16,
+        }
+    },
+    title: {
+        [theme.breakpoints.down('sm')]: {
+            textAlign: "left"
+        }
+    },
     desc: {
         marginTop: 32,
         marginBottom: 32,
 
     },
     uploadWrap: {
-        margin: 16,
+        marginBottom: 16,
+        [theme.breakpoints.up('sm')]: {
+            margin: 16,
+        },
+
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-around',
