@@ -36,11 +36,12 @@ const styleSheet = createStyleSheet('Add', theme => ({
     },
     tabs: {
         borderBottom: 'solid 1px #cbcbcb60',
+        margin: '0 auto',
         marginBottom: 36,
-        marginRight: 36,
-        marginLeft: 36,
+        maxWidth: 320
     },
     tabWrap: {
+        minWidth: 80,
         height: 72
     },
     tab: {
