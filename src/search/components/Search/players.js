@@ -181,8 +181,11 @@ const styleSheet = createStyleSheet('Search', theme => ({
     },
 
     total: {
+        display: 'flex',
+
         [theme.breakpoints.down('sm')]: {
-            padding: [0 , 20],
+            justifyContent: 'center',
+            alignItems: 'center',
         }
     }
 
@@ -207,10 +210,16 @@ class Players extends Component {
 
     follow(event, player) {
         event.preventDefault();
-        this.props.follow(player);
-        player.is_tagged = !player.is_tagged;
 
-        this.forceUpdate();
+        let id_tagged = player.is_tagged;
+        let id = player.id;
+
+        // player.is_tagged  = !player.is_tagged;
+
+
+        // console.log(id_tagged , id , this.props.follow);
+        //
+        // this.props.follow(id_tagged , id);
     }
 
 
@@ -218,7 +227,9 @@ class Players extends Component {
         const {classes} = this.props;
 
         return (<div className={classNames(classes.content)}>
-                <Typography type="caption" className={classes.total}>{this.props.total ? this.props.total : 0} scouts found</Typography>
+                <div className={classes.total}>
+                    <Typography type="caption">{this.props.total ? this.props.total : 0} scouts found</Typography>
+                </div>
                 <div className={classes.resultContainer}>
                     <Grid container gutter={40}>
 

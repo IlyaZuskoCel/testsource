@@ -8,12 +8,13 @@ import {Route, Redirect} from 'react-router-dom';
 
 import DefaultLayout from '../../containers/DefaultRoute';
 
-const PrivateRoute = ({component: Component, isAuthenticated, hideBackgroundTopHeader, hideBackgroundTopMobileHeader, ...rest}) => (
+const PrivateRoute = ({component: Component, isAuthenticated, hideBackgroundTopHeader, hideBackgroundTopMobileHeader, hideBackgroundTopMobileHeaderScroll, ...rest}) => (
     <Route {...rest} render={props => (
         isAuthenticated ? (
             <DefaultLayout component={Component}
                            hideBackgroundTopHeader={hideBackgroundTopHeader}
                            hideBackgroundTopMobileHeader={hideBackgroundTopMobileHeader}
+                           hideBackgroundTopMobileHeaderScroll={hideBackgroundTopMobileHeaderScroll}
                            {...props}/>
         ) : (
             <Redirect to={{

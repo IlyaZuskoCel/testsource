@@ -136,8 +136,11 @@ const styleSheet = createStyleSheet('Scout', theme => ({
         }
     },
     total: {
+        display: 'flex',
+
         [theme.breakpoints.down('sm')]: {
-            padding: [0 , 20],
+            justifyContent: 'center',
+            alignItems: 'center',
         }
     }
 }));
@@ -173,7 +176,9 @@ class Scouts extends Component {
 
         return (
             <div className={classes.content}>
-                <Typography type="caption" className={classes.total}>{this.props.total ? this.props.total : 0} scouts found</Typography>
+                <div className={classes.total}>
+                    <Typography type="caption">{this.props.total ? this.props.total : 0} scouts found</Typography>
+                </div>
                 <div className={classes.resultContainer}>
                     <Grid container gutter={40}>
 
