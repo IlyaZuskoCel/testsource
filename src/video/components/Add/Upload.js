@@ -88,6 +88,9 @@ class Upload extends Component {
         if (event.target.files[0].size > 31457280)
             return this.setState({error: 'Please upload another video - the file size should be under 30 MB'});
 
+        if (event.target.files[0].type.search('video') < 0)
+            return this.setState({error: 'Please upload another video - the file type should be video'});
+
         this.setState({error: ''});
         this.props.upload(event.target.files[0]);
 
