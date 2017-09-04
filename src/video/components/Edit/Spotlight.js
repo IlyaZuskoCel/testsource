@@ -175,6 +175,10 @@ class Trim extends Component {
         document.onmouseup = this.stopDrag;
 
 
+        document.ontouchstart = this.startDrag;
+        document.ontouchend = this.stopDrag;
+
+
         const video = document.createElement('video');
         video.oncanplay = () => {
 
@@ -222,6 +226,9 @@ class Trim extends Component {
     componentWillUnmount() {
         document.onmousedown = null;
         document.onmouseup = null;
+
+        document.ontouchstart = null;
+        document.ontouchend = null;
     }
 
 
@@ -260,6 +267,7 @@ class Trim extends Component {
 
         // move div element
         document.onmousemove = this.dragging;
+        document.ontouchmove = this.dragging;
         return false;
     };
     dragging = (e) => {
@@ -300,6 +308,7 @@ class Trim extends Component {
         if (!this.drag) return;
         this.drag = false;
         document.onmousemove = null;
+        document.ontouchmove = null;
 
         const circle = document.getElementById("circle");
         const image = document.getElementById("imageSrc");
