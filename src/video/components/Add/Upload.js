@@ -79,11 +79,16 @@ const styleSheet = createStyleSheet('Upload', theme => ({
 
 
 class Upload extends Component {
-
-    onUploadPicture = event => {
+    state = {error: ''};
+    onUploadVideo = event => {
         event.preventDefault();
+
         if (!event.target.files.length) return;
 
+        if (event.target.files[0].size > 31457280)
+            return this.setState({error: 'Please upload another video - the file size should be under 30 MB'});
+
+        this.setState({error: ''});
         this.props.upload(event.target.files[0]);
 
     };
@@ -109,7 +114,7 @@ class Upload extends Component {
                         </Button>
                         <input autoComplete="off" type="file"
                                accept="video/*"
-                               onChange={this.onUploadPicture}
+                               onChange={this.onUploadVideo}
                                className={classes.uploadInput}/>
                     </div>
                 </Paper>
@@ -133,7 +138,7 @@ class Upload extends Component {
                     <video src={video.video_path} className={classes.video} controls/>
                 </Paper>
             )}
-
+            {this.state.error && <Typography type="body2">{this.state.error}</Typography>}
 
             <div className={classes.buttons}>
                 <Button onClick={this.props.onNext} raised color={video.video_path ? 'primary' : 'default'}
