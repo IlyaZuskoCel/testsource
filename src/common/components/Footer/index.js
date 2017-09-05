@@ -106,6 +106,9 @@ const styleSheet = createStyleSheet('Footer', theme => ({
         alignItems: 'center',
         height: 24,
     },
+    logoLink: {
+        textDecoration: 'none',
+    },
     logoSkyrocket: {
         fontSize: 24,
         opacity: 0.6,
@@ -130,10 +133,17 @@ class Footer extends Component {
             <footer className={classes.root}>
                 <Grid container gutter={8} className={classes.footer}>
                     <Grid item xs={6} sm={4} md={2} lg={2}>
-                        <Link to={user ? (user.role === SCOUT_ROLE ? '/search/player' : '/profile') : 'https://scoutzoo.com'}
-                              className={classes.logoLink} disabledUnderline>
-                            <Icon className={classes.logo}>scoutzoo-symbol</Icon>
-                        </Link>
+                        {user ? (
+                            <Link to={user.role === SCOUT_ROLE ? '/search/player' : '/profile'}
+                                  className={classes.logoLink} disabledUnderline>
+                                <Icon className={classes.logo}>scoutzoo-symbol</Icon>
+                            </Link>
+                        ) : (
+                            <a href="https://scoutzoo.com" target="_blank" className={classes.logoLink}>
+                                <Icon className={classes.logo}>scoutzoo-symbol</Icon>
+                            </a>
+                        )}
+
                     </Grid>
                     <Grid item xs={6} sm={8} md={6} lg={8} className={classes.links}>
                         <a href="https://scoutzoo.com/aboutus" target="_blank" className={classes.link}>

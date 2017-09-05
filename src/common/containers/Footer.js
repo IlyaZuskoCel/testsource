@@ -12,7 +12,8 @@ import {logOut} from '../../user/actions';
 import {go} from '../actions';
 
 const mapStateToProps = (state) => ({
-    isAuthenticated: state.user.current !== null
+    isAuthenticated: state.user.current !== null,
+    user: state.user.current
 });
 
 
