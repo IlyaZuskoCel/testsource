@@ -50,6 +50,12 @@ export const confirm = token => dispatch => {
                 return dispatch({type: ERROR_ALERT, payload: {message: user.error.message}});
 
             auth(user.access_token);
+
+            dispatch({
+                type: SUCCESS_ALERT,
+                payload: {message: 'Your account was confirmed successfully!'}
+            });
+
             dispatch({type: LOGIN, payload: user});
             if (user.role === SCOUT_ROLE)
                 return dispatch(push('/search/player'));
