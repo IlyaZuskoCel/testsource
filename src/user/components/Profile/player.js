@@ -21,6 +21,8 @@ import TextField from 'material-ui/TextField';
 import Tabs, {Tab} from 'material-ui/Tabs';
 
 
+import {absUrl} from '../../../common/helpers';
+
 import {Link, Icon} from '../../../common/components';
 import {
     PLAYER_ROLE,
@@ -600,7 +602,8 @@ class PlayerProfile extends Component {
                     </div>
                 ) : (
                     <div className={classes.topNavigate}>
-                        <ShareButton/>
+                        <ShareButton url={absUrl(`/profile/${user.id}`)}
+                                     title={`My profile on Scout Zoo`}/>
                         <div className={classes.rightNavigate}>
                             <Link to="/profile/edit" disabledUnderline>
                                 <Button className={classes.editButton}>
