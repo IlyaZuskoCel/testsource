@@ -130,7 +130,7 @@ class Footer extends Component {
             <footer className={classes.root}>
                 <Grid container gutter={8} className={classes.footer}>
                     <Grid item xs={6} sm={4} md={2} lg={2}>
-                        <Link to={user && user.role === SCOUT_ROLE ? '/search/player' : '/profile'}
+                        <Link to={user ? (user.role === SCOUT_ROLE ? '/search/player' : '/profile') : 'https://scoutzoo.com'}
                               className={classes.logoLink} disabledUnderline>
                             <Icon className={classes.logo}>scoutzoo-symbol</Icon>
                         </Link>
