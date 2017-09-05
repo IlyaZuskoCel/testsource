@@ -94,6 +94,7 @@ class PlayerFilter extends Component {
             born: [PLAYER_MIN_AGE , PlAYER_MAX_AGE]
         };
 
+        this.born = [PLAYER_MIN_AGE , PlAYER_MAX_AGE];
         this.makeFilterRequest = this.makeFilterRequest.bind(this);
 
         this.onChangeName = this.onChangeName.bind(this);
@@ -116,12 +117,13 @@ class PlayerFilter extends Component {
     }
 
     getRange(value) {
-        if (this.state.born[0] !== value[0] || this.state.born[1] !== value[1]) {
-            this.setState({born: value} , () => {
-                this.makeFilterRequest();
-            })
-        }
+        this.setState({born: value} , () => {
+            this.makeFilterRequest();
+        })
     }
+    handleChangeRange = (value) => {
+        this.setState({born: value})
+    };
 
     makeFilterRequest() {
         let queryString = '';
@@ -174,8 +176,9 @@ class PlayerFilter extends Component {
            });
         }
 
-        console.log(nextProps);
-
+        if ('query' in nextProps && nextProps.query['born[0]']) {
+            this.setState({born : [parseInt(nextProps.query['born[0]']) , parseInt(nextProps.query['born[1]'])]})
+        }
     }
 
     render() {
@@ -223,6 +226,7 @@ class PlayerFilter extends Component {
                                      inputProps={{
                                          label: "Position",
                                          value: POS_LIST[this.state.position] || this.props.query['position'] || '',
+                                         value: POS_LIST[this.state.position] || this.props.query['position'] || '',
                                          onChange: this.onChangeAutosuggest('position'),
                                      }}
                         />
@@ -230,7 +234,9 @@ class PlayerFilter extends Component {
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>
                             <RangeSlider  onAfterChange={this.getRange}
-                                          defaultValue={this.props.query && this.props.query['born[0]'] && [parseInt(this.props.query['born[0]']) , parseInt(this.props.query['born[1]'])] || this.state.born}
+                                          onChange={this.handleChangeRange}
+                                          value={this.state.born}
+                                          defaultValue={[PLAYER_MIN_AGE , PlAYER_MAX_AGE]}
                                           label={'Year born'}
                                           min={PLAYER_MIN_AGE}
                                           max={PlAYER_MAX_AGE}/>
