@@ -300,3 +300,36 @@ export const report = (id_violator, type, message) => dispatch => {
         })
 };
 
+export const forgotPassword = email => dispatch => {
+    return post(`/api/v2/profile/reset-password-request`, {email})
+        .then(result => {
+            if ('error' in result)
+                return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
+
+            return dispatch({
+                type: SUCCESS_ALERT,
+                payload: {message: "We have sent email with link to change password."}
+            });
+        })
+        .catch((message) => {
+            if (message === 'Unauthorized') {
+                dispatch(logOut());
+            }
+            dispatch({type: ERROR_ALERT, payload: {message}});
+        })
+};
+
+export const forgotPasswordToken = (token, password, password_repeat) => dispatch => {
+    return post(`/api/v2/profile/reset-password/${token}`, {password, password_repeat})
+        .then(result => {
+            if ('error' in result)
+                return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
+            dispatch(push('/sign/in'));
+            return dispatch({type: SUCCESS_ALERT, payload: {message: "Password was changed successfully!"}});
+        })
+        .catch((message) => {
+
+            dispatch({type: ERROR_ALERT, payload: {message}});
+        })
+};
+
