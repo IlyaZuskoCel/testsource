@@ -20,6 +20,7 @@ import {Link, Icon} from '../../../common/components';
 
 import ReportButton from '../../containers/ReportButton';
 
+import {absUrl} from '../../../common/helpers';
 
 import ShareButton from '../ShareButton';
 
@@ -397,7 +398,8 @@ class ScoutProfile extends Component {
                     </div>
                 ) : (
                     <div className={classes.topNavigate}>
-                        <ShareButton/>
+                        <ShareButton url={absUrl(`/profile/${user.id}`)}
+                                     title={`My profile on Scout Zoo`}/>
                         <div className={classes.rightNavigate}>
                             <Link to="/profile/edit" disabledUnderline>
                                 <Button className={classes.editButton}>

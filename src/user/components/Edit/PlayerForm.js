@@ -16,6 +16,7 @@ import Typography from 'material-ui/Typography';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import Hidden from 'material-ui/Hidden';
+import Dialog, {DialogActions, DialogContent, DialogTitle} from 'material-ui/Dialog';
 
 import {DateTextField, HeightTextField, Autosuggest, Link, Icon} from '../../../common/components';
 
@@ -201,6 +202,7 @@ class PlayerForm extends Component {
         super(props);
 
         this.state = {
+            isDeletePhotoOpen: false,
             ...getUserState(props.user),
             errors: []
         };
@@ -227,9 +229,22 @@ class PlayerForm extends Component {
         this.props.uploadPicture(event.target.files[0]);
 
     };
-    onDeletePicture = event => {
+
+
+    handleDialogDelete = event => {
         event.preventDefault();
         this.props.uploadPicture(null);
+        this.setState({isDeletePhotoOpen: false});
+        return false
+    };
+    handleDelete = event => {
+        event.preventDefault();
+        this.setState({isDeletePhotoOpen: true});
+
+        return false
+    };
+    handleDialogCancel = event => {
+        this.setState({isDeletePhotoOpen: false})
     };
 
     cancel = event => {
@@ -280,9 +295,32 @@ class PlayerForm extends Component {
                                    onChange={this.onUploadPicture}
                                    className={classes.uploadInput}/>
                         </Typography>
-                        <Typography type="body1" onClick={this.onDeletePicture} className={classes.link}>
-                            Delete profile picture
-                        </Typography>
+                        {user.profile_picture && (
+                            <Typography type="body1" onClick={this.handleDelete} className={classes.link}>
+                                Delete profile picture
+                            </Typography>
+                        )}
+
+
+                        <Dialog
+                            open={this.state.isDeletePhotoOpen}
+                            ignoreBackdropClick
+                            ignoreEscapeKeyUp>
+                            <DialogTitle disableTypography>
+                                <Typography type="subheading">
+                                    Do you want to delete your profile picture?
+                                </Typography>
+                            </DialogTitle>
+                            <DialogActions>
+                                <Button onClick={this.handleDialogCancel}>
+                                    Cancel
+                                </Button>
+                                <Button onClick={this.handleDialogDelete} color="primary">
+                                    Delete
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
+
 
                     </div>
                 </div>
