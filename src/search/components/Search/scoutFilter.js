@@ -13,9 +13,10 @@ import withWidth from 'material-ui/utils/withWidth';
 import {filterOnReg} from "../../helpers/helpers";
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
+import Hidden from 'material-ui/Hidden';
+
 
 import classNames from 'classnames';
-
 
 const styleSheet = createStyleSheet('ScoutFilter' , theme => ({
     row: {
@@ -23,6 +24,10 @@ const styleSheet = createStyleSheet('ScoutFilter' , theme => ({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-start',
+
+        [theme.breakpoints.down('sm')]: {
+            padding: 16,
+        }
     },
     textField: {
         width: 360,
@@ -35,50 +40,15 @@ const styleSheet = createStyleSheet('ScoutFilter' , theme => ({
         },
 
         [theme.breakpoints.down('sm')]: {
-            margin: [17 , 'auto'],
+            maxWidth: '100%',
+            width: '100%',
+            margin: [0 , 0 , 0 , 0],
         }
     },
 
-    mobileWrapper: {
-        padding: [0 , 16],
-    },
-
-    mobileRow: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-    },
-
-    mobileItem: {
-        width: '100%',
-        marginBottom: 36,
-    },
-
-    leagueMobile: {
-        marginTop: 33,
-    },
-
-    mobileRange: {
-        width: '95%'
-    },
-
-    formControllRoot: {
-        margin: 0,
-        width: '100% !important',
-    },
-
-    mobileTextField: {
-        width: '100%',
-    },
-
     viewButton: {
-        width: 215,
-        height: 40,
-        backgroundImage: 'linear-gradient(281deg, #f55e58, #c9011b)',
-        boxShadow: '0 0 7px 0 rgba(0, 0, 0, 0.3)',
-        marginTop: 50,
         marginBottom: 45,
+        marginTop: 50,
     },
 
     viewTypography: {
@@ -89,14 +59,13 @@ const styleSheet = createStyleSheet('ScoutFilter' , theme => ({
         color: '#ffffff',
     },
 
-    buttonRoot: {
-        textDecoration: 'none',
-        backgroundColor: 'transparent',
-        '&:hover': {
-            backgroundImage: 'transparent',
-            backgroundColor: 'transparent',
-        }
-    },
+
+    buttonViewContainer: {
+        display: 'flex',
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
 
 }));
 
@@ -123,8 +92,17 @@ class ScoutFilter extends Component {
                 leagues: nextProps.leagues.map(league => ({label: league.short_name}))
             });
         }
-    }
 
+        if ('clearField' in nextProps && nextProps.clearField === 'scout') {
+            this.setState({
+                id_league: '',
+                id_team_current: '',
+                name: '',
+            } , () => {
+                nextProps.stopClearing();
+            });
+        }
+    }
 
     changeName(event) {
         this.setState({name : event.target.value} , () => {
@@ -137,7 +115,6 @@ class ScoutFilter extends Component {
             this.makeFilterRequest();
         })
     }
-
 
     onChangeAutosuggest = name => (event, {newValue}) => {
 
@@ -174,7 +151,6 @@ class ScoutFilter extends Component {
     render() {
         const {classes , width} = this.props;
 
-        if (width === 'xl' || width === 'lg' || width === 'md')
             return ( <div className={classes.row}>
 
                 <Grid container gutter={40}>
@@ -185,7 +161,7 @@ class ScoutFilter extends Component {
                                      onSuggestionsClearRequested={() => {}}
                                      inputProps={{
                                          label: "League",
-                                         value: this.props.leagues[this.state.id_league] || '',
+                                         value: this.props.leagues[this.state.id_league] || this.props.query['id_league'] || '',
                                          onChange: this.onChangeAutosuggest('id_league'),
                                     }}
                             className={classes.textField}/>
@@ -197,7 +173,7 @@ class ScoutFilter extends Component {
                             onSuggestionsClearRequested={() => {}}
                             inputProps={{
                                 label: "Team",
-                                value: this.props.teams[this.state.id_team_current] || '',
+                                value: this.props.teams[this.state.id_team_current] || this.props.query['id_team_current'] || '',
                                 onChange: this.onChangeAutosuggest('id_team_current'),
                             }}
                             className={classes.textField}/>
@@ -206,56 +182,25 @@ class ScoutFilter extends Component {
                         <TextField
                             id="name"
                             label="Name"
-                            value={this.state.name}
+                            value={this.state.name || this.props.query['name_search'] || ''}
                             className={classes.textField}
                             onChange={this.changeName}
                         />
                     </Grid>
+
+                    <Hidden smUp>
+                        <div className={classes.buttonViewContainer}>
+                            <Button raised color="primary" className={classes.viewButton} onClick={this.props.viewResults} >
+                                <Typography className={classes.viewTypography}>
+                                    view all {this.props.total} players
+                                </Typography>
+                            </Button>
+                        </div>
+                    </Hidden>
+
                 </Grid>
             </div>)
 
-        return (<div className={classNames(classes.mobileRow , classes.mobileWrapper)}>
-            <div className={classNames(classes.mobileItem , classes.leagueMobile)}>
-                <Autosuggest fullWidth
-                             suggestions={this.props.leagueOptions}
-                             onSuggestionsFetchRequested={() => {}}
-                             onSuggestionsClearRequested={() => {}}
-                             inputProps={{
-                                 label: "League",
-                                 value: this.props.leagues[this.state.id_league] || '',
-                                 onChange: this.onChangeAutosuggest('id_league'),
-                             }}/>
-            </div>
-            <div className={classNames(classes.mobileItem)}>
-                <Autosuggest fullWidth
-                             suggestions={this.state.id_league ? this.props.teamOptions.filter(i => i.item.id_league === parseInt(this.state.id_league)) : this.props.teamOptions}
-                             onSuggestionsFetchRequested={() => {}}
-                             onSuggestionsClearRequested={() => {}}
-                             inputProps={{
-                                 label: "Team",
-                                 value: this.props.teams[this.state.id_team_current] || '',
-                                 onChange: this.onChangeAutosuggest('id_team_current'),
-                             }}/>
-            </div>
-            <div className={classNames(classes.mobileItem)}>
-                <TextField
-                    id="name"
-                    label="Name"
-                    value={this.state.name}
-                    className={classes.mobileTextField}
-                    onChange={this.changeName}
-                />
-            </div>
-
-            <div className={classes.showResults}>
-                <Button  className={classes.viewButton} onClick={this.props.viewResults}>
-                    <Typography className={classes.viewTypography}>
-                        VIEW ALL {this.props.total} PLAYERS
-                    </Typography>
-                </Button>
-            </div>
-
-        </div>);
     }
 }
 

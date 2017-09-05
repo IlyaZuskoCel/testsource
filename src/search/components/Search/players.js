@@ -211,15 +211,15 @@ class Players extends Component {
     follow(event, player) {
         event.preventDefault();
 
+
+
         let id_tagged = player.is_tagged;
         let id = player.id;
+        player.is_tagged  = !player.is_tagged;
 
-        // player.is_tagged  = !player.is_tagged;
-
-
-        // console.log(id_tagged , id , this.props.follow);
-        //
-        // this.props.follow(id_tagged , id);
+        // setTimeout(() => {
+        //     this.props.follow(id_tagged , id);
+        // } , 250)
     }
 
 

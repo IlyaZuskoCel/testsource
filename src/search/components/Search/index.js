@@ -23,6 +23,8 @@ import Scouts from './scouts';
 import ScoutFilter from './scoutFilter';
 import PlayerFilter from './playerFilter';
 
+import { KeyboardArrowDown, KeyboardArrowUp } from 'material-ui-icons';
+
 import queryString from 'query-string';
 import './assets/style.css';
 
@@ -162,6 +164,9 @@ const styleSheet = createStyleSheet('Search' , theme => ({
         fontFamily: 'UnitedSansReg-Medium',
         fontWeight: 500,
         color: '#ffffff',
+    },
+    arrow: {
+      color: '#ffffff',
     }
 }));
 
@@ -188,6 +193,7 @@ class Search extends Component {
             numberOfResults: 0,
             mobileFilterOn: true,
             appliedFilters: 0,
+            clearFilters: '',
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -195,6 +201,7 @@ class Search extends Component {
         this.toggleMobileFilter = this.toggleMobileFilter.bind(this);
         this.countFilters = this.countFilters.bind(this);
         this.onClearFilters = this.onClearFilters.bind(this);
+        this.stopClearing = this.stopClearing.bind(this);
     }
 
     componentDidMount() {
@@ -238,6 +245,16 @@ class Search extends Component {
         this.setState({clearField : this.props.type});
     }
 
+    stopClearing() {
+        this.setState({clearField: '' } , () => {
+            this.props.go(this.props.type === 'scout' ? '/search/scout' : '/search/player');
+
+            setTimeout(() => {
+                this.props.upload(this.props.type , {page : 1 , 'per-page': 18 , ...this.state.query});
+            } , 250);
+        });
+    }
+
     changePagination(page) {
         this.setState({activePage : page} , () => {
            this.props.upload(this.props.type , {page : page , 'per-page': 18 , ...this.state.query});
@@ -248,15 +265,10 @@ class Search extends Component {
 
 
     toggleMobileFilter() {
-        // console.log('Function:[toggleMobileFilter]');
-
         this.setState({mobileFilterOn: !this.state.mobileFilterOn} , () => {
-            // console.log(this.state.mobileFilterOn);
             this.forceUpdate();
         });
     }
-
-
 
     render() {
         const {classes , width} = this.props;
@@ -277,14 +289,24 @@ class Search extends Component {
                                                                      teams={this.props.teams}
                                                                      teamOptions={this.props.teamOptions}
                                                                      filterScouts={this.props.filterScouts}
-                                                                     activePage={this.state.activePage}/>}
+                                                                     activePage={this.state.activePage}
+                                                                     query={this.state.query}
+                                                                     clearFilters={this.state.clearFilters}
+                                                                     stopClearing={this.stopClearing}
+
+                        />}
 
                         {this.props.type === 'player' && <PlayerFilter leagues={this.props.leagues}
                                                                        leagueOptions={this.props.leagueOptions}
                                                                        teams={this.props.teams}
                                                                        teamOptions={this.props.teamOptions}
                                                                        filterPlayers={this.props.filterPlayers}
-                                                                       activePage={this.state.activePage}/>}
+                                                                       activePage={this.state.activePage}
+                                                                       query={this.state.query}
+                                                                       clearFilters={this.state.clearFilters}
+                                                                       stopClearing={this.stopClearing}
+
+                        />}
                     </div>
                 </header></Hidden>
 
@@ -306,11 +328,12 @@ class Search extends Component {
                 <div className={classes.filterTogglerConntainer}>
                     <Button className={classes.buttonFilter} onClick={this.toggleMobileFilter}>
                         <Typography  className={classes.filterTitle}>Filter ({this.state.appliedFilters})</Typography>
-                        <Icon></Icon>
+                        {this.state.mobileFilterOn && <KeyboardArrowDown className={classes.arrow} />}
+                        {!this.state.mobileFilterOn && <KeyboardArrowUp className={classes.arrow} />}
                     </Button>
-                    <Button className={classes.clearFilters} onClick={this.onClearFilters}>
+                    {!this.state.mobileFilterOn && <Button className={classes.clearFilters} onClick={this.onClearFilters}>
                         <Typography className={classes.clearFilterTypography}>Clear All</Typography>
-                    </Button>
+                    </Button>}
                 </div>
             </Hidden>
 
@@ -324,7 +347,9 @@ class Search extends Component {
                                                                  activePage={this.state.activePage}
                                                                  total={this.props.headers ? this.props.headers.count : 0}
                                                                  viewResults={this.toggleMobileFilter}
+                                                                 query={this.state.query}
                                                                  clearField={this.state.clearField}
+                                                                 stopClearing={this.stopClearing}
                                                                  />
                     }
 
@@ -336,8 +361,10 @@ class Search extends Component {
                                                                    activePage={this.state.activePage}
                                                                    total={this.props.headers ? this.props.headers.count : 0}
                                                                    viewResults={this.toggleMobileFilter}
+                                                                   query={this.state.query}
                                                                    clearField={this.state.clearField}
-                                                                   />}
+                                                                   stopClearing={this.stopClearing}
+                                                                  />}
                 </div>
             </Hidden>}
 

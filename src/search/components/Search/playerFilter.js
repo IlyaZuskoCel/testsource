@@ -13,10 +13,10 @@ import withWidth from 'material-ui/utils/withWidth';
 import classNames from 'classnames';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
+import Hidden from 'material-ui/Hidden';
 
 
 import {PlAYER_MAX_AGE , PLAYER_MIN_AGE} from "../../../common/constants/playerSettings";
-
 
 import queryParse from 'query-string';
 import {RangeSlider} from '../../../common/components';
@@ -35,6 +35,11 @@ const styleSheet = createStyleSheet('ScoutFilter', theme => ({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-start',
+
+
+        [theme.breakpoints.down('sm')]: {
+            padding: 16,
+        }
     },
     textField: {
         width: 360,
@@ -49,46 +54,13 @@ const styleSheet = createStyleSheet('ScoutFilter', theme => ({
         position: 'relative',
     },
 
-    mobileWrapper: {
-        padding: [0 , 16],
-    },
-
-    mobileRow: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-    },
-
-    mobileItem: {
-        width: '100%',
-        marginBottom: 36,
-    },
-
-    leagueMobile: {
-        marginTop: 33,
-    },
-
-    mobileRange: {
-        width: '95%'
-    },
-
-    formControllRoot: {
-        margin: 0,
-        width: '100% !important',
-    },
-
     mobileTextField: {
       width: '100%',
     },
 
     viewButton: {
-        width: 215,
-        height: 40,
-        backgroundImage: 'linear-gradient(281deg, #f55e58, #c9011b)',
-        boxShadow: '0 0 7px 0 rgba(0, 0, 0, 0.3)',
-        marginTop: 50,
         marginBottom: 45,
+        marginTop: 50,
     },
 
     viewTypography: {
@@ -97,8 +69,14 @@ const styleSheet = createStyleSheet('ScoutFilter', theme => ({
         fontWeight: 900,
         letterSpacing: .3,
         color: '#ffffff',
-    }
+    },
 
+    buttonViewContainer: {
+        display: 'flex',
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
 }));
 
 class PlayerFilter extends Component {
@@ -139,7 +117,7 @@ class PlayerFilter extends Component {
 
     getRange(value) {
         if (this.state.born[0] !== value[0] || this.state.born[1] !== value[1]) {
-            this.setState({born: value } , () => {
+            this.setState({born: value} , () => {
                 this.makeFilterRequest();
             })
         }
@@ -181,12 +159,28 @@ class PlayerFilter extends Component {
                 leagues: nextProps.leagues.map(league => ({label: league.short_name}))
             });
         }
+
+        if ('clearField' in nextProps && nextProps.clearField === 'player') {
+
+           this.setState({
+               id_league: '',
+               id_team_current: '',
+               position: '',
+               born: [PLAYER_MIN_AGE , PlAYER_MAX_AGE],
+               name: '',
+           } , () => {
+               nextProps.stopClearing();
+               this.forceUpdate();
+           });
+        }
+
+        console.log(nextProps);
+
     }
 
     render() {
         const {classes , width} = this.props;
 
-        if (width === 'xl' || width === 'lg' || width === 'md')
             return (<div className={classes.row}>
                 <Grid container gutter={40}>
                     <Grid item xs={12} sm={6} md={4}>
@@ -199,7 +193,7 @@ class PlayerFilter extends Component {
                                      }}
                                      inputProps={{
                                          label: "League",
-                                         value: this.props.leagues[this.state.id_league] || '',
+                                         value: this.props.leagues[this.state.id_league] ||   this.props.query['id_league'] || '',
                                          onChange: this.onChangeAutosuggest('id_league'),
                                      }}/>
                     </Grid>
@@ -213,7 +207,7 @@ class PlayerFilter extends Component {
                                      }}
                                      inputProps={{
                                          label: "Team",
-                                         value: this.props.teams[this.state.id_team_current] || '',
+                                         value: this.props.teams[this.state.id_team_current] || this.props.query['id_team_current']  || '',
                                          onChange: this.onChangeAutosuggest('id_team_current'),
                                      }}/>
 
@@ -228,95 +222,42 @@ class PlayerFilter extends Component {
                                      }}
                                      inputProps={{
                                          label: "Position",
-                                         value: POS_LIST[this.state.position] || '',
+                                         value: POS_LIST[this.state.position] || this.props.query['position'] || '',
                                          onChange: this.onChangeAutosuggest('position'),
                                      }}
                         />
 
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>
-                        <RangeSlider  onAfterChange={this.getRange} defaultValue={this.state.born} label={'Year born'} min={PLAYER_MIN_AGE} max={PlAYER_MAX_AGE}/>
+                            <RangeSlider  onAfterChange={this.getRange}
+                                          defaultValue={this.props.query && this.props.query['born[0]'] && [parseInt(this.props.query['born[0]']) , parseInt(this.props.query['born[1]'])] || this.state.born}
+                                          label={'Year born'}
+                                          min={PLAYER_MIN_AGE}
+                                          max={PlAYER_MAX_AGE}/>
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>
                         <TextField
                             id="name"
                             label="Name"
-                            value={this.state.name}
-                            className={classes.textField}
+                            value={this.state.name || this.props.query['name_search'] || ''}
+                            className={width === 'xl' || width === 'lg' || width === 'md' ? classes.textField : classes.mobileTextField}
                             onChange={this.onChangeName}
                         />
                     </Grid>
+
+                    <Hidden smUp>
+                        <div className={classes.buttonViewContainer}>
+                            <Button raised color="primary" className={classes.viewButton} onClick={this.props.viewResults} >
+                                <span className={classes.viewTypography}>
+                                    view all {this.props.total} players
+                                </span>
+                            </Button>
+                        </div>
+                    </Hidden>
+
                 </Grid>
+
             </div>);
-
-
-        return (<div className={classNames(classes.mobileRow , classes.mobileWrapper)}>
-            <div className={classNames(classes.mobileItem , classes.leagueMobile)}>
-                <Autosuggest fullWidth
-                             suggestions={this.props.leagueOptions}
-                             onSuggestionsFetchRequested={() => {
-                             }}
-                             onSuggestionsClearRequested={() => {
-                             }}
-                             inputProps={{
-                                 label: "League",
-                                 value: this.props.leagues[this.state.id_league] || '',
-                                 onChange: this.onChangeAutosuggest('id_league'),
-                             }}/>
-            </div>
-            <div className={classNames(classes.mobileItem)}>
-                <Autosuggest fullWidth
-                             suggestions={this.state.id_league ? this.props.teamOptions.filter(i => i.item.id_league === parseInt(this.state.id_league)) : this.props.teamOptions}
-                             onSuggestionsFetchRequested={() => {
-
-                             }}
-                             onSuggestionsClearRequested={() => {
-                             }}
-                             inputProps={{
-                                 label: "Team",
-                                 value: this.props.teams[this.state.id_team_current] || '',
-                                 onChange: this.onChangeAutosuggest('id_team_current'),
-                             }}/>
-            </div>
-            <div className={classNames(classes.mobileItem)}>
-                <Autosuggest fullWidth
-                             suggestions={positionOptions}
-                             onSuggestionsFetchRequested={() => {
-                             }}
-                             onSuggestionsClearRequested={() => {
-                             }}
-                             inputProps={{
-                                 label: "Position",
-                                 value: POS_LIST[this.state.position] || '',
-                                 onChange: this.onChangeAutosuggest('position'),
-                             }}
-                />
-            </div>
-            <div className={classNames(classes.mobileItem , classes.mobileRange)}>
-                <RangeSlider  onAfterChange={this.getRange} defaultValue={this.state.born} label={'Year born'} min={PLAYER_MIN_AGE} max={PlAYER_MAX_AGE}/>
-            </div>
-
-            <div className={classNames(classes.mobileItem)}>
-                <TextField
-                    id="name"
-                    label="Name"
-                    value={this.state.name}
-                    className={classes.mobileTextField}
-                    onChange={this.onChangeName}
-                />
-            </div>
-
-
-            <div className={classes.showResults}>
-                <Button className={classes.viewButton} onClick={this.props.viewResults} >
-                    <Typography className={classes.viewTypography}>
-                        VIEW ALL {this.props.total} PLAYERS
-                    </Typography>
-                </Button>
-            </div>
-
-        </div>);
-
     }
 }
 

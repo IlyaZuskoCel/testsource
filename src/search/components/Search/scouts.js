@@ -32,9 +32,18 @@ const styleSheet = createStyleSheet('Scout', theme => ({
     resultCard: {
         height: 150,
 
+        transition: theme.transitions.create('box-shadow', {
+            duration: theme.transitions.duration.shorter,
+            easing: theme.transitions.easing.ease,
+        }),
+
         [theme.breakpoints.down('sm')]: {
             height: 'auto',
             minHeight: 120,
+        },
+
+        "&:hover": {
+            boxShadow: "0px 3px 14px 0 rgba(0, 0, 0, 0.2)",
         }
     },
     playerInfo: {
