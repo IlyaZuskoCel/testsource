@@ -11,7 +11,7 @@ import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import withWidth from 'material-ui/utils/withWidth';
-import {Link, Icon, Pagination , Autosuggest} from '../../../common/components';
+import {Link, Pagination , Autosuggest} from '../../../common/components';
 import Hidden from 'material-ui/Hidden';
 import Button from 'material-ui/Button';
 
@@ -22,8 +22,7 @@ import Players from './players';
 import Scouts from './scouts';
 import ScoutFilter from './scoutFilter';
 import PlayerFilter from './playerFilter';
-
-import { KeyboardArrowDown, KeyboardArrowUp } from 'material-ui-icons';
+import Icon from 'material-ui/Icon';
 
 import queryString from 'query-string';
 import './assets/style.css';
@@ -328,8 +327,8 @@ class Search extends Component {
                 <div className={classes.filterTogglerConntainer}>
                     <Button className={classes.buttonFilter} onClick={this.toggleMobileFilter}>
                         <Typography  className={classes.filterTitle}>Filter ({this.state.appliedFilters})</Typography>
-                        {this.state.mobileFilterOn && <KeyboardArrowDown className={classes.arrow} />}
-                        {!this.state.mobileFilterOn && <KeyboardArrowUp className={classes.arrow} />}
+                        {this.state.mobileFilterOn && <Icon className={classes.arrow}>keyboard_arrow_down</Icon>}
+                        {!this.state.mobileFilterOn && <Icon className={classes.arrow}>keyboard_arrow_up</Icon>}
                     </Button>
                     {!this.state.mobileFilterOn && <Button className={classes.clearFilters} onClick={this.onClearFilters}>
                         <Typography className={classes.clearFilterTypography}>Clear All</Typography>
