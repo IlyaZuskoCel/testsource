@@ -13,7 +13,7 @@ import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import Tabs, {Tab} from 'material-ui/Tabs';
 import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
+import Hidden from 'material-ui/Hidden';
 
 
 import Trim from './Trim';
@@ -26,28 +26,70 @@ const styleSheet = createStyleSheet('Edit', theme => ({
         width: '100%',
         margin: '76px auto',
         [theme.breakpoints.down('sm')]: {
-            marginTop: 0,
+            marginTop: 80,
         },
 
     },
     paper: {
-        padding: 32
+
+        [theme.breakpoints.up('sm')]: {
+            padding: 32,
+        },
+        [theme.breakpoints.down('sm')]: {
+            boxShadow: 'none'
+        },
     },
     tabs: {
-        borderBottom: 'solid 1px #cbcbcb60',
+
+        margin: '0 auto',
         marginBottom: 36,
-        marginRight: 36,
-        marginLeft: 36,
+
+
+        [theme.breakpoints.up('sm')]: {
+            borderBottom: 'solid 1px #cbcbcb60',
+            maxWidth: 320,
+        },
+
+        [theme.breakpoints.down('sm')]: {
+            height: 48,
+            zIndex: 500,
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            paddingTop: 60,
+            paddingLeft: 16,
+            paddingRight: 16,
+            backgroundImage: 'linear-gradient(287deg, #f55e58, #c9011b)'
+        },
+
+
     },
     tabWrap: {
-        height: 72
+        minWidth: 80,
+        height: 72,
+        [theme.breakpoints.down('sm')]: {
+            height: 48,
+        }
+    },
+    activeTabWrap: {
+        opacity: 1
     },
     tab: {
         color: '#9b9b9b',
-        marginTop: -38
+        marginTop: -38,
+        [theme.breakpoints.down('sm')]: {
+            marginTop: -30,
+            color: '#ffffff',
+            opacity: 0.6
+        }
     },
     activeTab: {
-        color: '#d7001e'
+        color: '#d7001e',
+        [theme.breakpoints.down('sm')]: {
+            color: '#ffffff',
+            opacity: 1
+        }
     },
     tabNum: {
         opacity: 0.1
@@ -80,46 +122,105 @@ class Edit extends Component {
         if (!video) return null;
 
         return <div className={classes.root}>
+
+            <Hidden smUp>
+                <Tabs index={this.state.tab}
+                      centered
+                      className={classes.tabs}
+                      indicatorColor="white"
+                      onChange={this.handleChangeTab}>
+
+                    <Tab className={classNames(classes.tabWrap, {[classes.activeTabWrap]: this.state.tab >= 0})}
+                         label={
+                             <div>
+                                 <Typography className={classes.tabNum} type="headline" align="center">
+                                     1
+                                 </Typography>
+                                 <Typography
+                                     className={classNames(classes.tab, {[classes.activeTab]: this.state.tab >= 0})}
+                                     type="body2">
+                                     Trim
+
+                                 </Typography>
+                             </div>
+
+                         }/>
+                    <Tab className={classNames(classes.tabWrap, {[classes.activeTabWrap]: this.state.tab >= 1})}
+                         label={
+                             <div>
+                                 <Typography className={classes.tabNum} type="headline" align="center">
+                                     2
+                                 </Typography>
+                                 <Typography
+                                     className={classNames(classes.tab, {[classes.activeTab]: this.state.tab >= 1})}
+                                     type="body2">
+                                     Spotlight
+                                 </Typography>
+                             </div>
+
+                         }/>
+
+                    <Tab className={classNames(classes.tabWrap, {[classes.activeTabWrap]: this.state.tab >= 2})}
+                         label={
+                             <div>
+                                 <Typography className={classes.tabNum} type="headline"
+                                             align="center">
+                                     3
+                                 </Typography>
+                                 <Typography
+                                     className={classNames(classes.tab, {[classes.activeTab]: this.state.tab >= 2})}
+                                     type="body2">
+                                     Post
+                                 </Typography>
+                             </div>
+
+                         }/>
+
+                </Tabs>
+
+            </Hidden>
+
             <Grid container>
                 <Grid item xs={12} sm={6}>
                     <Paper className={classes.paper}>
 
-                        <Tabs index={this.state.tab}
-                              centered
-                              className={classes.tabs}
-                              onChange={this.handleChangeTab}>
-                            <Tab className={classes.tabWrap}
-                                 label={
-                                     <div>
-                                         <Typography className={classes.tabNum} type="headline" align="center">
-                                             1
-                                         </Typography>
-                                         <Typography
-                                             className={classNames(classes.tab, {[classes.activeTab]: this.state.tab >= 0})}
-                                             type="body2">
-                                             Trim
+                        <Hidden xsDown>
+                            <Tabs index={this.state.tab}
+                                  centered
+                                  className={classes.tabs}
+                                  onChange={this.handleChangeTab}>
+                                <Tab className={classes.tabWrap}
+                                     label={
+                                         <div>
+                                             <Typography className={classes.tabNum} type="headline" align="center">
+                                                 1
+                                             </Typography>
+                                             <Typography
+                                                 className={classNames(classes.tab, {[classes.activeTab]: this.state.tab >= 0})}
+                                                 type="body2">
+                                                 Trim
 
-                                         </Typography>
-                                     </div>
+                                             </Typography>
+                                         </div>
 
-                                 }/>
-                            <Tab className={classes.tabWrap}
-                                 label={
-                                     <div>
-                                         <Typography className={classes.tabNum} type="headline" align="center">
-                                             2
-                                         </Typography>
-                                         <Typography
-                                             className={classNames(classes.tab, {[classes.activeTab]: this.state.tab >= 1})}
-                                             type="body2">
-                                             Spotlight
+                                     }/>
+                                <Tab className={classes.tabWrap}
+                                     label={
+                                         <div>
+                                             <Typography className={classes.tabNum} type="headline" align="center">
+                                                 2
+                                             </Typography>
+                                             <Typography
+                                                 className={classNames(classes.tab, {[classes.activeTab]: this.state.tab >= 1})}
+                                                 type="body2">
+                                                 Spotlight
+                                             </Typography>
+                                         </div>
 
-                                         </Typography>
-                                     </div>
+                                     }/>
 
-                                 }/>
-
-                        </Tabs>
+                            </Tabs>
+                        </Hidden>
 
                         {this.state.tab === 0 && <Trim video={video}
                                                        onNext={this.handleNext}
@@ -129,6 +230,14 @@ class Edit extends Component {
                                                             updateField={this.props.updateField}
                                                             onPrev={this.handlePrev}
                                                             onNext={this.handleNext}/>}
+
+                        {this.state.tab === 2 && <Form video={video}
+                                                       tags={this.props.tags}
+                                                       updateField={this.props.updateField}
+                                                       tagOptions={this.props.tagOptions}
+                                                       onSubmit={this.handleSubmit}
+                                                       onPrev={this.handlePrev}/>}
+
 
                     </Paper>
                 </Grid>

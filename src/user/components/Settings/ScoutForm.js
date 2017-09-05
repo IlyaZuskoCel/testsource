@@ -241,6 +241,7 @@ class ScoutForm extends Component {
                                error={this.state.errors.indexOf('email') > -1}
                                label="Your Email Address"
                                value={this.state.email}
+                               type="email"
                                onChange={this.handleChange('email')}
                                className={classes.emailTextField}/>
                     <Typography type="caption">This is the email address you will use to login to your Scout Zoo
@@ -269,6 +270,7 @@ class ScoutForm extends Component {
                                            fullWidth
                                            error={this.state.errors.indexOf('phone') > -1}
                                            label="Coach's Phone Number"
+                                           type="number"
                                            value={this.state.phone}
                                            onChange={this.handleChange('phone')}
                                            className={classes.phoneTextField}/>

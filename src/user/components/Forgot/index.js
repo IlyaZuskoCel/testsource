@@ -15,12 +15,12 @@ import Radio, {RadioGroup} from 'material-ui/Radio';
 
 import {Link, Icon} from '../../../common/components';
 
-import PlayerForm from '../../containers/SignPlayerForm';
-import ScoutForm from '../../containers/SignScoutForm';
-import InForm from '../../containers/SignInForm';
+import EmailForm from './EmailForm';
+import PasswordForm from './PasswordForm';
+
 import hockeyMen from './assets/image/image.jpg';
 
-const styleSheet = createStyleSheet('Sign', theme => ({
+const styleSheet = createStyleSheet('Forgot', theme => ({
     content: {
         maxWidth: 1168,
         margin: 'auto',
@@ -130,7 +130,6 @@ const styleSheet = createStyleSheet('Sign', theme => ({
         },
         [theme.breakpoints.down('sm')]: {
             padding: 16,
-            paddingTop: 48,
             paddingBottom: 56,
         }
 
@@ -170,25 +169,14 @@ const styleSheet = createStyleSheet('Sign', theme => ({
 }));
 
 
-class Sign extends Component {
+class Forgot extends Component {
     constructor(props) {
         super(props);
         this.state = {};
     }
 
-    handleChangeTab = (event, index) => {
-        if (index === 0) {
-            this.props.goLogin();
-        } else {
-            this.props.goRegister(this.props.user);
-        }
-    };
-    handleRadio = (event, value) => {
-        this.props.goRegister(value);
-    };
-
     render() {
-        const {classes, type, user} = this.props;
+        const {classes, type, token} = this.props;
 
         return (<div>
 
@@ -214,80 +202,18 @@ class Sign extends Component {
                         <a href="https://scoutzoo.com" className={classNames(classes.logoLink)}>
                             <Icon className={classes.logo}>scoutzoo-symbol</Icon>
                         </a>
-
-                        <Tabs index={type === 'in' ? 0 : 1}
-                              centered fullWidth
-                              indicatorColor="white"
-                              onChange={this.handleChangeTab}>
-                            <Tab label={
-                                <Typography className={classes.text} type="body2">
-                                    Log In
-                                </Typography>
-                            }/>
-                            <Tab label={
-                                <Typography className={classes.text} type="body2">
-                                    Sign up
-                                </Typography>
-                            }/>
-                        </Tabs>
                     </div>
                 </Hidden>
 
 
-                <Grid container direction={'row'} className={classes.root}>
+                <Grid container>
                     <Grid item xs={12} sm={8} md={6}>
                         <div className={classes.tabContent}>
-
-                            <Hidden xsDown>
-
-                                <Tabs index={type === 'in' ? 0 : 1}
-                                      centered fullWidth
-                                      className={classes.tabs}
-                                      onChange={this.handleChangeTab}>
-                                    <Tab label={
-                                        <Typography className={classes.text} type="body2">
-                                            Log In
-                                        </Typography>
-                                    }/>
-                                    <Tab label={
-                                        <Typography className={classes.text} type="body2">
-                                            Sign up
-                                        </Typography>
-                                    }/>
-                                </Tabs>
-                            </Hidden>
-
-
-                            {type === 'in' && (<InForm/>)}
-
-
-                            {type === 'up' && (
-
-                                <div className={classNames(classes.radioUserWrap)}>
-                                    <Typography type="subheading" className={classes.radioLabel}>I am a</Typography>
-                                    <RadioGroup
-                                        selectedValue={this.props.user}
-                                        onChange={this.handleRadio}
-                                        className={classes.radioUser}>
-                                        <FormControlLabel value="player" control={<Radio/>} label={
-                                            <Typography type="body1">
-                                                Player
-                                            </Typography>
-                                        }/>
-                                        <FormControlLabel value="scout" control={<Radio/>} label={
-                                            <Typography type="body1">
-                                                Scout
-                                            </Typography>
-                                        }/>
-                                    </RadioGroup>
-                                </div>
-                            )}
-
-                            {type === 'up' && user === 'player' && (
-                                <PlayerForm/>
-                            )}
-                            {type === 'up' && user === 'scout' && (
-                                <ScoutForm/>
+                            {token ? (
+                                <PasswordForm token={token} submit={this.props.changePassword}
+                                              cancel={this.props.cancel}/>
+                            ) : (
+                                <EmailForm submit={this.props.sendEmail} cancel={this.props.cancel}/>
                             )}
                         </div>
                     </Grid>
@@ -303,8 +229,8 @@ class Sign extends Component {
     }
 }
 
-Sign.propTypes = {
+Forgot.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default compose(withStyles(styleSheet), withWidth())(Sign);
+export default compose(withStyles(styleSheet), withWidth())(Forgot);

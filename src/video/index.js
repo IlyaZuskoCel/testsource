@@ -12,8 +12,8 @@ import Add from './containers/Add';
 import Edit from './containers/Edit';
 
 const routes = [
-    <PrivateRoute key="VideoAdd" path="/video/add" component={Add}/>,
-    <PrivateRoute key="VideoEdit" path="/video/edit/:id?" component={Edit}/>,
+    <PrivateRoute key="VideoAdd" path="/video/add" component={Add} hideBackgroundTopMobileHeader/>,
+    <PrivateRoute key="VideoEdit" path="/video/edit/:id?" component={Edit} hideBackgroundTopMobileHeader/>,
 ];
 
 export default routes;

@@ -157,6 +157,9 @@ const theme = (outerTheme) => {
         },
         accent: {
             ...outerTheme.palette.accent,
+            A100: '#eb3941',
+            A400: '#d7001e'
+
         },
         input: {
             ...outerTheme.palette.input,

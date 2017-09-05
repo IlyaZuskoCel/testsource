@@ -16,6 +16,8 @@ import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 
 
+import {PLAYER_ROLE, SCOUT_ROLE} from '../../../user/constants';
+
 import {Link, Icon} from '../'
 
 
@@ -57,6 +59,7 @@ const styleSheet = createStyleSheet('Footer', theme => ({
         flexDirection: 'row',
         justifyContent: 'space-around',
 
+
         maxWidth: 760,
         margin: 'auto',
         [theme.breakpoints.up('md')]: {
@@ -67,6 +70,7 @@ const styleSheet = createStyleSheet('Footer', theme => ({
         }
     },
     link: {
+        textDecoration: 'none',
         [theme.breakpoints.down('sm')]: {
             marginBottom: 20
         }
@@ -84,6 +88,9 @@ const styleSheet = createStyleSheet('Footer', theme => ({
         }
 
     },
+    followLink: {
+        textDecoration: 'none',
+    },
     followContainerLinks: {
         display: 'flex',
         flexDirection: 'row',
@@ -98,6 +105,9 @@ const styleSheet = createStyleSheet('Footer', theme => ({
         justifyContent: 'center',
         alignItems: 'center',
         height: 24,
+    },
+    logoLink: {
+        textDecoration: 'none',
     },
     logoSkyrocket: {
         fontSize: 24,
@@ -118,28 +128,36 @@ class Footer extends Component {
     }
 
     render() {
-        const {user, classes, width} = this.props;
+        const {user, classes} = this.props;
         return (
             <footer className={classes.root}>
                 <Grid container gutter={8} className={classes.footer}>
                     <Grid item xs={6} sm={4} md={2} lg={2}>
-                        <Link to="/" className={classes.logoLink} disabledUnderline>
-                            <Icon className={classes.logo}>scoutzoo-symbol</Icon>
-                        </Link>
+                        {user ? (
+                            <Link to={user.role === SCOUT_ROLE ? '/search/player' : '/profile'}
+                                  className={classes.logoLink} disabledUnderline>
+                                <Icon className={classes.logo}>scoutzoo-symbol</Icon>
+                            </Link>
+                        ) : (
+                            <a href="https://scoutzoo.com" target="_blank" className={classes.logoLink}>
+                                <Icon className={classes.logo}>scoutzoo-symbol</Icon>
+                            </a>
+                        )}
+
                     </Grid>
                     <Grid item xs={6} sm={8} md={6} lg={8} className={classes.links}>
-                        <Link to="/about" disabledUnderline className={classes.link}>
+                        <a href="https://scoutzoo.com/aboutus" target="_blank" className={classes.link}>
                             <Typography type="caption">About Us</Typography>
-                        </Link>
-                        <Link to="/contact" disabledUnderline className={classes.link}>
+                        </a>
+                        <a href="https://scoutzoo.com/contact" target="_blank" className={classes.link}>
                             <Typography type="caption">Contact Us</Typography>
-                        </Link>
-                        <Link to="/privacy" disabledUnderline className={classes.link}>
+                        </a>
+                        <a href="https://scoutzoo.com/policy" target="_blank" className={classes.link}>
                             <Typography type="caption">Privacy Policy</Typography>
-                        </Link>
-                        <Link to="/terms" disabledUnderline className={classes.link}>
+                        </a>
+                        <a href="https://scoutzoo.com/term" target="_blank" className={classes.link}>
                             <Typography type="caption">Terms & Conditions</Typography>
-                        </Link>
+                        </a>
                     </Grid>
                     <Grid item xs={6} sm={10} md={2} lg={1} className={classes.followContainer}>
                         <Typography type="caption">
@@ -147,15 +165,15 @@ class Footer extends Component {
                         </Typography>
                     </Grid>
                     <Grid item xs={6} sm={2} md={1} lg={1} className={classes.followContainerLinks}>
-                        <Link to="/" disabledUnderline>
+                        <a href="https://www.facebook.com/scoutzoo" target="_blank" className={classes.followLink}>
                             <Icon className={classes.socialLogo}>facebook-filled</Icon>
-                        </Link>
-                        <Link to="/" disabledUnderline>
+                        </a>
+                        <a href="https://twitter.com/scoutzoo" target="_blank" className={classes.followLink}>
                             <Icon className={classes.socialLogo}>twitter-fill</Icon>
-                        </Link>
-                        <Link to="/" disabledUnderline>
+                        </a>
+                        <a href="https://www.instagram.com/scoutzoo" target="_blank" className={classes.followLink}>
                             <Icon className={classes.socialLogo}>instagram-fill</Icon>
-                        </Link>
+                        </a>
 
                     </Grid>
                 </Grid>
@@ -163,7 +181,9 @@ class Footer extends Component {
                     <Typography type="caption">
                         Copyright © Scout Zoo. Built by
                     </Typography>
-                    <Icon className={classes.logoSkyrocket}>skyrocket-avatar</Icon>
+                    <a href="https://skyrocket.is" target="_blank" className={classes.followLink}>
+                        <Icon className={classes.logoSkyrocket}>skyrocket-avatar</Icon>
+                    </a>
                 </Grid>
             </footer>
 

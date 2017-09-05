@@ -17,8 +17,15 @@ import {Autosuggest, DateTextField} from '../../../common/components';
 
 const styleSheet = createStyleSheet('Form', theme => ({
     root: {
-        marginTop: 40,
-        marginLeft: 80
+        [theme.breakpoints.up('sm')]: {
+            marginTop: 40,
+            marginLeft: 80,
+        },
+        [theme.breakpoints.down('sm')]: {
+            paddingLeft: 16,
+            paddingRight: 16,
+        }
+
     },
 
     buttons: {
@@ -41,7 +48,6 @@ class Form extends Component {
     handleChangeTags = (event, {newValue}) => {
         return this.props.updateField('tags', [newValue]);
     };
-
 
 
     render() {
@@ -87,11 +93,14 @@ class Form extends Component {
                         Previous
                     </Button>
                 </Hidden>
-                <Button onClick={this.props.onSubmit} raised
-                        color={video.title && video.video_path ? 'primary' : 'default'}
-                        disabled={!video.title || !video.video_path}>
-                    Post the Video
-                </Button>
+                {!this.props.hideButton && (
+                    <Button onClick={this.props.onSubmit} raised
+                            color={video.title && video.video_path ? 'primary' : 'default'}
+                            disabled={!video.title || !video.video_path}>
+                        Post the Video
+                    </Button>
+                )}
+
             </div>
         </div>;
     }

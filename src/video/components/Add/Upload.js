@@ -11,25 +11,63 @@ import {withStyles, createStyleSheet} from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import Paper from 'material-ui/Paper';
+import {LinearProgress} from 'material-ui/Progress';
+import Icon from 'material-ui/Icon';
+
 
 const styleSheet = createStyleSheet('Upload', theme => ({
-    root: {},
-    title: {},
+    root: {
+        [theme.breakpoints.down('sm')]: {
+            paddingLeft: 16,
+            paddingRight: 16,
+        }
+    },
+    title: {
+        [theme.breakpoints.down('sm')]: {
+            textAlign: "left"
+        }
+    },
     desc: {
         marginTop: 32,
         marginBottom: 32,
 
     },
     uploadWrap: {
-        boxShadow: 'none',
-        margin: 16,
+        marginBottom: 16,
+        [theme.breakpoints.up('sm')]: {
+            margin: 16,
+        },
+
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-around',
         alignItems: 'center',
     },
     uploadInputWrap: {
-        position: 'relative'
+        position: 'relative',
+        marginBottom: 32
+    },
+    uploadIcon: {
+        fontSize: 72,
+        color: '#e2e2e2',
+        margin: 32
+    },
+    progress: {
+        color: '#e2e2e2',
+        margin: 32
+    },
+    linearProgress: {
+
+        width: '80%',
+        height: 40
+    },
+    progressTitle: {
+        marginTop: -40,
+        lineHeight: '40px',
+        marginBottom: 32,
+        textTransform: 'uppercase',
+        color: '#fff',
+        zIndex: 1000
     },
     uploadInput: {
         position: 'absolute',
@@ -54,11 +92,19 @@ const styleSheet = createStyleSheet('Upload', theme => ({
 
 
 class Upload extends Component {
-
-    onUploadPicture = event => {
+    state = {error: ''};
+    onUploadVideo = event => {
         event.preventDefault();
+
         if (!event.target.files.length) return;
 
+        if (event.target.files[0].size > 31457280)
+            return this.setState({error: 'Please upload another video - the file size should be under 30 MB'});
+
+        if (event.target.files[0].type.search('video') < 0)
+            return this.setState({error: 'Please upload another video - the file type should be video'});
+
+        this.setState({error: ''});
         this.props.upload(event.target.files[0]);
 
     };
@@ -76,25 +122,40 @@ class Upload extends Component {
             </Typography>
 
 
-            <Paper className={classes.uploadWrap}>
-                {!video.video_path && (
+            {!video.video_path && typeof video.progress === 'undefined' && (  <Paper className={classes.uploadWrap}>
+                    <Icon className={classes.uploadIcon}>file_upload</Icon>
                     <div className={classes.uploadInputWrap}>
                         <Button raised color="primary">
                             Choose a video to upload
                         </Button>
                         <input autoComplete="off" type="file"
                                accept="video/*"
-                               onChange={this.onUploadPicture}
+                               onChange={this.onUploadVideo}
                                className={classes.uploadInput}/>
                     </div>
+                </Paper>
+            )}
 
+            {!video.video_path && video.progress >= 0 && ( <Paper className={classes.uploadWrap}>
+                {video.progress < 100 ? (
+                    <Typography type="headline"
+                                className={classes.progress}>{video.progress}%</Typography>
+                ) : (
+                    <Icon className={classes.uploadIcon}>movie</Icon>
                 )}
-                {video.video_path && (
+
+                <LinearProgress color="accent" mode={video.progress < 100 ? "determinate" : 'indeterminate'}
+                                value={video.progress}
+                                className={classes.linearProgress}/>
+                <Typography type="body1"
+                            className={classes.progressTitle}>{video.progress < 100 ? 'Upload in progress' : 'Convert in progress'}</Typography>
+            </Paper>)}
+
+            {video.video_path && (<Paper className={classes.uploadWrap}>
                     <video src={video.video_path} className={classes.video} controls/>
-                )}
-
-            </Paper>
-
+                </Paper>
+            )}
+            {this.state.error && <Typography type="body2">{this.state.error}</Typography>}
 
             <div className={classes.buttons}>
                 <Button onClick={this.props.onNext} raised color={video.video_path ? 'primary' : 'default'}

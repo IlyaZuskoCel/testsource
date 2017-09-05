@@ -66,7 +66,7 @@ const DefaultRoute = ({component: Component, isAuthenticated, alert, hideAlert, 
                     vertical: 'top',
                     horizontal: 'center'
                 }}
-                // autoHideDuration={6e3}
+                autoHideDuration={3000}
                 onRequestClose={hideAlert}
                 open={alert.open}
                 message={<div className={classes.message}>

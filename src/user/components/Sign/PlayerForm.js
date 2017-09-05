@@ -64,10 +64,10 @@ class PlayerForm extends Component {
     }
 
     handleChange = (name) => event => {
-        return this.setState({[name]: event.target.value, errors:[]});
+        return this.setState({[name]: event.target.value, errors: []});
     };
     handleChangeCheckbox = (name) => event => {
-        return this.setState({[name]: this.state[name] === '1' ? '0' : '1', errors:[]});
+        return this.setState({[name]: this.state[name] === '1' ? '0' : '1', errors: []});
     };
     handleSubmit = e => {
         e.preventDefault();
@@ -79,7 +79,7 @@ class PlayerForm extends Component {
         return false;
     };
     handleRadio = name => (event, value) => {
-        return this.setState({[name]: parseInt(value), errors:[]})
+        return this.setState({[name]: parseInt(value), errors: []})
     };
 
     render() {
@@ -120,6 +120,7 @@ class PlayerForm extends Component {
                                        error={this.state.errors.indexOf('email') > -1}
                                        label="Email Address"
                                        value={this.state.email}
+                                       type="email"
                                        onChange={this.handleChange('email')}/>
                         </Grid>
                         <Grid item xs={12}>
@@ -165,6 +166,7 @@ class PlayerForm extends Component {
                                            error={this.state.errors.indexOf('agent_email') > -1}
                                            label="Agent's Email Address"
                                            value={this.state.agent_email}
+                                           type="email"
                                            onChange={this.handleChange('agent_email')}
                                            className={classes.emailAgentTextField}/>
                             </Grid>
@@ -181,8 +183,10 @@ class PlayerForm extends Component {
                                     />
                                 }
                                 label={<Typography type="body1">
-                                    I agree to the <a className={classes.link}>Terms of Service</a> and <a
-                                    className={classes.link}>Privacy Policy</a>.
+                                    I agree to the <a className={classes.link} href="https://scoutzoo.com/term"
+                                                      target="_blank">Terms of Service</a> and <a
+                                    className={classes.link} href="https://scoutzoo.com/policy" target="_blank">
+                                    Privacy Policy</a>.
                                 </Typography>}/>
                         </Grid>
 

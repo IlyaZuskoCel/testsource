@@ -12,20 +12,32 @@ import {withStyles, createStyleSheet} from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import Paper from 'material-ui/Paper';
+import Hidden from 'material-ui/Hidden';
 
 
 const styleSheet = createStyleSheet('Trim', theme => ({
-    root: {},
-    title: {},
+    root: {
+        [theme.breakpoints.down('sm')]: {
+            paddingLeft: 16,
+            paddingRight: 16,
+        }
+    },
+    title: {
+        [theme.breakpoints.down('sm')]: {
+            textAlign: "left"
+        }
+    },
     desc: {
         marginTop: 32,
         marginBottom: 32,
 
     },
     uploadWrap: {
+        marginBottom: 16,
+        [theme.breakpoints.up('sm')]: {
+            margin: 16,
+        },
         position: 'relative',
-        boxShadow: 'none',
-        margin: 16,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-around',
@@ -163,6 +175,10 @@ class Trim extends Component {
         document.onmouseup = this.stopDrag;
 
 
+        document.ontouchstart = this.startDrag;
+        document.ontouchend = this.stopDrag;
+
+
         const video = document.createElement('video');
         video.oncanplay = () => {
 
@@ -177,7 +193,29 @@ class Trim extends Component {
             context.drawImage(video, 0, 0, width, height);
 
             this.image = canvas.toDataURL("image/png");
-            this.setState({image: true})
+            this.setState({image: true}, () => {
+                const circle = document.getElementById("circle");
+                const imageCircle = document.getElementById("imageCircle");
+
+
+                const image = document.getElementById("imageSrc");
+
+                if (image.width !== imageCircle.width)
+                    imageCircle.width = image.width;
+                if (image.height !== imageCircle.height)
+                    imageCircle.height = image.height;
+
+
+                const left = this.props.video.overlay_x * image.width / width - 2;
+                const top = this.props.video.overlay_y * image.height / height - 2;
+
+
+                circle.style['margin-left'] = left + 'px';
+                circle.style['margin-top'] = top + 'px';
+
+                imageCircle.style.left = (-1 * (left + 2)) + 'px';
+                imageCircle.style.top = (-1 * (top + 2)) + 'px';
+            });
 
         };
         video.src = this.props.video.video_path;
@@ -188,6 +226,9 @@ class Trim extends Component {
     componentWillUnmount() {
         document.onmousedown = null;
         document.onmouseup = null;
+
+        document.ontouchstart = null;
+        document.ontouchend = null;
     }
 
 
@@ -226,6 +267,7 @@ class Trim extends Component {
 
         // move div element
         document.onmousemove = this.dragging;
+        document.ontouchmove = this.dragging;
         return false;
     };
     dragging = (e) => {
@@ -266,6 +308,7 @@ class Trim extends Component {
         if (!this.drag) return;
         this.drag = false;
         document.onmousemove = null;
+        document.ontouchmove = null;
 
         const circle = document.getElementById("circle");
         const image = document.getElementById("imageSrc");
@@ -279,8 +322,8 @@ class Trim extends Component {
 
             const uri = getImage(imageObj, x, y, r, border);
 
-            this.props.updateField('overlayX', x);
-            this.props.updateField('overlayY', y);
+            this.props.updateField('overlay_x', Math.round(x));
+            this.props.updateField('overlay_y', Math.round(y));
             this.props.updateField('overlayUri', uri);
 
         };
@@ -319,6 +362,14 @@ class Trim extends Component {
                 <Button onClick={this.props.onPrev} raised>
                     Previous
                 </Button>
+
+                <Hidden smUp>
+                    <Button onClick={this.props.onNext} raised
+                            color={video.time_end - video.time_start > 60000 ? 'default' : 'primary'}
+                            disabled={video.time_end - video.time_start > 60000}>
+                        Next
+                    </Button>
+                </Hidden>
 
             </div>
         </div>;

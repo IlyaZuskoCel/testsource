@@ -20,6 +20,7 @@ import {Link, Icon} from '../../../common/components';
 
 import ReportButton from '../../containers/ReportButton';
 
+import {absUrl} from '../../../common/helpers';
 
 import ShareButton from '../ShareButton';
 
@@ -40,14 +41,14 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
     },
     backgroundImgWrap: {
         zIndex: -1,
-        width: '100%',
+        width: '70%',
         height: 688,
         [theme.breakpoints.down('sm')]: {
             height: 536,
         },
         position: 'absolute',
         top: 0,
-        left: 0,
+        right: 0,
         opacity: 0.5,
         backgroundImage: 'linear-gradient(196deg, #f3f3f3, rgba(255, 255, 255, 0.74) 53%, rgba(250, 250, 250, 0.86) 74%, #f3f3f3)',
         overflow: 'hidden'
@@ -397,7 +398,8 @@ class ScoutProfile extends Component {
                     </div>
                 ) : (
                     <div className={classes.topNavigate}>
-                        <ShareButton/>
+                        <ShareButton url={absUrl(`/profile/${user.id}`)}
+                                     title={`My profile on Scout Zoo`}/>
                         <div className={classes.rightNavigate}>
                             <Link to="/profile/edit" disabledUnderline>
                                 <Button className={classes.editButton}>

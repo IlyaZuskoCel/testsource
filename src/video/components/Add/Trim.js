@@ -36,16 +36,27 @@ const tipFormatter = value => {
 };
 
 const styleSheet = createStyleSheet('Trim', theme => ({
-    root: {},
-    title: {},
+    root: {
+        [theme.breakpoints.down('sm')]: {
+            paddingLeft: 16,
+            paddingRight: 16,
+        }
+    },
+    title: {
+        [theme.breakpoints.down('sm')]: {
+            textAlign: "left"
+        }
+    },
     desc: {
         marginTop: 32,
         marginBottom: 32,
 
     },
     uploadWrap: {
-        boxShadow: 'none',
-        margin: 16,
+        marginBottom: 16,
+        [theme.breakpoints.up('sm')]: {
+            margin: 16,
+        },
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-around',
@@ -81,7 +92,7 @@ class Trim extends Component {
     handleLoadedMetadata = () => {
         const video = document.getElementById("video");
         const duration = video.duration;
-        const max = Math.min(Math.ceil(video.duration * 1000), 60000);
+        const max = Math.ceil(video.duration * 1000);
         if (!this.props.video.time_end)
             this.props.updateField('time_end', max);
         this.setState({min: 0, max, duration})
@@ -120,6 +131,7 @@ class Trim extends Component {
                                  onChange={this.handleChange}
                                  onAfterChange={this.handleChange}
                                  tipFormatter={tipFormatter}
+                                 trackStyle={[{backgroundColor: '#d7001e'}]}
                                  defaultValue={[video.time_start || 0, video.time_end || 0]}/>
                 </div>
             )}
@@ -130,8 +142,8 @@ class Trim extends Component {
                     Previous
                 </Button>
                 <Button onClick={this.props.onNext} raised
-                        color={video.time_end - video.time_start > 600000 ? 'default' : 'primary'}
-                        disabled={video.time_end - video.time_start > 600000}>
+                        color={video.time_end - video.time_start > 60000 ? 'default' : 'primary'}
+                        disabled={video.time_end - video.time_start > 60000}>
                     Next
                 </Button>
             </div>

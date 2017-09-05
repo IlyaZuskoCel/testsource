@@ -5,7 +5,7 @@
 
 import {push, goBack} from 'react-router-redux';
 
-import {get, post, postForm} from '../../common/helpers/api';
+import {get, post, postForm, uploadForm} from '../../common/helpers/api';
 
 
 import {logOut} from '../../user/actions';
@@ -16,6 +16,7 @@ import {
     SET_VIDEO,
     SET_TAGS,
     SET_VIDEO_FIELD,
+    SET_VIDEO_PROGRESS,
     DELETE_VIDEO
 } from '../constants/actions';
 
@@ -43,7 +44,10 @@ export const upload = file => dispatch => {
         form.append('UploadForm', file);
 
 
-    return postForm(`/api/v2/video/upload`, form)
+    return uploadForm(`/api/v2/video/upload`, form, (progress) => dispatch({
+        type: SET_VIDEO_PROGRESS,
+        payload: progress
+    }))
         .then(result => {
             if ('error' in result)
                 return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
@@ -62,7 +66,7 @@ export const upload = file => dispatch => {
 
 export const postVideo = (data) => dispatch => {
     const overlayUri = data.overlayUri;
-    return post(`/api/v2/video/update-video`,  {...data, overlayUri: null})
+    return post(`/api/v2/video/update-video`, {...data, overlayUri: null})
         .then(result => {
             if ('error' in result)
                 return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});

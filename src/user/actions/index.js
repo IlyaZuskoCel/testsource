@@ -19,8 +19,11 @@ import {
     SET_CURRENT_PHOTO,
     SET_CURRENT_PHONE
 } from '../constants/actions';
+
+
 import {LOAD} from '../../common/constants/actions';
 
+import {SCOUT_ROLE, PLAYER_ROLE} from '../constants'
 
 export const logIn = (email, password) => dispatch => {
     return post('/api/v2/profile/login', {email, password})
@@ -30,7 +33,34 @@ export const logIn = (email, password) => dispatch => {
 
             auth(user.access_token);
             dispatch({type: LOGIN, payload: user});
-            dispatch(push('/profile'))
+            if (user.role === SCOUT_ROLE)
+                return dispatch(push('/search/player'));
+
+            return dispatch(push('/profile'));
+        })
+        .catch((message) => {
+            dispatch({type: ERROR_ALERT, payload: {message}});
+        })
+};
+
+export const confirm = token => dispatch => {
+    return get(`/api/v2/profile/confirm-email/${token}`)
+        .then(user => {
+            if ('error' in user)
+                return dispatch({type: ERROR_ALERT, payload: {message: user.error.message}});
+
+            auth(user.access_token);
+
+            dispatch({
+                type: SUCCESS_ALERT,
+                payload: {message: 'Your account was confirmed successfully!'}
+            });
+
+            dispatch({type: LOGIN, payload: user});
+            if (user.role === SCOUT_ROLE)
+                return dispatch(push('/search/player'));
+
+            return dispatch(push('/profile'));
         })
         .catch((message) => {
             dispatch({type: ERROR_ALERT, payload: {message}});
@@ -42,6 +72,10 @@ export const registerScout = user => dispatch => {
         .then(user => {
             if ('error' in user)
                 return dispatch({type: ERROR_ALERT, payload: {message: user.error.message}});
+            dispatch({
+                type: SUCCESS_ALERT,
+                payload: {message: 'Your account was registered successfully! Please confirm your account.'}
+            });
             dispatch(push('/sign/in'))
         })
         .catch((message) => {
@@ -54,6 +88,10 @@ export const registerPlayer = user => dispatch => {
         .then(user => {
             if ('error' in user)
                 return dispatch({type: ERROR_ALERT, payload: {message: user.error.message}});
+            dispatch({
+                type: SUCCESS_ALERT,
+                payload: {message: 'Your account was registered successfully! Please confirm your account.'}
+            });
             dispatch(push('/sign/in'))
         })
         .catch((message) => {
@@ -255,21 +293,7 @@ export const changePassword = (password_old, password_new) => dispatch => {
         })
 };
 
-export const resetPassword = () => dispatch => {
-    return post(`/api/v2/profile/reset-password`, {})
-        .then(result => {
-            if ('error' in result)
-                return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
 
-            return dispatch({type: SUCCESS_ALERT, payload: {message: "We emailed you a temporary password"}});
-        })
-        .catch((message) => {
-            if (message === 'Unauthorized') {
-                dispatch(logOut());
-            }
-            dispatch({type: ERROR_ALERT, payload: {message}});
-        })
-};
 export const report = (id_violator, type, message) => dispatch => {
     return post(`/api/v2/activity/report`, {id_violator, type, message})
         .then(result => {
@@ -286,3 +310,51 @@ export const report = (id_violator, type, message) => dispatch => {
         })
 };
 
+export const forgotPassword = email => dispatch => {
+    return post(`/api/v2/profile/reset-password-request`, {email})
+        .then(result => {
+            if ('error' in result)
+                return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
+
+            return dispatch({
+                type: SUCCESS_ALERT,
+                payload: {message: "We have sent email with link to change password."}
+            });
+        })
+        .catch((message) => {
+            if (message === 'Unauthorized') {
+                dispatch(logOut());
+            }
+            dispatch({type: ERROR_ALERT, payload: {message}});
+        })
+};
+
+export const forgotPasswordToken = (token, password, password_repeat) => dispatch => {
+    return post(`/api/v2/profile/reset-password/${token}`, {password, password_repeat})
+        .then(result => {
+            if ('error' in result)
+                return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
+            dispatch(push('/sign/in'));
+            return dispatch({type: SUCCESS_ALERT, payload: {message: "Password was changed successfully!"}});
+        })
+        .catch((message) => {
+
+            dispatch({type: ERROR_ALERT, payload: {message}});
+        })
+};
+
+export const resetPassword = () => dispatch => {
+    return get(`/api/v2/profile/temp-password`)
+        .then(result => {
+            if ('error' in result)
+                return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
+
+            return dispatch({type: SUCCESS_ALERT, payload: {message: "We emailed you a temporary password"}});
+        })
+        .catch((message) => {
+            if (message === 'Unauthorized') {
+                dispatch(logOut());
+            }
+            dispatch({type: ERROR_ALERT, payload: {message}});
+        })
+};

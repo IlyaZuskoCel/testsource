@@ -38,7 +38,7 @@
 }
 
 .rc-slider-handle:hover {
-    border-color: #c2a24d;
+    border-color: transparent;
 }
 
 .rc-slider {

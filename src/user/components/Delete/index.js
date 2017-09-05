@@ -21,15 +21,12 @@ import Hidden from 'material-ui/Hidden';
 import {Link, Icon, Autosuggest} from '../../../common/components';
 
 
-const whyOptions = [
-    {label: 'I no longer use the Scout Zoo app'},
-    {label: 'I do not like the recent changes made to the Scout Zoo app'},
-    {label: 'I haven’t received any emails from scouts'},
-    {label: 'I have received too many notifications from Scout Zoo'},
-    {label: 'I do not find Scout Zoo helpful'},
-    {label: 'I am concerned about my privacy'},
-    {label: 'Other'},
-]
+import {DELETE_REASON_LIST} from '../../constants';
+
+const whyOptions = Object.keys(DELETE_REASON_LIST).map(value => ({
+    label: DELETE_REASON_LIST[value],
+    value
+}));
 
 
 const styleSheet = createStyleSheet('Delete', theme => ({
@@ -186,10 +183,8 @@ class Delete extends Component {
                                          onSuggestionsClearRequested={() => {
                                          }}
                                          inputProps={{
-
-                                             fullWidth: true,
                                              label: "Why are you deleting your account?",
-                                             value: this.state.why,
+                                             value: DELETE_REASON_LIST[this.state.why] || '',
                                              onChange: (event, {newValue}) => this.setState({why: newValue}),
                                          }}
                             />

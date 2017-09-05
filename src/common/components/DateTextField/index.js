@@ -9,6 +9,8 @@ import FormControl from './FormControl';
 import FormHelperText from 'material-ui/Form/FormHelperText';
 import classNames from 'classnames';
 
+import moment from 'moment';
+
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 
 
@@ -20,9 +22,9 @@ const parseDate = value => {
     };
     let date = value.split('-');
     return {
-        year: parseInt(date[0]) || '',
-        month: parseInt(date[1]) || '',
-        day: parseInt(date[2]) || '',
+        year: date[0] || '',
+        month: date[1] || '',
+        day: date[2] || '',
     }
 
 };
@@ -75,14 +77,28 @@ const styleSheet = createStyleSheet('DateTextField', theme => {
 class DateTextField extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {focused: false};
+        const date = parseDate(props.value);
+        this.state = {
+            month: date.month || '',
+            year: date.year || '',
+            focused: false
+        };
     }
 
     handleChangeMonth = event => {
         event.preventDefault();
+
+        if (event.target.value.length > 2) return false;
+        if (event.target.value.length > 0 && ['0', '1'].indexOf(event.target.value[0]) === -1) return false;
+        if (event.target.value.length > 1 && event.target.value[0] === '0' && event.target.value[1] === '0') return false;
+
         let value = parseInt(event.target.value);
         if (value > 12 || value < 0)
+            return false;
+
+        this.setState({month: event.target.value});
+
+        if (value > 12 || value <= 0)
             return false;
 
         let date = parseDate(this.props.value);
@@ -98,9 +114,19 @@ class DateTextField extends Component {
     };
     handleChangeYear = event => {
         event.preventDefault();
+
+        if (event.target.value.length > 4) return false;
+
         let value = parseInt(event.target.value);
-        if (value > 2100 || value < 0)
+
+        if (value < 0)
             return false;
+
+        this.setState({year: event.target.value});
+
+        if (value < 1000)
+            return false;
+
 
         let date = parseDate(this.props.value);
 
@@ -147,10 +173,9 @@ class DateTextField extends Component {
             fullWidth,
             required,
             rootRef,
-            value,
         } = this.props;
 
-        const date = parseDate(value);
+
         return (
             <div>
                 <FormControl
@@ -164,24 +189,24 @@ class DateTextField extends Component {
                 >
                     {label &&
                     <InputLabel className={labelClassName} {...InputLabelProps}
-                                shrink={!!date.month || !!date.year || this.state.focused}>
+                                shrink={!!this.state.month || !!this.state.year || this.state.focused}>
                         {label}
                     </InputLabel>}
 
                     <Input
-                        className={classNames(classes.input, classes.leftInput, {[classes.hidePlaceholder]: date.month || (!this.state.focused && !date.month && !date.year)})}
+                        className={classNames(classes.input, classes.leftInput, {[classes.hidePlaceholder]: this.state.month || (!this.state.focused && !this.state.month && !this.state.year)})}
                         disabled={disabled}
                         name="month"
-                        value={date.month}
+                        value={this.state.month}
                         placeholder="MM"
                         onChange={this.handleChangeMonth}
                     />
 
                     <Input
-                        className={classNames(classes.input, classes.rightInput, {[classes.hidePlaceholder]: date.year || (!this.state.focused && !date.month && !date.year)})}
+                        className={classNames(classes.input, classes.rightInput, {[classes.hidePlaceholder]: this.state.year || (!this.state.focused && !this.state.month && !this.state.year)})}
                         disabled={disabled}
                         name="year"
-                        value={date.year}
+                        value={this.state.year}
                         placeholder="YYYY"
                         onChange={this.handleChangeYear}
 

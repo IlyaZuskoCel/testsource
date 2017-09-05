@@ -21,6 +21,8 @@ import TextField from 'material-ui/TextField';
 import Tabs, {Tab} from 'material-ui/Tabs';
 
 
+import {absUrl} from '../../../common/helpers';
+
 import {Link, Icon} from '../../../common/components';
 import {
     PLAYER_ROLE,
@@ -36,6 +38,7 @@ import {
 import FavoriteButton from '../../containers/FavoriteButton';
 import ShareButton from '../ShareButton';
 import ReportButton from '../../containers/ReportButton';
+import ContactForm from '../../containers/ContactForm';
 
 
 import VideoList from '../../../video/containers/VideoList';
@@ -55,20 +58,18 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
             marginTop: 0,
         },
 
-
     },
-
 
     backgroundImgWrap: {
         zIndex: -1,
-        width: '100%',
+        width: '70%',
         height: 688,
         [theme.breakpoints.down('sm')]: {
             height: 536,
         },
         position: 'absolute',
         top: 0,
-        left: 0,
+        right: 0,
         opacity: 0.5,
         backgroundImage: 'linear-gradient(196deg, #f3f3f3, rgba(255, 255, 255, 0.74) 53%, rgba(250, 250, 250, 0.86) 74%, #f3f3f3)',
         overflow: 'hidden'
@@ -600,7 +601,8 @@ class PlayerProfile extends Component {
                     </div>
                 ) : (
                     <div className={classes.topNavigate}>
-                        <ShareButton/>
+                        <ShareButton url={absUrl(`/profile/${user.id}`)}
+                                     title={`My profile on Scout Zoo`}/>
                         <div className={classes.rightNavigate}>
                             <Link to="/profile/edit" disabledUnderline>
                                 <Button className={classes.editButton}>
@@ -872,60 +874,7 @@ class PlayerProfile extends Component {
 
                         {this.state.tab === 2 && !isCurrent && (currentUser && currentUser.role === SCOUT_ROLE) && (
                             <div className={classes.tabContent}>
-                                <Grid container>
-                                    <Grid item sm={3} xs={12}>
-
-                                        {user.have_agent ? (
-                                            <Typography type="body1">
-                                                <strong>You are contacting this player’s agent.</strong> Responses will
-                                                be send
-                                                directly
-                                                to your email as indicated.
-                                            </Typography>
-                                        ) : (
-                                            <Typography type="body1">
-                                                You can send a message to a player here. Responses will be send directly
-                                                to your
-                                                email as indicated.
-                                            </Typography>
-                                        )}
-
-                                    </Grid>
-                                    <Grid item sm={8} xs={12}>
-                                        <form onSubmit={this.sendMessage}>
-                                            <Grid item xs={12}>
-                                                <TextField
-                                                    className={classes.contactTextField}
-                                                    label="Your Email Address"
-                                                    value={user.self_contact_information}
-                                                    disabled
-                                                />
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <TextField
-                                                    className={classes.contactTextField}
-                                                    label="Subject Line"
-                                                    value={this.state.contactSubject}
-                                                    onChange={this.handleChange('contactSubject')}
-                                                />
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <TextField
-                                                    className={classes.contactTextField}
-                                                    label="Message"
-                                                    value={this.state.contactMessage}
-                                                    onChange={this.handleChange('contactMessage')}
-                                                />
-                                            </Grid>
-                                            <Grid container align="center" justify="center">
-                                                <Grid item xs={6}>
-                                                    <Button type="submit" color="primary" raised
-                                                            className={classes.contactButton}>Send</Button>
-                                                </Grid>
-                                            </Grid>
-                                        </form>
-                                    </Grid>
-                                </Grid>
+                                <ContactForm user={user}/>
                             </div>
                         )}
 
@@ -952,7 +901,7 @@ class PlayerProfile extends Component {
                                            tagCounts={user.tags_isset}/>
                             ) : (
 
-                                !currentUser ? (
+                                !isCurrent ? (
                                     <div className={classes.videoListWrap}>
                                         <Typography type="subheading" align="center">
                                             This player hasn't uploaded any video yet.
@@ -991,64 +940,13 @@ class PlayerProfile extends Component {
 
                         </Paper>
 
-                        {!isCurrent && currentUser && currentUser.role === SCOUT_ROLE && (
+                        {!isCurrent && currentUser && currentUser.role === SCOUT_ROLE  && (
 
                             <div className={classes.contactContainer}>
                                 <Typography type="title" className={classes.contactTitle}>
                                     Contact
                                 </Typography>
-                                <Grid container>
-                                    <Grid item sm={3} xs={12}>
-
-                                        {user.have_agent ? (
-                                            <Typography type="body1">
-                                                <strong>You are contacting this player’s agent.</strong> Responses will
-                                                be send
-                                                directly
-                                                to your email as indicated.
-                                            </Typography>
-                                        ) : (
-                                            <Typography type="body1">
-                                                You can send a message to a player here. Responses will be send directly
-                                                to your
-                                                email as indicated.
-                                            </Typography>
-                                        )}
-
-                                    </Grid>
-                                    <Grid item sm={1} xs={1}/>
-                                    <Grid item sm={8} xs={12}>
-                                        <form onSubmit={this.sendMessage}>
-                                            <Grid item xs={12}>
-                                                <TextField
-                                                    label="Your Email Address"
-                                                    value={user.self_contact_information}
-                                                    disabled
-                                                />
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <TextField
-                                                    className={classes.contactTextField}
-                                                    label="Subject Line"
-                                                    value={this.state.contactSubject}
-                                                    onChange={this.handleChange('contactSubject')}
-                                                />
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <TextField
-                                                    className={classes.contactTextField}
-                                                    label="Message"
-                                                    value={this.state.contactMessage}
-                                                    onChange={this.handleChange('contactMessage')}
-                                                />
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <Button type="submit" color="primary" raised
-                                                        className={classes.contactButton}>Send</Button>
-                                            </Grid>
-                                        </form>
-                                    </Grid>
-                                </Grid>
+                               <ContactForm user={user}/>
 
                             </div>
                         )}
