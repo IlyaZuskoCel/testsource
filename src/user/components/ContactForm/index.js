@@ -57,6 +57,7 @@ class ContactForm extends Component {
     sendMessage = (e) => {
         e.preventDefault();
         if (!this.props.currentUser.is_verify) return false;
+        if (this.props.user.is_messaged > 2) return false;
 
         if (!this.state.contactSubject) return false;
         if (!this.state.contactMessage) return false;
@@ -146,9 +147,9 @@ class ContactForm extends Component {
                     <Grid container align="center" justify="center">
                         <Grid item xs={6}>
                             <Button type="submit"
-                                    color={!this.props.currentUser.is_verify ? 'default' : 'primary'}
+                                    color={!this.props.currentUser.is_verify || this.props.user.is_messaged > 2 ? 'default' : 'primary'}
                                     raised
-                                    disabled={!this.props.currentUser.is_verify}
+                                    disabled={!this.props.currentUser.is_verify || this.props.user.is_messaged > 2}
                                     className={classes.contactButton}>Send</Button>
                         </Grid>
                     </Grid>
