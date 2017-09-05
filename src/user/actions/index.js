@@ -269,21 +269,7 @@ export const changePassword = (password_old, password_new) => dispatch => {
         })
 };
 
-export const resetPassword = () => dispatch => {
-    return post(`/api/v2/profile/reset-password`, {})
-        .then(result => {
-            if ('error' in result)
-                return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
 
-            return dispatch({type: SUCCESS_ALERT, payload: {message: "We emailed you a temporary password"}});
-        })
-        .catch((message) => {
-            if (message === 'Unauthorized') {
-                dispatch(logOut());
-            }
-            dispatch({type: ERROR_ALERT, payload: {message}});
-        })
-};
 export const report = (id_violator, type, message) => dispatch => {
     return post(`/api/v2/activity/report`, {id_violator, type, message})
         .then(result => {
@@ -333,3 +319,18 @@ export const forgotPasswordToken = (token, password, password_repeat) => dispatc
         })
 };
 
+export const resetPassword = () => dispatch => {
+    return get(`/api/v2/profile/temp-password`)
+        .then(result => {
+            if ('error' in result)
+                return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
+
+            return dispatch({type: SUCCESS_ALERT, payload: {message: "We emailed you a temporary password"}});
+        })
+        .catch((message) => {
+            if (message === 'Unauthorized') {
+                dispatch(logOut());
+            }
+            dispatch({type: ERROR_ALERT, payload: {message}});
+        })
+};
