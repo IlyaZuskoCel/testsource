@@ -68,3 +68,23 @@ export const REPORT_LIST = {
     [REPORT_ACCOUNT]: 'Fake account',
     [REPORT_OTHER]: 'Other',
 };
+
+
+export const DELETE_NO_USE = 0;
+export const DELETE_NO_CHANGES = 1;
+export const DELETE_NO_EMAILS_FROM_SCOUTS = 2;
+export const DELETE_NOTIF = 3;
+export const DELETE_NO_HELPFUL = 4;
+export const DELETE_PRIVACY = 5;
+export const DELETE_OTHER = 6;
+
+
+export const DELETE_REASON_LIST = {
+    [DELETE_NO_USE]: 'I no longer use the Scout Zoo app',
+    [DELETE_NO_CHANGES]: 'I do not like the recent changes made to the Scout Zoo app',
+    [DELETE_NO_EMAILS_FROM_SCOUTS]: 'I haven’t received any emails from scouts',
+    [DELETE_NOTIF]: 'I have received too many notifications from Scout Zoo',
+    [DELETE_NO_HELPFUL]: 'I do not find Scout Zoo helpful',
+    [DELETE_PRIVACY]: 'I am concerned about my privacy',
+    [DELETE_OTHER]: 'Other',
+};
