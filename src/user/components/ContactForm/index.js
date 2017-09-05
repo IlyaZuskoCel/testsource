@@ -34,6 +34,9 @@ const styleSheet = createStyleSheet('ContactForm', theme => ({
         }
 
     },
+    contactTextFieldEmail: {
+        width: '100%',
+    },
     contactButton: {
         marginTop: 64,
         [theme.breakpoints.down('sm')]: {
@@ -120,7 +123,7 @@ class ContactForm extends Component {
                     <Grid item xs={12}>
                         <TextField
                             type="email"
-                            className={classes.contactTextField}
+                            className={classes.contactTextFieldEmail}
                             label="Your Email Address"
                             value={currentUser.email}
                             disabled
