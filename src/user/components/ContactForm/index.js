@@ -57,6 +57,10 @@ class ContactForm extends Component {
     sendMessage = (e) => {
         e.preventDefault();
         if (!this.props.currentUser.is_verify) return false;
+
+        if (!this.state.contactSubject) return false;
+        if (!this.state.contactMessage) return false;
+
         this.props.sendEmail(this.props.user.id, this.state.contactSubject, this.state.contactMessage);
         this.setState({
             contactSubject: '',
@@ -83,21 +87,25 @@ class ContactForm extends Component {
                     </Typography>
                 )}
 
-                {user.message_date && (
+                {!!this.props.currentUser.is_verify && !!user.message_date && (
                     <Typography type="caption">
-                        You contacted this player on {moment(user.message_date).format('MMMM Do, YYYY')}.
+                        You contacted this {user.have_agent ? "player's agent" : "player"}
+                        on {moment(user.message_date).format('MMMM Do, YYYY')}.
                     </Typography>
                 )}
 
 
-                {user.have_agent ? (
+                {!!this.props.currentUser.is_verify && !!user.have_agent && (
                     <Typography type="body1">
                         <strong>You are contacting this player’s agent.</strong> Responses will
                         be send
                         directly
                         to your email as indicated.
                     </Typography>
-                ) : (
+                )}
+
+
+                {!!this.props.currentUser.is_verify && !!!user.have_agent && (
                     <Typography type="body1">
                         You can send a message to a player here. Responses will be send directly
                         to your
@@ -121,6 +129,7 @@ class ContactForm extends Component {
                         <TextField
                             className={classes.contactTextField}
                             label="Subject Line"
+                            disabled={!this.props.currentUser.is_verify}
                             value={this.state.contactSubject}
                             onChange={this.handleChange('contactSubject')}
                         />
@@ -129,6 +138,7 @@ class ContactForm extends Component {
                         <TextField
                             className={classes.contactTextField}
                             label="Message"
+                            disabled={!this.props.currentUser.is_verify}
                             value={this.state.contactMessage}
                             onChange={this.handleChange('contactMessage')}
                         />
