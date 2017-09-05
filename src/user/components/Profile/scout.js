@@ -40,7 +40,7 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
     },
     backgroundImgWrap: {
         zIndex: -1,
-        width: '100%',
+        width: '70%',
         height: 688,
         [theme.breakpoints.down('sm')]: {
             height: 536,
