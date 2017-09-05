@@ -47,7 +47,7 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
         },
         position: 'absolute',
         top: 0,
-        left: 0,
+        right: 0,
         opacity: 0.5,
         backgroundImage: 'linear-gradient(196deg, #f3f3f3, rgba(255, 255, 255, 0.74) 53%, rgba(250, 250, 250, 0.86) 74%, #f3f3f3)',
         overflow: 'hidden'
