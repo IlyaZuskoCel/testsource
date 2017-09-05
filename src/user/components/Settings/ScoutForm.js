@@ -270,6 +270,7 @@ class ScoutForm extends Component {
                                            fullWidth
                                            error={this.state.errors.indexOf('phone') > -1}
                                            label="Coach's Phone Number"
+                                           type="number"
                                            value={this.state.phone}
                                            onChange={this.handleChange('phone')}
                                            className={classes.phoneTextField}/>
