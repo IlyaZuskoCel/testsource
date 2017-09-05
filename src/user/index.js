@@ -11,6 +11,7 @@ import DefaultLayout from '../common/containers/DefaultRoute'
 
 import Profile from './containers/Profile';
 import Sign from './containers/Sign';
+import Confirm from './containers/Confirm';
 import Forgot from './containers/Forgot';
 import Settings from './containers/Settings';
 import Edit from './containers/Edit';
@@ -20,6 +21,7 @@ import ChangePassword from './containers/ChangePassword';
 const routes = [
     <DefaultLayout key="Sign" path="/sign/:type/:user?" component={Sign} hideHeader/>,
     <DefaultLayout key="Forgot" path="/forgot/:token?" component={Forgot} hideHeader/>,
+    <DefaultLayout key="Confirm" path="/confirm/:token" component={Confirm}/>,
     <PrivateRoute key="ChangePassword" path="/settings/password" component={ChangePassword}
                   hideBackgroundTopMobileHeader/>,
     <PrivateRoute key="Settings" path="/settings" component={Settings} hideBackgroundTopMobileHeader/>,

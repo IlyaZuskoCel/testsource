@@ -43,6 +43,24 @@ export const logIn = (email, password) => dispatch => {
         })
 };
 
+export const confirm = token => dispatch => {
+    return get(`/api/v2/profile/confirm-email/${token}`)
+        .then(user => {
+            if ('error' in user)
+                return dispatch({type: ERROR_ALERT, payload: {message: user.error.message}});
+
+            auth(user.access_token);
+            dispatch({type: LOGIN, payload: user});
+            if (user.role === SCOUT_ROLE)
+                return dispatch(push('/search/player'));
+
+            return dispatch(push('/profile'));
+        })
+        .catch((message) => {
+            dispatch({type: ERROR_ALERT, payload: {message}});
+        })
+};
+
 export const registerScout = user => dispatch => {
     return post('/api/v2/profile/signup-scout', user)
         .then(user => {
