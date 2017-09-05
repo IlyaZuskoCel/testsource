@@ -74,6 +74,7 @@ class InForm extends Component {
                                        fullWidth
                                        error={this.state.errors.indexOf('username') > -1}
                                        label="Email Address"
+                                       type="email"
                                        value={this.state.username}
                                        onChange={this.handleChange('username')}/>
                         </Grid>

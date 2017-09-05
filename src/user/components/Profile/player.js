@@ -57,9 +57,7 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
             marginTop: 0,
         },
 
-
     },
-
 
     backgroundImgWrap: {
         zIndex: -1,
@@ -898,6 +896,7 @@ class PlayerProfile extends Component {
                                         <form onSubmit={this.sendMessage}>
                                             <Grid item xs={12}>
                                                 <TextField
+                                                    type="email"
                                                     className={classes.contactTextField}
                                                     label="Your Email Address"
                                                     value={user.self_contact_information}

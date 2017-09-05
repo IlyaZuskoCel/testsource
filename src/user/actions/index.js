@@ -48,6 +48,10 @@ export const registerScout = user => dispatch => {
         .then(user => {
             if ('error' in user)
                 return dispatch({type: ERROR_ALERT, payload: {message: user.error.message}});
+            dispatch({
+                type: SUCCESS_ALERT,
+                payload: {message: 'Your account was registered successfully! Please confirm your account.'}
+            });
             dispatch(push('/sign/in'))
         })
         .catch((message) => {
@@ -60,6 +64,10 @@ export const registerPlayer = user => dispatch => {
         .then(user => {
             if ('error' in user)
                 return dispatch({type: ERROR_ALERT, payload: {message: user.error.message}});
+            dispatch({
+                type: SUCCESS_ALERT,
+                payload: {message: 'Your account was registered successfully! Please confirm your account.'}
+            });
             dispatch(push('/sign/in'))
         })
         .catch((message) => {

@@ -120,6 +120,7 @@ class PlayerForm extends Component {
                                        error={this.state.errors.indexOf('email') > -1}
                                        label="Email Address"
                                        value={this.state.email}
+                                       type="email"
                                        onChange={this.handleChange('email')}/>
                         </Grid>
                         <Grid item xs={12}>
@@ -165,6 +166,7 @@ class PlayerForm extends Component {
                                            error={this.state.errors.indexOf('agent_email') > -1}
                                            label="Agent's Email Address"
                                            value={this.state.agent_email}
+                                           type="email"
                                            onChange={this.handleChange('agent_email')}
                                            className={classes.emailAgentTextField}/>
                             </Grid>
