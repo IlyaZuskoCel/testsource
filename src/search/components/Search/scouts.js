@@ -32,9 +32,18 @@ const styleSheet = createStyleSheet('Scout', theme => ({
     resultCard: {
         height: 150,
 
+        transition: theme.transitions.create('box-shadow', {
+            duration: theme.transitions.duration.shorter,
+            easing: theme.transitions.easing.ease,
+        }),
+
         [theme.breakpoints.down('sm')]: {
             height: 'auto',
             minHeight: 120,
+        },
+
+        "&:hover": {
+            boxShadow: "0px 3px 14px 0 rgba(0, 0, 0, 0.2)",
         }
     },
     playerInfo: {
@@ -136,8 +145,11 @@ const styleSheet = createStyleSheet('Scout', theme => ({
         }
     },
     total: {
+        display: 'flex',
+
         [theme.breakpoints.down('sm')]: {
-            padding: [0 , 20],
+            justifyContent: 'center',
+            alignItems: 'center',
         }
     }
 }));
@@ -173,7 +185,9 @@ class Scouts extends Component {
 
         return (
             <div className={classes.content}>
-                <Typography type="caption" className={classes.total}>{this.props.total ? this.props.total : 0} scouts found</Typography>
+                <div className={classes.total}>
+                    <Typography type="caption">{this.props.total ? this.props.total : 0} scouts found</Typography>
+                </div>
                 <div className={classes.resultContainer}>
                     <Grid container gutter={40}>
 

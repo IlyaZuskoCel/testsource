@@ -222,7 +222,6 @@ class Edit extends Component {
                             </Tabs>
                         </Hidden>
 
-
                         {this.state.tab === 0 && <Trim video={video}
                                                        onNext={this.handleNext}
                                                        updateField={this.props.updateField}

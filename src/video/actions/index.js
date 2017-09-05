@@ -39,7 +39,6 @@ export const fetchVideo = id => dispatch => {
 
 export const upload = file => dispatch => {
 
-
     let form = new FormData();
     if (file)
         form.append('UploadForm', file);

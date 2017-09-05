@@ -232,7 +232,7 @@ const theme = (outerTheme) => {
 
                     '&:hover': {
                         textDecoration: 'none',
-                        backgroundColor: '#f5f5f5',
+                        backgroundColor: 'transparent',
                         color: '#d7001e',
                         '&$disabled': {
                             backgroundColor: '#cbcbcb',

@@ -7,10 +7,11 @@ import withWidth from 'material-ui/utils/withWidth';
 import Slider, {Range, createSliderWithTooltip} from 'rc-slider';
 import Tooltip from 'rc-tooltip';
 
-const Handle = Slider.Handle;
-
 import 'rc-slider/assets/index.css';
 import './assets/style.css';
+import {PlAYER_MAX_AGE, PLAYER_MIN_AGE} from "../../constants/playerSettings";
+
+const Handle = Slider.Handle;
 
 const styleSheet = createStyleSheet('RangeSlider', theme => ({
     root: {
@@ -49,6 +50,7 @@ class RangeSlider extends Component {
         super(props);
 
     }
+
     render() {
         const {classes, label, ...props} = this.props;
 
