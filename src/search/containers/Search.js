@@ -34,7 +34,8 @@ const mapDispatchToProps = (dispatch, props) => ({
     go: (url) => dispatch(go(url)),
     filterScouts: (params) => dispatch(filterScouts(params)),
     filterPlayers: (params) => dispatch(filterPlayers(params)),
-    follow: (type , playerId) =>  {type ? dispatch(removeFavorite(playerId)) : dispatch(addFavorite(playerId))},
+    addFavorite: (playerId) => dispatch(addFavorite(playerId)),
+    removeFavorite: (playerId) => dispatch(removeFavorite(playerId))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Search))

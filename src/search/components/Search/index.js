@@ -288,7 +288,6 @@ class Search extends Component {
                                                                      query={this.state.query}
                                                                      clearFilters={this.state.clearFilters}
                                                                      stopClearing={this.stopClearing}
-
                         />}
 
                         {this.props.type === 'player' && <PlayerFilter leagues={this.props.leagues}
@@ -300,7 +299,6 @@ class Search extends Component {
                                                                        query={this.state.query}
                                                                        clearFilters={this.state.clearFilters}
                                                                        stopClearing={this.stopClearing}
-
                         />}
                     </div>
                 </header></Hidden>
@@ -365,10 +363,16 @@ class Search extends Component {
 
             {this.state.mobileFilterOn && <div className={classes.containerWrapper}>
                 {this.props.type === 'player' &&
-                    <Players players={this.props.results} total={this.props.headers ? this.props.headers.count : 0} role={this.props.currentUser ? this.props.currentUser.role : ''} follow={this.props.follow}/>
+                    <Players players={this.props.results}
+                             total={this.props.headers ? this.props.headers.count : 0}
+                             role={this.props.currentUser ? this.props.currentUser.role : ''}
+                             addFavorite={this.props.addFavorite}
+                             removeFavorite={this.props.removeFavorite}
+                    />
                 }
                 {this.props.type === 'scout' &&
-                    <Scouts scouts={this.props.results} total={this.props.headers ? this.props.headers.count : 0}/>
+                    <Scouts scouts={this.props.results}
+                            total={this.props.headers ? this.props.headers.count : 0}/>
                 }
             </div>}
 

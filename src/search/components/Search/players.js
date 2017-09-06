@@ -6,19 +6,13 @@ import React, {Component} from 'react';
 import compose from 'recompose/compose';
 import PropTypes from 'prop-types';
 import Grid from 'material-ui/Grid';
-import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import withWidth from 'material-ui/utils/withWidth';
-import {Link, Icon} from '../../../common/components';
 import classNames from 'classnames';
 
 import {withStyles, createStyleSheet} from 'material-ui/styles';
-import defaultPhoto from './assets/images/default-photo.png';
-import IconButton from 'material-ui/IconButton';
 
 import PlayerCard from '../../../user/components/Cards/PlayerCard';
-
-import moment from 'moment';
 
 const styleSheet = createStyleSheet('Search', theme => ({
     content: {
@@ -199,27 +193,10 @@ class Players extends Component {
         this.state = {
             players: null,
         }
-
-        this.follow = this.follow.bind(this);
     }
 
     componentWillReceiveProps(nextProp) {
         this.setState({players: nextProp.players});
-    }
-
-
-    follow(event, player) {
-        event.preventDefault();
-
-
-
-        let id_tagged = player.is_tagged;
-        let id = player.id;
-        player.is_tagged  = !player.is_tagged;
-
-        // setTimeout(() => {
-        //     this.props.follow(id_tagged , id);
-        // } , 250)
     }
 
 
@@ -232,10 +209,12 @@ class Players extends Component {
                 </div>
                 <div className={classes.resultContainer}>
                     <Grid container gutter={40}>
-
                         {this.state.players && this.state.players.map(player => {
                             return <Grid item xs={12} md={4} sm={6} key={player.id}>
-                                <PlayerCard player={player} role={this.props.role} />
+                                <PlayerCard player={player}
+                                            role={this.props.role}
+                                            addFavorite={this.props.addFavorite}
+                                            removeFavorite={this.props.removeFavorite} />
                             </Grid>
                         })}
                     </Grid>

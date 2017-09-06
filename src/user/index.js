@@ -17,6 +17,7 @@ import Settings from './containers/Settings';
 import Edit from './containers/Edit';
 import Delete from './containers/Delete';
 import ChangePassword from './containers/ChangePassword';
+import Shortlist from './containers/Shortlist'
 
 const routes = [
     <DefaultLayout key="Sign" path="/sign/:type/:user?" component={Sign} hideHeader/>,
@@ -26,7 +27,7 @@ const routes = [
                   hideBackgroundTopMobileHeader/>,
     <PrivateRoute key="Settings" path="/settings" component={Settings} hideBackgroundTopMobileHeader/>,
     <PrivateRoute key="Edit" path="/profile/edit" component={Edit} hideBackgroundTopMobileHeader/>,
-
+    <PrivateRoute key="Shortlist" path="/profile/shortlist" component={Shortlist} hideBackgroundTopMobileHeader/>,
     <PrivateRoute key="Delete" path="/profile/delete" component={Delete}/>,
     <DefaultLayout key="Profile" path="/profile/:id" component={Profile} hideBackgroundTopHeader/>,
     <PrivateRoute key="CurrentProfile" path="/profile" component={Profile} hideBackgroundTopHeader/>,

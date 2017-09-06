@@ -5,7 +5,6 @@ export const selectTeams = teams => teams.map(team => ({
     id_league: team.id_league
 }));
 
-
 export const mapOptions = items => items.map(item => ({label: item.name.trim(), value: item.id, item}));
 export const map = items => items.reduce((o, v) => Object.assign(o, {[v.id]: v.name.trim()}), {});
 
