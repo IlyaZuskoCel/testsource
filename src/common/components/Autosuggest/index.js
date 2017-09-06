@@ -121,7 +121,7 @@ class IntegrationAutosuggest extends Component {
     handleFocus = () => {
         setTimeout(() => {
             this.focus = true;
-        }, 100);
+        }, 500);
     };
     handleBlur = () => {
         this.focus = false;
