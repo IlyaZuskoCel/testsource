@@ -10,3 +10,5 @@ export const CLEAR_LIST = 'search:clearList';
 export const SET_LEAGUES = 'search:setLeagues';
 
 export const SET_HEADERS = 'search:setHeaders';
+
+export const SET_FOLLOWED = 'search:setFollowed';

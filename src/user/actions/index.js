@@ -343,6 +343,8 @@ export const forgotPasswordToken = (token, password, password_repeat) => dispatc
         })
 };
 
+
+
 export const resetPassword = () => dispatch => {
     return get(`/api/v2/profile/temp-password`)
         .then(result => {

@@ -17,6 +17,17 @@ import {Link, Icon} from '../../../common/components';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import defaultPhoto from './assets/images/default-photo.png';
 import IconButton from 'material-ui/IconButton';
+import Button from 'material-ui/Button';
+
+
+import Dialog, {
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+} from 'material-ui/Dialog';
+
+
 
 import moment from 'moment';
 
@@ -166,80 +177,136 @@ const styleSheet = createStyleSheet('Search', theme => ({
         alignItems: 'center',
     },
 
+    alertTitle: {
+        color: '#000000',
+    }
+
 }));
 
 class PlayerCard extends Component {
 
     constructor(props) {
         super(props);
+
+        this.state = {
+            openRemoveAlert: false,
+            currentPlayer: null,
+        }
     }
 
     follow = (event, player) => {
         event.preventDefault();
+
+        player.is_tagged = true;
+        this.props.addFavorite && this.props.addFavorite(player.id);
+
+        this.forceUpdate();
+    };
+
+    unSubscribe = (event , player) => {
+        event.preventDefault();
+        this.setState({openRemoveAlert: true, currentPlayer: player});
+    };
+
+    handleDialogCancel = () => {
+      this.setState({openRemoveAlert : false});
+    };
+
+    handleDialogDelete = () => {
+        this.setState({openRemoveAlert: false} , () => {
+
+            this.props.removeFavorite && this.props.removeFavorite(this.state.currentPlayer.id);
+
+
+            setTimeout(() => {
+                this.props.onUpdateUpper && this.props.onUpdateUpper();
+            } , 300)
+        });
     };
 
     render() {
         const {classes , player  , role , ...props} = this.props;
 
         return (
-            <Link to={`/profile/${player.id}`} disabledUnderline>
-                <Paper classes={{root: classes.resultCard}} elevation={1}>
-                    <div className={classes.leftStripe}></div>
+            <div>
+                <Dialog
+                    open={this.state.openRemoveAlert}
+                    ignoreBackdropClick
+                    ignoreEscapeKeyUp>
+                    <DialogTitle disableTypography>
+                        <Typography type="subheading">
+                            Remove {this.state.currentPlayer && this.state.currentPlayer.first_name} {this.state.currentPlayer && this.state.currentPlayer.last_name} from your Shortlist
+                        </Typography>
+                    </DialogTitle>
+                    <DialogActions>
+                        <Button onClick={this.handleDialogCancel}>
+                            Cancel
+                        </Button>
+                        <Button onClick={this.handleDialogDelete} color="primary">
+                            Remove
+                        </Button>
+                    </DialogActions>
+                </Dialog>
 
-                    <div className={classes.playerInfo}>
-                        <div className={classes.playerImage}>
-                            <img src={player.profile_picture || defaultPhoto}
-                                 className={classes.playerPhoto} alt="Player's photo"/>
-                        </div>
+                <Link to={`/profile/${player.id}`} disabledUnderline>
+                    <Paper classes={{root: classes.resultCard}} elevation={1}>
+                        <div className={classes.leftStripe}></div>
 
-                        <div className={classes.playerNameContainer}>
-                            <div className={classes.nameColumn}>
-                                <Typography type='title' className={classes.nameFont}>
-                                    {player.first_name} {player.last_name}
-                                </Typography>
-                                <Typography type='caption'
-                                            className={classes.playerLeague}>{player.team ? player.team : ''} {player.league_short ? player.league_short : ''}</Typography>
+                        <div className={classes.playerInfo}>
+                            <div className={classes.playerImage}>
+                                <img src={player.profile_picture || defaultPhoto}
+                                     className={classes.playerPhoto} alt="Player's photo"/>
+                            </div>
+
+                            <div className={classes.playerNameContainer}>
+                                <div className={classes.nameColumn}>
+                                    <Typography type='title' className={classes.nameFont}>
+                                        {player.first_name} {player.last_name}
+                                    </Typography>
+                                    <Typography type='caption'
+                                                className={classes.playerLeague}>{player.team ? player.team : ''} {player.league_short ? player.league_short : ''}</Typography>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div className={classes.playerBottomInfo}>
+                        <div className={classes.playerBottomInfo}>
 
-                        {player.position_short !== 'n/a' && <Typography type='body1'
-                                                                        className={classes.bottomPlayerText}>{player.position_short}</Typography>}
-                        {player.position_short !== 'n/a' &&
-                        <div className={classes.playerBottomDivider}></div>}
+                            {player.position_short !== 'n/a' && <Typography type='body1'
+                                                                            className={classes.bottomPlayerText}>{player.position_short}</Typography>}
+                            {player.position_short !== 'n/a' &&
+                            <div className={classes.playerBottomDivider}></div>}
 
-                        {player.height && <Typography type='body1'
-                                                      className={classes.bottomPlayerText}>{player.height[0] + "'" + player.height[1] + '"'}</Typography>}
-                        {player.height && <div className={classes.playerBottomDivider}></div>}
+                            {player.height && <Typography type='body1'
+                                                          className={classes.bottomPlayerText}>{player.height[0] + "'" + player.height[1] + '"'}</Typography>}
+                            {player.height && <div className={classes.playerBottomDivider}></div>}
 
-                        {player.weight && <Typography type='body1'
-                                                      className={classes.bottomPlayerText}>{parseInt(player.weight) + ' lbs'}</Typography>}
-                        {player.weight && <div className={classes.playerBottomDivider}></div>}
+                            {player.weight && <Typography type='body1'
+                                                          className={classes.bottomPlayerText}>{parseInt(player.weight) + ' lbs'}</Typography>}
+                            {player.weight && <div className={classes.playerBottomDivider}></div>}
 
-                        {player.birthday && <Typography type='body1'
-                                                        className={classes.bottomPlayerText}>{moment(player.birthday).format("MMM. YYYY")}</Typography>}
+                            {player.birthday && <Typography type='body1'
+                                                            className={classes.bottomPlayerText}>{moment(player.birthday).format("MMM. YYYY")}</Typography>}
 
-                        {role && role !== 'Player' &&
-                        <div className={classes.lastItemInRow}>
-                            <div className={classes.playerBottomDivider}></div>
-                            {
-                                player.is_tagged ? <IconButton onClick={(event) => {
-                                        this.follow(event, player)
-                                    }} className={classes.iconWrapper}><Icon
-                                        className={classes.editIcon}>star-full</Icon></IconButton> :
-                                    <IconButton onClick={(event) => {
-                                        this.follow(event, player)
-                                    }} className={classes.iconWrapper}><Icon
-                                        className={classes.editIcon}>star-empty</Icon></IconButton>
-                            }
-                        </div>}
+                            {role && role !== 'Player' &&
+                            <div className={classes.lastItemInRow}>
+                                <div className={classes.playerBottomDivider}></div>
+                                {
+                                    player.is_tagged ? <IconButton onClick={(event) => {
+                                            this.unSubscribe(event, player)
+                                        }} className={classes.iconWrapper}><Icon
+                                            className={classes.editIcon}>star-full</Icon></IconButton> :
+                                        <IconButton onClick={(event) => {
+                                            this.follow(event, player)
+                                        }} className={classes.iconWrapper}><Icon
+                                            className={classes.editIcon}>star-empty</Icon></IconButton>
+                                }
+                            </div>}
 
-                    </div>
+                        </div>
 
-                </Paper>
-            </Link>
+                    </Paper>
+                </Link>
+            </div>
         );
     }
 }

@@ -11,7 +11,8 @@ import {SET_PLAYERS,
         SET_SCOUTS ,
         CLEAR_LIST ,
         SET_LEAGUES,
-        SET_HEADERS} from "../constants/actions";
+        SET_HEADERS,
+        SET_FOLLOWED} from "../constants/actions";
 import {LOAD} from '../../common/constants/actions';
 import {addRequestParams} from "../helpers/helpers";
 
@@ -51,6 +52,18 @@ export const uploadScouts = (params) => dispatch => {
         });
 };
 
+export const getFollowedList = () => dispatch => {
+    dispatch({type: CLEAR_LIST});
+
+    return get('/api/v2/activity/following')
+        .then(result => {
+            dispatch({type : SET_FOLLOWED , payload : result.activities})
+        })
+        .catch((message) => {
+            dispatch({type: ERROR_ALERT, payload: {message}});
+        })
+};
+
 export const getLeagues = () => dispatch => {
 
     get('/api/v2/league/get-list')
@@ -79,7 +92,6 @@ export const filterScouts = (params) => dispatch => {
             dispatch({type: ERROR_ALERT, payload: {message}});
         });
 };
-
 
 export const filterPlayers = (params) => dispatch => {
     dispatch({type: CLEAR_LIST});

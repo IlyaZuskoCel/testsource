@@ -252,12 +252,11 @@ class PlayerFilter extends Component {
                     </Grid>
 
                     <Hidden smUp>
-                        <div className={classes.
-                            ViewContainer}>
+                        <div className={classes.buttonViewContainer}>
                             <Button raised color="primary" className={classes.viewButton} onClick={this.props.viewResults} >
-                                <span className={classes.viewTypography}>
+                                <Typography className={classes.viewTypography}>
                                     view all {this.props.total} players
-                                </span>
+                                </Typography>
                             </Button>
                         </div>
                     </Hidden>

@@ -79,7 +79,7 @@ class ScoutFilter extends Component {
             leagues: [],
             team: '',
             name: '',
-        }
+        };
 
         this.changeName = this.changeName.bind(this);
         this.changeTeam = this.changeTeam.bind(this);

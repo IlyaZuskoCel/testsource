@@ -13,9 +13,9 @@ function current(state = null, action) {
         case SET_USER:
             return action.payload;
         case SET_USER_FAVORITE:
-            return action.payload === state.id ? {...state, is_tagged: true} : state;
+            return state && action.payload === state.id ? {...state, is_tagged: true} : state;
         case UNSET_USER_FAVORITE:
-            return action.payload === state.id ? {...state, is_tagged: false} : state;
+            return state &&  action.payload === state.id ? {...state, is_tagged: false} : state;
         case DELETE_VIDEO:
             return {...state, videos: state.videos.filter(i => i.id !== action.payload)};
         default:

@@ -304,7 +304,7 @@ class Header extends Component {
             if (user.role === SCOUT_ROLE)
                 items.unshift(<MenuItem key="favorite"
                                         className={classes.MenuItem}
-                                        onClick={this.handleMenuRequestClose('/favorite')}>ShortList</MenuItem>);
+                                        onClick={this.handleMenuRequestClose('/profile/shortlist')}>ShortList</MenuItem>);
 
 
             if (width === 'xs') {
@@ -331,11 +331,9 @@ class Header extends Component {
 
         }
 
-
         const hideBackground = (this.props.hideBackgroundTopHeader && !this.state.scroll)
             || (this.props.hideBackgroundTopMobileHeaderScroll && width === 'xs' && !this.state.scroll)
             || (this.props.hideBackgroundTopMobileHeader && width === 'xs');
-
 
         return (
             <AppBar position="fixed" className={classNames(classes.container, {[classes.hideShadow]: hideBackground})}>
