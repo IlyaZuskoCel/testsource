@@ -218,7 +218,7 @@ class PlayerForm extends Component {
     }
 
     handleChange = name => event => {
-        if (name === 'player_num' && event.target.value.length > 2) return;
+        if (name === 'player_num' && event.target.value.length > 0 && (isNaN(parseInt(event.target.value)) || parseInt(event.target.value) < 1 || parseInt(event.target.value) > 99)) return;
         return this.setState({[name]: event.target.value})
     };
 
@@ -425,7 +425,6 @@ class PlayerForm extends Component {
                             <TextField fullWidth
                                        label="Jersey number"
                                        error={this.state.errors.indexOf('player_num') > -1}
-                                       type="number"
                                        value={this.state.player_num || ''}
                                        onChange={this.handleChange('player_num')}/>
                         </Grid>

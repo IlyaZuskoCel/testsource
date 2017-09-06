@@ -20,6 +20,7 @@ import IconButton from 'material-ui/IconButton';
 
 import moment from 'moment';
 
+
 const styleSheet = createStyleSheet('Search', theme => ({
 
     resultCard: {
