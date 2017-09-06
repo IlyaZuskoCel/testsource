@@ -26,6 +26,7 @@ const routes = [
                   hideBackgroundTopMobileHeader/>,
     <PrivateRoute key="Settings" path="/settings" component={Settings} hideBackgroundTopMobileHeader/>,
     <PrivateRoute key="Edit" path="/profile/edit" component={Edit} hideBackgroundTopMobileHeader/>,
+
     <PrivateRoute key="Delete" path="/profile/delete" component={Delete}/>,
     <DefaultLayout key="Profile" path="/profile/:id" component={Profile} hideBackgroundTopHeader/>,
     <PrivateRoute key="CurrentProfile" path="/profile" component={Profile} hideBackgroundTopHeader/>,

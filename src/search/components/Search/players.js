@@ -16,9 +16,9 @@ import {withStyles, createStyleSheet} from 'material-ui/styles';
 import defaultPhoto from './assets/images/default-photo.png';
 import IconButton from 'material-ui/IconButton';
 
+import PlayerCard from '../../../user/components/Cards/PlayerCard';
 
 import moment from 'moment';
-
 
 const styleSheet = createStyleSheet('Search', theme => ({
     content: {
@@ -235,64 +235,7 @@ class Players extends Component {
 
                         {this.state.players && this.state.players.map(player => {
                             return <Grid item xs={12} md={4} sm={6} key={player.id}>
-                                <Link to={`/profile/${player.id}`} disabledUnderline>
-                                    <Paper classes={{root: classes.resultCard}} elevation={1}>
-                                        <div className={classes.leftStripe}></div>
-
-                                        <div className={classes.playerInfo}>
-                                            <div className={classes.playerImage}>
-                                                <img src={player.profile_picture || defaultPhoto}
-                                                     className={classes.playerPhoto} alt="Player's photo"/>
-                                            </div>
-
-                                            <div className={classes.playerNameContainer}>
-                                                <div className={classes.nameColumn}>
-                                                    <Typography type='title' className={classes.nameFont}>
-                                                        {player.first_name} {player.last_name}
-                                                    </Typography>
-                                                    <Typography type='caption'
-                                                                className={classes.playerLeague}>{player.team ? player.team : ''} {player.league_short ? player.league_short : ''}</Typography>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className={classes.playerBottomInfo}>
-
-                                            {player.position_short !== 'n/a' && <Typography type='body1'
-                                                                                            className={classes.bottomPlayerText}>{player.position_short}</Typography>}
-                                            {player.position_short !== 'n/a' &&
-                                            <div className={classes.playerBottomDivider}></div>}
-
-                                            {player.height && <Typography type='body1'
-                                                                          className={classes.bottomPlayerText}>{player.height[0] + "'" + player.height[1] + '"'}</Typography>}
-                                            {player.height && <div className={classes.playerBottomDivider}></div>}
-
-                                            {player.weight && <Typography type='body1'
-                                                                          className={classes.bottomPlayerText}>{parseInt(player.weight) + ' lbs'}</Typography>}
-                                            {player.weight && <div className={classes.playerBottomDivider}></div>}
-
-                                            {player.birthday && <Typography type='body1'
-                                                                            className={classes.bottomPlayerText}>{moment(player.birthday).format("MMM. YYYY")}</Typography>}
-
-                                            {this.props.role && this.props.role !== 'Player' &&
-                                            <div className={classes.lastItemInRow}>
-                                                <div className={classes.playerBottomDivider}></div>
-                                                {
-                                                    player.is_tagged ? <IconButton onClick={(event) => {
-                                                            this.follow(event, player)
-                                                        }} className={classes.iconWrapper}><Icon
-                                                            className={classes.editIcon}>star-full</Icon></IconButton> :
-                                                        <IconButton onClick={(event) => {
-                                                            this.follow(event, player)
-                                                        }} className={classes.iconWrapper}><Icon
-                                                            className={classes.editIcon}>star-empty</Icon></IconButton>
-                                                }
-                                            </div>}
-
-                                        </div>
-
-                                    </Paper>
-                                </Link>
+                                <PlayerCard player={player} role={this.props.role} />
                             </Grid>
                         })}
                     </Grid>
