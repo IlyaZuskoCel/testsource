@@ -177,48 +177,46 @@ class DateTextField extends Component {
 
 
         return (
-            <div>
-                <FormControl
-                    fullWidth={fullWidth}
-                    ref={rootRef}
-                    className={classNames(classes.root, className)}
-                    error={error}
-                    required={required}
-                    onFocus={this.handleFocus}
-                    onBlur={this.handleBlur}
-                >
-                    {label &&
-                    <InputLabel className={labelClassName} {...InputLabelProps}
-                                shrink={!!this.state.month || !!this.state.year || this.state.focused}>
-                        {label}
-                    </InputLabel>}
+            <FormControl
+                fullWidth={fullWidth}
+                ref={rootRef}
+                className={classNames(classes.root, className)}
+                error={error}
+                required={required}
+                onFocus={this.handleFocus}
+                onBlur={this.handleBlur}
+            >
+                {label &&
+                <InputLabel className={labelClassName} {...InputLabelProps}
+                            shrink={!!this.state.month || !!this.state.year || this.state.focused}>
+                    {label}
+                </InputLabel>}
 
-                    <Input
-                        className={classNames(classes.input, classes.leftInput, {[classes.hidePlaceholder]: this.state.month || (!this.state.focused && !this.state.month && !this.state.year)})}
-                        disabled={disabled}
-                        name="month"
-                        value={this.state.month}
-                        placeholder="MM"
-                        onChange={this.handleChangeMonth}
-                    />
+                <Input
+                    className={classNames(classes.input, classes.leftInput, {[classes.hidePlaceholder]: this.state.month || (!this.state.focused && !this.state.month && !this.state.year)})}
+                    disabled={disabled}
+                    name="month"
+                    value={this.state.month}
+                    placeholder="MM"
+                    onChange={this.handleChangeMonth}
+                />
 
-                    <Input
-                        className={classNames(classes.input, classes.rightInput, {[classes.hidePlaceholder]: this.state.year || (!this.state.focused && !this.state.month && !this.state.year)})}
-                        disabled={disabled}
-                        name="year"
-                        value={this.state.year}
-                        placeholder="YYYY"
-                        onChange={this.handleChangeYear}
+                <Input
+                    className={classNames(classes.input, classes.rightInput, {[classes.hidePlaceholder]: this.state.year || (!this.state.focused && !this.state.month && !this.state.year)})}
+                    disabled={disabled}
+                    name="year"
+                    value={this.state.year}
+                    placeholder="YYYY"
+                    onChange={this.handleChangeYear}
 
-                    />
+                />
 
-                    {helperText &&
-                    <FormHelperText className={helperTextClassName} {...FormHelperTextProps}>
-                        {helperText}
-                    </FormHelperText>}
-                </FormControl>
+                {helperText &&
+                <FormHelperText className={helperTextClassName} {...FormHelperTextProps}>
+                    {helperText}
+                </FormHelperText>}
+            </FormControl>
 
-            </div>
         );
     }
 }

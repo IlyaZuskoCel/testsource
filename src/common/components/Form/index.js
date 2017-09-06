@@ -18,7 +18,7 @@ import Checkbox from 'material-ui/Checkbox';
 import Button from 'material-ui/Button';
 
 
-import {Autosuggest, Pagination} from '../';
+import {Autosuggest, Pagination, TextArea} from '../';
 
 
 const styleSheet = createStyleSheet('Typography', theme => ({
@@ -83,10 +83,10 @@ class Form extends Component {
                 </Grid>
                 <Grid item xs={12}>
                     <Typography type="body1">Multi-line Field (need to do new component)</Typography>
-                    <TextField
-                        multiline
+                    <TextArea
+                        fullWidth
+                        max={500}
                         rowsMax="4"
-                        rows="2"
                         label="Name"
                         value={this.state.TextFieldMulti}
                         onChange={event => this.setState({TextFieldMulti: event.target.value})}

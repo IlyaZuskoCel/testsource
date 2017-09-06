@@ -13,7 +13,7 @@ import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 
 
-import {Autosuggest, DateTextField} from '../../../common/components';
+import {Autosuggest, DateTextField, TextArea} from '../../../common/components';
 
 const styleSheet = createStyleSheet('Form', theme => ({
     root: {
@@ -68,11 +68,14 @@ class Form extends Component {
                            value={video.date || ''}
                            onChange={this.handleChange('date')}/>
 
-            <TextField fullWidth
-                       error={this.state.errors.indexOf('description') > -1}
-                       label="Description"
-                       value={video.description || ''}
-                       onChange={this.handleChange('description')}/>
+            <TextArea fullWidth
+                      rowsMax="4"
+                      max={500}
+
+                      error={this.state.errors.indexOf('description') > -1}
+                      label="Description"
+                      value={video.description || ''}
+                      onChange={this.handleChange('description')}/>
 
             <Autosuggest fullWidth
                          error={this.state.errors.indexOf('tags') > -1}

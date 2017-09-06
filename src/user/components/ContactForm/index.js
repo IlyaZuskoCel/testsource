@@ -15,6 +15,8 @@ import Hidden from 'material-ui/Hidden';
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
 
+import {TextArea} from '../../../common/components';
+
 
 import {Link} from '../../../common/components';
 
@@ -27,16 +29,13 @@ const styleSheet = createStyleSheet('ContactForm', theme => ({
         paddingBottom: 40
     },
     contactTextField: {
-        width: '100%',
         marginTop: 24,
         [theme.breakpoints.down('sm')]: {
             marginTop: 8,
         }
 
     },
-    contactTextFieldEmail: {
-        width: '100%',
-    },
+
     contactButton: {
         marginTop: 64,
         [theme.breakpoints.down('sm')]: {
@@ -121,30 +120,30 @@ class ContactForm extends Component {
             <Grid item sm={8} xs={12}>
                 <form onSubmit={this.sendMessage}>
                     <Grid item xs={12}>
-                        <TextField
-                            type="email"
-                            className={classes.contactTextFieldEmail}
-                            label="Your Email Address"
-                            value={currentUser.email}
-                            disabled
+                        <TextField fullWidth
+                                   type="email"
+                                   label="Your Email Address"
+                                   value={currentUser.email}
+                                   disabled
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <TextField
-                            className={classes.contactTextField}
-                            label="Subject Line"
-                            disabled={!this.props.currentUser.is_verify}
-                            value={this.state.contactSubject}
-                            onChange={this.handleChange('contactSubject')}
+                        <TextField fullWidth
+                                   className={classes.contactTextField}
+                                   label="Subject Line"
+                                   disabled={!this.props.currentUser.is_verify}
+                                   value={this.state.contactSubject}
+                                   onChange={this.handleChange('contactSubject')}
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <TextField
-                            className={classes.contactTextField}
-                            label="Message"
-                            disabled={!this.props.currentUser.is_verify}
-                            value={this.state.contactMessage}
-                            onChange={this.handleChange('contactMessage')}
+                        <TextArea fullWidth
+                                  className={classes.contactTextField}
+                                  rowsMax="4"
+                                  label="Message"
+                                  disabled={!this.props.currentUser.is_verify}
+                                  value={this.state.contactMessage}
+                                  onChange={this.handleChange('contactMessage')}
                         />
                     </Grid>
                     <Grid container align="center" justify="center">

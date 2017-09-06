@@ -18,7 +18,7 @@ import Button from 'material-ui/Button';
 import Hidden from 'material-ui/Hidden';
 import Dialog, {DialogActions, DialogContent, DialogTitle} from 'material-ui/Dialog';
 
-import {DateTextField, HeightTextField, Autosuggest, Link, Icon} from '../../../common/components';
+import {DateTextField, HeightTextField, Autosuggest, Link, Icon, TextArea} from '../../../common/components';
 
 import defaultPhoto from './assets/images/default-photo.png';
 
@@ -496,14 +496,13 @@ class PlayerForm extends Component {
                         you.</Typography>
                     <Grid container>
                         <Grid item xs={12} md={12}>
-                            <TextField fullWidth
-                                       error={this.state.errors.indexOf('weight') > -1}
-                                       multiline
-                                       rowsMax="4"
-                                       rows="1"
-                                       label="Tell us about yourself"
-                                       value={this.state.biography || ''}
-                                       onChange={this.handleChange('biography')}/>
+                            <TextArea fullWidth
+                                      rowsMax="4"
+                                      max={500}
+                                      error={this.state.errors.indexOf('weight') > -1}
+                                      label="Tell us about yourself"
+                                      value={this.state.biography || ''}
+                                      onChange={this.handleChange('biography')}/>
 
                         </Grid>
                     </Grid>

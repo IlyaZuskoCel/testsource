@@ -128,48 +128,46 @@ class HeightTextField extends Component {
 
         const data = parse(value);
         return (
-            <div>
-                <FormControl
-                    fullWidth={fullWidth}
-                    ref={rootRef}
-                    className={classNames(classes.root, className)}
-                    error={error}
-                    required={required}
-                    onFocus={this.handleFocus}
-                    onBlur={this.handleBlur}
-                >
-                    {label &&
-                    <InputLabel className={labelClassName} {...InputLabelProps}
-                                shrink={!!data.f || !!data.i || this.state.focused}>
-                        {label}
-                    </InputLabel>}
+            <FormControl
+                fullWidth={fullWidth}
+                ref={rootRef}
+                className={classNames(classes.root, className)}
+                error={error}
+                required={required}
+                onFocus={this.handleFocus}
+                onBlur={this.handleBlur}
+            >
+                {label &&
+                <InputLabel className={labelClassName} {...InputLabelProps}
+                            shrink={!!data.f || !!data.i || this.state.focused}>
+                    {label}
+                </InputLabel>}
 
-                    <Input
-                        className={classNames(classes.input, classes.leftInput, {[classes.hidePlaceholder]: data.f || (!this.state.focused && !data.f && !data.i)})}
-                        disabled={disabled}
-                        name="f"
-                        value={data.f}
-                        placeholder="ft"
-                        onChange={this.handleChange('f')}
-                    />
+                <Input
+                    className={classNames(classes.input, classes.leftInput, {[classes.hidePlaceholder]: data.f || (!this.state.focused && !data.f && !data.i)})}
+                    disabled={disabled}
+                    name="f"
+                    value={data.f}
+                    placeholder="ft"
+                    onChange={this.handleChange('f')}
+                />
 
-                    <Input
-                        className={classNames(classes.input, classes.rightInput, {[classes.hidePlaceholder]: data.i || (!this.state.focused && !data.f && !data.i)})}
-                        disabled={disabled}
-                        name="i"
-                        value={data.i}
-                        placeholder="in"
-                        onChange={this.handleChange('i')}
+                <Input
+                    className={classNames(classes.input, classes.rightInput, {[classes.hidePlaceholder]: data.i || (!this.state.focused && !data.f && !data.i)})}
+                    disabled={disabled}
+                    name="i"
+                    value={data.i}
+                    placeholder="in"
+                    onChange={this.handleChange('i')}
 
-                    />
+                />
 
-                    {helperText &&
-                    <FormHelperText className={helperTextClassName} {...FormHelperTextProps}>
-                        {helperText}
-                    </FormHelperText>}
-                </FormControl>
+                {helperText &&
+                <FormHelperText className={helperTextClassName} {...FormHelperTextProps}>
+                    {helperText}
+                </FormHelperText>}
+            </FormControl>
 
-            </div>
         );
     }
 }
