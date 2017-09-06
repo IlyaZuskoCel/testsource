@@ -17,7 +17,8 @@ import {
     SET_USER_FAVORITE,
     UNSET_USER_FAVORITE,
     SET_CURRENT_PHOTO,
-    SET_CURRENT_PHONE
+    SET_CURRENT_PHONE,
+    RECOVERY_PASSWORD,
 } from '../constants/actions';
 
 
@@ -342,8 +343,6 @@ export const forgotPasswordToken = (token, password, password_repeat) => dispatc
             dispatch({type: ERROR_ALERT, payload: {message}});
         })
 };
-
-
 
 export const resetPassword = () => dispatch => {
     return get(`/api/v2/profile/temp-password`)
