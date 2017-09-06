@@ -78,18 +78,21 @@ class ScoutForm extends Component {
     handleSubmit = e => {
         e.preventDefault();
 
-
         if (!this.state.password)
-            return this.setState({errors: ['password']});
+            return this.setthis.state({errors: ['password']});
 
         if (this.state.password !== this.state.password_repeat)
-            return this.setState({errors: ['password_repeat']});
+            return this.setthis.state({errors: ['password_repeat']});
+
+
+        if (this.state.id_league === '-1' && !this.state.league)
+            return this.setState({errors: ['league']});
+
+        if (this.state.id_team_current === '-1' && !this.state.team)
+            return this.setState({errors: ['team']});
 
         this.props.register(this.state);
         return false;
-    };
-    handleRadio = name => (event, value) => {
-        return this.setState({[name]: parseInt(value), errors: []})
     };
 
     render() {
@@ -113,7 +116,6 @@ class ScoutForm extends Component {
                                        label="Last Name"
                                        value={this.state.last_name}
                                        onChange={this.handleChange('last_name')}
-                                       className={classes.formControl}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -158,28 +160,54 @@ class ScoutForm extends Component {
                                              value: this.props.leagues[this.state.id_league] || '',
                                              onChange: (event, {newValue}) => this.setState({
                                                  id_league: newValue,
-                                                 id_team_current: ''
+                                                 id_team_current: newValue === '-1' ? '-1' : ''
                                              }),
                                          }}
                             />
                         </Grid>
-                        <Grid item xs={12}>
+                        {this.state.id_league === '-1' && (
+                            <Grid item xs={12}>
+                                <TextField fullWidth
+                                           required
+                                           error={this.state.errors.indexOf('league') > -1}
+                                           label="Type in the full League name"
+                                           value={this.state.league}
+                                           onChange={this.handleChange('league')}
+                                />
+                            </Grid>
+                        )}
 
-                            <Autosuggest fullWidth
-                                         required
-                                         error={this.state.errors.indexOf('id_team_current') > -1}
-                                         suggestions={this.state.id_league ? this.props.teamOptions.filter(i => i.item.id_league === parseInt(this.state.id_league)) : this.props.teamOptions}
-                                         onSuggestionsFetchRequested={() => {
-                                         }}
-                                         onSuggestionsClearRequested={() => {
-                                         }}
-                                         inputProps={{
-                                             label: "Team",
-                                             value: this.props.teams[this.state.id_team_current] || '',
-                                             onChange: (event, {newValue}) => this.setState({id_team_current: newValue}),
-                                         }}
-                            />
-                        </Grid>
+                        {this.state.id_league !== '-1' && (
+                            <Grid item xs={12}>
+
+                                <Autosuggest fullWidth
+                                             required
+                                             error={this.state.errors.indexOf('id_team_current') > -1}
+                                             suggestions={this.state.id_league ? this.props.teamOptions.filter(i => i.value === '-1' || i.item.id_league === parseInt(this.state.id_league)) : this.props.teamOptions}
+                                             onSuggestionsFetchRequested={() => {
+                                             }}
+                                             onSuggestionsClearRequested={() => {
+                                             }}
+                                             inputProps={{
+                                                 label: "Team",
+                                                 value: this.props.teams[this.state.id_team_current] || '',
+                                                 onChange: (event, {newValue}) => this.setState({id_team_current: newValue}),
+                                             }}
+                                />
+                            </Grid>
+                        )}
+
+                        {this.state.id_team_current === '-1' && (
+                            <Grid item xs={12}>
+                                <TextField fullWidth
+                                           required
+                                           error={this.state.errors.indexOf('team') > -1}
+                                           label="Type in the full Team name"
+                                           value={this.state.team}
+                                           onChange={this.handleChange('team')}
+                                />
+                            </Grid>
+                        )}
 
                         <Grid item xs={12}>
                             <FormControlLabel
