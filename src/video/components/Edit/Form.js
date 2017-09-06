@@ -45,8 +45,9 @@ class Form extends Component {
     handleChange = name => event => {
         return this.props.updateField(name, event.target.value);
     };
-    handleChangeTags = (event, {newValue}) => {
-        return this.props.updateField('tags', [newValue]);
+    handleChangeTags = (tags) => {
+        if (tags.length < 4)
+            return this.props.updateField('tags', tags);
     };
 
 
