@@ -99,7 +99,7 @@ class InForm extends Component {
                                 label="Remember me"/>
                         </Grid>
                         <Grid item xs={12}>
-                            <Link to="/recovery">
+                            <Link to="/forgot">
                                 <Typography type="body1" className={classes.link}>Forgot my password</Typography>
                             </Link>
                         </Grid>
