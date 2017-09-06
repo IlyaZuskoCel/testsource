@@ -67,7 +67,6 @@ const styleSheet = createStyleSheet('Search' , theme => ({
         height: 60,
         width: '100%',
         backgroundImage: 'linear-gradient(295deg, #f55e58, #c9011b)',
-        zIndex: 5,
     },
 
     headerWholeBackground: {
@@ -77,7 +76,7 @@ const styleSheet = createStyleSheet('Search' , theme => ({
         height: 178,
         width: '100%',
         backgroundImage: 'linear-gradient(295deg, #f55e58, #c9011b)',
-        zIndex: 10,
+        zIndex: -1,
     },
     headerMobNav: {
         position: 'relative',
@@ -88,7 +87,6 @@ const styleSheet = createStyleSheet('Search' , theme => ({
         width: '100%',
         backgroundImage: 'transparent',
         display: 'flex',
-        zIndex: 11,
     },
     navigationWrapper: {
         width: '100%',
@@ -117,7 +115,6 @@ const styleSheet = createStyleSheet('Search' , theme => ({
     },
     buttonFilter: {
         color: '#ffffff',
-        zIndex: 12,
     },
 
     navItem: {
@@ -158,7 +155,6 @@ const styleSheet = createStyleSheet('Search' , theme => ({
     },
 
     clearFilterTypography: {
-        zIndex: 11,
         fontSize: 14,
         fontFamily: 'UnitedSansReg-Medium',
         fontWeight: 500,
@@ -250,7 +246,7 @@ class Search extends Component {
 
             setTimeout(() => {
                 this.props.upload(this.props.type , {page : 1 , 'per-page': 18 , ...this.state.query});
-            } , 250);
+            } , 1200);
         });
     }
 

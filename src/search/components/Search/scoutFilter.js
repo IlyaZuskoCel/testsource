@@ -192,7 +192,7 @@ class ScoutFilter extends Component {
                         <div className={classes.buttonViewContainer}>
                             <Button raised color="primary" className={classes.viewButton} onClick={this.props.viewResults} >
                                 <Typography className={classes.viewTypography}>
-                                    view all {this.props.total} players
+                                    view all {this.props.total} scouts
                                 </Typography>
                             </Button>
                         </div>
