@@ -13,7 +13,7 @@ import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 
 
-import {Autosuggest, DateTextField, TextArea} from '../../../common/components';
+import {DropDownCheckBoxes, DateTextField, TextArea} from '../../../common/components';
 
 const styleSheet = createStyleSheet('Form', theme => ({
     root: {
@@ -76,18 +76,15 @@ class Form extends Component {
                       value={video.description || ''}
                       onChange={this.handleChange('description')}/>
 
-            <Autosuggest fullWidth
-                         error={this.state.errors.indexOf('tags') > -1}
-                         suggestions={this.props.tagOptions}
-                         onSuggestionsFetchRequested={() => {
-                         }}
-                         onSuggestionsClearRequested={() => {
-                         }}
-                         inputProps={{
-                             label: "Tags (max 3)",
-                             value: (video.tags && video.tags.length && video.tags.map(i => this.props.tags[i]).join(', ')) || '',
-                             onChange: this.handleChangeTags,
-                         }}/>
+            <DropDownCheckBoxes suggestions={this.props.tagOptions || []}
+                                value={video.tags || []}
+                                onChange={this.handleChangeTags}
+                                inputProps={{
+                                    fullWidth: true,
+                                    label: "Tags (max 3)",
+                                    value: (video.tags && video.tags.length && video.tags.map(i => this.props.tags[i]).join(', ')) || '',
+
+                                }}/>
 
             <div className={classes.buttons}>
                 <Hidden smUp>

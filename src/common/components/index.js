@@ -11,3 +11,4 @@ export {default as HeightTextField} from './HeightTextField';
 export {default as Pagination} from './Pagination';
 export {default as RangeSlider} from './RangeSlider';
 export {default as TextArea} from './TextArea';
+export {default as DropDownCheckBoxes} from './DropDownCheckBoxes';

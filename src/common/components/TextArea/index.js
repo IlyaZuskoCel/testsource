@@ -5,22 +5,9 @@
 
 
 import React, {Component} from 'react';
-import classNames from 'classnames';
 
 import TextField from 'material-ui/TextField';
 import Typography from 'material-ui/Typography';
-
-import {withStyles, createStyleSheet} from 'material-ui/styles';
-
-
-const styleSheet = createStyleSheet('TextArea', theme => {
-    return {
-        root: {
-            flexDirection: 'row'
-        },
-
-    }
-});
 
 
 class TextArea extends Component {
@@ -34,7 +21,6 @@ class TextArea extends Component {
 
     render() {
         const {
-            classes,
             max,
             ...props
         } = this.props;
@@ -53,6 +39,5 @@ class TextArea extends Component {
     }
 }
 
-TextArea.defaultProps = {};
 
-export default withStyles(styleSheet)(TextArea);
+export default TextArea;

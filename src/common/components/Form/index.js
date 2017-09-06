@@ -18,7 +18,7 @@ import Checkbox from 'material-ui/Checkbox';
 import Button from 'material-ui/Button';
 
 
-import {Autosuggest, Pagination, TextArea} from '../';
+import {Autosuggest, Pagination, TextArea, DropDownCheckBoxes} from '../';
 
 
 const styleSheet = createStyleSheet('Typography', theme => ({
@@ -43,6 +43,7 @@ class Form extends Component {
             TextFieldError: 'Text',
             TextFieldMulti: '',
             DropdownValue: '',
+            DropDownCheckBoxes: []
         };
 
     }
@@ -112,6 +113,26 @@ class Form extends Component {
 
                 </Grid>
                 <Grid item xs={12}>
+                    <Typography type="body1">DropDownCheckBoxes</Typography>
+
+                    <DropDownCheckBoxes suggestions={[{label: 'Option 1', value: 1}, {label: 'Option 2', value: 2}]}
+                                        value={this.state.DropDownCheckBoxes}
+                                        onChange={(DropDownCheckBoxes) => this.setState({DropDownCheckBoxes})}
+                                        inputProps={{
+                                            fullWidth: true,
+                                            label: "Dropdown with no selection",
+                                            value: [{label: 'Option 1', value: 1}, {label: 'Option 2', value: 2}]
+                                                .filter(item => this.state.DropDownCheckBoxes.indexOf(item.value) > -1)
+                                                .map(item => item.label)
+                                                .join(', '),
+
+                                        }}/>
+
+
+                </Grid>
+
+
+                <Grid item xs={12}>
                     <Typography type="body1">Tags (need to do component)</Typography>
                 </Grid>
                 <Grid item xs={12}>
@@ -151,7 +172,6 @@ class Form extends Component {
                 </Grid>
 
 
-
                 <Grid item xs={12}>
                     <Typography type="body1">Pagination</Typography>
                     <Pagination currentPage={1} perPage={10} total={30}/>
@@ -164,7 +184,6 @@ class Form extends Component {
                     <Typography type="body1">Pagination</Typography>
                     <Pagination currentPage={3} perPage={10} total={30}/>
                 </Grid>
-
 
 
                 <Grid item xs={12}>
