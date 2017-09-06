@@ -111,18 +111,24 @@ const styleSheet = createStyleSheet(theme => ({
     icon: {
         cursor: 'pointer',
         marginLeft: -16,
-        zIndex: 999,
-        lineHeight: '40px'
+        lineHeight: '40px',
+        zIndex: -1
     }
 }));
 
 class IntegrationAutosuggest extends Component {
-    state = {
-        open: false
+    focus = false;
+    handleFocus = () => {
+        setTimeout(() => {
+            this.focus = true;
+        }, 100);
     };
-
-    toggleOpen = () => {
-        this.setState({open: !this.state.open});
+    handleBlur = () => {
+        this.focus = false;
+    };
+    handleClick = () => {
+        if (this.focus)
+            return this.nameInput.blur();
     };
 
     render() {
@@ -144,14 +150,19 @@ class IntegrationAutosuggest extends Component {
                     shouldRenderSuggestions={shouldRenderSuggestions}
                     focusInputOnSuggestionClick={false}
                     inputProps={{
+                        inputRef: (input) => {
+                            this.nameInput = input;
+                        },
+                        onClick: this.handleClick,
+                        onFocus: this.handleFocus,
+                        onBlur: this.handleBlur,
                         classes,
                         required,
                         ...inputProps
                     }}
-                    alwaysRenderSuggestions={this.state.open}
                     {...props}
                 />
-                <ScoutIcon className={classes.icon} onClick={this.toggleOpen}>dropdown-arrows</ScoutIcon>
+                <ScoutIcon className={classes.icon}>dropdown-arrows</ScoutIcon>
 
 
             </div>
