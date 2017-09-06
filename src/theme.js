@@ -71,41 +71,41 @@ const theme = (outerTheme) => {
 
         headline: {
             fontSize: 60,
-            lineHeight:'60px',
+            lineHeight: '60px',
             fontWeight: 900,
             letterSpacing: 0.6,
             color: '#000',
             fontFamily: "UnitedSerifCond-Black",
             [outerTheme.breakpoints.down('sm')]: {
                 fontSize: 40,
-                lineHeight:'40px',
+                lineHeight: '40px',
                 letterSpacing: 0.4,
             }
         },
         title: {
             fontSize: 40,
-            lineHeight:'40px',
+            lineHeight: '40px',
             fontWeight: 900,
             letterSpacing: 0.4,
             color: '#000',
             fontFamily: "UnitedSerifCond-Heavy",
             [outerTheme.breakpoints.down('sm')]: {
                 fontSize: 32,
-                lineHeight:'32px',
+                lineHeight: '32px',
                 letterSpacing: 0.2,
             }
         },
 
         subheading: {
             fontSize: 32,
-            lineHeight:'32px',
+            lineHeight: '32px',
             fontWeight: 500,
             letterSpacing: 0.4,
             color: '#000',
             fontFamily: "UnitedSerifCond-Medium",
             [outerTheme.breakpoints.down('sm')]: {
                 fontSize: 24,
-                lineHeight:'24px',
+                lineHeight: '24px',
                 letterSpacing: 0.2,
             }
         },
@@ -113,29 +113,29 @@ const theme = (outerTheme) => {
             fontSize: 22,
             fontWeight: 900,
             letterSpacing: 0.7,
-            lineHeight:'22px',
+            lineHeight: '22px',
             color: '#000',
             fontFamily: "UnitedSerifCond-Heavy",
             [outerTheme.breakpoints.down('sm')]: {
                 fontSize: 20,
-                lineHeight:'20px',
+                lineHeight: '20px',
                 letterSpacing: 0.6,
             }
         },
         body1: {
             fontSize: 18,
-            lineHeight:'18px',
+            lineHeight: '18px',
             fontWeight: 500,
             color: '#000',
             fontFamily: "UnitedSansReg-Medium",
             [outerTheme.breakpoints.down('sm')]: {
                 fontSize: 14,
-                lineHeight:'14px',
+                lineHeight: '14px',
             }
         },
         caption: {
             fontSize: 14,
-            lineHeight:'14px',
+            lineHeight: '14px',
             fontWeight: 500,
             letterSpacing: 0.4,
             color: '#9b9b9b',
@@ -143,14 +143,14 @@ const theme = (outerTheme) => {
         },
         button: {
             fontSize: 20,
-            lineHeight:'20px',
+            lineHeight: '20px',
             textTransform: 'uppercase',
             fontWeight: 900,
             fontFamily: 'UnitedSansSemiCond-Heavy',
             letterSpacing: '0.4px',
             [outerTheme.breakpoints.down('sm')]: {
                 fontSize: 16,
-                lineHeight:'16px',
+                lineHeight: '16px',
                 letterSpacing: '0.3px',
             },
         },
@@ -353,6 +353,8 @@ const theme = (outerTheme) => {
                 },
                 inputMultiline: {
                     ...typography.body1,
+                    resize: 'none',
+                    overflow: 'auto',
                     paddingLeft: 8,
                     paddingRight: 8,
 
