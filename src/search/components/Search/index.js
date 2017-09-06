@@ -246,7 +246,7 @@ class Search extends Component {
 
             setTimeout(() => {
                 this.props.upload(this.props.type , {page : 1 , 'per-page': 18 , ...this.state.query});
-            } , 1200);
+            } , 400);
         });
     }
 
