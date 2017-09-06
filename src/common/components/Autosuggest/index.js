@@ -20,21 +20,21 @@ import ScoutIcon from '../Icon';
 const shouldRenderSuggestions = value => true;
 
 function renderInput(inputProps) {
-    const {classes, value, label, ref, ...other} = inputProps;
+    const {classes, value, required, label, ref, ...other} = inputProps;
 
     return (
-        <TextField
-            className={classes.textField}
-            InputClassName={classes.InputClassName}
-            value={value}
-            label={label}
-            inputRef={ref}
-            InputProps={{
-                classes: {
-                    input: classes.input,
-                },
-                ...other,
-            }}
+        <TextField required
+                   className={classes.textField}
+                   InputClassName={classes.InputClassName}
+                   value={value}
+                   label={label}
+                   inputRef={ref}
+                   InputProps={{
+                       classes: {
+                           input: classes.input,
+                       },
+                       ...other,
+                   }}
         />
     );
 }
@@ -72,6 +72,7 @@ const styleSheet = createStyleSheet(theme => ({
     container: {
         width: '100%',
         position: 'relative',
+
     },
     suggestionsContainerOpen: {
         position: 'absolute',
@@ -79,6 +80,7 @@ const styleSheet = createStyleSheet(theme => ({
         marginBottom: theme.spacing.unit * 3,
         left: 0,
         right: 0,
+        zIndex: 1000,
     },
     suggestion: {
         display: 'block',
@@ -109,22 +111,28 @@ const styleSheet = createStyleSheet(theme => ({
     icon: {
         cursor: 'pointer',
         marginLeft: -16,
-        zIndex: 1000,
-        lineHeight: '40px'
+        lineHeight: '40px',
+        zIndex: -1
     }
 }));
 
 class IntegrationAutosuggest extends Component {
-    state = {
-        open: false
+    focus = false;
+    handleFocus = () => {
+        setTimeout(() => {
+            this.focus = true;
+        }, 100);
     };
-
-    toggleOpen = () => {
-        this.setState({open: !this.state.open});
+    handleBlur = () => {
+        this.focus = false;
+    };
+    handleClick = () => {
+        if (this.focus)
+            return this.nameInput.blur();
     };
 
     render() {
-        const {classes, inputProps, className, ...props} = this.props;
+        const {classes, inputProps, className, required, ...props} = this.props;
 
         return (
             <div className={classNames(classes.root, className)}>
@@ -142,13 +150,19 @@ class IntegrationAutosuggest extends Component {
                     shouldRenderSuggestions={shouldRenderSuggestions}
                     focusInputOnSuggestionClick={false}
                     inputProps={{
+                        inputRef: (input) => {
+                            this.nameInput = input;
+                        },
+                        onClick: this.handleClick,
+                        onFocus: this.handleFocus,
+                        onBlur: this.handleBlur,
                         classes,
+                        required,
                         ...inputProps
                     }}
-                    alwaysRenderSuggestions={this.state.open}
                     {...props}
                 />
-                <ScoutIcon className={classes.icon} onClick={this.toggleOpen}>dropdown-arrows</ScoutIcon>
+                <ScoutIcon className={classes.icon}>dropdown-arrows</ScoutIcon>
 
 
             </div>

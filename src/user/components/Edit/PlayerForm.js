@@ -254,6 +254,14 @@ class PlayerForm extends Component {
     };
     submit = event => {
         event.preventDefault();
+
+        if (this.state.id_league === '-1' && !this.state.league)
+            return this.setState({errors: ['league']});
+
+        if (this.state.id_team_current === '-1' && !this.state.team)
+            return this.setState({errors: ['team']});
+
+
         this.props.save(this.state);
         return false;
     };
@@ -452,38 +460,68 @@ class PlayerForm extends Component {
                     <Typography type="subheading" className={classes.subTitle}>Team Information</Typography>
                     <Grid container>
                         <Grid item xs={12} md={6}>
-                            <Autosuggest fullWidth
-                                         error={this.state.errors.indexOf('id_league') > -1}
-                                         suggestions={this.props.leagueOptions}
-                                         onSuggestionsFetchRequested={() => {
-                                         }}
-                                         onSuggestionsClearRequested={() => {
-                                         }}
-                                         inputProps={{
-                                             label: "Current or Most Recent League",
-                                             value: this.props.leagues[this.state.id_league] || '',
-                                             onChange: (event, {newValue}) => this.setState({
-                                                 id_league: newValue,
-                                                 id_team_current: ''
-                                             }),
-                                         }}
-                            />
+                            <Grid item xs={12}>
+                                <Autosuggest fullWidth
+                                             error={this.state.errors.indexOf('id_league') > -1}
+                                             suggestions={this.props.leagueOptions}
+                                             onSuggestionsFetchRequested={() => {
+                                             }}
+                                             onSuggestionsClearRequested={() => {
+                                             }}
+                                             inputProps={{
+                                                 label: "Current or Most Recent League",
+                                                 value: this.props.leagues[this.state.id_league] || '',
+                                                 onChange: (event, {newValue}) => this.setState({
+                                                     id_league: newValue,
+                                                     id_team_current: newValue === '-1' ? '-1' : ''
+                                                 }),
+                                             }}
+                                />
+                            </Grid>
+
+                            {this.state.id_league === '-1' && (
+                                <Grid item xs={12}>
+                                    <TextField fullWidth
+                                               required
+                                               error={this.state.errors.indexOf('league') > -1}
+                                               label="Type in the full League name"
+                                               value={this.state.league}
+                                               onChange={this.handleChange('league')}
+                                    />
+                                </Grid>
+                            )}
                         </Grid>
                         <Grid item xs={12} md={6}>
+                            {this.state.id_league !== '-1' && (
+                                <Grid item xs={12}>
 
-                            <Autosuggest fullWidth
-                                         error={this.state.errors.indexOf('id_team_current') > -1}
-                                         suggestions={this.state.id_league ? this.props.teamOptions.filter(i => i.item.id_league === parseInt(this.state.id_league)) : this.props.teamOptions}
-                                         onSuggestionsFetchRequested={() => {
-                                         }}
-                                         onSuggestionsClearRequested={() => {
-                                         }}
-                                         inputProps={{
-                                             label: "Current or Most Recent Team",
-                                             value: this.props.teams[this.state.id_team_current] || '',
-                                             onChange: (event, {newValue}) => this.setState({id_team_current: newValue}),
-                                         }}
-                            />
+                                    <Autosuggest fullWidth
+                                                 error={this.state.errors.indexOf('id_team_current') > -1}
+                                                 suggestions={this.state.id_league ? this.props.teamOptions.filter(i => i.value === '-1' || i.item.id_league === parseInt(this.state.id_league)) : this.props.teamOptions}
+                                                 onSuggestionsFetchRequested={() => {
+                                                 }}
+                                                 onSuggestionsClearRequested={() => {
+                                                 }}
+                                                 inputProps={{
+                                                     label: "Current or Most Recent Team",
+                                                     value: this.props.teams[this.state.id_team_current] || '',
+                                                     onChange: (event, {newValue}) => this.setState({id_team_current: newValue}),
+                                                 }}
+                                    />
+                                </Grid>
+                            )}
+
+                            {this.state.id_team_current === '-1' && (
+                                <Grid item xs={12}>
+                                    <TextField fullWidth
+                                               required
+                                               error={this.state.errors.indexOf('team') > -1}
+                                               label="Type in the full Team name"
+                                               value={this.state.team}
+                                               onChange={this.handleChange('team')}
+                                    />
+                                </Grid>
+                            )}
                         </Grid>
                     </Grid>
 

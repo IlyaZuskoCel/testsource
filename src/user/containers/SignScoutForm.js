@@ -15,10 +15,10 @@ import {getLeagues, getTeams} from '../../common/actions';
 import {map, mapOptions,} from '../selectors'
 
 const mapStateToProps = (state) => ({
-    leagues: map(state.common.leagues),
-    leagueOptions: mapOptions(state.common.leagues),
-    teams: map(state.common.teams),
-    teamOptions: mapOptions(state.common.teams),
+    leagues: {'-1': 'My League isn\'t listed', ...map(state.common.leagues)},
+    leagueOptions: [{label: 'My League isn\'t listed', value: '-1'}, ...mapOptions(state.common.leagues)],
+    teams: {'-1': 'My Team isn\'t listed', ...map(state.common.teams)},
+    teamOptions: [{label: 'My Team isn\'t listed', value: '-1'}, ...mapOptions(state.common.teams)],
 });
 const mapDispatchToProps = (dispatch) => ({
     register: (user) => dispatch(registerScout(user)),
