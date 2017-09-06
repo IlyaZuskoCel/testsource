@@ -78,6 +78,10 @@ class ScoutForm extends Component {
     handleSubmit = e => {
         e.preventDefault();
 
+
+        if (!this.state.password)
+            return this.setState({errors: ['password']});
+
         if (this.state.password !== this.state.password_repeat)
             return this.setState({errors: ['password_repeat']});
 
