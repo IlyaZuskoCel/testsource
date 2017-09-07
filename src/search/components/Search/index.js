@@ -37,6 +37,10 @@ const styleSheet = createStyleSheet('Search' , theme => ({
     },
     header: {
         backgroundColor: '#f5f5f5',
+
+        [theme.breakpoints.down('lg')]: {
+            padding: [0 , 20],
+        }
     },
     footer: {
         display: 'flex',
@@ -51,8 +55,12 @@ const styleSheet = createStyleSheet('Search' , theme => ({
         padding: 56,
         boxShadow: '0 -8px 8px -8px rgba(0, 0, 0, 0.2)',
 
+        [theme.breakpoints.down('md')]: {
+            padding: [56, 20]
+        },
+
         [theme.breakpoints.down('sm')]: {
-            padding: [56 , 0],
+            padding: [28 , 0],
             boxShadow: 'none',
         }
     },
@@ -162,7 +170,7 @@ const styleSheet = createStyleSheet('Search' , theme => ({
     },
     arrow: {
       color: '#ffffff',
-    }
+    },
 }));
 
 const splitSearchQuery = (q) => {
@@ -224,7 +232,6 @@ class Search extends Component {
 
         if ('born[0]' in this.state.query)
             count--;
-
 
         this.setState({appliedFilters: count});
     }

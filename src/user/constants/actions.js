@@ -15,3 +15,6 @@ export const SET_USER_FAVORITE = 'user:setUserFavorite';
 export const UNSET_USER_FAVORITE = 'user:unSetUserFavorite';
 
 export const RECOVERY_PASSWORD='user:recoveryPassword';
+
+export const SET_SHORTLIST='user:setShortlist';
+export const CLEAR_SHORTLIST='user:clearShortlist';

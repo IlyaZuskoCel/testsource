@@ -52,18 +52,6 @@ export const uploadScouts = (params) => dispatch => {
         });
 };
 
-export const getFollowedList = () => dispatch => {
-    dispatch({type: CLEAR_LIST});
-
-    return get('/api/v2/activity/following')
-        .then(result => {
-            dispatch({type : SET_FOLLOWED , payload : result.activities})
-        })
-        .catch((message) => {
-            dispatch({type: ERROR_ALERT, payload: {message}});
-        })
-};
-
 export const getLeagues = () => dispatch => {
 
     get('/api/v2/league/get-list')

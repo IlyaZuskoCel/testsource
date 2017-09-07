@@ -3,7 +3,7 @@
  * moonion.com
  */
 
-import {SET_PLAYERS, SET_SCOUTS , CLEAR_LIST , SET_FOLLOWED} from "../constants/actions";
+import {SET_PLAYERS, SET_SCOUTS , CLEAR_LIST } from "../constants/actions";
 
 
 function players(state = [], action) {
@@ -12,9 +12,6 @@ function players(state = [], action) {
             state = action.payload;
             return state;
         case SET_SCOUTS:
-            state = action.payload;
-            return state;
-        case SET_FOLLOWED:
             state = action.payload;
             return state;
         case CLEAR_LIST:

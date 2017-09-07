@@ -104,8 +104,11 @@ const styleSheet = createStyleSheet('Search', theme => ({
         justifyContent: 'space-between',
         alignItems: 'flex-start',
         height: 126,
-        marginLeft: 29,
+        marginLeft: 20,
 
+        [theme.breakpoints.down('md')]: {
+          marginLeft: 5,
+        },
 
         [theme.breakpoints.down('sm')]: {
             justifyContent: 'flex-start',

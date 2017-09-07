@@ -6,7 +6,6 @@ import Paper from 'material-ui/Paper';
 import withWidth from 'material-ui/utils/withWidth';
 import Hidden from 'material-ui/Hidden';
 
-
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 import {Icon} from '../../../common/components';
@@ -26,6 +25,11 @@ const styleSheet = createStyleSheet('Shortlist' , theme => ({
         backgroundColor: 'transparent',
         padding: 56,
 
+
+        [theme.breakpoints.down('md')]: {
+          padding: [28 , 0],
+        },
+
         [theme.breakpoints.down('sm')]: {
             padding: [56 , 0],
         }
@@ -34,6 +38,10 @@ const styleSheet = createStyleSheet('Shortlist' , theme => ({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
+
+        [theme.breakpoints.down('md')]: {
+            marginLeft: 20,
+        },
 
         [theme.breakpoints.down('sm')]: {
             width: '100%',
@@ -48,6 +56,11 @@ const styleSheet = createStyleSheet('Shortlist' , theme => ({
     total: {
         display: 'flex',
         marginTop: 45,
+
+
+        [theme.breakpoints.down('md')]: {
+          marginLeft: 18,
+        },
 
         [theme.breakpoints.down('sm')]: {
             justifyContent: 'center',
@@ -129,13 +142,10 @@ class Shortlist extends Component {
         super(props);
     }
 
-    componentWillMount(nextProps) {
-        console.log(nextProps);
-    }
-
     componentDidMount() {
         this.props.getFollowedList();
     }
+
 
     onUpdateUpper = () => {
         this.props.getFollowedList();

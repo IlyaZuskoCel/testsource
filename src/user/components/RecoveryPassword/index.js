@@ -32,7 +32,6 @@ const styleSheet = createStyleSheet('ChangePassword', theme => ({
         [theme.breakpoints.down('sm')]: {
             paddingTop: 0,
         },
-
     },
 
     formWrap: {
@@ -64,8 +63,6 @@ const styleSheet = createStyleSheet('ChangePassword', theme => ({
     passwords: {
         paddingBottom: 32
     },
-
-
     root: {
         backgroundColor: '#ffffff',
     },
@@ -112,7 +109,6 @@ const styleSheet = createStyleSheet('ChangePassword', theme => ({
         [theme.breakpoints.down('sm')]: {
             alignItems: 'center',
             height: 180,
-
         }
     },
     hideBackground: {
