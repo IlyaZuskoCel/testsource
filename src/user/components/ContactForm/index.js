@@ -131,7 +131,7 @@ class ContactForm extends Component {
                         <TextField fullWidth
                                    className={classes.contactTextField}
                                    label="Subject Line"
-                                   disabled={!this.props.currentUser.is_verify}
+                                   disabled={!this.props.currentUser.is_verify || this.props.user.is_messaged >= 2}
                                    value={this.state.contactSubject}
                                    onChange={this.handleChange('contactSubject')}
                         />
@@ -141,7 +141,7 @@ class ContactForm extends Component {
                                   className={classes.contactTextField}
                                   rowsMax="4"
                                   label="Message"
-                                  disabled={!this.props.currentUser.is_verify}
+                                  disabled={!this.props.currentUser.is_verify || this.props.user.is_messaged >= 2}
                                   value={this.state.contactMessage}
                                   onChange={this.handleChange('contactMessage')}
                         />
