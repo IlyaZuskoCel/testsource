@@ -211,7 +211,7 @@ class Players extends Component {
 
         return (<div className={classNames(classes.content)}>
                 <div className={classes.total}>
-                    <Typography type="caption">{this.props.total ? this.props.total : 0} scouts found</Typography>
+                    <Typography type="caption">{this.props.total ? this.props.total : 0} players found</Typography>
                 </div>
                 <div className={classes.resultContainer}>
                     <Grid container gutter={40}>

@@ -11,8 +11,6 @@ import options from './options'
 import headers from './headers'
 import filters from './filters'
 
-
-
 export default combineReducers({
     test: test,
     people: people,
