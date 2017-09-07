@@ -687,7 +687,8 @@ class PlayerProfile extends Component {
                                             className={classes.infoCardName}>{user.first_name} {user.last_name}</Typography>
                             </Hidden>
                             <Typography type="subheading" align="center" className={classes.infoCardTeam}>
-                                {user.team || 'Team Unknown'}{user.league_short ? ' - ' + user.league_short : ''}
+                                {!!!user.team_status && 'Other / '}{user.team || 'Team Unknown'}
+                                {!!!user.league_status && ' - Other / '}{user.league_short ? ' - ' + user.league_short : (!!!user.league_status ? user.league : '')}
                             </Typography>
                             <Typography type="body1" align="center">
                                 {(user.team_location !== 'n/a' && user.team_location) || user.team_country || 'Location Unknown'}
