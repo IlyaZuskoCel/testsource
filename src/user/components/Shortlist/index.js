@@ -114,12 +114,15 @@ const styleSheet = createStyleSheet('Shortlist' , theme => ({
     emptyHeader: {
         marginTop: 55,
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             display: 'flex',
             width: '100%',
             justifyContent: 'center',
             alignItems: 'center',
             flexDirection: 'column',
+        },
+
+        [theme.breakpoints.down('sm')]: {
             marginTop: 45,
         }
     },
@@ -157,7 +160,6 @@ class Shortlist extends Component {
         return (<div className={classes.root}>
             <div className={classes.containerWrapper}>
                 <div className={classNames(classes.content)}>
-
 
                     <Hidden smUp>
                         <div className={classes.wholeBackground}></div>

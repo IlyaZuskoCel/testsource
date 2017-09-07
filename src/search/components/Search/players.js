@@ -219,6 +219,7 @@ class Players extends Component {
                             return <Grid item xs={12} md={4} sm={6} key={player.id}>
                                 <PlayerCard player={player}
                                             role={this.props.role}
+                                            onUpdateUpper={this.props.onUpdateUpper}
                                             addFavorite={this.props.addFavorite}
                                             removeFavorite={this.props.removeFavorite} />
                             </Grid>
