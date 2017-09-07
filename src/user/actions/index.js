@@ -194,7 +194,10 @@ export const uploadPhoto = (file) => dispatch => {
             if ('error' in result)
                 return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
             dispatch({type: SET_CURRENT_PHOTO, payload: result.profile_picture});
-            dispatch({type: SUCCESS_ALERT, payload: {message: 'Profile picture was uploaded successfully'}});
+            if(file)
+                dispatch({type: SUCCESS_ALERT, payload: {message: 'Profile picture was uploaded successfully'}});
+            else
+                dispatch({type: SUCCESS_ALERT, payload: {message: 'Profile picture was deleted successfully'}});
         })
         .catch((message) => {
             if (message === 'Unauthorized') {
