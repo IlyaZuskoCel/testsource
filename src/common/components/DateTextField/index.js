@@ -86,19 +86,26 @@ class DateTextField extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.value !== nextProps.value) {
-            const date = parseDate(nextProps.value);
-            this.setState({
-                month: date.month || '',
-                year: date.year || '',
-            })
-        }
+        if (this.props.value === nextProps.value)
+            return false;
+        const date = parseDate(nextProps.value);
+
+        console.log(parseInt(date.month), parseInt(this.state.month), parseInt(date.year), parseInt(this.state.year));
+        if ((parseInt(date.month) === parseInt(this.state.month) || (this.state.month === '' && parseInt(date.month) === 0))
+            && parseInt(date.year) === parseInt(this.state.year) || (this.state.year === '' && parseInt(date.year) === 0))
+            return;
+
+
+        this.setState({
+            month: date.month || '',
+            year: date.year || '',
+        })
+
 
     }
 
     handleChangeMonth = event => {
         event.preventDefault();
-
         if (event.target.value.length > 2) return false;
         if (event.target.value.length > 0 && ['0', '1'].indexOf(event.target.value[0]) === -1) return false;
         if (event.target.value.length > 1 && event.target.value[0] === '0' && event.target.value[1] === '0') return false;
@@ -107,20 +114,24 @@ class DateTextField extends Component {
         if (value > 12 || value < 0)
             return false;
 
-        this.setState({month: event.target.value});
-
-        if (value > 12 || value <= 0)
+        if (event.target.value !== '' && (isNaN(value) || isNaN(event.target.value)))
             return false;
 
-        let date = parseDate(this.props.value);
+        this.setState({month: event.target.value}, () => {
+            let date = parseDate(this.props.value);
 
-        date.month = `${value < 10 ? '0' : ''}${value}`;
+            if (isNaN(value))
+                value = 0;
 
-        const dateValue = getDate(date);
+            date.month = ('00' + value).slice(-2);
+            const dateValue = getDate(date);
 
-        if (dateValue === this.props.value)
-            return;
-        this.props.onChange({target: {value: dateValue}});
+            if (dateValue === this.props.value)
+                return;
+            this.props.onChange({target: {value: dateValue}});
+        });
+
+
         return false;
     };
     handleChangeYear = event => {
@@ -133,21 +144,25 @@ class DateTextField extends Component {
         if (value < 0)
             return false;
 
-        this.setState({year: event.target.value});
-
-        if (value < 1000)
+        if (event.target.value !== '' && (isNaN(value) || isNaN(event.target.value)))
             return false;
 
+        this.setState({year: event.target.value}, () => {
+            let date = parseDate(this.props.value);
 
-        let date = parseDate(this.props.value);
+            if (isNaN(value))
+                value = 0;
 
-        date.year = '' + value;
+            date.year = ('0000' + value).slice(-4);
 
-        const dateValue = getDate(date);
+            const dateValue = getDate(date);
 
-        if (dateValue === this.props.value)
-            return;
-        this.props.onChange({target: {value: dateValue}});
+            if (dateValue === this.props.value)
+                return;
+            this.props.onChange({target: {value: dateValue}});
+        });
+
+
         return false;
     };
     handleFocus = event => {
