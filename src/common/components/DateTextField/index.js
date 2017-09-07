@@ -88,18 +88,17 @@ class DateTextField extends Component {
     componentWillReceiveProps(nextProps) {
         if (this.props.value === nextProps.value)
             return false;
+        let state = {};
         const date = parseDate(nextProps.value);
 
-        console.log(parseInt(date.month), parseInt(this.state.month), parseInt(date.year), parseInt(this.state.year));
-        if ((parseInt(date.month) === parseInt(this.state.month) || (this.state.month === '' && parseInt(date.month) === 0))
-            && parseInt(date.year) === parseInt(this.state.year) || (this.state.year === '' && parseInt(date.year) === 0))
-            return;
 
+        if (parseInt(date.month) !== parseInt(this.state.month) && parseInt(date.month) !== 0)
+            state.month = date.month || '';
 
-        this.setState({
-            month: date.month || '',
-            year: date.year || '',
-        })
+        if (parseInt(date.year) !== parseInt(this.state.year) && parseInt(date.year) !== 0)
+            state.year = date.year || '';
+
+        this.setState(state);
 
 
     }
@@ -138,6 +137,8 @@ class DateTextField extends Component {
         event.preventDefault();
 
         if (event.target.value.length > 4) return false;
+
+        if (event.target.value.length > 0 && event.target.value[0] === '0') return false;
 
         let value = parseInt(event.target.value);
 
