@@ -352,20 +352,20 @@ class ScoutForm extends Component {
                                 />
                             </Grid>
 
-                            {(this.state.id_league === '-1' || !this.props.leagues[this.state.id_league]) && (
+                            {(this.state.id_league === '-1' || (this.state.id_league && !this.props.leagues[this.state.id_league])) && (
                                 <Grid item xs={12}>
                                     <TextField fullWidth
                                                required
                                                error={this.state.errors.indexOf('league') > -1}
                                                label="Type in the full League name"
-                                               value={this.state.league}
+                                               value={this.state.league || ''}
                                                onChange={this.handleChange('league')}
                                     />
                                 </Grid>
                             )}
                         </Grid>
                         <Grid item xs={12} md={6}>
-                            {this.state.id_league !== '-1' && (
+                            {this.state.id_league !== '-1' && !(this.state.id_league && !this.props.leagues[this.state.id_league]) && (
                                 <Grid item xs={12}>
 
                                     <Autosuggest fullWidth
@@ -385,13 +385,13 @@ class ScoutForm extends Component {
                                 </Grid>
                             )}
 
-                            {(this.state.id_team_current === '-1' || !this.props.teams[this.state.id_team_current]) && (
+                            {(this.state.id_league === '-1' || (this.state.id_league && !this.props.leagues[this.state.id_league]) || this.state.id_team_current === '-1' || (this.state.id_team_current && !this.props.teams[this.state.id_team_current])) && (
                                 <Grid item xs={12}>
                                     <TextField fullWidth
                                                required
                                                error={this.state.errors.indexOf('team') > -1}
                                                label="Type in the full Team name"
-                                               value={this.state.team}
+                                               value={this.state.team || ''}
                                                onChange={this.handleChange('team')}
                                     />
                                 </Grid>

@@ -149,9 +149,9 @@ class ContactForm extends Component {
                     <Grid container align="center" justify="center">
                         <Grid item xs={6}>
                             <Button type="submit"
-                                    color={!this.props.currentUser.is_verify || this.props.user.is_messaged > 2 ? 'default' : 'primary'}
+                                    color={!this.props.currentUser.is_verify || this.props.user.is_messaged >= 2 ? 'default' : 'primary'}
                                     raised
-                                    disabled={!this.props.currentUser.is_verify || this.props.user.is_messaged > 2}
+                                    disabled={!this.props.currentUser.is_verify || this.props.user.is_messaged >= 2}
                                     className={classes.contactButton}>Send</Button>
                         </Grid>
                     </Grid>
