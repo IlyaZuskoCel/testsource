@@ -104,8 +104,11 @@ const styleSheet = createStyleSheet('Search', theme => ({
         justifyContent: 'space-between',
         alignItems: 'flex-start',
         height: 126,
-        marginLeft: 29,
+        marginLeft: 20,
 
+        [theme.breakpoints.down('md')]: {
+          marginLeft: 5,
+        },
 
         [theme.breakpoints.down('sm')]: {
             justifyContent: 'flex-start',
@@ -197,10 +200,13 @@ class PlayerCard extends Component {
     follow = (event, player) => {
         event.preventDefault();
 
-        player.is_tagged = true;
         this.props.addFavorite && this.props.addFavorite(player.id);
 
-        this.forceUpdate();
+        setTimeout(() => {
+            console.log('update upper element');
+            this.props.onUpdateUpper && this.props.onUpdateUpper();
+            this.forceUpdate();
+        } , 300);
     };
 
     unSubscribe = (event , player) => {
@@ -216,7 +222,6 @@ class PlayerCard extends Component {
         this.setState({openRemoveAlert: false} , () => {
 
             this.props.removeFavorite && this.props.removeFavorite(this.state.currentPlayer.id);
-
 
             setTimeout(() => {
                 this.props.onUpdateUpper && this.props.onUpdateUpper();

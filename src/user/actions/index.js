@@ -18,6 +18,8 @@ import {
     UNSET_USER_FAVORITE,
     SET_CURRENT_PHOTO,
     SET_CURRENT_PHONE,
+    SET_SHORTLIST,
+    CLEAR_SHORTLIST,
 } from '../constants/actions';
 
 
@@ -355,6 +357,18 @@ export const resetPassword = () => dispatch => {
             if (message === 'Unauthorized') {
                 dispatch(logOut());
             }
+            dispatch({type: ERROR_ALERT, payload: {message}});
+        })
+};
+
+export const getFollowedList = () => dispatch => {
+    dispatch({type: CLEAR_SHORTLIST});
+
+    return get('/api/v2/activity/following')
+        .then(result => {
+            dispatch({type : SET_SHORTLIST , payload : result.activities})
+        })
+        .catch((message) => {
             dispatch({type: ERROR_ALERT, payload: {message}});
         })
 };

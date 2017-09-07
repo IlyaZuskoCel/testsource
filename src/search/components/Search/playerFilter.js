@@ -76,7 +76,12 @@ const styleSheet = createStyleSheet('ScoutFilter', theme => ({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-    }
+    },
+    headerMedia: {
+        [theme.breakpoints.down('lg')]: {
+            padding: 20,
+        }
+    },
 }));
 
 class PlayerFilter extends Component {
@@ -184,7 +189,7 @@ class PlayerFilter extends Component {
     render() {
         const {classes , width} = this.props;
 
-            return (<div className={classes.row}>
+            return (<div className={classNames(classes.row , classes.headerMedia)} >
                 <Grid container gutter={40}>
                     <Grid item xs={12} sm={6} md={4}>
 
