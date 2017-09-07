@@ -41,10 +41,13 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
     },
     backgroundImgWrap: {
         zIndex: -1,
-        width: '70%',
+        width: '100%',
         height: 688,
         [theme.breakpoints.down('sm')]: {
             height: 536,
+        },
+        [theme.breakpoints.up('lg')]: {
+            width: '70%',
         },
         position: 'absolute',
         top: 0,
