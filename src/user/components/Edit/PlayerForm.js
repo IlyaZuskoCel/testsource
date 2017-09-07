@@ -194,6 +194,8 @@ const getUserState = user => ({
     weight: user.weight,
     id_league: user.id_league,
     id_team_current: user.id_team_current,
+    league: user.league,
+    team: user.team,
     biography: user.biography,
 });
 
@@ -254,6 +256,7 @@ class PlayerForm extends Component {
     };
     submit = event => {
         event.preventDefault();
+        let data = this.state;
 
         if (this.state.id_league === '-1' && !this.state.league)
             return this.setState({errors: ['league']});
@@ -261,8 +264,11 @@ class PlayerForm extends Component {
         if (this.state.id_team_current === '-1' && !this.state.team)
             return this.setState({errors: ['team']});
 
+        if (!data.height[0] && !data.height[1])
+            data.height = null;
 
-        this.props.save(this.state);
+
+        this.props.save(data);
         return false;
     };
 
@@ -442,7 +448,6 @@ class PlayerForm extends Component {
                                              error={this.state.errors.indexOf('height') > -1}
                                              label="Height"
                                              value={this.state.height}
-
                                              onChange={this.handleChange('height')}/>
 
                         </Grid>
@@ -470,7 +475,7 @@ class PlayerForm extends Component {
                                              }}
                                              inputProps={{
                                                  label: "Current or Most Recent League",
-                                                 value: this.props.leagues[this.state.id_league] || '',
+                                                 value: this.state.id_league ? (this.props.leagues[this.state.id_league] || this.props.leagues['-1']) : '',
                                                  onChange: (event, {newValue}) => this.setState({
                                                      id_league: newValue,
                                                      id_team_current: newValue === '-1' ? '-1' : ''
@@ -479,7 +484,7 @@ class PlayerForm extends Component {
                                 />
                             </Grid>
 
-                            {this.state.id_league === '-1' && (
+                            {(this.state.id_league === '-1' || !this.props.leagues[this.state.id_league]) && (
                                 <Grid item xs={12}>
                                     <TextField fullWidth
                                                required
@@ -504,14 +509,14 @@ class PlayerForm extends Component {
                                                  }}
                                                  inputProps={{
                                                      label: "Current or Most Recent Team",
-                                                     value: this.props.teams[this.state.id_team_current] || '',
+                                                     value: this.state.id_team_current ? (this.props.teams[this.state.id_team_current] || this.props.teams['-1']) : '',
                                                      onChange: (event, {newValue}) => this.setState({id_team_current: newValue}),
                                                  }}
                                     />
                                 </Grid>
                             )}
 
-                            {this.state.id_team_current === '-1' && (
+                            {(this.state.id_team_current === '-1' || !this.props.teams[this.state.id_team_current]) && (
                                 <Grid item xs={12}>
                                     <TextField fullWidth
                                                required

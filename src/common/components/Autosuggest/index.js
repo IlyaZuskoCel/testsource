@@ -21,9 +21,8 @@ const shouldRenderSuggestions = value => true;
 
 function renderInput(inputProps) {
     const {classes, value, required, label, ref, ...other} = inputProps;
-
     return (
-        <TextField required
+        <TextField required={required}
                    className={classes.textField}
                    InputClassName={classes.InputClassName}
                    value={value}
@@ -172,6 +171,10 @@ class IntegrationAutosuggest extends Component {
 
 IntegrationAutosuggest.propTypes = {
     classes: PropTypes.object.isRequired,
+};
+
+IntegrationAutosuggest.defaultProps = {
+    required: false
 };
 
 export default withStyles(styleSheet)(IntegrationAutosuggest);

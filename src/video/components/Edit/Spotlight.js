@@ -58,7 +58,8 @@ const styleSheet = createStyleSheet('Trim', theme => ({
         width: '100%'
     },
     imageBg: {
-        maxWidth: '100%'
+        maxWidth: '100%',
+        minWidth: '100%'
     },
     opacityBg: {
         position: 'absolute',

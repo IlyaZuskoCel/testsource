@@ -18,7 +18,6 @@ import {
     UNSET_USER_FAVORITE,
     SET_CURRENT_PHOTO,
     SET_CURRENT_PHONE,
-    RECOVERY_PASSWORD,
     SET_SHORTLIST,
     CLEAR_SHORTLIST,
 } from '../constants/actions';

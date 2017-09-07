@@ -138,9 +138,6 @@ class Trim extends Component {
 
 
             <div className={classes.buttons}>
-                <Button onClick={this.props.onPrev} raised>
-                    Previous
-                </Button>
                 <Button onClick={this.props.onNext} raised
                         color={video.time_end - video.time_start > 60000 ? 'default' : 'primary'}
                         disabled={video.time_end - video.time_start > 60000}>

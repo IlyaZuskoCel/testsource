@@ -170,6 +170,8 @@ const getUserState = user => ({
     job_title: user.job_title,
     id_league: user.id_league,
     id_team_current: user.id_team_current,
+    league: user.league,
+    team: user.team,
     biography: user.biography,
 });
 
@@ -332,6 +334,7 @@ class ScoutForm extends Component {
                         <Grid item xs={12} md={6}>
                             <Grid item xs={12}>
                                 <Autosuggest fullWidth
+                                             required
                                              error={this.state.errors.indexOf('id_league') > -1}
                                              suggestions={this.props.leagueOptions}
                                              onSuggestionsFetchRequested={() => {
@@ -340,7 +343,7 @@ class ScoutForm extends Component {
                                              }}
                                              inputProps={{
                                                  label: "Current League",
-                                                 value: this.props.leagues[this.state.id_league] || '',
+                                                 value: this.state.id_league ? (this.props.leagues[this.state.id_league] || this.props.leagues['-1']) : '',
                                                  onChange: (event, {newValue}) => this.setState({
                                                      id_league: newValue,
                                                      id_team_current: newValue === '-1' ? '-1' : ''
@@ -349,7 +352,7 @@ class ScoutForm extends Component {
                                 />
                             </Grid>
 
-                            {this.state.id_league === '-1' && (
+                            {(this.state.id_league === '-1' || !this.props.leagues[this.state.id_league]) && (
                                 <Grid item xs={12}>
                                     <TextField fullWidth
                                                required
@@ -366,6 +369,7 @@ class ScoutForm extends Component {
                                 <Grid item xs={12}>
 
                                     <Autosuggest fullWidth
+                                                 required
                                                  error={this.state.errors.indexOf('id_team_current') > -1}
                                                  suggestions={this.state.id_league ? this.props.teamOptions.filter(i => i.value === '-1' || i.item.id_league === parseInt(this.state.id_league)) : this.props.teamOptions}
                                                  onSuggestionsFetchRequested={() => {
@@ -374,14 +378,14 @@ class ScoutForm extends Component {
                                                  }}
                                                  inputProps={{
                                                      label: "Current Team",
-                                                     value: this.props.teams[this.state.id_team_current] || '',
+                                                     value: this.state.id_team_current ? (this.props.teams[this.state.id_team_current] || this.props.teams['-1']) : '',
                                                      onChange: (event, {newValue}) => this.setState({id_team_current: newValue}),
                                                  }}
                                     />
                                 </Grid>
                             )}
 
-                            {this.state.id_team_current === '-1' && (
+                            {(this.state.id_team_current === '-1' || !this.props.teams[this.state.id_team_current]) && (
                                 <Grid item xs={12}>
                                     <TextField fullWidth
                                                required
