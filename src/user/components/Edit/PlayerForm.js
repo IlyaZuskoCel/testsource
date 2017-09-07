@@ -254,6 +254,7 @@ class PlayerForm extends Component {
     };
     submit = event => {
         event.preventDefault();
+        let data = this.state;
 
         if (this.state.id_league === '-1' && !this.state.league)
             return this.setState({errors: ['league']});
@@ -261,8 +262,11 @@ class PlayerForm extends Component {
         if (this.state.id_team_current === '-1' && !this.state.team)
             return this.setState({errors: ['team']});
 
+        if (!data.height[0] && !data.height[1])
+            data.height = null;
 
-        this.props.save(this.state);
+
+        this.props.save(data);
         return false;
     };
 
