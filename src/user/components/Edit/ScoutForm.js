@@ -332,6 +332,7 @@ class ScoutForm extends Component {
                         <Grid item xs={12} md={6}>
                             <Grid item xs={12}>
                                 <Autosuggest fullWidth
+                                             required
                                              error={this.state.errors.indexOf('id_league') > -1}
                                              suggestions={this.props.leagueOptions}
                                              onSuggestionsFetchRequested={() => {
@@ -366,6 +367,7 @@ class ScoutForm extends Component {
                                 <Grid item xs={12}>
 
                                     <Autosuggest fullWidth
+                                                 required
                                                  error={this.state.errors.indexOf('id_team_current') > -1}
                                                  suggestions={this.state.id_league ? this.props.teamOptions.filter(i => i.value === '-1' || i.item.id_league === parseInt(this.state.id_league)) : this.props.teamOptions}
                                                  onSuggestionsFetchRequested={() => {
