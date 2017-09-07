@@ -9,6 +9,13 @@ import React, {Component} from 'react';
 import TextField from 'material-ui/TextField';
 import Typography from 'material-ui/Typography';
 
+import {withStyles, createStyleSheet} from 'material-ui/styles';
+
+const styleSheet = createStyleSheet('TextArea', (theme) => ({
+    maxCaption: {
+        marginTop: 4
+    }
+}));
 
 class TextArea extends Component {
 
@@ -18,9 +25,9 @@ class TextArea extends Component {
         this.props.onChange(event);
         return false;
     };
-
     render() {
         const {
+            classes,
             max,
             ...props
         } = this.props;
@@ -32,7 +39,8 @@ class TextArea extends Component {
                     {...props}
                     onChange={this.handleChange}
                 />
-                <Typography type="caption" align="right">{props.value.length}{max && ` / ${max}`}</Typography>
+                <Typography type="caption" align="right"
+                            className={classes.maxCaption}>{props.value.length}{max && ` / ${max}`}</Typography>
             </div>
 
         );
@@ -40,4 +48,4 @@ class TextArea extends Component {
 }
 
 
-export default TextArea;
+export default withStyles(styleSheet)(TextArea);
