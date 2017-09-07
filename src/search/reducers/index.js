@@ -9,6 +9,7 @@ import test from './test';
 import people from './people'
 import options from './options'
 import headers from './headers'
+import filters from './filters'
 
 
 
@@ -17,4 +18,5 @@ export default combineReducers({
     people: people,
     options: options,
     headers: headers,
+    filters: filters,
 });
