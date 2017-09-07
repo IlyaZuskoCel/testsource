@@ -516,7 +516,7 @@ class PlayerForm extends Component {
                                 </Grid>
                             )}
 
-                            {(this.state.id_team_current === '-1' || (this.state.id_team_current && !this.props.teams[this.state.id_team_current])) && (
+                            {(this.state.id_league === '-1' || (this.state.id_league && !this.props.leagues[this.state.id_league]) || this.state.id_team_current === '-1' || (this.state.id_team_current && !this.props.teams[this.state.id_team_current])) && (
                                 <Grid item xs={12}>
                                     <TextField fullWidth
                                                required
