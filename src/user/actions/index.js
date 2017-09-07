@@ -20,6 +20,7 @@ import {
     SET_CURRENT_PHONE,
     SET_SHORTLIST,
     CLEAR_SHORTLIST,
+    INC_EMAIL_COUNT
 } from '../constants/actions';
 
 
@@ -194,7 +195,7 @@ export const uploadPhoto = (file) => dispatch => {
             if ('error' in result)
                 return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
             dispatch({type: SET_CURRENT_PHOTO, payload: result.profile_picture});
-            if(file)
+            if (file)
                 dispatch({type: SUCCESS_ALERT, payload: {message: 'Profile picture was uploaded successfully'}});
             else
                 dispatch({type: SUCCESS_ALERT, payload: {message: 'Profile picture was deleted successfully'}});
@@ -251,8 +252,10 @@ export const removeFavorite = (id) => dispatch => {
 export const sendEmail = (id, subject, text) => dispatch => {
     return post(`/api/v2/message/send-email`, {recipient: id, subject, text})
         .then(result => {
-            if (result.success)
+            if (result.success) {
+                dispatch({type: INC_EMAIL_COUNT, payload: id});
                 return dispatch({type: SUCCESS_ALERT, payload: {message: "Your message was successfully sent!"}});
+            }
             return dispatch({type: ERROR_ALERT, payload: {message: "Your message wasn't sent!"}});
 
         })
@@ -369,7 +372,7 @@ export const getFollowedList = () => dispatch => {
 
     return get('/api/v2/activity/following')
         .then(result => {
-            dispatch({type : SET_SHORTLIST , payload : result.activities})
+            dispatch({type: SET_SHORTLIST, payload: result.activities})
         })
         .catch((message) => {
             dispatch({type: ERROR_ALERT, payload: {message}});
