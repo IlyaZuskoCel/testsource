@@ -94,10 +94,11 @@ class Form extends Component {
                     </Button>
                 </Hidden>
                 <Button onClick={this.props.onSubmit} raised
-                        color={video.title && video.video_path ? 'primary' : 'default'}
-                        disabled={!video.title || !video.video_path}>
+                        color={!video.title || !video.video_path || video.time_end - video.time_start > 60000 ? 'default' : 'primary'}
+                        disabled={!video.title || !video.video_path || video.time_end - video.time_start > 60000}>
                     Update the Video
                 </Button>
+
             </div>
         </div>;
     }
