@@ -4,7 +4,7 @@
  */
 
 
-import {SET_SHORTLIST , CLEAR_SHORTLIST} from '../constants/actions';
+import {SET_SHORTLIST , CLEAR_SHORTLIST, UNSET_USER_FAVORITE} from '../constants/actions';
 
 function shortlist(state = [], action) {
     switch (action.type) {
@@ -14,6 +14,8 @@ function shortlist(state = [], action) {
         case CLEAR_SHORTLIST:
             state = [];
             return state;
+        case UNSET_USER_FAVORITE:
+            return state && state.length > 0 ? state.filter(user => user.id !== action.payload) : state;
         default:
             return state;
     }
