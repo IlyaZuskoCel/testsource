@@ -243,10 +243,6 @@ class Search extends Component {
             });
     }
 
-    updateResults = () => {
-        this.props.upload(this.props.type === 'scout' ? 'scout' : 'player' , {page : this.props.headers.page  , 'per-page' : 18 , ...this.state.query});
-    };
-
     onClearFilters() {
         this.setState({clearField : this.props.type});
     }
@@ -310,6 +306,10 @@ class Search extends Component {
                                                                        query={this.state.query}
                                                                        clearFilters={this.state.clearFilters}
                                                                        stopClearing={this.stopClearing}
+
+                                                                       filters={this.props.filters}
+                                                                       setFilters={this.props.setFilters}
+                                                                       clear={this.props.clearFilters}
                         />}
                     </div>
                 </header></Hidden>
@@ -377,7 +377,6 @@ class Search extends Component {
                     <Players players={this.props.results}
                              total={this.props.headers ? this.props.headers.count : 0}
                              role={this.props.currentUser ? this.props.currentUser.role : ''}
-                             onUpdateUpper={this.updateResults}
                              addFavorite={this.props.addFavorite}
                              removeFavorite={this.props.removeFavorite}
                     />

@@ -1,7 +1,7 @@
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux';
 
-import {uploadPlayers, uploadScouts, filterScouts, filterPlayers , follow} from '../actions';
+import {uploadPlayers, uploadScouts, filterScouts, filterPlayers , setFilters , clearFilters} from '../actions';
 import {addFavorite , removeFavorite} from "../../user/actions/index";
 import {go, getLeagues, getTeams} from '../../common/actions';
 
@@ -20,6 +20,7 @@ const mapStateToProps = (state, props) => ({
     type: props.match.params.type || 'player',
     query: props.location.search,
     headers: state.search.headers,
+    filters: state.search.filters,
 });
 
 
@@ -35,7 +36,9 @@ const mapDispatchToProps = (dispatch, props) => ({
     filterScouts: (params) => dispatch(filterScouts(params)),
     filterPlayers: (params) => dispatch(filterPlayers(params)),
     addFavorite: (playerId) => dispatch(addFavorite(playerId)),
-    removeFavorite: (playerId) => dispatch(removeFavorite(playerId))
+    removeFavorite: (playerId) => dispatch(removeFavorite(playerId)),
+    setFilters: (filters) => dispatch(setFilters(filters)),
+    clearFilters: () => dispatch(clearFilters()),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Search))

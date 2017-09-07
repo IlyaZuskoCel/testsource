@@ -86,32 +86,32 @@ const styleSheet = createStyleSheet('ScoutFilter', theme => ({
 
 class PlayerFilter extends Component {
 
-    constructor(props) {
-        super(props);
+constructor(props) {
+    super(props);
 
-        this.state = {
-            DropdownValue: '',
-            name: '',
-            team: '',
-            year: '',
-            position: '',
-            leagues: [],
-            born: [PLAYER_MIN_AGE , PlAYER_MAX_AGE]
-        };
+    this.state = {
+        DropdownValue: '',
+        name: '',
+        team: '',
+        year: '',
+        position: '',
+        leagues: [],
+        born: [PLAYER_MIN_AGE , PlAYER_MAX_AGE]
+    };
 
-        this.born = [PLAYER_MIN_AGE , PlAYER_MAX_AGE];
-        this.makeFilterRequest = this.makeFilterRequest.bind(this);
+    this.born = [PLAYER_MIN_AGE , PlAYER_MAX_AGE];
+    this.makeFilterRequest = this.makeFilterRequest.bind(this);
 
-        this.onChangeName = this.onChangeName.bind(this);
-        this.getRange = this.getRange.bind(this);
-    }
+    this.onChangeName = this.onChangeName.bind(this);
+    this.getRange = this.getRange.bind(this);
+}
 
 
-    onChangeAutosuggest = name => (event, {newValue}) => {
+onChangeAutosuggest = name => (event, {newValue}) => {
 
-            this.setState({[name]: filterOnReg(/^[0-9]+/ ,newValue) }, () => {
-                this.makeFilterRequest();
-            });
+        this.setState({[name]: filterOnReg(/^[0-9]+/ ,newValue) }, () => {
+            this.makeFilterRequest();
+        });
     };
 
 
@@ -132,6 +132,7 @@ class PlayerFilter extends Component {
 
     makeFilterRequest() {
         let queryString = '';
+        let filters = {};
 
         let options = {
             id_league: this.state.id_league ? this.state.id_league : null,
@@ -147,15 +148,17 @@ class PlayerFilter extends Component {
                 if (options[key] === null)
                     continue;
 
+                filters[key] = options[key];
                 queryString += key + '=' + options[key] + '&'
             }
 
-
             if (this.state.born[0] !== PLAYER_MIN_AGE || this.state.born[1] !== PlAYER_MAX_AGE ) {
                 queryString += `born[0]=${this.state.born[0]}&born[1]=${this.state.born[1]}&`;
+                filters.range = [parseInt(this.state.born[0]) , parseInt(this.state.born[1])];
             }
         }
 
+        this.props.setFilters(filters);
         this.props.filterPlayers(queryString.slice(0, -1));
     }
 

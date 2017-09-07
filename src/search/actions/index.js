@@ -12,7 +12,8 @@ import {SET_PLAYERS,
         CLEAR_LIST ,
         SET_LEAGUES,
         SET_HEADERS,
-        SET_FOLLOWED} from "../constants/actions";
+        SET_FILTERS,
+        CLEAR_FILTERS} from "../constants/actions";
 import {LOAD} from '../../common/constants/actions';
 import {addRequestParams} from "../helpers/helpers";
 
@@ -62,6 +63,14 @@ export const getLeagues = () => dispatch => {
         .catch(message => {
             dispatch({type: ERROR_ALERT, payload: {message}});
         });
+};
+
+export const setFilters = (filters) => dispatch => {
+    dispatch({type : SET_FILTERS , payload : filters});
+};
+
+export const clearFilters = () => dispatch => {
+    dispatch({type: CLEAR_FILTERS});
 };
 
 export const filterScouts = (params) => dispatch => {

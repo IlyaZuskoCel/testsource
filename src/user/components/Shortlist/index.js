@@ -149,11 +149,6 @@ class Shortlist extends Component {
         this.props.getFollowedList();
     }
 
-
-    onUpdateUpper = () => {
-        this.props.getFollowedList();
-    };
-
     render() {
         const {classes} = this.props;
 
@@ -194,8 +189,7 @@ class Shortlist extends Component {
                             {this.props.results && this.props.results.map(player => {
                                 return <Grid item xs={12} md={4} sm={6} key={player.id}>
                                     <PlayerCard player={player} role={this.props.currentUser ? this.props.currentUser.role : ''}
-                                                removeFavorite={this.props.removeFavorite}
-                                                onUpdateUpper={this.onUpdateUpper}/>
+                                                removeFavorite={this.props.removeFavorite}/>
                                 </Grid>
                             })}
                         </Grid>
