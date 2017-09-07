@@ -442,7 +442,6 @@ class PlayerForm extends Component {
                                              error={this.state.errors.indexOf('height') > -1}
                                              label="Height"
                                              value={this.state.height}
-
                                              onChange={this.handleChange('height')}/>
 
                         </Grid>
