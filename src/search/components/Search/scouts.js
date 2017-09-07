@@ -104,9 +104,14 @@ const styleSheet = createStyleSheet('Scout', theme => ({
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
+        flex: 1,
         height: 150,
         marginLeft: 30,
 
+
+        [theme.breakpoints.down('md')]: {
+          marginLeft: 0,
+        },
 
         [theme.breakpoints.down('sm')]: {
             justifyContent: 'flex-start',
@@ -119,6 +124,10 @@ const styleSheet = createStyleSheet('Scout', theme => ({
         lineHeight: 1,
         letterSpacing: 0.4,
         textAlign: 'left',
+
+        [theme.breakpoints.down('md')]: {
+            fontSize: 32,
+        }
 
     },
 
@@ -133,6 +142,10 @@ const styleSheet = createStyleSheet('Scout', theme => ({
     scoutRole: {
         margin: [1, 0, 2, 0],
         lineHeight: 1.33,
+
+        [theme.breakpoints.down('md')]: {
+            fontSize: 16,
+        }
     },
     photoContainer: {
         flexDirection: 'column',
@@ -146,6 +159,10 @@ const styleSheet = createStyleSheet('Scout', theme => ({
     },
     total: {
         display: 'flex',
+
+        [theme.breakpoints.down('md')]: {
+            marginLeft: 20,
+        },
 
         [theme.breakpoints.down('sm')]: {
             justifyContent: 'center',

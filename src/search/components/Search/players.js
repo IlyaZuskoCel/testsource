@@ -84,7 +84,7 @@ const styleSheet = createStyleSheet('Search', theme => ({
         display: 'flex',
         flexDirection: 'row',
         height: 150,
-        flex: 1,
+        // flex: 1,
 
         [theme.breakpoints.down('sm')]: {
             width: 120,
@@ -100,6 +100,10 @@ const styleSheet = createStyleSheet('Search', theme => ({
         height: 126,
         marginLeft: 29,
 
+
+        [theme.breakpoints.down('md')]: {
+            marginLeft: 5,
+        },
 
         [theme.breakpoints.down('sm')]: {
             justifyContent: 'flex-start',
@@ -177,12 +181,15 @@ const styleSheet = createStyleSheet('Search', theme => ({
     total: {
         display: 'flex',
 
+        [theme.breakpoints.down('md')]: {
+          marginLeft: 20,
+        },
+
         [theme.breakpoints.down('sm')]: {
             justifyContent: 'center',
             alignItems: 'center',
         }
     }
-
 }));
 
 class Players extends Component {
@@ -199,7 +206,6 @@ class Players extends Component {
         this.setState({players: nextProp.players});
     }
 
-
     render() {
         const {classes} = this.props;
 
@@ -213,6 +219,7 @@ class Players extends Component {
                             return <Grid item xs={12} md={4} sm={6} key={player.id}>
                                 <PlayerCard player={player}
                                             role={this.props.role}
+                                            onUpdateUpper={this.props.onUpdateUpper}
                                             addFavorite={this.props.addFavorite}
                                             removeFavorite={this.props.removeFavorite} />
                             </Grid>

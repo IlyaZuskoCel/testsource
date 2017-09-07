@@ -1,12 +1,12 @@
 import {connect} from 'react-redux';
 import Shortlist from '../components/Shortlist';
-import {getFollowedList} from "../../search/actions/index";
 import {removeFavorite} from "../actions/index";
+import {getFollowedList} from "../actions/index";
 
 const mapStateToProps = (state, props) => ({
     currentUser: state.user.current,
     user: state.user.user,
-    results: state.search.people,
+    results: state.user.shortlist,
     headers: state.search.headers,
 });
 const mapDispatchToProps = (dispatch) => ({

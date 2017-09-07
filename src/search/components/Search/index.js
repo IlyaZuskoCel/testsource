@@ -37,6 +37,10 @@ const styleSheet = createStyleSheet('Search' , theme => ({
     },
     header: {
         backgroundColor: '#f5f5f5',
+
+        [theme.breakpoints.down('lg')]: {
+            padding: [0 , 20],
+        }
     },
     footer: {
         display: 'flex',
@@ -51,8 +55,12 @@ const styleSheet = createStyleSheet('Search' , theme => ({
         padding: 56,
         boxShadow: '0 -8px 8px -8px rgba(0, 0, 0, 0.2)',
 
+        [theme.breakpoints.down('md')]: {
+            padding: [56, 20]
+        },
+
         [theme.breakpoints.down('sm')]: {
-            padding: [56 , 0],
+            padding: [28 , 0],
             boxShadow: 'none',
         }
     },
@@ -162,7 +170,7 @@ const styleSheet = createStyleSheet('Search' , theme => ({
     },
     arrow: {
       color: '#ffffff',
-    }
+    },
 }));
 
 const splitSearchQuery = (q) => {
@@ -225,7 +233,6 @@ class Search extends Component {
         if ('born[0]' in this.state.query)
             count--;
 
-
         this.setState({appliedFilters: count});
     }
 
@@ -235,6 +242,10 @@ class Search extends Component {
                 this.props.upload(value === 1 ? 'scout' : 'player' , {page : 1 , 'per-page' : 18});
             });
     }
+
+    updateResults = () => {
+        this.props.upload(this.props.type === 'scout' ? 'scout' : 'player' , {page : this.props.headers.page  , 'per-page' : 18 , ...this.state.query});
+    };
 
     onClearFilters() {
         this.setState({clearField : this.props.type});
@@ -366,6 +377,7 @@ class Search extends Component {
                     <Players players={this.props.results}
                              total={this.props.headers ? this.props.headers.count : 0}
                              role={this.props.currentUser ? this.props.currentUser.role : ''}
+                             onUpdateUpper={this.updateResults}
                              addFavorite={this.props.addFavorite}
                              removeFavorite={this.props.removeFavorite}
                     />
