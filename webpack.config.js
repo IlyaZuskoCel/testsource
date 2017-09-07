@@ -32,6 +32,8 @@ module.exports = {
     },
     plugins: [new HtmlWebpackPlugin({
         title: 'Scout Zoo App',
-        template: 'src/index.ejs'
+        template: 'src/index.ejs',
+        hash: true,
+        cache: false
     })]
 };
