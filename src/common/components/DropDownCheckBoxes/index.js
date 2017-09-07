@@ -105,6 +105,7 @@ class DropDownCheckBoxes extends Component {
                     />
                     <ScoutIcon className={classes.icon} onClick={this.toggleOpen}>dropdown-arrows</ScoutIcon>
                 </div>
+
                 <div className={classes.container}>
                     {this.state.open && <div className={classes.overlay} onClick={this.toggleOpen}/>}
                     {this.state.open &&

@@ -78,7 +78,7 @@ class Form extends Component {
                       onChange={this.handleChange('description')}/>
 
             <DropDownCheckBoxes suggestions={this.props.tagOptions || []}
-                                value={video.tags || []}
+                                value={video.tags && video.tags.length > 0 ? video.tags.map(v => '' + v) : []}
                                 onChange={this.handleChangeTags}
                                 inputProps={{
                                     fullWidth: true,
