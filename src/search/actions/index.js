@@ -65,8 +65,8 @@ export const getLeagues = () => dispatch => {
         });
 };
 
-export const setFilters = (filters) => dispatch => {
-    dispatch({type : SET_FILTERS , payload : filters});
+export const setFilters = (filters , type) => dispatch => {
+    dispatch({type : SET_FILTERS , payload : {filters , type: type || 'player'} });
 };
 
 export const clearFilters = () => dispatch => {

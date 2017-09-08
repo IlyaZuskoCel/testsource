@@ -8,10 +8,10 @@ import {CLEAR_FILTERS , SET_FILTERS} from "../constants/actions";
 function filters(state = null, action) {
     switch (action.type) {
         case CLEAR_FILTERS:
-            state = null;
-            return state;
+            return null;
         case SET_FILTERS:
-            state = action.payload;
+            state = {};
+            state[action.payload.type] = action.payload.filters;
             return state;
         default:
             return state;
