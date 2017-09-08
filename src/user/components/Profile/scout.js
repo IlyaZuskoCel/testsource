@@ -236,6 +236,7 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
         justifyContent: 'center',
         alignItems: 'center',
 
+        padding: [0, 8],
         [theme.breakpoints.down('sm')]: {
             height: 132,
             backgroundImage: 'none',

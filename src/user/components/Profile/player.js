@@ -270,7 +270,7 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-
+        padding: [0, 8],
         [theme.breakpoints.down('sm')]: {
             height: 132,
             backgroundImage: 'none',
