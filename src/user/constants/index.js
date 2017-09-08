@@ -39,8 +39,8 @@ export const POS_LIST = {
     [POS_FL]: 'Left Wing',
     [POS_FR]: 'Right Wing',
     [POS_C]: 'Center',
-    [POS_DL]: 'Defense',
-    // [POS_DR]: 'Right Defense',
+    [POS_DL]: 'Defence',
+    // [POS_DR]: 'Right Defence',
     [POS_G]: 'Goalie',
 };
 
