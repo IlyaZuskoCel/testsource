@@ -158,6 +158,7 @@ onChangeAutosuggest = name => (event, {newValue}) => {
             }
         }
 
+
         this.props.setFilters(filters);
         this.props.filterPlayers(queryString.slice(0, -1));
     }
@@ -184,8 +185,13 @@ onChangeAutosuggest = name => (event, {newValue}) => {
            });
         }
 
-        if ('query' in nextProps && nextProps.query['born[0]']) {
-            this.setState({born : [parseInt(nextProps.query['born[0]']) , parseInt(nextProps.query['born[1]'])]})
+
+
+        if ('filters' in nextProps && nextProps.filters.range) {
+            this.setState({born: nextProps.filters.range});
+         }
+         else {
+            this.setState({born: [PLAYER_MIN_AGE , PlAYER_MAX_AGE]});
         }
     }
 
