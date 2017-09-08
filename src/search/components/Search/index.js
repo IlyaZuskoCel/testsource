@@ -210,7 +210,6 @@ class Search extends Component {
                 this.countFilters();
             });
         }
-
     }
 
     countFilters() {

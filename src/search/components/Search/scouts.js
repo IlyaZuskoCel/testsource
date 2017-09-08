@@ -231,8 +231,8 @@ class Scouts extends Component {
                                                     </Typography>
 
 
-                                                    <Typography type="body1"
-                                                                className={classes.scoutRole}>{this.roleShortener(scout.user_role) || 'Unknown'}</Typography>
+                                                    {scout.job_title && <Typography type="body1"
+                                                                className={classes.scoutRole}>{this.roleShortener(scout.job_title)}</Typography>}
                                                     <Typography type='caption'
                                                                 className={classes.playerLeague}>{scout.league || 'Unknown'}</Typography>
                                                 </div>
