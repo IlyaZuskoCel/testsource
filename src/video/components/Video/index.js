@@ -131,14 +131,11 @@ class Video extends Component {
 
     handleEdit = event => {
         event.preventDefault();
-        this.toggleVideoMenu(event);
-
         this.props.edit(this.props.video.id);
         return false
     };
     handleDialogDelete = event => {
         event.preventDefault();
-        this.toggleVideoMenu(event);
 
         this.props.delete(this.props.video.id);
         this.setState({isDeleteOpen: false});
@@ -155,14 +152,12 @@ class Video extends Component {
         this.setState({isDeleteOpen: false})
     };
 
-    toggleVideoMenu = event => {
+    handleClick = event => {
+        this.setState({openVideoMenu: true, anchorVideoMenuEl: event.currentTarget});
+    };
 
-        let state = {openVideoMenu: !this.state.openVideoMenu};
-        if (!this.state.openVideoMenu)
-            state.anchorVideoMenuEl = event.anchorVideoMenuEl;
-
-
-        this.setState(state)
+    handleRequestClose = () => {
+        this.setState({openVideoMenu: false});
     };
 
     render() {
@@ -208,15 +203,15 @@ class Video extends Component {
                                     <IconButton
                                         className={classes.moreButton}
                                         aria-label="More"
-                                        aria-owns={`video-menu-${video.id}`}
+                                        aria-owns={this.state.openVideoMenu ? `video-menu-${video.id}` : null}
                                         aria-haspopup="true"
-                                        onClick={this.toggleVideoMenu}>
+                                        onClick={this.handleClick}>
                                         <ScoutZooIcon>dots-three-vertical</ScoutZooIcon>
                                     </IconButton>
                                     <Menu id={`video-menu-${video.id}`}
                                           anchorEl={this.state.anchorVideoMenuEl}
                                           open={this.state.openVideoMenu}
-                                          onRequestClose={this.toggleVideoMenu}>
+                                          onRequestClose={this.handleRequestClose}>
                                         <MenuItem onClick={this.handleEdit}>Edit</MenuItem>
                                         <MenuItem onClick={this.handleDelete}>Delete</MenuItem>
 
