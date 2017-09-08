@@ -18,7 +18,7 @@ export const POS_FL = '1'; // Left Forward
 export const POS_FR = '2'; // Right Forward
 export const POS_C = '3'; //  Center
 export const POS_DL = '4'; // Left Defense
-export const POS_DR = '5'; // Right Defense
+// export const POS_DR = '5'; // Right Defense
 export const POS_G = '6'; // Goalie
 
 
@@ -36,11 +36,11 @@ export const POS_DPP = '17'; // Director of Player Personnel
 
 
 export const POS_LIST = {
-    [POS_FL]: 'Left Forward',
-    [POS_FR]: 'Right Forward',
+    [POS_FL]: 'Left Wing',
+    [POS_FR]: 'Right Wing',
     [POS_C]: 'Center',
-    [POS_DL]: 'Left Defense',
-    [POS_DR]: 'Right Defense',
+    [POS_DL]: 'Defense',
+    // [POS_DR]: 'Right Defense',
     [POS_G]: 'Goalie',
 };
 
