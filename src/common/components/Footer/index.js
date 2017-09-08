@@ -38,10 +38,13 @@ const styleSheet = createStyleSheet('Footer', theme => ({
 
     },
     logo: {
-        fontSize: 60,
+        fontSize: 40,
         color: '#444444',
-        [theme.breakpoints.down('md')]: {
-            fontSize: 40,
+        [theme.breakpoints.down('lg')]: {
+            fontSize: 32,
+        },
+        [theme.breakpoints.down('sm')]: {
+            fontSize: 24,
         }
     },
     footer: {
@@ -132,20 +135,20 @@ class Footer extends Component {
         return (
             <footer className={classes.root}>
                 <Grid container gutter={8} className={classes.footer}>
-                    <Grid item xs={6} sm={4} md={2} lg={2}>
+                    <Grid item xs={6} sm={4} md={3} lg={2}>
                         {user ? (
                             <Link to={user.role === SCOUT_ROLE ? '/search/player' : '/profile'}
                                   className={classes.logoLink} disabledUnderline>
-                                <Icon className={classes.logo}>scoutzoo-symbol</Icon>
+                                <Icon className={classes.logo}>scoutzoo-wordmark</Icon>
                             </Link>
                         ) : (
                             <a href="https://scoutzoo.com" target="_blank" className={classes.logoLink}>
-                                <Icon className={classes.logo}>scoutzoo-symbol</Icon>
+                                <Icon className={classes.logo}>scoutzoo-wordmark</Icon>
                             </a>
                         )}
 
                     </Grid>
-                    <Grid item xs={6} sm={8} md={6} lg={8} className={classes.links}>
+                    <Grid item xs={6} sm={8} md={5} lg={6} className={classes.links}>
                         <a href="https://scoutzoo.com/aboutus" target="_blank" className={classes.link}>
                             <Typography type="caption">About Us</Typography>
                         </a>
@@ -159,12 +162,12 @@ class Footer extends Component {
                             <Typography type="caption">Terms & Conditions</Typography>
                         </a>
                     </Grid>
-                    <Grid item xs={6} sm={10} md={2} lg={1} className={classes.followContainer}>
+                    <Grid item xs={6} sm={10} md={2} lg={2} className={classes.followContainer}>
                         <Typography type="caption">
                             Follow Us On
                         </Typography>
                     </Grid>
-                    <Grid item xs={6} sm={2} md={1} lg={1} className={classes.followContainerLinks}>
+                    <Grid item xs={6} sm={2} md={2} lg={2} className={classes.followContainerLinks}>
                         <a href="https://www.facebook.com/scoutzoo" target="_blank" className={classes.followLink}>
                             <Icon className={classes.socialLogo}>facebook-filled</Icon>
                         </a>
