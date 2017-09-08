@@ -34,7 +34,7 @@ const styleSheet = createStyleSheet('DropDown', theme => {
         icon: {
             cursor: 'pointer',
             marginLeft: -16,
-            zIndex: 999,
+            zIndex: 0,
             lineHeight: '40px'
         },
         container: {
