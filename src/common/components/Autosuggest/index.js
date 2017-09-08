@@ -111,7 +111,7 @@ const styleSheet = createStyleSheet(theme => ({
         cursor: 'pointer',
         marginLeft: -16,
         lineHeight: '40px',
-        zIndex: 0,
+        zIndex: -1,
     },
     iconCross: {
         zIndex: 10000
