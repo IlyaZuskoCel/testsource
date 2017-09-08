@@ -53,17 +53,6 @@ export const uploadScouts = (params) => dispatch => {
         });
 };
 
-export const getLeagues = () => dispatch => {
-
-    get('/api/v2/league/get-list')
-        .then(leagues => {
-            dispatch({type: SET_LEAGUES , payload: leagues});
-
-        })
-        .catch(message => {
-            dispatch({type: ERROR_ALERT, payload: {message}});
-        });
-};
 
 export const setFilters = (filters , type) => dispatch => {
     dispatch({type : SET_FILTERS , payload : {filters , type: type || 'player'} });

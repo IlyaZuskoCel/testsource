@@ -102,37 +102,87 @@ const styleSheet = createStyleSheet(theme => ({
     },
     input: {
         paddingRight: 16,
-        cursor: 'pointer',
-        outline: 'none',
-        color: 'transparent',
-        textShadow: '0 0 0 #000'
+        // cursor: 'pointer',
+        // outline: 'none',
+        // color: 'transparent',
+        // textShadow: '0 0 0 #000'
     },
     icon: {
         cursor: 'pointer',
         marginLeft: -16,
         lineHeight: '40px',
-        zIndex: -1
+        zIndex: 0,
+    },
+    iconCross: {
+        zIndex: 10000
     }
 }));
 
 class IntegrationAutosuggest extends Component {
-    focus = false;
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            focus: false,
+            value: props.value,
+            suggestions: props.suggestions,
+        };
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({suggestions: nextProps.suggestions, value: nextProps.value})
+    }
+
     handleFocus = () => {
+        this.setState({focus: true});
+    };
+    handleBlur = (event) => {
         setTimeout(() => {
-            this.focus = true;
-        }, 500);
+            this.setState({focus: false});
+            const inputValue = this.state.value.trim().toLowerCase();
+            const item = this.props.suggestions.find(item => item.label.toLowerCase() === inputValue);
+            this.props.onSuggestionSelected(event, {suggestionValue: item ? item.value : ''});
+        }, 100);
+
     };
-    handleBlur = () => {
-        this.focus = false;
+
+    handleChange = (event, {newValue}) => {
     };
-    handleClick = () => {
-        if (this.focus)
-            return this.nameInput.blur();
+    handlerClear = (event) => {
+        this.props.onSuggestionSelected(event, {suggestionValue: ''});
+        this.nameInput.focus();
+        setTimeout(() => {
+            this.setState({focus: true});
+        }, 100);
+
+    };
+
+    handleSuggestionsFetchRequested = ({value}) => {
+        const inputValue = value.trim().toLowerCase();
+
+        const item = this.props.suggestions.find(item => item.label.toLowerCase() === inputValue);
+        if (item) {
+            return this.setState({suggestions: this.props.suggestions, value: item.label})
+        }
+
+        const inputLength = inputValue.length;
+        const suggestions = inputLength === 0 ? this.props.suggestions : this.props.suggestions.filter(item =>
+            item.label.toLowerCase().slice(0, inputLength) === inputValue || item.value === '-1'
+        );
+
+        this.setState({
+            suggestions: suggestions,
+            value
+        });
+    };
+    handleSuggestionsClearRequested = () => {
+        this.setState({
+            suggestions: []
+        });
     };
 
     render() {
-        const {classes, inputProps, className, required, ...props} = this.props;
-
+        const {classes, inputProps, className, required, label, ...props} = this.props;
         return (
             <div className={classNames(classes.root, className)}>
                 <Autosuggest
@@ -142,6 +192,9 @@ class IntegrationAutosuggest extends Component {
                         suggestionsList: classes.suggestionsList,
                         suggestion: classes.suggestion,
                     }}
+                    onSuggestionsFetchRequested={this.handleSuggestionsFetchRequested}
+                    onSuggestionsClearRequested={this.handleSuggestionsClearRequested}
+
                     renderInputComponent={renderInput}
                     renderSuggestionsContainer={renderSuggestionsContainer}
                     getSuggestionValue={getSuggestionValue}
@@ -149,19 +202,27 @@ class IntegrationAutosuggest extends Component {
                     shouldRenderSuggestions={shouldRenderSuggestions}
                     focusInputOnSuggestionClick={false}
                     inputProps={{
+                        ...inputProps,
                         inputRef: (input) => {
                             this.nameInput = input;
                         },
                         onClick: this.handleClick,
                         onFocus: this.handleFocus,
                         onBlur: this.handleBlur,
+                        onChange: this.handleChange,
                         classes,
                         required,
-                        ...inputProps
+                        label,
+                        value: this.state.value
                     }}
                     {...props}
+                    suggestions={this.state.suggestions}
                 />
-                <ScoutIcon className={classes.icon}>dropdown-arrows</ScoutIcon>
+                <ScoutIcon
+                    onClick={this.handlerClear}
+                    className={classNames(classes.icon, {[classes.iconCross]: this.state.focus})}>
+                    {this.state.focus ? 'cross' : 'dropdown-arrows'}
+                </ScoutIcon>
 
 
             </div>

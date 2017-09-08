@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import Grid from 'material-ui/Grid';
 import TextField from 'material-ui/TextField';
-import {Link, Icon, Pagination , Autosuggest} from '../../../common/components';
+import {Link, Icon, Pagination, Autosuggest} from '../../../common/components';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import withWidth from 'material-ui/utils/withWidth';
 import {filterOnReg} from "../../helpers/helpers";
@@ -18,7 +18,7 @@ import Hidden from 'material-ui/Hidden';
 
 import classNames from 'classnames';
 
-const styleSheet = createStyleSheet('ScoutFilter' , theme => ({
+const styleSheet = createStyleSheet('ScoutFilter', theme => ({
     row: {
         display: 'flex',
         flexDirection: 'row',
@@ -42,7 +42,7 @@ const styleSheet = createStyleSheet('ScoutFilter' , theme => ({
         [theme.breakpoints.down('sm')]: {
             maxWidth: '100%',
             width: '100%',
-            margin: [0 , 0 , 0 , 0],
+            margin: [0, 0, 0, 0],
         }
     },
 
@@ -98,27 +98,32 @@ class ScoutFilter extends Component {
                 id_league: '',
                 id_team_current: '',
                 name: '',
-            } , () => {
+            }, () => {
                 nextProps.stopClearing();
             });
         }
     }
 
     changeName(event) {
-        this.setState({name : event.target.value} , () => {
+        this.setState({name: event.target.value}, () => {
             this.makeFilterRequest();
         })
     }
 
     changeTeam(event) {
-        this.setState({team : event.target.value} , () => {
+        this.setState({team: event.target.value}, () => {
             this.makeFilterRequest();
         })
     }
 
-    onChangeAutosuggest = name => (event, {newValue}) => {
+    handleChange = (name) => event => {
+        return this.setState({[name]: event.target.value}, () => {
+            this.makeFilterRequest();
+        });
+    };
 
-        this.setState({[name]: filterOnReg(/^[0-9]+/ ,newValue) }, () => {
+    onChangeAutosuggest = name => (event, {suggestionValue}) => {
+        this.setState({[name]: filterOnReg(/^[0-9]+/, suggestionValue)}, () => {
             this.makeFilterRequest();
         });
     };
@@ -130,11 +135,11 @@ class ScoutFilter extends Component {
 
             id_league: this.state.id_league ? this.state.id_league : null,
             id_team_current: this.state.id_team_current ? this.state.id_team_current : null,
-            'name_search' : this.state.name ? this.state.name : null,
+            'name_search': this.state.name ? this.state.name : null,
         };
 
 
-        if ( this.state.name  || this.state.id_league || this.state.id_team_current) {
+        if (this.state.name || this.state.id_league || this.state.id_team_current) {
             queryString += '?';
 
             for (let key in options) {
@@ -145,61 +150,51 @@ class ScoutFilter extends Component {
             }
         }
 
-        this.props.filterScouts(queryString.slice(0 , -1));
+        this.props.filterScouts(queryString.slice(0, -1));
     }
 
     render() {
-        const {classes , width} = this.props;
+        const {classes, width} = this.props;
 
-            return ( <div className={classes.row}>
+        return ( <div className={classes.row}>
 
-                <Grid container gutter={40}>
-                    <Grid item xs={12} sm={6} md={4}>
-                        <Autosuggest fullWidth
-                                     suggestions={this.props.leagueOptions}
-                                     onSuggestionsFetchRequested={() => {}}
-                                     onSuggestionsClearRequested={() => {}}
-                                     inputProps={{
-                                         label: "League",
-                                         value: this.props.leagues[this.state.id_league] || this.props.query['id_league'] || '',
-                                         onChange: this.onChangeAutosuggest('id_league'),
-                                    }}
-                            className={classes.textField}/>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                        <Autosuggest fullWidth
-                            suggestions={this.state.id_league ? this.props.teamOptions.filter(i => i.item.id_league === parseInt(this.state.id_league)) : this.props.teamOptions}
-                            onSuggestionsFetchRequested={() => {}}
-                            onSuggestionsClearRequested={() => {}}
-                            inputProps={{
-                                label: "Team",
-                                value: this.props.teams[this.state.id_team_current] || this.props.query['id_team_current'] || '',
-                                onChange: this.onChangeAutosuggest('id_team_current'),
-                            }}
-                            className={classes.textField}/>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                        <TextField
-                            id="name"
-                            label="Name"
-                            value={this.state.name || this.props.query['name_search'] || ''}
-                            className={classes.textField}
-                            onChange={this.changeName}
-                        />
-                    </Grid>
-
-                    <Hidden smUp>
-                        <div className={classes.buttonViewContainer}>
-                            <Button raised color="primary" className={classes.viewButton} onClick={this.props.viewResults} >
-                                <Typography className={classes.viewTypography}>
-                                    view all {this.props.total} scouts
-                                </Typography>
-                            </Button>
-                        </div>
-                    </Hidden>
-
+            <Grid container gutter={40}>
+                <Grid item xs={12} sm={6} md={4}>
+                    <Autosuggest fullWidth
+                                 label="League"
+                                 value={this.props.leagues[this.state.id_league] || this.props.query['id_league'] || ''}
+                                 suggestions={this.props.leagueOptions}
+                                 onSuggestionSelected={this.onChangeAutosuggest('id_league')}/>
                 </Grid>
-            </div>)
+                <Grid item xs={12} sm={6} md={4}>
+                    <Autosuggest fullWidth
+                                 label="Team"
+                                 value={this.props.leagues[this.state.id_team_current] || this.props.query['id_team_current'] || ''}
+                                 suggestions={this.state.id_league ? this.props.teamOptions.filter(i => i.item.id_league === parseInt(this.state.id_league)) : this.props.teamOptions}
+                                 onSuggestionSelected={this.onChangeAutosuggest('id_team_current')}/>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
+                    <TextField
+                        id="name"
+                        label="Name"
+                        value={this.state.name || this.props.query['name_search'] || ''}
+                        className={classes.textField}
+                        onChange={this.changeName}
+                    />
+                </Grid>
+
+                <Hidden smUp>
+                    <div className={classes.buttonViewContainer}>
+                        <Button raised color="primary" className={classes.viewButton} onClick={this.props.viewResults}>
+                            <Typography className={classes.viewTypography}>
+                                view all {this.props.total} scouts
+                            </Typography>
+                        </Button>
+                    </div>
+                </Hidden>
+
+            </Grid>
+        </div>)
 
     }
 }

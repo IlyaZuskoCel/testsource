@@ -150,22 +150,19 @@ class ScoutForm extends Component {
                             <Autosuggest fullWidth
                                          required
                                          error={this.state.errors.indexOf('id_league') > -1}
+                                         label="League"
+                                         value={this.state.id_league ? (this.props.leagues[this.state.id_league] || this.props.leagues['-1']) : ''}
                                          suggestions={this.props.leagueOptions}
-                                         onSuggestionsFetchRequested={() => {
-                                         }}
-                                         onSuggestionsClearRequested={() => {
-                                         }}
-                                         inputProps={{
-                                             label: "League",
-                                             value: this.props.leagues[this.state.id_league] || '',
-                                             onChange: (event, {newValue}) => this.setState({
-                                                 id_league: newValue,
-                                                 id_team_current: newValue === '-1' ? '-1' : ''
-                                             }),
-                                         }}
-                            />
+                                         onSuggestionSelected={(event, {suggestionValue}) => {
+                                             this.setState({
+                                                 id_league: suggestionValue,
+                                                 id_team_current: suggestionValue === '-1' ? '-1' : ''
+                                             });
+                                         }}/>
+
+
                         </Grid>
-                        {this.state.id_league === '-1' && (
+                        {(this.state.id_league === '-1' ) && (
                             <Grid item xs={12}>
                                 <TextField fullWidth
                                            required
@@ -179,25 +176,23 @@ class ScoutForm extends Component {
 
                         {this.state.id_league !== '-1' && (
                             <Grid item xs={12}>
-
                                 <Autosuggest fullWidth
                                              required
+                                             label="Team"
                                              error={this.state.errors.indexOf('id_team_current') > -1}
                                              suggestions={this.state.id_league ? this.props.teamOptions.filter(i => i.value === '-1' || i.item.id_league === parseInt(this.state.id_league)) : this.props.teamOptions}
-                                             onSuggestionsFetchRequested={() => {
+                                             onSuggestionSelected={(event, {suggestionValue}) => {
+                                                 this.setState({
+                                                     id_team_current: suggestionValue,
+                                                 });
                                              }}
-                                             onSuggestionsClearRequested={() => {
-                                             }}
-                                             inputProps={{
-                                                 label: "Team",
-                                                 value: this.props.teams[this.state.id_team_current] || '',
-                                                 onChange: (event, {newValue}) => this.setState({id_team_current: newValue}),
-                                             }}
+                                             value={this.state.id_team_current ? (this.props.teams[this.state.id_team_current] || this.props.teams['-1']) : ''}
                                 />
                             </Grid>
                         )}
 
-                        {this.state.id_team_current === '-1' && (
+                        {(this.state.id_league === '-1' || (this.state.id_league && !this.props.leagues[this.state.id_league]) || this.state.id_team_current === '-1' || (this.state.id_team_current && !this.props.teams[this.state.id_team_current])) && (
+
                             <Grid item xs={12}>
                                 <TextField fullWidth
                                            required

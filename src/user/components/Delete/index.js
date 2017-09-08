@@ -18,7 +18,7 @@ import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import Hidden from 'material-ui/Hidden';
 
-import {Link, Icon, Autosuggest} from '../../../common/components';
+import {Link, Icon, DropDown} from '../../../common/components';
 
 
 import {DELETE_REASON_LIST} from '../../constants';
@@ -175,19 +175,13 @@ class Delete extends Component {
                 <form className={classes.formWrap} onSubmit={this.submit}>
                     <Grid container className={classes.passwords}>
                         <Grid item xs={12} sm={6}>
-                            <Autosuggest fullWidth
-                                         error={this.state.errors.indexOf('why') > -1}
-                                         suggestions={whyOptions}
-                                         onSuggestionsFetchRequested={() => {
-                                         }}
-                                         onSuggestionsClearRequested={() => {
-                                         }}
-                                         inputProps={{
-                                             label: "Why are you deleting your account?",
-                                             value: DELETE_REASON_LIST[this.state.why] || '',
-                                             onChange: (event, {newValue}) => this.setState({why: newValue}),
-                                         }}
-                            />
+                            <DropDown fullWidth
+                                      required
+                                      error={this.state.errors.indexOf('why') > -1}
+                                      options={whyOptions}
+                                      value={this.state.why}
+                                      label="Why are you deleting your account?"
+                                      onChange={this.handleChange('why')}/>
                         </Grid>
                         <Hidden xsDown>
                             <Grid item xs={12} sm={6}/>

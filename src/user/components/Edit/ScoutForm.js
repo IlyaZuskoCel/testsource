@@ -336,20 +336,15 @@ class ScoutForm extends Component {
                                 <Autosuggest fullWidth
                                              required
                                              error={this.state.errors.indexOf('id_league') > -1}
+                                             label="Current League"
+                                             value={this.state.id_league ? (this.props.leagues[this.state.id_league] || this.props.leagues['-1']) : ''}
                                              suggestions={this.props.leagueOptions}
-                                             onSuggestionsFetchRequested={() => {
-                                             }}
-                                             onSuggestionsClearRequested={() => {
-                                             }}
-                                             inputProps={{
-                                                 label: "Current League",
-                                                 value: this.state.id_league ? (this.props.leagues[this.state.id_league] || this.props.leagues['-1']) : '',
-                                                 onChange: (event, {newValue}) => this.setState({
-                                                     id_league: newValue,
-                                                     id_team_current: newValue === '-1' ? '-1' : ''
-                                                 }),
-                                             }}
-                                />
+                                             onSuggestionSelected={(event, {suggestionValue}) => {
+                                                 this.setState({
+                                                     id_league: suggestionValue,
+                                                     id_team_current: suggestionValue === '-1' ? '-1' : ''
+                                                 });
+                                             }}/>
                             </Grid>
 
                             {(this.state.id_league === '-1' || (this.state.id_league && !this.props.leagues[this.state.id_league])) && (
@@ -370,17 +365,15 @@ class ScoutForm extends Component {
 
                                     <Autosuggest fullWidth
                                                  required
+                                                 label="Current Team"
                                                  error={this.state.errors.indexOf('id_team_current') > -1}
                                                  suggestions={this.state.id_league ? this.props.teamOptions.filter(i => i.value === '-1' || i.item.id_league === parseInt(this.state.id_league)) : this.props.teamOptions}
-                                                 onSuggestionsFetchRequested={() => {
+                                                 onSuggestionSelected={(event, {suggestionValue}) => {
+                                                     this.setState({
+                                                         id_team_current: suggestionValue,
+                                                     });
                                                  }}
-                                                 onSuggestionsClearRequested={() => {
-                                                 }}
-                                                 inputProps={{
-                                                     label: "Current Team",
-                                                     value: this.state.id_team_current ? (this.props.teams[this.state.id_team_current] || this.props.teams['-1']) : '',
-                                                     onChange: (event, {newValue}) => this.setState({id_team_current: newValue}),
-                                                 }}
+                                                 value={this.state.id_team_current ? (this.props.teams[this.state.id_team_current] || this.props.teams['-1']) : ''}
                                     />
                                 </Grid>
                             )}

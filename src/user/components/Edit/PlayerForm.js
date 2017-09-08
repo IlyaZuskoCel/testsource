@@ -18,7 +18,7 @@ import Button from 'material-ui/Button';
 import Hidden from 'material-ui/Hidden';
 import Dialog, {DialogActions, DialogContent, DialogTitle} from 'material-ui/Dialog';
 
-import {DateTextField, HeightTextField, Autosuggest, Link, Icon, TextArea} from '../../../common/components';
+import {DateTextField, HeightTextField, Autosuggest, Link, Icon, TextArea, DropDown} from '../../../common/components';
 
 import defaultPhoto from './assets/images/default-photo.png';
 
@@ -369,35 +369,25 @@ class PlayerForm extends Component {
 
                         </Grid>
                         <Grid item xs={12} md={6}>
-                            <Autosuggest fullWidth
-                                         error={this.state.errors.indexOf('gender') > -1}
-                                         suggestions={genderOptions}
-                                         onSuggestionsFetchRequested={() => {
-                                         }}
-                                         onSuggestionsClearRequested={() => {
-                                         }}
-                                         inputProps={{
-                                             label: "Gender",
-                                             value: GENDER_LIST[this.state.gender] || '',
-                                             onChange: (event, {newValue}) => this.setState({gender: newValue}),
-                                         }}
-                            />
+                            <DropDown fullWidth
+                                      error={this.state.errors.indexOf('gender') > -1}
+                                      options={genderOptions}
+                                      label="Gender"
+                                      value={GENDER_LIST[this.state.gender] || ''}
+                                      onChange={this.handleChange('gender')}/>
 
                         </Grid>
                         <Grid item xs={12} md={6}>
                             <Autosuggest fullWidth
-                                         error={this.state.errors.indexOf('nationality') > -1}
+                                         error={this.state.errors.indexOf('id_league') > -1}
+                                         label="Nationality"
                                          suggestions={this.props.nationalityOptions}
-                                         onSuggestionsFetchRequested={() => {
+                                         onSuggestionSelected={(event, {suggestionValue}) => {
+                                             this.setState({
+                                                 nationality: suggestionValue,
+                                             });
                                          }}
-                                         onSuggestionsClearRequested={() => {
-                                         }}
-                                         inputProps={{
-                                             label: "Nationality",
-                                             value: this.props.nationalities[this.state.nationality] || '',
-                                             onChange: (event, {newValue}) => this.setState({nationality: newValue}),
-                                         }}
-                            />
+                                         value={this.props.nationalities[this.state.nationality] || ''}/>
 
                         </Grid>
 
@@ -405,34 +395,20 @@ class PlayerForm extends Component {
                     <Typography type="subheading" className={classes.subTitle}>Hockey Information</Typography>
                     <Grid container>
                         <Grid item xs={12} md={6}>
-                            <Autosuggest fullWidth
-                                         error={this.state.errors.indexOf('position') > -1}
-                                         suggestions={positionOptions}
-                                         onSuggestionsFetchRequested={() => {
-                                         }}
-                                         onSuggestionsClearRequested={() => {
-                                         }}
-                                         inputProps={{
-                                             label: "Position",
-                                             value: POS_LIST[this.state.position] || '',
-                                             onChange: (event, {newValue}) => this.setState({position: newValue}),
-                                         }}
-                            />
+                            <DropDown fullWidth
+                                      error={this.state.errors.indexOf('position') > -1}
+                                      options={positionOptions}
+                                      label="Position"
+                                      value={POS_LIST[this.state.position] || ''}
+                                      onChange={this.handleChange('position')}/>
                         </Grid>
                         <Grid item xs={6} md={6}>
-                            <Autosuggest fullWidth
-                                         error={this.state.errors.indexOf('shot') > -1}
-                                         suggestions={shotOptions}
-                                         onSuggestionsFetchRequested={() => {
-                                         }}
-                                         onSuggestionsClearRequested={() => {
-                                         }}
-                                         inputProps={{
-                                             label: "Shot",
-                                             value: SHOT_LIST[this.state.shot] || '',
-                                             onChange: (event, {newValue}) => this.setState({shot: newValue}),
-                                         }}
-                            />
+                            <DropDown fullWidth
+                                      error={this.state.errors.indexOf('shot') > -1}
+                                      options={shotOptions}
+                                      label="Shot"
+                                      value={SHOT_LIST[this.state.shot] || ''}
+                                      onChange={this.handleChange('shot')}/>
                         </Grid>
 
                         <Grid item xs={6} md={6}>
@@ -468,20 +444,15 @@ class PlayerForm extends Component {
                             <Grid item xs={12}>
                                 <Autosuggest fullWidth
                                              error={this.state.errors.indexOf('id_league') > -1}
+                                             label="Current or Most Recent League"
                                              suggestions={this.props.leagueOptions}
-                                             onSuggestionsFetchRequested={() => {
+                                             onSuggestionSelected={(event, {suggestionValue}) => {
+                                                 this.setState({
+                                                     id_league: suggestionValue,
+                                                     id_team_current: suggestionValue === '-1' ? '-1' : ''
+                                                 });
                                              }}
-                                             onSuggestionsClearRequested={() => {
-                                             }}
-                                             inputProps={{
-                                                 label: "Current or Most Recent League",
-                                                 value: this.state.id_league ? (this.props.leagues[this.state.id_league] || this.props.leagues['-1']) : '',
-                                                 onChange: (event, {newValue}) => this.setState({
-                                                     id_league: newValue,
-                                                     id_team_current: newValue === '-1' ? '-1' : ''
-                                                 }),
-                                             }}
-                                />
+                                             value={this.state.id_league ? (this.props.leagues[this.state.id_league] || this.props.leagues['-1']) : ''}/>
                             </Grid>
 
                             {(this.state.id_league === '-1' || (this.state.id_league && !this.props.leagues[this.state.id_league])) && (
@@ -502,17 +473,14 @@ class PlayerForm extends Component {
 
                                     <Autosuggest fullWidth
                                                  error={this.state.errors.indexOf('id_team_current') > -1}
+                                                 label="Current or Most Recent Team"
                                                  suggestions={this.state.id_league ? this.props.teamOptions.filter(i => i.value === '-1' || i.item.id_league === parseInt(this.state.id_league)) : this.props.teamOptions}
-                                                 onSuggestionsFetchRequested={() => {
+                                                 onSuggestionSelected={(event, {suggestionValue}) => {
+                                                     this.setState({
+                                                         id_team_current: suggestionValue,
+                                                     });
                                                  }}
-                                                 onSuggestionsClearRequested={() => {
-                                                 }}
-                                                 inputProps={{
-                                                     label: "Current or Most Recent Team",
-                                                     value: this.state.id_team_current ? (this.props.teams[this.state.id_team_current] || this.props.teams['-1']) : '',
-                                                     onChange: (event, {newValue}) => this.setState({id_team_current: newValue}),
-                                                 }}
-                                    />
+                                                 value={this.state.id_team_current ? (this.props.teams[this.state.id_team_current] || this.props.teams['-1']) : ''}/>
                                 </Grid>
                             )}
 

@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import Grid from 'material-ui/Grid';
 import TextField from 'material-ui/TextField';
-import {Link, Icon, Pagination, Autosuggest} from '../../../common/components';
+import {Link, Icon, Pagination, Autosuggest, DropDown} from '../../../common/components';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import withWidth from 'material-ui/utils/withWidth';
 import classNames from 'classnames';
@@ -16,7 +16,7 @@ import Typography from 'material-ui/Typography';
 import Hidden from 'material-ui/Hidden';
 
 
-import {PlAYER_MAX_AGE , PLAYER_MIN_AGE} from "../../../common/constants/playerSettings";
+import {PlAYER_MAX_AGE, PLAYER_MIN_AGE} from "../../../common/constants/playerSettings";
 
 import queryParse from 'query-string';
 import {RangeSlider} from '../../../common/components';
@@ -28,6 +28,8 @@ let positionOptions = Object.keys(POS_LIST).map(value => ({
     label: POS_LIST[value],
     value
 }));
+
+positionOptions.unshift({label: 'None', value: ''});
 
 const styleSheet = createStyleSheet('ScoutFilter', theme => ({
     row: {
@@ -55,7 +57,7 @@ const styleSheet = createStyleSheet('ScoutFilter', theme => ({
     },
 
     mobileTextField: {
-      width: '100%',
+        width: '100%',
     },
 
     viewButton: {
@@ -86,34 +88,37 @@ const styleSheet = createStyleSheet('ScoutFilter', theme => ({
 
 class PlayerFilter extends Component {
 
-constructor(props) {
-    super(props);
+    constructor(props) {
+        super(props);
 
-    this.state = {
-        DropdownValue: '',
-        name: '',
-        team: '',
-        year: '',
-        position: '',
-        leagues: [],
-        born: [PLAYER_MIN_AGE , PlAYER_MAX_AGE]
-    };
+        this.state = {
+            DropdownValue: '',
+            name: '',
+            team: '',
+            year: '',
+            position: '',
+            leagues: [],
+            born: [PLAYER_MIN_AGE, PlAYER_MAX_AGE]
+        };
 
-    this.born = [PLAYER_MIN_AGE , PlAYER_MAX_AGE];
-    this.makeFilterRequest = this.makeFilterRequest.bind(this);
+        this.born = [PLAYER_MIN_AGE, PlAYER_MAX_AGE];
+        this.makeFilterRequest = this.makeFilterRequest.bind(this);
 
-    this.onChangeName = this.onChangeName.bind(this);
-    this.getRange = this.getRange.bind(this);
-}
+        this.onChangeName = this.onChangeName.bind(this);
+        this.getRange = this.getRange.bind(this);
+    }
 
-
-onChangeAutosuggest = name => (event, {newValue}) => {
-
-        this.setState({[name]: filterOnReg(/^[0-9]+/ ,newValue) }, () => {
+    handleChange = (name) => event => {
+        return this.setState({[name]: event.target.value}, () => {
             this.makeFilterRequest();
         });
     };
 
+    onChangeAutosuggest = name => (event, {suggestionValue}) => {
+        this.setState({[name]: filterOnReg(/^[0-9]+/, suggestionValue)}, () => {
+            this.makeFilterRequest();
+        });
+    };
 
     onChangeName(event) {
         this.setState({name: event.target.value}, () => {
@@ -122,10 +127,11 @@ onChangeAutosuggest = name => (event, {newValue}) => {
     }
 
     getRange(value) {
-        this.setState({born: value} , () => {
+        this.setState({born: value}, () => {
             this.makeFilterRequest();
         })
     }
+
     handleChangeRange = (value) => {
         this.setState({born: value})
     };
@@ -141,7 +147,7 @@ onChangeAutosuggest = name => (event, {newValue}) => {
             'name_search': this.state.name ? this.state.name : null,
         };
 
-        if (this.state.name || this.state.id_league || this.state.id_team_current  || this.state.year || this.state.position || this.state.values || this.state.born) {
+        if (this.state.name || this.state.id_league || this.state.id_team_current || this.state.year || this.state.position || this.state.values || this.state.born) {
             queryString += '?';
 
             for (let key in options) {
@@ -152,9 +158,9 @@ onChangeAutosuggest = name => (event, {newValue}) => {
                 queryString += key + '=' + options[key] + '&'
             }
 
-            if (this.state.born[0] !== PLAYER_MIN_AGE || this.state.born[1] !== PlAYER_MAX_AGE ) {
+            if (this.state.born[0] !== PLAYER_MIN_AGE || this.state.born[1] !== PlAYER_MAX_AGE) {
                 queryString += `born[0]=${this.state.born[0]}&born[1]=${this.state.born[1]}&`;
-                filters.range = [parseInt(this.state.born[0]) , parseInt(this.state.born[1])];
+                filters.range = [parseInt(this.state.born[0]), parseInt(this.state.born[1])];
             }
         }
 
@@ -173,111 +179,88 @@ onChangeAutosuggest = name => (event, {newValue}) => {
 
         if ('clearField' in nextProps && nextProps.clearField === 'player') {
 
-           this.setState({
-               id_league: '',
-               id_team_current: '',
-               position: '',
-               born: [PLAYER_MIN_AGE , PlAYER_MAX_AGE],
-               name: '',
-           } , () => {
-               nextProps.stopClearing();
-               this.forceUpdate();
-           });
+            this.setState({
+                id_league: '',
+                id_team_current: '',
+                position: '',
+                born: [PLAYER_MIN_AGE, PlAYER_MAX_AGE],
+                name: '',
+            }, () => {
+                nextProps.stopClearing();
+                this.forceUpdate();
+            });
         }
-
 
 
         if ('filters' in nextProps && nextProps.filters.range) {
             this.setState({born: nextProps.filters.range});
-         }
-         else {
-            this.setState({born: [PLAYER_MIN_AGE , PlAYER_MAX_AGE]});
+        }
+        else {
+            this.setState({born: [PLAYER_MIN_AGE, PlAYER_MAX_AGE]});
         }
     }
 
     render() {
-        const {classes , width} = this.props;
+        const {classes, width} = this.props;
 
-            return (<div className={classNames(classes.row , classes.headerMedia)} >
-                <Grid container gutter={40}>
-                    <Grid item xs={12} sm={6} md={4}>
-
-                        <Autosuggest fullWidth
-                                     suggestions={this.props.leagueOptions}
-                                     onSuggestionsFetchRequested={() => {
-                                     }}
-                                     onSuggestionsClearRequested={() => {
-                                     }}
-                                     inputProps={{
-                                         label: "League",
-                                         value: this.props.leagues[this.state.id_league] ||   this.props.query['id_league'] || '',
-                                         onChange: this.onChangeAutosuggest('id_league'),
-                                     }}/>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                        <Autosuggest fullWidth
-                                     suggestions={this.state.id_league ? this.props.teamOptions.filter(i => i.item.id_league === parseInt(this.state.id_league)) : this.props.teamOptions}
-                                     onSuggestionsFetchRequested={() => {
-
-                                     }}
-                                     onSuggestionsClearRequested={() => {
-                                     }}
-                                     inputProps={{
-                                         label: "Team",
-                                         value: this.props.teams[this.state.id_team_current] || this.props.query['id_team_current']  || '',
-                                         onChange: this.onChangeAutosuggest('id_team_current'),
-                                     }}/>
-
-
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                        <Autosuggest fullWidth
-                                     suggestions={positionOptions}
-                                     onSuggestionsFetchRequested={() => {
-                                     }}
-                                     onSuggestionsClearRequested={() => {
-                                     }}
-                                     inputProps={{
-                                         label: "Position",
-                                         value: POS_LIST[this.state.position] || this.props.query['position'] || '',
-                                         value: POS_LIST[this.state.position] || this.props.query['position'] || '',
-                                         onChange: this.onChangeAutosuggest('position'),
-                                     }}
-                        />
-
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                            <RangeSlider  onAfterChange={this.getRange}
-                                          onChange={this.handleChangeRange}
-                                          value={this.state.born}
-                                          defaultValue={[PLAYER_MIN_AGE , PlAYER_MAX_AGE]}
-                                          label={'Year born'}
-                                          min={PLAYER_MIN_AGE}
-                                          max={PlAYER_MAX_AGE}/>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                        <TextField
-                            id="name"
-                            label="Name"
-                            value={this.state.name || this.props.query['name_search'] || ''}
-                            className={width === 'xl' || width === 'lg' || width === 'md' ? classes.textField : classes.mobileTextField}
-                            onChange={this.onChangeName}
-                        />
-                    </Grid>
-
-                    <Hidden smUp>
-                        <div className={classes.buttonViewContainer}>
-                            <Button raised color="primary" className={classes.viewButton} onClick={this.props.viewResults} >
-                                <Typography className={classes.viewTypography}>
-                                    view all {this.props.total} players
-                                </Typography>
-                            </Button>
-                        </div>
-                    </Hidden>
+        return (<div className={classNames(classes.row, classes.headerMedia)}>
+            <Grid container gutter={40}>
+                <Grid item xs={12} sm={6} md={4}>
+                    <Autosuggest fullWidth
+                                 label="League"
+                                 value={this.props.leagues[this.state.id_league] || this.props.query['id_league'] || ''}
+                                 suggestions={this.props.leagueOptions}
+                                 onSuggestionSelected={this.onChangeAutosuggest('id_league')}/>
 
                 </Grid>
+                <Grid item xs={12} sm={6} md={4}>
 
-            </div>);
+                    <Autosuggest fullWidth
+                                 label="Team"
+                                 value={this.props.leagues[this.state.id_team_current] || this.props.query['id_team_current'] || ''}
+                                 suggestions={this.state.id_league ? this.props.teamOptions.filter(i => i.item.id_league === parseInt(this.state.id_league)) : this.props.teamOptions}
+                                 onSuggestionSelected={this.onChangeAutosuggest('id_team_current')}/>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
+                    <DropDown fullWidth
+                              options={positionOptions}
+                              label="Position"
+                              value={POS_LIST[this.state.position] || POS_LIST[this.props.query['position']] || ''}
+                              onChange={this.handleChange('position')}/>
+
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
+                    <RangeSlider onAfterChange={this.getRange}
+                                 onChange={this.handleChangeRange}
+                                 value={this.state.born}
+                                 defaultValue={[PLAYER_MIN_AGE, PlAYER_MAX_AGE]}
+                                 label={'Year born'}
+                                 min={PLAYER_MIN_AGE}
+                                 max={PlAYER_MAX_AGE}/>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
+                    <TextField
+                        id="name"
+                        label="Name"
+                        value={this.state.name || this.props.query['name_search'] || ''}
+                        className={width === 'xl' || width === 'lg' || width === 'md' ? classes.textField : classes.mobileTextField}
+                        onChange={this.onChangeName}
+                    />
+                </Grid>
+
+                <Hidden smUp>
+                    <div className={classes.buttonViewContainer}>
+                        <Button raised color="primary" className={classes.viewButton} onClick={this.props.viewResults}>
+                            <Typography className={classes.viewTypography}>
+                                view all {this.props.total} players
+                            </Typography>
+                        </Button>
+                    </div>
+                </Hidden>
+
+            </Grid>
+
+        </div>);
     }
 }
 
