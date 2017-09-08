@@ -173,17 +173,6 @@ const styleSheet = createStyleSheet('Search' , theme => ({
     },
 }));
 
-const splitSearchQuery = (q) => {
-    let result = {};
-
-    q.slice(1).split('&').map(item => {
-        let splitItem = item.split('=');
-        result[splitItem[0]] = splitItem[1];
-    });
-
-    return result;
-}
-
 class Search extends Component {
 
     constructor(props) {
@@ -197,7 +186,7 @@ class Search extends Component {
             mobileFilterOn: true,
             appliedFilters: 0,
             clearFilters: '',
-        }
+        };
 
         this.handleChange = this.handleChange.bind(this);
         this.changePagination = this.changePagination.bind(this);
@@ -221,6 +210,7 @@ class Search extends Component {
                 this.countFilters();
             });
         }
+
     }
 
     countFilters() {
@@ -252,6 +242,7 @@ class Search extends Component {
             this.props.go(this.props.type === 'scout' ? '/search/scout' : '/search/player');
 
             setTimeout(() => {
+                this.props.clearFilters();
                 this.props.upload(this.props.type , {page : 1 , 'per-page': 18 , ...this.state.query});
             } , 400);
         });
@@ -294,8 +285,7 @@ class Search extends Component {
                                                                      activePage={this.state.activePage}
                                                                      query={this.state.query}
                                                                      clearFilters={this.state.clearFilters}
-                                                                     stopClearing={this.stopClearing}
-                        />}
+                                                                     stopClearing={this.stopClearing}/>}
 
                         {this.props.type === 'player' && <PlayerFilter leagues={this.props.leagues}
                                                                        leagueOptions={this.props.leagueOptions}
@@ -307,9 +297,8 @@ class Search extends Component {
                                                                        clearFilters={this.state.clearFilters}
                                                                        stopClearing={this.stopClearing}
 
-                                                                       filters={this.props.filters}
+                                                                       filters={this.props.filters && this.props.filters.player ? this.props.filters.player : {}}
                                                                        setFilters={this.props.setFilters}
-                                                                       clear={this.props.clearFilters}
                         />}
                     </div>
                 </header></Hidden>
@@ -354,7 +343,7 @@ class Search extends Component {
                                                                  query={this.state.query}
                                                                  clearField={this.state.clearField}
                                                                  stopClearing={this.stopClearing}
-                                                                 />
+                     />
                     }
 
                     {this.props.type === 'player' && <PlayerFilter leagues={this.props.leagues}
@@ -368,6 +357,9 @@ class Search extends Component {
                                                                    query={this.state.query}
                                                                    clearField={this.state.clearField}
                                                                    stopClearing={this.stopClearing}
+
+                                                                   filters={this.props.filters && this.props.filters.player ? this.props.filters.player : {}}
+                                                                   setFilters={this.props.setFilters}
                                                                   />}
                 </div>
             </Hidden>}
