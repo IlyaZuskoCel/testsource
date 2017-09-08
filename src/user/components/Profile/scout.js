@@ -90,14 +90,7 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
 
         [theme.breakpoints.down('sm')]: {
             height: 536,
-            right: 404,
-            opacity: 0.8
-
-        },
-
-        [theme.breakpoints.down('xs')]: {
-            height: 536,
-            right: 304,
+            right: 284,
             opacity: 0.8
 
         },
@@ -126,15 +119,13 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
             width: 560,
         },
 
+
         [theme.breakpoints.down('sm')]: {
+            right: 0,
             height: 536,
-            width: 364,
+            width: 284,
         },
 
-        [theme.breakpoints.down('xs')]: {
-            height: 536,
-            width: 264,
-        },
         transform: 'skew(-20deg)',
     },
     backgroundCenter: {

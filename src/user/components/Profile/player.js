@@ -112,17 +112,11 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
 
         [theme.breakpoints.down('sm')]: {
             height: 536,
-            right: 364,
-            opacity: 0.8
-
-        },
-
-        [theme.breakpoints.down('xs')]: {
-            height: 536,
             right: 284,
             opacity: 0.8
 
         },
+
 
         backgroundImage: 'linear-gradient(311deg, #f55e58, #c9011b)',
         transform: 'skew(-20deg)',
@@ -152,13 +146,10 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
         [theme.breakpoints.down('sm')]: {
             right: 0,
             height: 536,
-            width: 364,
-        },
-
-        [theme.breakpoints.down('xs')]: {
-            height: 536,
             width: 284,
         },
+
+
         transform: 'skew(-20deg)',
     },
     backgroundCenter: {
