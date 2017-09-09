@@ -12,6 +12,7 @@ stages:
 #######################
 
 before_script:
+  - echo $DOCKER_DRIVER
   - docker info
 
 build moonion latest:
