@@ -1,6 +1,5 @@
 variables:
   GIT_SUBMODULE_STRATEGY: none
-  DOCKER_DRIVER: overlay2
 
 stages:
   - build
@@ -10,10 +9,6 @@ stages:
 #######################
 #   Moonion Builds    #
 #######################
-
-before_script:
-  - echo $DOCKER_DRIVER
-  - docker info
 
 build moonion latest:
   stage: build
