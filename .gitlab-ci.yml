@@ -10,6 +10,8 @@ stages:
 #   Moonion Builds    #
 #######################
 
+before_script:
+  - docker info
 
 build moonion latest:
   stage: build
