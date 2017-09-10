@@ -179,12 +179,21 @@ class Trim extends Component {
         document.ontouchend = this.stopDrag;
     }
 
+    componentWillUnmount() {
+        document.onmousedown = null;
+        document.onmouseup = null;
+
+        document.ontouchstart = null;
+        document.ontouchend = null;
+    }
 
     handleLoadedMetadata = () => {
         const video = document.getElementById("video");
         if (this.props.video.time_start)
             video.currentTime = this.props.video.time_start / 1000;
-
+    };
+    handleCanPlay = () => {
+        const video = document.getElementById("video");
         const width = video.videoWidth;
         const height = video.videoHeight;
         const canvas = document.createElement('canvas');
@@ -219,16 +228,7 @@ class Trim extends Component {
             imageCircle.style.left = (-1 * (left + 2)) + 'px';
             imageCircle.style.top = (-1 * (top + 2)) + 'px';
         });
-
     };
-
-    componentWillUnmount() {
-        document.onmousedown = null;
-        document.onmouseup = null;
-
-        document.ontouchstart = null;
-        document.ontouchend = null;
-    }
 
 
     startDrag = (e) => {
@@ -362,6 +362,7 @@ class Trim extends Component {
                            preload
                            className={classes.video}
                            onLoadedMetadata={this.handleLoadedMetadata}
+                           onCanPlay={this.handleCanPlay}
                            controls/>
                 </Paper>
             )}
