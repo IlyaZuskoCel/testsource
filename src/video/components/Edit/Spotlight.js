@@ -199,7 +199,6 @@ class Trim extends Component {
         const canvas = document.createElement('canvas');
         const context = canvas.getContext('2d');
 
-        alert(''+video.currentTime+'-'+width+'-'+height);
         canvas.width = width;
         canvas.height = height;
 
