@@ -204,6 +204,7 @@ class Trim extends Component {
         canvas.height = height;
 
         try {
+
             context.drawImage(video, 0, 0, width, height);
 
             console.log(canvas, width, height);
@@ -235,6 +236,7 @@ class Trim extends Component {
                 imageCircle.style.top = (-1 * (top + 2)) + 'px';
             });
         } catch (e) {
+            console.log(e);
             if (e.name === "NS_ERROR_NOT_AVAILABLE") {
                 // Wait a bit before trying again; you may wish to change the
                 // length of this delay.
