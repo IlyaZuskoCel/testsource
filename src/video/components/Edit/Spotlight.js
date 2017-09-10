@@ -195,7 +195,8 @@ class Trim extends Component {
         const video = document.getElementById("video");
         const width = video.videoWidth;
         const height = video.videoHeight;
-        const canvas = document.createElement('canvas');
+        // const canvas = document.createElement('canvas');
+        const canvas = document.getElementById("canvas");
         const context = canvas.getContext('2d');
 
         canvas.width = width;
@@ -305,7 +306,7 @@ class Trim extends Component {
 
         return false;
     };
-    stopDrag = (e) => {
+    stopDrag = () => {
 
         if (!this.drag) return;
         this.drag = false;
@@ -367,6 +368,7 @@ class Trim extends Component {
                            className={classes.video}
                            onPlay={this.handleCanPlay}
                            controls/>
+                    <canvas id="canvas"/>
                 </Paper>
             )}
 
