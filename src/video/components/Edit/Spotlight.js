@@ -198,6 +198,7 @@ class Trim extends Component {
             const height = video.videoHeight;
             const canvas = document.createElement('canvas');
             // const canvas = document.getElementById("canvas");
+            console.log(canvas, width, height);
             const context = canvas.getContext('2d');
 
             canvas.width = width;
@@ -369,7 +370,7 @@ class Trim extends Component {
                            autoPlay
                            preload
                            className={classes.video}
-                           onPlay={this.handleCanPlay}
+                           onLoadedData={this.handleCanPlay}
                            controls/>
                     {/*<canvas id="canvas"/>*/}
                 </Paper>
