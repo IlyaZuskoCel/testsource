@@ -238,6 +238,7 @@ class Trim extends Component {
         }
 
         const el = e.target ? e.target : e.srcElement;
+
         if (el.id !== 'circle' && el.id !== 'divCircle') return;
         if (e.preventDefault) e.preventDefault();
 
@@ -352,7 +353,6 @@ class Trim extends Component {
             </Typography>
             <Typography className={classes.desc} type="body1">
                 This is how the scout identifies you. Pinch and drag with 2 fingers to resize the marker.
-                {this.state.tmp}
             </Typography>
 
             {this.state.image ? (

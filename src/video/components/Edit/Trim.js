@@ -96,6 +96,7 @@ class Trim extends Component {
     handleChange = range => {
         const video = document.getElementById("video");
         video.currentTime = range[0] / 1000;
+
         this.props.updateField('time_start', range[0]);
         this.props.updateField('time_end', range[1]);
     };

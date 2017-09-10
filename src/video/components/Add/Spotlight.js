@@ -175,55 +175,61 @@ class Trim extends Component {
         document.onmousedown = this.startDrag;
         document.onmouseup = this.stopDrag;
 
+        document.ontouchstart = this.startDrag;
+        document.ontouchend = this.stopDrag;
 
-        const video = document.createElement('video');
-        video.oncanplay = () => {
-
-            const width = video.videoWidth;
-            const height = video.videoHeight;
-            const canvas = document.createElement('canvas');
-            const context = canvas.getContext('2d');
-
-            canvas.width = width;
-            canvas.height = height;
-
-            context.drawImage(video, 0, 0, width, height);
-
-            this.image = canvas.toDataURL("image/png");
-            this.setState({image: true}, () => {
-                const circle = document.getElementById("circle");
-                const imageCircle = document.getElementById("imageCircle");
-
-
-                const image = document.getElementById("imageSrc");
-
-                if (image.width !== imageCircle.width)
-                    imageCircle.width = image.width;
-                if (image.height !== imageCircle.height)
-                    imageCircle.height = image.height;
-
-
-                const left = this.props.video.overlay_x * image.width / width - 2;
-                const top = this.props.video.overlay_y * image.height / height - 2;
-
-
-                circle.style['margin-left'] = left + 'px';
-                circle.style['margin-top'] = top + 'px';
-
-                imageCircle.style.left = (-1 * (left + 2)) + 'px';
-                imageCircle.style.top = (-1 * (top + 2)) + 'px';
-            });
-
-        };
-        video.src = this.props.video.video_path;
-        video.currentTime = this.props.video.time_start / 1000;
-
+        const video = document.getElementById("video");
+        if (this.props.video.time_start)
+            video.currentTime = this.props.video.time_start / 1000;
     }
 
     componentWillUnmount() {
         document.onmousedown = null;
         document.onmouseup = null;
+
+        document.ontouchstart = null;
+        document.ontouchend = null;
     }
+
+    handlePlay = () => {
+        const video = document.getElementById("video");
+        video.pause();
+        const width = video.videoWidth;
+        const height = video.videoHeight;
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+
+        canvas.width = width;
+        canvas.height = height;
+        context.drawImage(video, 0, 0, width, height);
+        this.image = canvas.toDataURL("image/png");
+
+        this.setState({image: true}, () => {
+            const circle = document.getElementById("circle");
+            const imageCircle = document.getElementById("imageCircle");
+
+
+            const image = document.getElementById("imageSrc");
+
+            if (image.width !== imageCircle.width)
+                imageCircle.width = image.width;
+            if (image.height !== imageCircle.height)
+                imageCircle.height = image.height;
+
+
+            const left = this.props.video.overlay_x * image.width / width - 2;
+            const top = this.props.video.overlay_y * image.height / height - 2;
+
+
+            circle.style['margin-left'] = left + 'px';
+            circle.style['margin-top'] = top + 'px';
+
+            imageCircle.style.left = (-1 * (left + 2)) + 'px';
+            imageCircle.style.top = (-1 * (top + 2)) + 'px';
+        });
+
+
+    };
 
 
     startDrag = (e) => {
@@ -235,6 +241,9 @@ class Trim extends Component {
 
         if (el.id !== 'circle' && el.id !== 'divCircle') return;
         if (e.preventDefault) e.preventDefault();
+
+        document.body.style.overflow = 'hidden';
+
         const imageSrc = document.getElementById("imageSrc");
         const imageCircle = document.getElementById("imageCircle");
 
@@ -246,8 +255,11 @@ class Trim extends Component {
 
         const circle = document.getElementById("circle");
 
-        this.offsetX = e.clientX;
-        this.offsetY = e.clientY;
+        const x = e.clientX || e.touches[0].clientX;
+        const y = e.clientY || e.touches[0].clientY;
+
+        this.offsetX = x;
+        this.offsetY = y;
 
         // assign default values for top and left properties
         if (!circle.style['margin-left']) circle.style['margin-left'] = '0px';
@@ -261,9 +273,13 @@ class Trim extends Component {
 
         // move div element
         document.onmousemove = this.dragging;
+        document.ontouchmove = this.dragging;
+
+
         return false;
     };
     dragging = (e) => {
+
         if (!this.drag) return;
         if (!e) e = window.event;
         const circle = document.getElementById("circle");
@@ -273,9 +289,11 @@ class Trim extends Component {
         const width = imageWrap.offsetWidth;
         const height = imageWrap.offsetHeight;
 
+        const x = e.clientX || e.touches[0].clientX;
+        const y = e.clientY || e.touches[0].clientY;
 
-        let left = this.coordX + e.clientX - this.offsetX;
-        let top = this.coordY + e.clientY - this.offsetY;
+        let left = this.coordX + x - this.offsetX;
+        let top = this.coordY + y - this.offsetY;
         if (left < 0)
             left = 0;
         if (left > width - circle.offsetWidth)
@@ -296,11 +314,13 @@ class Trim extends Component {
 
         return false;
     };
-    stopDrag = (e) => {
+    stopDrag = () => {
 
         if (!this.drag) return;
+        document.body.style.overflow = 'auto';
         this.drag = false;
         document.onmousemove = null;
+        document.ontouchmove = null;
 
         const circle = document.getElementById("circle");
         const image = document.getElementById("imageSrc");
@@ -335,19 +355,30 @@ class Trim extends Component {
                 This is how the scout identifies you. Pinch and drag with 2 fingers to resize the marker.
             </Typography>
 
+            {this.state.image ? (
+                <Paper className={classes.uploadWrap} id="image">
 
-            <Paper className={classes.uploadWrap} id="image">
+                    <img src={this.image} className={classes.imageBg} id="imageSrc"/>
+                    <div className={classes.opacityBg}/>
+                    <div className={classes.imageWrap} id="imageWrap">
+                        <div className={classes.circle} id="circle">
+                            <img src={this.image} className={classes.imageCircle} id="imageCircle"/>
+                            <div className={classes.divCircle} id="divCircle"/>
 
-                <img src={this.image || video.thumb_lg} className={classes.imageBg} id="imageSrc"/>
-                <div className={classes.opacityBg}/>
-                <div className={classes.imageWrap} id="imageWrap">
-                    <div className={classes.circle} id="circle">
-                        <img src={this.image || video.thumb_lg} className={classes.imageCircle} id="imageCircle"/>
-                        <div className={classes.divCircle} id="divCircle"/>
-
+                        </div>
                     </div>
-                </div>
-            </Paper>
+                </Paper>
+            ) : (
+                <Paper className={classes.uploadWrap} id="image">
+                    <video src={video.video_path}
+                           id="video"
+                           autoPlay
+                           preload
+                           className={classes.video}
+                           onPlay={this.handlePlay}
+                           controls/>
+                </Paper>
+            )}
 
 
             <div className={classes.buttons}>
