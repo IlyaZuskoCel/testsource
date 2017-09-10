@@ -135,8 +135,9 @@ class Trim extends Component {
                        onTimeUpdate={this.handleTimeUpdate}
                        controls/>
             </Paper>
-            {this.state.max && (
+            {!!this.state.max && video.time_end > video.time_start && (
                 <div className={classes.range}>
+                    {console.log(video.time_start,video.time_end)}
                     <RangeSlider min={this.state.min}
                                  max={this.state.max}
                                  onAfterChange={this.handleChange}
