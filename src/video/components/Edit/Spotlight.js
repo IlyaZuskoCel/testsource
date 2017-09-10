@@ -172,8 +172,8 @@ class Trim extends Component {
     image = '';
 
     componentDidMount() {
-        document.onmousedown = this.startDrag;
-        document.onmouseup = this.stopDrag;
+        // document.onmousedown = this.startDrag;
+        // document.onmouseup = this.stopDrag;
 
         document.ontouchstart = this.startDrag;
         document.ontouchend = this.stopDrag;
@@ -184,8 +184,8 @@ class Trim extends Component {
     }
 
     componentWillUnmount() {
-        document.onmousedown = null;
-        document.onmouseup = null;
+        // document.onmousedown = null;
+        // document.onmouseup = null;
 
         document.ontouchstart = null;
         document.ontouchend = null;
@@ -266,8 +266,11 @@ class Trim extends Component {
         this.drag = true;
 
         // move div element
-        document.onmousemove = this.dragging;
+        // document.onmousemove = this.dragging;
         document.ontouchmove = this.dragging;
+
+        this.setState({tmp: el.id+'-sdsa'});
+
         return false;
     };
     dragging = (e) => {
