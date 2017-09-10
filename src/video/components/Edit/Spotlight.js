@@ -238,7 +238,10 @@ class Trim extends Component {
             if (e.name === "NS_ERROR_NOT_AVAILABLE") {
                 // Wait a bit before trying again; you may wish to change the
                 // length of this delay.
-                this.handleCanPlay();
+
+                setTimeout(() => {
+                    this.handleCanPlay();
+                }, 100);
             } else {
                 throw e;
             }
@@ -379,7 +382,7 @@ class Trim extends Component {
                            autoPlay
                            preload
                            className={classes.video}
-                           onLoadedData={this.handleCanPlay}
+                           onPlay={this.handleCanPlay}
                            controls/>
                     {/*<canvas id="canvas"/>*/}
                 </Paper>
