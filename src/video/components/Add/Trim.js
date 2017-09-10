@@ -102,6 +102,8 @@ class Trim extends Component {
         const max = Math.ceil(video.duration * 1000);
         if (!this.props.video.time_end)
             this.props.updateField('time_end', max);
+        if (this.props.video.time_start)
+            video.currentTime = this.props.video.time_start / 1000;
         this.setState({min: 0, max, duration})
     };
     handleTimeUpdate = () => {
@@ -130,7 +132,7 @@ class Trim extends Component {
                        onTimeUpdate={this.handleTimeUpdate}
                        controls/>
             </Paper>
-
+            {this.state.max}-{video.duration}
             {this.state.max && (
                 <div className={classes.range}>
                     <RangeSlider min={this.state.min}
