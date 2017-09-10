@@ -241,7 +241,7 @@ class ScoutForm extends Component {
                                required
                                error={this.state.errors.indexOf('email') > -1}
                                label="Your Email Address"
-                               value={this.state.email}
+                               value={this.state.email || ''}
                                type="email"
                                onChange={this.handleChange('email')}
                                className={classes.emailTextField}/>
@@ -271,7 +271,7 @@ class ScoutForm extends Component {
                                            fullWidth
                                            error={this.state.errors.indexOf('phone') > -1}
                                            label="Coach's Phone Number"
-                                           value={this.state.phone}
+                                           value={this.state.phone || ''}
                                            onChange={this.handleChange('phone')}
                                            className={classes.phoneTextField}/>
                                 <Button raised color="primary" onClick={this.handleVerified}>Get verified</Button>

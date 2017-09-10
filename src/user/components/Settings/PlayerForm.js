@@ -233,7 +233,7 @@ class PlayerForm extends Component {
                                error={this.state.errors.indexOf('email') > -1}
                                label="Your Email Address"
                                type="email"
-                               value={this.state.email}
+                               value={this.state.email || ''}
                                onChange={this.handleChange('email')}
                                className={classes.emailTextField}/>
                     <Typography type="caption">This is the email address you will use to login to your Scout Zoo
@@ -268,7 +268,7 @@ class PlayerForm extends Component {
                                    error={this.state.errors.indexOf('agent_email') > -1}
                                    label="Agent's Email Address"
                                    type="email"
-                                   value={this.state.agent_email}
+                                   value={this.state.agent_email || ''}
                                    onChange={this.handleChange('agent_email')}
                                    className={classes.emailAgentTextField}/>
                     )}
