@@ -191,11 +191,6 @@ class Trim extends Component {
         document.ontouchend = null;
     }
 
-    handleLoadedMetadata = () => {
-        const video = document.getElementById("video");
-        if (this.props.video.time_start)
-            video.currentTime = this.props.video.time_start / 1000;
-    };
     handleCanPlay = () => {
         const video = document.getElementById("video");
         video.pause();
@@ -204,6 +199,7 @@ class Trim extends Component {
         const canvas = document.createElement('canvas');
         const context = canvas.getContext('2d');
 
+        alert(''+width+height);
         canvas.width = width;
         canvas.height = height;
 
