@@ -191,64 +191,42 @@ class Trim extends Component {
         document.ontouchend = null;
     }
 
-    handleCanPlay = () => {
+    handlePlay = () => {
         const video = document.getElementById("video");
         video.pause();
         const width = video.videoWidth;
         const height = video.videoHeight;
         const canvas = document.createElement('canvas');
-        // const canvas = document.getElementById("canvas");
-        console.log(canvas, width, height);
         const context = canvas.getContext('2d');
 
         canvas.width = width;
         canvas.height = height;
+        context.drawImage(video, 0, 0, width, height);
+        this.image = canvas.toDataURL("image/png");
 
-        try {
-
-            context.drawImage(video, 0, 0, width, height);
-
-            console.log(canvas, width, height);
-
-            this.image = canvas.toDataURL("image/png");
-
-            console.log(this.image);
-            this.setState({image: true}, () => {
-                const circle = document.getElementById("circle");
-                const imageCircle = document.getElementById("imageCircle");
+        this.setState({image: true}, () => {
+            const circle = document.getElementById("circle");
+            const imageCircle = document.getElementById("imageCircle");
 
 
-                const image = document.getElementById("imageSrc");
+            const image = document.getElementById("imageSrc");
 
-                if (image.width !== imageCircle.width)
-                    imageCircle.width = image.width;
-                if (image.height !== imageCircle.height)
-                    imageCircle.height = image.height;
-
-
-                const left = this.props.video.overlay_x * image.width / width - 2;
-                const top = this.props.video.overlay_y * image.height / height - 2;
+            if (image.width !== imageCircle.width)
+                imageCircle.width = image.width;
+            if (image.height !== imageCircle.height)
+                imageCircle.height = image.height;
 
 
-                circle.style['margin-left'] = left + 'px';
-                circle.style['margin-top'] = top + 'px';
+            const left = this.props.video.overlay_x * image.width / width - 2;
+            const top = this.props.video.overlay_y * image.height / height - 2;
 
-                imageCircle.style.left = (-1 * (left + 2)) + 'px';
-                imageCircle.style.top = (-1 * (top + 2)) + 'px';
-            });
-        } catch (e) {
-            console.log(e);
-            if (e.name === "NS_ERROR_NOT_AVAILABLE") {
-                // Wait a bit before trying again; you may wish to change the
-                // length of this delay.
 
-                // setTimeout(() => {
-                //     this.handleCanPlay();
-                // }, 100);
-            } else {
-                throw e;
-            }
-        }
+            circle.style['margin-left'] = left + 'px';
+            circle.style['margin-top'] = top + 'px';
+
+            imageCircle.style.left = (-1 * (left + 2)) + 'px';
+            imageCircle.style.top = (-1 * (top + 2)) + 'px';
+        });
 
 
     };
@@ -260,7 +238,7 @@ class Trim extends Component {
         }
 
         const el = e.target ? e.target : e.srcElement;
-
+        this.setState({tmp: el.id});
         if (el.id !== 'circle' && el.id !== 'divCircle') return;
         if (e.preventDefault) e.preventDefault();
         const imageSrc = document.getElementById("imageSrc");
@@ -363,6 +341,7 @@ class Trim extends Component {
             </Typography>
             <Typography className={classes.desc} type="body1">
                 This is how the scout identifies you. Pinch and drag with 2 fingers to resize the marker.
+                {this.state.tmp}
             </Typography>
 
             {this.state.image ? (
@@ -385,9 +364,8 @@ class Trim extends Component {
                            autoPlay
                            preload
                            className={classes.video}
-                           onPlay={this.handleCanPlay}
+                           onPlay={this.handlePlay}
                            controls/>
-                    {/*<canvas id="canvas"/>*/}
                 </Paper>
             )}
 
