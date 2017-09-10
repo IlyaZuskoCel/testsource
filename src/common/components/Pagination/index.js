@@ -103,14 +103,14 @@ class Pagination extends Component {
                             className={classes.button}>{currentPage - 2}</Button>
                 )}
 
-                {currentPage > 1 && currentPage !== countPages - 2 && (
+                {currentPage > 1  && (
                     <Button onClick={this.onChange(currentPage - 1)}
                             className={classes.button}>{currentPage - 1}</Button>
                 )}
                 <Button onClick={this.onChange(currentPage)}
                         className={classNames(classes.button, classes.current)}>{currentPage}</Button>
 
-                {currentPage < countPages && currentPage !== 3 && (
+                {currentPage < countPages && (
                     <Button onClick={this.onChange(currentPage + 1)}
                             className={classes.button}>{currentPage + 1}</Button>
                 )}

@@ -97,36 +97,24 @@ class Form extends Component {
                 <Grid item xs={12}>
                     <Typography type="body1">Dropdown</Typography>
 
-                    <Autosuggest
-                        suggestions={[{label: 'Option 1'}, {label: 'Option 2'}]}
-                        onSuggestionsFetchRequested={() => {
-                        }}
-                        onSuggestionsClearRequested={() => {
-                        }}
-                        inputProps={{
-                            label: "Dropdown with no selection",
-                            value: this.state.DropdownValue,
-                            onChange: (event, {newValue}) => this.setState({DropdownValue: newValue}),
-                        }}
-                    />
+                    <Autosuggest fullWidth
+                                 suggestions={[{label: 'Option 1'}, {label: 'Option 2'}]}
+                                 label="Dropdown with no selection"
+                                 value={this.state.DropdownValue || ''}
+                                 onSuggestionSelected={(event, {suggestionValue}) => {
+                                     this.setState({DropdownValue: suggestionValue});
+                                 }}/>
 
 
                 </Grid>
                 <Grid item xs={12}>
                     <Typography type="body1">DropDownCheckBoxes</Typography>
 
-                    <DropDownCheckBoxes suggestions={[{label: 'Option 1', value: 1}, {label: 'Option 2', value: 2}]}
+                    <DropDownCheckBoxes fullWidth
+                                        options={[{label: 'Option 1', value: 1}, {label: 'Option 2', value: 2}]}
                                         value={this.state.DropDownCheckBoxes}
-                                        onChange={(DropDownCheckBoxes) => this.setState({DropDownCheckBoxes})}
-                                        inputProps={{
-                                            fullWidth: true,
-                                            label: "Dropdown with no selection",
-                                            value: [{label: 'Option 1', value: 1}, {label: 'Option 2', value: 2}]
-                                                .filter(item => this.state.DropDownCheckBoxes.indexOf(item.value) > -1)
-                                                .map(item => item.label)
-                                                .join(', '),
-
-                                        }}/>
+                                        label="Dropdown with no selection"
+                                        onChange={(DropDownCheckBoxes) => this.setState({DropDownCheckBoxes})}/>
 
 
                 </Grid>
@@ -188,28 +176,32 @@ class Form extends Component {
 
                 <Grid item xs={12}>
                     <Typography type="body1">Pagination</Typography>
-                    <Pagination currentPage={1} perPage={10} total={60}/>
+                    <Pagination currentPage={1} perPage={10} total={70}/>
                 </Grid>
                 <Grid item xs={12}>
                     <Typography type="body1">Pagination</Typography>
-                    <Pagination currentPage={2} perPage={10} total={60}/>
+                    <Pagination currentPage={2} perPage={10} total={70}/>
                 </Grid>
                 <Grid item xs={12}>
                     <Typography type="body1">Pagination</Typography>
-                    <Pagination currentPage={3} perPage={10} total={60}/>
+                    <Pagination currentPage={3} perPage={10} total={70}/>
                 </Grid>
 
                 <Grid item xs={12}>
                     <Typography type="body1">Pagination</Typography>
-                    <Pagination currentPage={4} perPage={10} total={60}/>
+                    <Pagination currentPage={4} perPage={10} total={70}/>
                 </Grid>
                 <Grid item xs={12}>
                     <Typography type="body1">Pagination</Typography>
-                    <Pagination currentPage={5} perPage={10} total={60}/>
+                    <Pagination currentPage={5} perPage={10} total={70}/>
                 </Grid>
                 <Grid item xs={12}>
                     <Typography type="body1">Pagination</Typography>
-                    <Pagination currentPage={6} perPage={10} total={60}/>
+                    <Pagination currentPage={6} perPage={10} total={70}/>
+                </Grid>
+                <Grid item xs={12}>
+                    <Typography type="body1">Pagination</Typography>
+                    <Pagination currentPage={7} perPage={10} total={70}/>
                 </Grid>
 
                 <Grid item xs={12}>
