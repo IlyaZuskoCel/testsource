@@ -204,6 +204,8 @@ class Trim extends Component {
 
         context.drawImage(video, 0, 0, width, height);
 
+        console.log(canvas, width, height);
+
         this.image = canvas.toDataURL("image/png");
         if (this.image) {
             alert(1);
