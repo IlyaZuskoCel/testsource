@@ -80,7 +80,14 @@ const styleSheet = createStyleSheet('Trim', theme => ({
 
 
 class Trim extends Component {
-    state = {};
+    constructor(props) {
+        super(props);
+        this.state = {
+            min: 0,
+            max: props.video.duration || null
+        };
+    }
+
     handleChange = range => {
         const video = document.getElementById("video");
         video.currentTime = range[0] / 1000;
