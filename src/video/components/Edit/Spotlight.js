@@ -193,6 +193,7 @@ class Trim extends Component {
 
     handleCanPlay = () => {
         const video = document.getElementById("video");
+        video.pause();
         const width = video.videoWidth;
         const height = video.videoHeight;
         const canvas = document.createElement('canvas');
