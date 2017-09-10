@@ -112,7 +112,7 @@ class Add extends Component {
         if (tab > 0 && !this.props.video.video_path) return;
         if (tab > 1 && !this.props.video.time_end) return;
         if (tab > 1 && this.props.video.time_end - this.props.video.time_start > 60000) return;
-        if (tab > 2 && !this.props.video.overlay_x) return;
+        // if (tab > 2 && !this.props.video.overlay_x) return;
         window.scrollTo(0, 0);
         this.setState({tab})
     };
