@@ -88,10 +88,14 @@ class Trim extends Component {
         };
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (this.state.max !== nextProps.video.duration)
+            this.setState({max: nextProps.video.duration})
+    }
+
     handleChange = range => {
         const video = document.getElementById("video");
         video.currentTime = range[0] / 1000;
-        this.setState({range});
 
         this.props.updateField('time_start', range[0]);
         this.props.updateField('time_end', range[1]);
@@ -104,7 +108,7 @@ class Trim extends Component {
             this.props.updateField('time_end', max);
         if (this.props.video.time_start)
             video.currentTime = this.props.video.time_start / 1000;
-        this.setState({min: 0, max, duration})
+        this.setState({min: 0, max})
     };
     handleTimeUpdate = () => {
         const video = document.getElementById("video");
@@ -137,7 +141,6 @@ class Trim extends Component {
                 <div className={classes.range}>
                     <RangeSlider min={this.state.min}
                                  max={this.state.max}
-                                 onChange={this.handleChange}
                                  onAfterChange={this.handleChange}
                                  tipFormatter={tipFormatter}
                                  trackStyle={[{backgroundColor: '#d7001e'}]}
