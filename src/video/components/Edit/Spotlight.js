@@ -252,8 +252,11 @@ class Trim extends Component {
 
         const circle = document.getElementById("circle");
 
-        this.offsetX = e.clientX;
-        this.offsetY = e.clientY;
+        const x = e.clientX || e.touches[0].clientX;
+        const y = e.clientY || e.touches[0].clientY;
+
+        this.offsetX = x;
+        this.offsetY = y;
 
         // assign default values for top and left properties
         if (!circle.style['margin-left']) circle.style['margin-left'] = '0px';
@@ -270,11 +273,10 @@ class Trim extends Component {
         document.ontouchmove = this.dragging;
 
 
-
         return false;
     };
     dragging = (e) => {
-        this.setState({tmp: '-sdsa-'+e.clientX});
+
         if (!this.drag) return;
         if (!e) e = window.event;
         const circle = document.getElementById("circle");
@@ -284,9 +286,12 @@ class Trim extends Component {
         const width = imageWrap.offsetWidth;
         const height = imageWrap.offsetHeight;
 
+        const x = e.clientX || e.touches[0].clientX;
+        const y = e.clientY || e.touches[0].clientY;
+        this.setState({tmp: '-sdsa-' + x});
 
-        let left = this.coordX + e.clientX - this.offsetX;
-        let top = this.coordY + e.clientY - this.offsetY;
+        let left = this.coordX + x - this.offsetX;
+        let top = this.coordY + y - this.offsetY;
         if (left < 0)
             left = 0;
         if (left > width - circle.offsetWidth)
