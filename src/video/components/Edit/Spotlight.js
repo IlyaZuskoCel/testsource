@@ -207,10 +207,8 @@ class Trim extends Component {
         console.log(canvas, width, height);
 
         this.image = canvas.toDataURL("image/png");
-        if (this.image) {
-            alert(1);
-        }
 
+        console.log(this.image);
         this.setState({image: true}, () => {
             const circle = document.getElementById("circle");
             const imageCircle = document.getElementById("imageCircle");
