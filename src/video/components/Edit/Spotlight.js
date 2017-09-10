@@ -269,11 +269,12 @@ class Trim extends Component {
         // document.onmousemove = this.dragging;
         document.ontouchmove = this.dragging;
 
-        this.setState({tmp: el.id+'-sdsa'});
+
 
         return false;
     };
     dragging = (e) => {
+        this.setState({tmp: el.id+'-sdsa-'+e.clientX});
         if (!this.drag) return;
         if (!e) e = window.event;
         const circle = document.getElementById("circle");
