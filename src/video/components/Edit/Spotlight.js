@@ -184,42 +184,40 @@ class Trim extends Component {
         const video = document.getElementById("video");
         if (this.props.video.time_start)
             video.currentTime = this.props.video.time_start / 1000;
-        video.oncanplay = () => {
-            const width = video.videoWidth;
-            const height = video.videoHeight;
-            const canvas = document.createElement('canvas');
-            const context = canvas.getContext('2d');
+        const width = video.videoWidth;
+        const height = video.videoHeight;
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
 
-            canvas.width = width;
-            canvas.height = height;
+        canvas.width = width;
+        canvas.height = height;
 
-            context.drawImage(video, 0, 0, width, height);
+        context.drawImage(video, 0, 0, width, height);
 
-            this.image = canvas.toDataURL("image/png");
-            this.setState({image: true}, () => {
-                const circle = document.getElementById("circle");
-                const imageCircle = document.getElementById("imageCircle");
-
-
-                const image = document.getElementById("imageSrc");
-
-                if (image.width !== imageCircle.width)
-                    imageCircle.width = image.width;
-                if (image.height !== imageCircle.height)
-                    imageCircle.height = image.height;
+        this.image = canvas.toDataURL("image/png");
+        this.setState({image: true}, () => {
+            const circle = document.getElementById("circle");
+            const imageCircle = document.getElementById("imageCircle");
 
 
-                const left = this.props.video.overlay_x * image.width / width - 2;
-                const top = this.props.video.overlay_y * image.height / height - 2;
+            const image = document.getElementById("imageSrc");
+
+            if (image.width !== imageCircle.width)
+                imageCircle.width = image.width;
+            if (image.height !== imageCircle.height)
+                imageCircle.height = image.height;
 
 
-                circle.style['margin-left'] = left + 'px';
-                circle.style['margin-top'] = top + 'px';
+            const left = this.props.video.overlay_x * image.width / width - 2;
+            const top = this.props.video.overlay_y * image.height / height - 2;
 
-                imageCircle.style.left = (-1 * (left + 2)) + 'px';
-                imageCircle.style.top = (-1 * (top + 2)) + 'px';
-            });
-        }
+
+            circle.style['margin-left'] = left + 'px';
+            circle.style['margin-top'] = top + 'px';
+
+            imageCircle.style.left = (-1 * (left + 2)) + 'px';
+            imageCircle.style.top = (-1 * (top + 2)) + 'px';
+        });
 
     };
 
