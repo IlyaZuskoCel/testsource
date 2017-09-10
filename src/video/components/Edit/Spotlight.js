@@ -274,7 +274,7 @@ class Trim extends Component {
         return false;
     };
     dragging = (e) => {
-        this.setState({tmp: el.id+'-sdsa-'+e.clientX});
+        this.setState({tmp: '-sdsa-'+e.clientX});
         if (!this.drag) return;
         if (!e) e = window.event;
         const circle = document.getElementById("circle");
