@@ -365,8 +365,7 @@ class Trim extends Component {
                            id="video"
                            preload
                            className={classes.video}
-                           onLoadedMetadata={this.handleLoadedMetadata}
-                           onLoadedData={this.handleCanPlay}
+                           onPlay={this.handleCanPlay}
                            controls/>
                 </Paper>
             )}
