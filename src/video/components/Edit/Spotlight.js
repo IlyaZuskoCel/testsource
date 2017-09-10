@@ -205,6 +205,10 @@ class Trim extends Component {
         context.drawImage(video, 0, 0, width, height);
 
         this.image = canvas.toDataURL("image/png");
+        if (this.image) {
+            alert(1);
+        }
+
         this.setState({image: true}, () => {
             const circle = document.getElementById("circle");
             const imageCircle = document.getElementById("imageCircle");
