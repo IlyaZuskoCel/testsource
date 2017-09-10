@@ -89,7 +89,7 @@ class Trim extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.state.max !== nextProps.video.duration)
+        if (nextProps.video.duration && this.state.max !== nextProps.video.duration)
             this.setState({max: nextProps.video.duration})
     }
 

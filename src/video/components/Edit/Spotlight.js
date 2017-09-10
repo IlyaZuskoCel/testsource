@@ -175,14 +175,16 @@ class Trim extends Component {
         document.onmousedown = this.startDrag;
         document.onmouseup = this.stopDrag;
 
-
         document.ontouchstart = this.startDrag;
         document.ontouchend = this.stopDrag;
+    }
 
 
-        const video = document.createElement('video');
+    handleLoadedMetadata = () => {
+        const video = document.getElementById("video");
+        if (this.props.video.time_start)
+            video.currentTime = this.props.video.time_start / 1000;
         video.oncanplay = () => {
-
             const width = video.videoWidth;
             const height = video.videoHeight;
             const canvas = document.createElement('canvas');
@@ -217,12 +219,9 @@ class Trim extends Component {
                 imageCircle.style.left = (-1 * (left + 2)) + 'px';
                 imageCircle.style.top = (-1 * (top + 2)) + 'px';
             });
+        }
 
-        };
-        video.src = this.props.video.video_path;
-        video.currentTime = this.props.video.time_start / 1000;
-
-    }
+    };
 
     componentWillUnmount() {
         document.onmousedown = null;
@@ -344,19 +343,28 @@ class Trim extends Component {
                 This is how the scout identifies you. Pinch and drag with 2 fingers to resize the marker.
             </Typography>
 
+            {this.state.image ? (
+                <Paper className={classes.uploadWrap} id="image">
 
-            <Paper className={classes.uploadWrap} id="image">
+                    <img src={this.image} className={classes.imageBg} id="imageSrc"/>
+                    <div className={classes.opacityBg}/>
+                    <div className={classes.imageWrap} id="imageWrap">
+                        <div className={classes.circle} id="circle">
+                            <img src={this.image} className={classes.imageCircle} id="imageCircle"/>
+                            <div className={classes.divCircle} id="divCircle"/>
 
-                <img src={this.image || video.thumb_lg} className={classes.imageBg} id="imageSrc"/>
-                <div className={classes.opacityBg}/>
-                <div className={classes.imageWrap} id="imageWrap">
-                    <div className={classes.circle} id="circle">
-                        <img src={this.image || video.thumb_lg} className={classes.imageCircle} id="imageCircle"/>
-                        <div className={classes.divCircle} id="divCircle"/>
-
+                        </div>
                     </div>
-                </div>
-            </Paper>
+                </Paper>
+            ) : (
+                <Paper className={classes.uploadWrap} id="image">
+                    <video src={video.video_path}
+                           id="video"
+                           className={classes.video}
+                           onLoadedMetadata={this.handleLoadedMetadata}
+                           controls/>
+                </Paper>
+            )}
 
 
             <div className={classes.buttons}>
