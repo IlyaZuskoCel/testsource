@@ -199,7 +199,7 @@ class Trim extends Component {
         const canvas = document.createElement('canvas');
         const context = canvas.getContext('2d');
 
-        alert(''+width+height);
+        alert(''+video.currentTime+'-'+width+'-'+height);
         canvas.width = width;
         canvas.height = height;
 
@@ -360,6 +360,7 @@ class Trim extends Component {
                 <Paper className={classes.uploadWrap} id="image">
                     <video src={video.video_path}
                            id="video"
+                           autoPlay
                            preload
                            className={classes.video}
                            onPlay={this.handleCanPlay}
