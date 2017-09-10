@@ -172,8 +172,8 @@ class Trim extends Component {
     image = '';
 
     componentDidMount() {
-        // document.onmousedown = this.startDrag;
-        // document.onmouseup = this.stopDrag;
+        document.onmousedown = this.startDrag;
+        document.onmouseup = this.stopDrag;
 
         document.ontouchstart = this.startDrag;
         document.ontouchend = this.stopDrag;
@@ -184,8 +184,8 @@ class Trim extends Component {
     }
 
     componentWillUnmount() {
-        // document.onmousedown = null;
-        // document.onmouseup = null;
+        document.onmousedown = null;
+        document.onmouseup = null;
 
         document.ontouchstart = null;
         document.ontouchend = null;
@@ -238,9 +238,11 @@ class Trim extends Component {
         }
 
         const el = e.target ? e.target : e.srcElement;
-        this.setState({tmp: el.id});
         if (el.id !== 'circle' && el.id !== 'divCircle') return;
         if (e.preventDefault) e.preventDefault();
+
+        document.body.style.overflow = 'hidden';
+
         const imageSrc = document.getElementById("imageSrc");
         const imageCircle = document.getElementById("imageCircle");
 
@@ -269,7 +271,7 @@ class Trim extends Component {
         this.drag = true;
 
         // move div element
-        // document.onmousemove = this.dragging;
+        document.onmousemove = this.dragging;
         document.ontouchmove = this.dragging;
 
 
@@ -288,7 +290,6 @@ class Trim extends Component {
 
         const x = e.clientX || e.touches[0].clientX;
         const y = e.clientY || e.touches[0].clientY;
-        this.setState({tmp: '-sdsa-' + x});
 
         let left = this.coordX + x - this.offsetX;
         let top = this.coordY + y - this.offsetY;
@@ -315,6 +316,7 @@ class Trim extends Component {
     stopDrag = () => {
 
         if (!this.drag) return;
+        document.body.style.overflow = 'auto';
         this.drag = false;
         document.onmousemove = null;
         document.ontouchmove = null;
