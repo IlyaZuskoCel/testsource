@@ -177,6 +177,10 @@ class Trim extends Component {
 
         document.ontouchstart = this.startDrag;
         document.ontouchend = this.stopDrag;
+
+        const video = document.getElementById("video");
+        if (this.props.video.time_start)
+            video.currentTime = this.props.video.time_start / 1000;
     }
 
     componentWillUnmount() {
@@ -362,7 +366,7 @@ class Trim extends Component {
                            preload
                            className={classes.video}
                            onLoadedMetadata={this.handleLoadedMetadata}
-                           onCanPlay={this.handleCanPlay}
+                           onLoadedData={this.handleCanPlay}
                            controls/>
                 </Paper>
             )}
