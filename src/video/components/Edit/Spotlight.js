@@ -242,9 +242,9 @@ class Trim extends Component {
                 // Wait a bit before trying again; you may wish to change the
                 // length of this delay.
 
-                setTimeout(() => {
-                    this.handleCanPlay();
-                }, 100);
+                // setTimeout(() => {
+                //     this.handleCanPlay();
+                // }, 100);
             } else {
                 throw e;
             }
