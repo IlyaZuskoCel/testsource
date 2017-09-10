@@ -192,18 +192,18 @@ class Trim extends Component {
     }
 
     handleCanPlay = () => {
-        setTimeout(()=>{
-            const video = document.getElementById("video");
-            const width = video.videoWidth;
-            const height = video.videoHeight;
-            const canvas = document.createElement('canvas');
-            // const canvas = document.getElementById("canvas");
-            console.log(canvas, width, height);
-            const context = canvas.getContext('2d');
+        const video = document.getElementById("video");
+        const width = video.videoWidth;
+        const height = video.videoHeight;
+        const canvas = document.createElement('canvas');
+        // const canvas = document.getElementById("canvas");
+        console.log(canvas, width, height);
+        const context = canvas.getContext('2d');
 
-            canvas.width = width;
-            canvas.height = height;
+        canvas.width = width;
+        canvas.height = height;
 
+        try {
             context.drawImage(video, 0, 0, width, height);
 
             console.log(canvas, width, height);
@@ -234,7 +234,16 @@ class Trim extends Component {
                 imageCircle.style.left = (-1 * (left + 2)) + 'px';
                 imageCircle.style.top = (-1 * (top + 2)) + 'px';
             });
-        }, 1000);
+        } catch (e) {
+            if (e.name === "NS_ERROR_NOT_AVAILABLE") {
+                // Wait a bit before trying again; you may wish to change the
+                // length of this delay.
+                this.handleCanPlay();
+            } else {
+                throw e;
+            }
+        }
+
 
     };
 
