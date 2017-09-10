@@ -13,7 +13,6 @@ import FormHelperText from 'material-ui/Form/FormHelperText';
 
 import Typography from 'material-ui/Typography';
 import {FormGroup, FormControlLabel} from 'material-ui/Form';
-import Checkbox from 'material-ui/Checkbox';
 import Paper from 'material-ui/Paper';
 import {ListItem} from 'material-ui/List';
 

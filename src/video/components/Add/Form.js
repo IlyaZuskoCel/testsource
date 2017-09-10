@@ -78,15 +78,12 @@ class Form extends Component {
                       value={video.description || ''}
                       onChange={this.handleChange('description')}/>
 
-            <DropDownCheckBoxes suggestions={this.props.tagOptions || []}
-                                value={video.tags || []}
-                                onChange={this.handleChangeTags}
-                                inputProps={{
-                                    fullWidth: true,
-                                    label: "Tags (max 3)",
-                                    value: (video.tags && video.tags.length && video.tags.map(i => this.props.tags[i]).join(', ')) || '',
-
-                                }}/>
+            <DropDownCheckBoxes fullWidth
+                                error={this.state.errors.indexOf('tags') > -1}
+                                options={this.props.tagOptions || []}
+                                label="Tags (max 3)"
+                                value={video.tags ? video.tags.map(v => '' + v) : []}
+                                onChange={this.handleChangeTags}/>
 
             <div className={classes.buttons}>
                 <Hidden smUp>

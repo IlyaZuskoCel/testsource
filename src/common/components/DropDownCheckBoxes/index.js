@@ -6,7 +6,9 @@
 import React, {Component} from 'react';
 import classNames from 'classnames';
 
-import TextField from 'material-ui/TextField';
+import Input, {InputLabel} from 'material-ui/Input';
+import FormControl from 'material-ui/Form/FormControl';
+import FormHelperText from 'material-ui/Form/FormHelperText';
 import Typography from 'material-ui/Typography';
 import {FormGroup, FormControlLabel} from 'material-ui/Form';
 import Checkbox from 'material-ui/Checkbox';
@@ -25,11 +27,12 @@ const styleSheet = createStyleSheet('DropDownCheckBoxes', theme => {
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
+            borderBottom: 'solid 1px #cbcbcb'
         },
         icon: {
             cursor: 'pointer',
             marginLeft: -16,
-            zIndex: 999,
+            zIndex: 0,
             lineHeight: '40px'
         },
         container: {
@@ -53,11 +56,17 @@ const styleSheet = createStyleSheet('DropDownCheckBoxes', theme => {
             zIndex: 999,
         },
         input: {
-            paddingRight: 16,
+            padding: 8,
+            marginTop: 16,
             cursor: 'pointer',
-            outline: 'none',
-            color: 'transparent',
-            textShadow: '0 0 0 #000'
+
+        },
+        openEmpty: {
+            marginTop: 16,
+            height: 38
+        },
+        label: {
+            cursor: 'pointer',
         },
 
     }
@@ -83,26 +92,57 @@ class DropDownCheckBoxes extends Component {
     render() {
         const {
             classes,
+            error,
             className,
-            inputProps,
-            suggestions,
+            fullWidth,
+            required,
+            options,
             value,
+            label,
+            labelClassName,
+            InputLabelProps,
+            helperTextClassName,
+            FormHelperTextProps,
+            helperText,
+            id,
+            ...other
         } = this.props;
-        const other = inputProps.InputProps || {};
         return (
             <div className={classNames(classes.root, className)}>
                 <div className={classes.inputRow}>
 
-                    <TextField
-                        {...inputProps}
-                        InputProps={{
-                            classes: {
-                                input: classes.input,
-                            },
-                            ...other,
-                        }}
-                        onFocus={this.toggleOpen}
-                    />
+                    <FormControl
+                        fullWidth={fullWidth}
+                        error={error}
+                        required={required}
+                        {...other}>
+                        {label && (
+                            <InputLabel htmlFor={id}
+                                        focused={this.state.open}
+                                        shrink={this.state.open || !!value.length}
+                                        onClick={this.toggleOpen}
+                                        className={classNames(classes.label, labelClassName)} {...InputLabelProps}>
+                                {label}
+                            </InputLabel>
+                        )}
+                        {(value.length || this.state.open) ? (
+                            <Typography type="body2" onClick={this.toggleOpen}
+                                        id={id}
+                                        className={classes.input}>
+                                {options.filter(item => value.indexOf(item.value) > -1).map(item => item.label).join(', ')}
+                            </Typography>
+                        ) : (
+                            <div className={classes.openEmpty}
+                                 id={id}
+                                 onClick={this.toggleOpen}/>
+                        )}
+
+                        {helperText && (
+                            <FormHelperText className={helperTextClassName} {...FormHelperTextProps}>
+                                {helperText}
+                            </FormHelperText>
+                        )}
+                    </FormControl>
                     <ScoutIcon className={classes.icon} onClick={this.toggleOpen}>dropdown-arrows</ScoutIcon>
                 </div>
 
@@ -110,11 +150,11 @@ class DropDownCheckBoxes extends Component {
                     {this.state.open && <div className={classes.overlay} onClick={this.toggleOpen}/>}
                     {this.state.open &&
                     <Paper style={{zIndex: 1000}} square className={classes.suggestionsContainerOpen}>
-                        {suggestions.map(item => (
+                        {options.map(item => (
                             <ListItem component="div" key={item.value || item.label}>
                                 <FormControlLabel
                                     control={
-                                        <Checkbox checked={value.indexOf(item.value || item.label) > -1}
+                                        <Checkbox checked={value.indexOf(item.value) > -1}
                                                   onChange={this.handleChange(item.value || item.label)}
                                                   value={item.label}
                                         />
