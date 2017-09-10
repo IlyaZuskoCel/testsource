@@ -184,6 +184,7 @@ class Trim extends Component {
         const video = document.getElementById("video");
         if (this.props.video.time_start)
             video.currentTime = this.props.video.time_start / 1000;
+
         const width = video.videoWidth;
         const height = video.videoHeight;
         const canvas = document.createElement('canvas');
@@ -358,6 +359,7 @@ class Trim extends Component {
                 <Paper className={classes.uploadWrap} id="image">
                     <video src={video.video_path}
                            id="video"
+                           preload
                            className={classes.video}
                            onLoadedMetadata={this.handleLoadedMetadata}
                            controls/>

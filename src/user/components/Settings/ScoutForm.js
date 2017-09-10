@@ -181,6 +181,7 @@ class ScoutForm extends Component {
     }
 
     handleChange = name => event => {
+        if(name === 'phone' && isNaN(event.target.value)) return;
         return this.setState({[name]: event.target.value})
     };
     handleSwitch = name => (event, checked) => {
@@ -270,7 +271,6 @@ class ScoutForm extends Component {
                                            fullWidth
                                            error={this.state.errors.indexOf('phone') > -1}
                                            label="Coach's Phone Number"
-                                           type="number"
                                            value={this.state.phone}
                                            onChange={this.handleChange('phone')}
                                            className={classes.phoneTextField}/>
