@@ -107,17 +107,23 @@ class Add extends Component {
         this.props.fetchData();
     }
 
-    handleChangeTab = (event, tab) => {
 
+    changeTab = tab => {
         if (tab > 0 && !this.props.video.video_path) return;
         if (tab > 1 && !this.props.video.time_end) return;
         if (tab > 1 && this.props.video.time_end - this.props.video.time_start > 60000) return;
         if (tab > 2 && !this.props.video.overlay_x) return;
-
+        window.scrollTo(0, 0);
         this.setState({tab})
     };
-    handleNext = () => this.setState({tab: this.state.tab + 1});
-    handlePrev = () => this.setState({tab: this.state.tab - 1});
+
+    handleChangeTab = (event, tab) => {
+        this.changeTab(tab);
+    };
+    handleNext = () => this.changeTab(this.state.tab + 1);
+    handlePrev = () => this.changeTab(this.state.tab - 1);
+
+
     handleSubmit = () => {
         this.props.update(this.props.video);
     };

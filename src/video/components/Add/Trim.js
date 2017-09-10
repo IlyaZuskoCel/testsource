@@ -102,7 +102,6 @@ class Trim extends Component {
     };
     handleLoadedMetadata = () => {
         const video = document.getElementById("video");
-        const duration = video.duration;
         const max = Math.ceil(video.duration * 1000);
         if (!this.props.video.time_end)
             this.props.updateField('time_end', max);
@@ -136,7 +135,6 @@ class Trim extends Component {
                        onTimeUpdate={this.handleTimeUpdate}
                        controls/>
             </Paper>
-            {this.state.max}-{video.duration}
             {this.state.max && (
                 <div className={classes.range}>
                     <RangeSlider min={this.state.min}

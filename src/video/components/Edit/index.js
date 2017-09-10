@@ -107,11 +107,17 @@ class Edit extends Component {
         this.props.fetchData(this.props.id);
     }
 
-    handleChangeTab = (event, tab) => {
+    changeTab = tab => {
+        window.scrollTo(0, 0);
         this.setState({tab})
     };
-    handleNext = () => this.setState({tab: this.state.tab + 1});
-    handlePrev = () => this.setState({tab: this.state.tab - 1});
+
+    handleChangeTab = (event, tab) => {
+        this.changeTab(tab);
+    };
+    handleNext = () => this.changeTab(this.state.tab + 1);
+    handlePrev = () => this.changeTab(this.state.tab - 1);
+
     handleSubmit = () => {
         this.props.update(this.props.video);
     };
