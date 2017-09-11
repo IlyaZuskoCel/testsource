@@ -272,7 +272,7 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
         alignItems: 'center',
         padding: [24, 8, 8],
         [theme.breakpoints.down('sm')]: {
-            paddingTop:8,
+            paddingTop: 8,
             minHeight: 132,
             backgroundImage: 'none',
             backgroundColor: '#ffffff'
@@ -372,8 +372,7 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
         },
 
     },
-    infoCardTeam: {
-    },
+    infoCardTeam: {},
     infoCardName: {
         fontSize: 32,
         letterSpacing: '0.2px'
@@ -440,11 +439,14 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
         letterSpacing: '2.8px'
     },
     infoRightCaption: {
+        paddingBottom: 4,
         [theme.breakpoints.down('sm')]: {
-            textAlign: 'center'
+            textAlign: 'center',
+            paddingBottom: 8,
         },
         [theme.breakpoints.up('sm')]: {
             color: '#000',
+
         },
     },
     infoRightValue: {
@@ -489,7 +491,7 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
     },
 
     mobileContent: {
-        marginTop: -2
+        marginTop: -12
     },
     tabs: {
         justifyContent: 'center',

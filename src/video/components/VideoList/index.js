@@ -48,7 +48,11 @@ const styleSheet = createStyleSheet('VideoList', theme => ({
         fontWeight: '500',
         '&:hover': {
             color: '#9b9b9b',
-        }
+        },
+        [theme.breakpoints.down('sm')]: {
+            fontSize: 14,
+            height: 32
+        },
     },
     buttonActive: {
         border: 'solid 1px #c2a24d',
