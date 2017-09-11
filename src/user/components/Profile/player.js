@@ -454,6 +454,7 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
     infoRightAbout: {
         fontSize: 16,
         lineHeight: 1.5,
+        wordWrap: "break-word",
 
         [theme.breakpoints.down('sm')]: {
             paddingBottom: 16,

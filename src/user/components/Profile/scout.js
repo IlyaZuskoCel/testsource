@@ -309,6 +309,7 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
         fontSize: 16,
         lineHeight: 1.5,
         marginTop: 38,
+        wordWrap: "break-word",
         [theme.breakpoints.down('sm')]: {
             marginTop: 0,
             fontSize: 14,
