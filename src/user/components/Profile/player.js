@@ -250,14 +250,14 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
     },
     infoCard: {
         width: 270,
-        height: 402,
+        minHeight: 402,
         marginLeft: 20,
         marginRight: 20,
         backgroundColor: '#f7f7f7',
         position: 'relative',
 
         [theme.breakpoints.down('sm')]: {
-            height: 324,
+            minHeight: 324,
             width: 218,
         },
 
@@ -265,14 +265,15 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
     },
     infoCardData: {
         backgroundImage: 'linear-gradient(196deg, #d1d1d1, rgba(255, 255, 255, 0.74) 53%, #d9d9d9)',
-        height: 129,
+        minHeight: 129,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: [0, 8],
+        padding: [24, 8, 8],
         [theme.breakpoints.down('sm')]: {
-            height: 132,
+            paddingTop:8,
+            minHeight: 132,
             backgroundImage: 'none',
             backgroundColor: '#ffffff'
         },
@@ -371,7 +372,8 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
         },
 
     },
-    infoCardTeam: {},
+    infoCardTeam: {
+    },
     infoCardName: {
         fontSize: 32,
         letterSpacing: '0.2px'

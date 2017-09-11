@@ -216,7 +216,7 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
     },
     infoCard: {
         width: 270,
-        height: 402,
+        minHeight: 402,
         marginLeft: 144,
         marginRight: 20,
         backgroundColor: '#f7f7f7',
@@ -230,13 +230,12 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
     },
     infoCardData: {
         backgroundImage: 'linear-gradient(196deg, #d1d1d1, rgba(255, 255, 255, 0.74) 53%, #d9d9d9)',
-        height: 129,
+        minHeight: 129,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-
-        padding: [0, 8],
+        padding: 8,
         [theme.breakpoints.down('sm')]: {
             height: 132,
             backgroundImage: 'none',
@@ -293,7 +292,8 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
         lineHeight: '48px'
 
     },
-    infoCardTeam: {},
+    infoCardTeam: {
+    },
     infoCardDataSeparator: {
         margin: '4px auto',
         width: 26,
