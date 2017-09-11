@@ -178,7 +178,7 @@ class Delete extends Component {
                             <DropDown fullWidth
                                       error={this.state.errors.indexOf('why') > -1}
                                       options={whyOptions}
-                                      value={this.state.why}
+                                      value={DELETE_REASON_LIST[this.state.why]}
                                       label="Why are you deleting your account?"
                                       onChange={this.handleChange('why')}/>
                         </Grid>
