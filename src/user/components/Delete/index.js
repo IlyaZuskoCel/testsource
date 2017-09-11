@@ -176,7 +176,6 @@ class Delete extends Component {
                     <Grid container className={classes.passwords}>
                         <Grid item xs={12} sm={6}>
                             <DropDown fullWidth
-                                      required
                                       error={this.state.errors.indexOf('why') > -1}
                                       options={whyOptions}
                                       value={this.state.why}
