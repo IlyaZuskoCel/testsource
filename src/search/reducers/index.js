@@ -10,6 +10,7 @@ import people from './people'
 import options from './options'
 import headers from './headers'
 import filters from './filters'
+import levels from './levels';
 
 export default combineReducers({
     test: test,
@@ -17,4 +18,5 @@ export default combineReducers({
     options: options,
     headers: headers,
     filters: filters,
+    levels: levels,
 });

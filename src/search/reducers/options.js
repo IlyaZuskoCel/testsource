@@ -3,16 +3,12 @@
  * moonion.com
  */
 
-
-import {SET_LEAGUES} from "../constants/actions";
+import {SET_ALL_LEAGUES} from "../constants/actions";
 
 function options(state = [], action) {
     switch (action.type) {
-        case SET_LEAGUES:
-            state = action.payload.filter(league => {
-                return league.is_active == 1 && league.is_verify == 1
-            });
-            return state;
+        case SET_ALL_LEAGUES:
+            return action.payload;
         default:
             return state;
     }

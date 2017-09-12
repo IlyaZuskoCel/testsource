@@ -6,6 +6,7 @@
 import {push as routerGo, goBack as routerBack} from 'react-router-redux';
 
 import {SUCCESS_ALERT, ERROR_ALERT, REMOVE_ALERT, SET_LEAGUES, SET_TEAMS, SET_COUNTRIES} from '../constants/actions';
+import {SET_ALL_LEAGUES} from "../../search/constants/actions";
 
 import {logOut} from '../../user/actions'
 
@@ -35,6 +36,7 @@ export const getLeagues = () => dispatch => {
             if ('error' in leagues)
                 return dispatch({type: ERROR_ALERT, payload: {message: leagues.error.message}});
             dispatch({type: SET_LEAGUES, payload: leagues});
+            dispatch({type: SET_ALL_LEAGUES , payload: leagues});
         })
         .catch((message) => {
             if (message === 'Unauthorized') {
@@ -73,3 +75,13 @@ export const getCountries = () => dispatch => {
             dispatch({type: ERROR_ALERT, payload: {message}});
         })
 };
+
+export const fetchLeagueByLevel = (id) => dispatch => {
+    get('/api/v2/league/get-list-by-level/' + id)
+        .then(data => {
+            dispatch({type : SET_LEAGUES , payload : data});
+        })
+        .catch(message => {
+            dispatch({type: ERROR_ALERT, payload: {message}});
+        })
+}

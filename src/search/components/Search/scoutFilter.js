@@ -15,6 +15,7 @@ import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import Hidden from 'material-ui/Hidden';
 
+import InputText from '../InputText';
 
 import classNames from 'classnames';
 
@@ -153,6 +154,21 @@ class ScoutFilter extends Component {
         this.props.filterScouts(queryString.slice(0, -1));
     }
 
+    clearName = () => {
+        this.setState({name : ''}, () => {
+            this.makeFilterRequest();
+        });
+    };
+
+    changeName = (name) => {
+        if (name) {
+            this.setState({name: name} , () => {
+                this.makeFilterRequest();
+            })
+        }
+    };
+
+
     render() {
         const {classes, width} = this.props;
 
@@ -174,13 +190,27 @@ class ScoutFilter extends Component {
                                  onSuggestionSelected={this.onChangeAutosuggest('id_team_current')}/>
                 </Grid>
                 <Grid item xs={12} sm={6} md={4}>
-                    <TextField
-                        id="name"
-                        label="Name"
-                        value={this.state.name || this.props.query['name_search'] || ''}
-                        className={classes.textField}
-                        onChange={this.changeName}
-                    />
+
+                    <Hidden xsDown>
+                        <TextField
+                            id="name"
+                            label="Name"
+                            value={this.state.name || this.props.query['name_search'] || ''}
+                            className={width === 'xl' || width === 'lg' || width === 'md' ? classes.textField : classes.mobileTextField}
+                            onChange={this.onChangeName}
+                        />
+                    </Hidden>
+
+                    <Hidden smUp>
+                        <InputText options={[]}
+                                   value={1}
+                                   label="Name"
+                                   changeName={this.changeName }
+                                   name={this.state.name || this.props.query['name_search'] }
+                                   clearName={this.clearName}
+                        />
+                    </Hidden>
+
                 </Grid>
 
                 <Hidden smUp>
