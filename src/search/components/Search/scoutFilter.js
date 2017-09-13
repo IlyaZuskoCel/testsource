@@ -168,7 +168,6 @@ class ScoutFilter extends Component {
         }
     };
 
-
     render() {
         const {classes, width} = this.props;
 
@@ -185,7 +184,7 @@ class ScoutFilter extends Component {
                 <Grid item xs={12} sm={6} md={4}>
                     <Autosuggest fullWidth
                                  label="Team"
-                                 value={this.props.leagues[this.state.id_team_current] || this.props.query['id_team_current'] || ''}
+                                 value={this.props.teams && this.state.id_team_current ? this.props.teams[this.state.id_team_current] || '' : ''}
                                  suggestions={this.state.id_league ? this.props.teamOptions.filter(i => i.item.id_league === parseInt(this.state.id_league)) : this.props.teamOptions}
                                  onSuggestionSelected={this.onChangeAutosuggest('id_team_current')}/>
                 </Grid>
