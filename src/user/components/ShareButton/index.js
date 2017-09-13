@@ -164,7 +164,7 @@ class ShareButton extends Component {
                     </div>
                 </DialogContent>
                 <DialogActions className={classes.buttons}>
-                    <Button onClick={this.handleCancel}>
+                    <Button onClick={this.handleCancel()}>
                         Cancel
                     </Button>
                 </DialogActions>

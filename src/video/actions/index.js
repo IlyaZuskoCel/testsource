@@ -143,7 +143,7 @@ export const trim = (id_video, time_start, time_end) => dispatch => {
         .then(result => {
             if ('error' in result)
                 return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
-            dispatch({type: SET_VIDEO, payload: {...result, trim_thumb:result.thumb_lg}});
+            dispatch({type: SET_VIDEO, payload: result});
         })
         .catch((message) => {
             if (message === 'Unauthorized') {
