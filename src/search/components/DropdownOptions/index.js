@@ -119,6 +119,15 @@ class DropDownCheckBoxes extends Component {
         this.setState({open: !this.state.open});
     };
 
+    componentWillReceiveProps(nextProps) {
+        if ('leagues' in nextProps) {
+            this.setState({leagues : nextProps.leagues});
+        }
+
+        if ('leaguesOptions' in nextProps) {
+            this.setState({leaguesOptions : nextProps.leaguesOptions , filteredLeagues : nextProps.leaguesOptions});
+        }
+    }
 
     handleChange = value => (event, checked) => {
         if (this.props.value.indexOf(value) > -1)
@@ -143,24 +152,13 @@ class DropDownCheckBoxes extends Component {
             league_id: '',
             open: false,
         } , () => {
-            this.props.getLeagues();
             this.props.clearLeague();
         });
     };
 
     onChangeLevel =  (event , {suggestionValue}) => {
-        if (suggestionValue && this.state.league_id) {
-            this.setState({'league_id' : ''} , () => {
-                this.setState({'level_id': suggestionValue});
-            });
-        }
-        else if (suggestionValue) {
-            this.setState({'level_id': suggestionValue});
-            this.props.fetchLeagueByLevel(suggestionValue);
-        } else {
-            this.setState({'level_id' : ''});
-            this.props.getLeagues();
-        }
+        let leagues = suggestionValue ? this.state.leaguesOptions.filter(league => parseInt(league.item.id_level) === suggestionValue ) : this.state.leaguesOptions;
+        this.setState({'level_id': suggestionValue , filteredLeagues: leagues});
     };
 
     onChangeLeague = (event, {suggestionValue}) => {
@@ -188,8 +186,6 @@ class DropDownCheckBoxes extends Component {
             leaguesOptions,
             leagues,
             league,
-            allLeagues,
-            fetchLeagueByLevel,
             getLeagues,
             changeLeague,
             clearLeague,
@@ -255,8 +251,8 @@ class DropDownCheckBoxes extends Component {
                         <div className={classes.dropdownItem}>
                             <Autosuggest fullWidth
                                          label="League"
-                                         value={this.state.league_id ? this.props.leagues[this.state.league_id] : ''}
-                                         suggestions={this.props.leaguesOptions ? this.props.leaguesOptions : []}
+                                         value={this.state.league_id ? this.state.leagues[this.state.league_id] : ''}
+                                         suggestions={this.state.filteredLeagues ? this.state.filteredLeagues : []}
                                          onSuggestionSelected={this.onChangeLeague}/>
                         </div>
 

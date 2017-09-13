@@ -58,10 +58,6 @@ const styleSheet = createStyleSheet('ScoutFilter', theme => ({
         position: 'relative',
     },
 
-    mobileTextField: {
-        width: '100%',
-    },
-
     viewButton: {
         marginBottom: 45,
         marginTop: 50,
@@ -247,9 +243,6 @@ class PlayerFilter extends Component {
                                         levelOptions={this.props.levelOptions && this.props.levelOptions.length > 0 ? this.props.levelOptions: []}
                                         leaguesOptions={this.props.leagueOptions}
                                         leagues={this.props.leagues}
-                                        allLeagues={this.props.allLeagues}
-                                        fetchLeagueByLevel={this.props.fetchLeagueByLevel}
-                                        getLeagues={this.props.getLeagues}
                                         changeLeague={this.changeLeague}
                                         clearLeague={this.clearLeague}
                                         league={this.state.id_league || this.props.query['id_league'] || ''}
@@ -288,7 +281,7 @@ class PlayerFilter extends Component {
                             id="name"
                             label="Name"
                             value={this.state.name || this.props.query['name_search'] || ''}
-                            className={width === 'xl' || width === 'lg' || width === 'md' ? classes.textField : classes.mobileTextField}
+                            className={classes.textField}
                             onChange={this.onChangeName}
                         />
                     </Hidden>

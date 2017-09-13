@@ -196,7 +196,7 @@ class ScoutFilter extends Component {
                             id="name"
                             label="Name"
                             value={this.state.name || this.props.query['name_search'] || ''}
-                            className={width === 'xl' || width === 'lg' || width === 'md' ? classes.textField : classes.mobileTextField}
+                            className={ classes.textField }
                             onChange={this.onChangeName}
                         />
                     </Hidden>

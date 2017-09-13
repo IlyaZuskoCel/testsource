@@ -291,9 +291,6 @@ class Search extends Component {
                                                                      query={this.state.query}
                                                                      clearFilters={this.state.clearFilters}
                                                                      stopClearing={this.stopClearing}
-                                                                     fetchLeagueByLevel={this.props.fetchLeagueByLevel}
-                                                                     getLeagues={this.props.getLeagues}
-                                                                     allLeagues={this.props.allLeagues}
 
                         />}
 
@@ -308,10 +305,6 @@ class Search extends Component {
                                                                        query={this.state.query}
                                                                        clearFilters={this.state.clearFilters}
                                                                        stopClearing={this.stopClearing}
-                                                                       fetchLeagueByLevel={this.props.fetchLeagueByLevel}
-                                                                       getLeagues={this.props.getLeagues}
-                                                                       allLeagues={this.props.allLeagues}
-
 
                                                                        filters={this.props.filters && this.props.filters.player ? this.props.filters.player : {}}
                                                                        setFilters={this.props.setFilters}
@@ -349,7 +342,6 @@ class Search extends Component {
             {(!this.state.mobileFilterOn && (width === 'sm' || width === 'xs')) && <Hidden smUp>
                 <div>
                     {this.props.type === 'scout' && <ScoutFilter leagues={this.props.leagues}
-                                                                 allLeagues={this.props.allLeagues}
                                                                  leagueOptions={this.props.leagueOptions}
                                                                  levels={this.props.levels}
                                                                  levelOptions={this.props.levelOptions ? this.props.levelOptions : []}
@@ -362,15 +354,12 @@ class Search extends Component {
                                                                  query={this.state.query}
                                                                  clearField={this.state.clearField}
                                                                  stopClearing={this.stopClearing}
-                                                                 fetchLeagueByLevel={this.props.fetchLeagueByLevel}
-                                                                 getLeagues={this.props.getLeagues}
 
 
                     />
                     }
 
                     {this.props.type === 'player' && <PlayerFilter leagues={this.props.leagues}
-                                                                   allLeagues={this.props.allLeagues}
                                                                    leagueOptions={this.props.leagueOptions}
                                                                    levels={this.props.levels}
                                                                    levelOptions={this.props.levelOptions ? this.props.levelOptions : []}
@@ -383,8 +372,6 @@ class Search extends Component {
                                                                    query={this.state.query}
                                                                    clearField={this.state.clearField}
                                                                    stopClearing={this.stopClearing}
-                                                                   fetchLeagueByLevel={this.props.fetchLeagueByLevel}
-                                                                   getLeagues={this.props.getLeagues}
 
 
                                                                    filters={this.props.filters && this.props.filters.player ? this.props.filters.player : {}}
