@@ -43,7 +43,9 @@ class Form extends Component {
         errors: []
     };
     handleChange = name => event => {
-        return this.props.updateField(name, event.target.value);
+        let value = event.target.value;
+        if (name === 'date' && value === '0000-00-01') value = null;
+        return this.props.updateField(name, value);
     };
     handleChangeTags = (tags) => {
         if (tags.length < 4)
