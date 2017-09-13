@@ -93,8 +93,8 @@ const styleSheet = createStyleSheet('Trim', theme => ({
     circle: {
         borderRadius: '50%',
         border: 'solid 2px #ccad51',
-        height: 100,
-        width: 100,
+        height: 0,
+        width: 0,
         overflow: 'hidden',
         position: 'relative'
 
@@ -178,8 +178,10 @@ class Trim extends Component {
 
     componentWillReceiveProps(nextProps) {
         if ((nextProps.video.overlay_x && !this.props.overlay_x && this.props.overlay_x !== nextProps.video.overlay_x)
-            || (nextProps.video.overlay_y && !this.props.overlay_y && this.props.overlay_y !== nextProps.video.overlay_y))
-            this.setDefaultPosition(nextProps.video.overlay_x, nextProps.video.overlay_y);
+            || (nextProps.video.overlay_y && !this.props.overlay_y && this.props.overlay_y !== nextProps.video.overlay_y)
+            || (nextProps.video.trim_thumb && !this.props.trim_thumb && this.props.trim_thumb !== nextProps.video.trim_thumb)
+        )
+            this.setDefaultPosition(nextProps.video.overlay_x, nextProps.video.overlay_y, nextProps.video.trim_thumb);
 
     }
 
@@ -200,12 +202,14 @@ class Trim extends Component {
     }
 
 
-    setDefaultPosition = (x, y) => {
+    setDefaultPosition = (x, y, src) => {
         const imageObj = new Image();
         imageObj.onload = () => {
 
             const width = imageObj.width;
             const height = imageObj.height;
+
+            const r = Math.round(width / 20);
 
             const circle = document.getElementById("circle");
             const imageCircle = document.getElementById("imageCircle");
@@ -218,19 +222,25 @@ class Trim extends Component {
                 imageCircle.height = image.height;
 
 
-            const left = x * image.width / width - 2;
-            const top = y * image.height / height - 2;
+            const left = Math.max(x * image.width / width - 2, 0);
 
+            const top = Math.max(y * image.height / height - 2, 0);
+
+            const radius = r * image.width / width;
 
             circle.style['margin-left'] = left + 'px';
             circle.style['margin-top'] = top + 'px';
 
+
+            circle.style.width = radius * 2 + 'px';
+            circle.style.height = radius * 2 + 'px';
+
             imageCircle.style.left = (-1 * (left + 2)) + 'px';
             imageCircle.style.top = (-1 * (top + 2)) + 'px';
 
-
         };
-        imageObj.src = this.props.video.trim_thumb;
+
+        imageObj.src = src;
     };
 
     startDrag = (e) => {
@@ -326,12 +336,13 @@ class Trim extends Component {
         const circle = document.getElementById("circle");
         const image = document.getElementById("imageSrc");
 
+
         const imageObj = new Image();
         imageObj.onload = () => {
             const border = 2 * imageObj.width / image.width;
-            const x = (parseInt(circle.style['margin-left'])) * imageObj.width / image.width + border;
-            const y = (parseInt(circle.style['margin-top'])) * imageObj.height / image.height + border;
-            const r = 50 * imageObj.width / image.width + border / 2;
+            const x = parseInt(circle.style['margin-left']) * imageObj.width / image.width + border;
+            const y = parseInt(circle.style['margin-top']) * imageObj.height / image.height + border;
+            const r = parseInt(circle.style.width) / 2 * imageObj.width / image.width + border / 2;
 
             const uri = getImage(imageObj, x, y, r, border);
             this.props.updateField('overlay_x', Math.round(x));
