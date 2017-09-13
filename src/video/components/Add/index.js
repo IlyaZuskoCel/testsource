@@ -100,7 +100,8 @@ const styleSheet = createStyleSheet('Add', theme => ({
 
 class Add extends Component {
     state = {
-        tab: 0
+        tab: 0,
+        nextTrim: false,
     };
 
     componentDidMount() {
@@ -108,8 +109,11 @@ class Add extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.video.trim_thumb !== this.props.video.trim_thumb)
-            this.changeTab(2);
+        if (this.state.nextTrim && nextProps.video.trim_thumb !== this.props.video.trim_thumb) {
+            this.setState({nextTrim: false}, () => {
+                this.changeTab(1);
+            })
+        }
     }
 
     changeTab = tab => {
@@ -127,10 +131,16 @@ class Add extends Component {
     handleNext = () => this.changeTab(this.state.tab + 1);
     handlePrev = () => this.changeTab(this.state.tab - 1);
 
-    handleTrim = () => {
-        if (!this.props.video.time_end) return;
-        if (this.props.video.time_end - this.props.video.time_start > 60000) return;
-        this.props.trim(this.props.video.id, this.props.video.time_start, this.props.video.time_end);
+    handleTrim = (time_start, time_end) => {
+        if (!time_end) return;
+        if (time_end - time_start > 60000) return;
+
+        if (time_start === this.props.video.time_start && time_end === this.props.video.time_end)
+            return this.handleNext();
+
+        this.setState({nextTrim: true}, () => {
+            this.props.trim(this.props.video.id, time_start, time_end);
+        });
     };
     handleSubmit = () => {
         this.props.update(this.props.video);

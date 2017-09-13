@@ -84,31 +84,46 @@ class Trim extends Component {
         super(props);
         this.state = {
             min: 0,
-            max: props.video.duration || null
+            max: props.video.duration || null,
+            time_start: props.video.time_start || 0,
+            time_end: props.video.time_end || 0,
         };
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.video.duration && this.state.max !== nextProps.video.duration)
-            this.setState({max: nextProps.video.duration})
+        if ((nextProps.video.duration && this.state.max !== nextProps.video.duration)
+            || (nextProps.video.time_start && this.state.time_start !== nextProps.video.time_start)
+            || (nextProps.video.time_end && this.state.time_end !== nextProps.video.time_end))
+            this.setState({
+                max: nextProps.video.duration,
+                time_start: nextProps.video.time_start,
+                time_end: nextProps.video.time_end
+            })
+
     }
 
     handleChange = range => {
         const video = document.getElementById("video");
         video.currentTime = range[0] / 1000;
-
-        this.props.updateField('time_start', range[0]);
-        this.props.updateField('time_end', range[1]);
+        this.setState({
+            time_start: range[0],
+            time_end: range[1]
+        });
     };
 
     handleTimeUpdate = () => {
         const video = document.getElementById("video");
-        if (video.currentTime >= this.props.video.time_end / 1000)
+        if (video.currentTime >= this.state.time_end / 1000)
             video.pause();
+    };
+    handleNext = () => {
+        this.props.onNext(this.state.time_start, this.state.time_end);
+
     };
 
     render() {
         const {classes, video} = this.props;
+
         return <div className={classes.root}>
             <Typography className={classes.title} type="subheading" align="center">
                 Trim your video
@@ -127,7 +142,7 @@ class Trim extends Component {
                        controls/>
             </Paper>
 
-            {!!this.state.max && (
+            {!!video && !!this.state.max && (
                 <div className={classes.range}>
                     <RangeSlider min={this.state.min}
                                  max={this.state.max}
@@ -143,7 +158,7 @@ class Trim extends Component {
                 <Button onClick={this.props.onPrev} raised>
                     Previous
                 </Button>
-                <Button onClick={this.props.onNext} raised
+                <Button onClick={this.props.handleNext} raised
                         color={video.time_end - video.time_start > 60000 ? 'default' : 'primary'}
                         disabled={video.time_end - video.time_start > 60000}>
                     Next

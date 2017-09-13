@@ -166,8 +166,22 @@ const getImage = (image, x, y, r, lineWidth) => {
 
 
 class Trim extends Component {
-    state = {image: false};
     drag = false;
+
+
+    constructor(props) {
+        super(props);
+        this.state = {};
+        if (props.video && props.video.overlay_x && props.video.overlay_y)
+            this.setDefaultPosition(props.video.overlay_x, props.video.overlay_y);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if ((nextProps.video.overlay_x && !this.props.overlay_x && this.props.overlay_x !== nextProps.video.overlay_x)
+            || (nextProps.video.overlay_y && !this.props.overlay_y && this.props.overlay_y !== nextProps.video.overlay_y))
+            this.setDefaultPosition(nextProps.video.overlay_x, nextProps.video.overlay_y);
+
+    }
 
     componentDidMount() {
         document.onmousedown = this.startDrag;
@@ -184,6 +198,40 @@ class Trim extends Component {
         document.ontouchstart = null;
         document.ontouchend = null;
     }
+
+
+    setDefaultPosition = (x, y) => {
+        const imageObj = new Image();
+        imageObj.onload = () => {
+
+            const width = imageObj.width;
+            const height = imageObj.height;
+
+            const circle = document.getElementById("circle");
+            const imageCircle = document.getElementById("imageCircle");
+
+            const image = document.getElementById("imageSrc");
+
+            if (image.width !== imageCircle.width)
+                imageCircle.width = image.width;
+            if (image.height !== imageCircle.height)
+                imageCircle.height = image.height;
+
+
+            const left = x * image.width / width - 2;
+            const top = y * image.height / height - 2;
+
+
+            circle.style['margin-left'] = left + 'px';
+            circle.style['margin-top'] = top + 'px';
+
+            imageCircle.style.left = (-1 * (left + 2)) + 'px';
+            imageCircle.style.top = (-1 * (top + 2)) + 'px';
+
+
+        };
+        imageObj.src = this.props.video.trim_thumb;
+    };
 
     startDrag = (e) => {
         if (!e) {
@@ -286,7 +334,6 @@ class Trim extends Component {
             const r = 50 * imageObj.width / image.width + border / 2;
 
             const uri = getImage(imageObj, x, y, r, border);
-
             this.props.updateField('overlay_x', Math.round(x));
             this.props.updateField('overlay_y', Math.round(y));
             this.props.updateField('overlayUri', uri);
