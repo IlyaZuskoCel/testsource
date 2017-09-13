@@ -12,3 +12,5 @@ export const REMOVE_ALERT = 'alert:remove';
 export const SET_LEAGUES = 'leagues:setLeagues';
 export const SET_TEAMS = 'teams:setTeams';
 export const SET_COUNTRIES = 'countries:set';
+
+export const FILTER_LEAGUES = 'leagues:filterLeagues';
