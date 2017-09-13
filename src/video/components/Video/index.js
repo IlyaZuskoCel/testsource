@@ -165,7 +165,7 @@ class Video extends Component {
         return <div className={classes.root}>
             <div className={classes.videoWrap}>
                 {this.state.isShow ? (
-                    <video src={video.trim_video_file_path || video.video_path}
+                    <video src={video.overlay_video_path || video.trim_video_file_path || video.video_path}
                            className={classes.video}
                            autoPlay
                            controls/>
