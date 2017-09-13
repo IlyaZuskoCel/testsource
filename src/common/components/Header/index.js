@@ -99,9 +99,11 @@ const styleSheet = createStyleSheet('Header', theme => ({
     menuItem: {
         marginLeft: 24,
         marginRight: 24,
+
         [theme.breakpoints.down('sm')]: {
             marginLeft: 0,
             marginRight: 0,
+
         }
 
     },
@@ -231,10 +233,33 @@ const styleSheet = createStyleSheet('Header', theme => ({
 
     },
     MenuItem: {
+        height: 40,
+        backgroundColor: 'transparent',
+        borderRadius: 0,
+        fontFamily: 'UnitedSansReg-Heavy',
+        fontSize: 20,
+        lineHeight: '20px',
+        fontWeight: 900,
+        letterSpacing: '0.4px',
+        textTransform: 'uppercase',
+        padding: '8px 4px',
+        minWidth: 160,
+        borderBottom: 'solid 1px #e2e2e2',
         [theme.breakpoints.down('sm')]: {
+            minWidth: 120,
+            fontSize: 16,
+            letterSpacing: '0.3px',
             padding: '32px 12px',
+            borderBottom: 'solid 2px #e2e2e2',
+            textAlign: 'center',
+            justifyContent: 'center',
 
         },
+
+
+        '&:last-child': {
+            borderBottom: 0,
+        }
     }
 }));
 

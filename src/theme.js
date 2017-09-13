@@ -285,37 +285,21 @@ const theme = (outerTheme) => {
             },
             MuiMenuItem: {
                 root: {
+                    ...typography.body1,
+                    minWidth: 100,
+                    padding: 0,
                     height: 40,
-                    backgroundColor: 'transparent',
-                    borderRadius: 0,
-                    fontFamily: 'UnitedSansReg-Heavy',
-                    fontSize: 20,
-                    lineHeight: '20px',
-                    fontWeight: 900,
-                    letterSpacing: '0.4px',
-                    textTransform: 'uppercase',
-                    padding: '8px 4px',
-                    minWidth: 160,
-                    borderBottom: 'solid 1px #e2e2e2',
-                    [outerTheme.breakpoints.down('sm')]: {
-                        minWidth: 120,
-                        fontSize: 16,
-                        letterSpacing: '0.3px',
-                        textAlign: 'center',
-                        justifyContent: 'center',
-                        borderBottom: 'solid 2px #e2e2e2',
-                    },
+
                     '&:focus': {
                         background: 'transparent',
                     },
+
                     '&:hover': {
                         textDecoration: 'none',
                         backgroundColor: 'transparent',
                         color: '#d7001e',
                     },
-                    '&:last-child': {
-                        borderBottom: 0,
-                    }
+
                 },
                 selected: {
                     textDecoration: 'none',
@@ -323,8 +307,14 @@ const theme = (outerTheme) => {
                     color: '#d7001e',
                 }
             },
+            MuiMenu: {
+                root: {
+                    borderRadius: 0
+                }
+            },
             MuiList: {
                 padding: {
+
                     paddingTop: 8,
                     paddingBottom: 4,
                     paddingLeft: 12,
