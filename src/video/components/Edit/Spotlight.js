@@ -102,7 +102,7 @@ const styleSheet = createStyleSheet('Trim', theme => ({
 }));
 
 
-const getImage = (image, x, y, r, lineWidth) => {
+const getImage = (image, x, y, r, lineWidth, width, height) => {
 
     x = parseInt(x);
     y = parseInt(y);
@@ -129,8 +129,8 @@ const getImage = (image, x, y, r, lineWidth) => {
 
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
-    canvas.width = image.width;
-    canvas.height = image.height;
+    canvas.width = width;
+    canvas.height = height;
     context.filter = 'brightness(30%)';
     context.drawImage(image, 0, 0);
 
@@ -173,7 +173,9 @@ class Trim extends Component {
         super(props);
         this.state = {};
         if (props.video)
-            this.setDefaultPosition(props.video.overlay_x, props.video.overlay_y, props.video.width, props.video.height);
+            setTimeout(() =>
+                    this.setDefaultPosition(props.video.overlay_x, props.video.overlay_y, props.video.width, props.video.height)
+                , 100);
 
 
     }
@@ -182,7 +184,7 @@ class Trim extends Component {
         if ((nextProps.video.overlay_x && !this.props.overlay_x && this.props.overlay_x !== nextProps.video.overlay_x)
             || (nextProps.video.overlay_y && !this.props.overlay_y && this.props.overlay_y !== nextProps.video.overlay_y)
             || (nextProps.video.trim_thumb && !this.props.trim_thumb && this.props.trim_thumb !== nextProps.video.trim_thumb)
-        ) this.setDefaultPosition(nextProps.video.overlay_x, nextProps.video.overlay_y, props.video.width, props.video.height);
+        ) this.setDefaultPosition(nextProps.video.overlay_x, nextProps.video.overlay_y, nextProps.video.width, nextProps.video.height);
     }
 
     componentDidMount() {
@@ -284,6 +286,8 @@ class Trim extends Component {
 
         if (!this.drag) return;
         if (!e) e = window.event;
+
+        e.preventDefault();
         const circle = document.getElementById("circle");
         const imageCircle = document.getElementById("imageCircle");
         const imageWrap = document.getElementById("imageWrap");
@@ -327,21 +331,16 @@ class Trim extends Component {
         const circle = document.getElementById("circle");
         const image = document.getElementById("imageSrc");
 
+        const border = 2 * this.props.video.width / image.width;
+        const x = Math.round(parseInt(circle.style['margin-left']) * this.props.video.width / image.width + border);
+        const y = Math.round(parseInt(circle.style['margin-top']) * this.props.video.height / image.height + border);
+        const r = Math.round(parseInt(circle.style.width) / 2 * this.props.video.width / image.width + border / 2);
 
-        const imageObj = new Image();
-        imageObj.onload = () => {
-            const border = 2 * imageObj.width / image.width;
-            const x = parseInt(circle.style['margin-left']) * imageObj.width / image.width + border;
-            const y = parseInt(circle.style['margin-top']) * imageObj.height / image.height + border;
-            const r = parseInt(circle.style.width) / 2 * imageObj.width / image.width + border / 2;
+        const uri = getImage(image, x, y, r, border, this.props.video.width, this.props.video.height);
+        this.props.updateField('overlay_x', x);
+        this.props.updateField('overlay_y', y);
+        this.props.updateField('overlayUri', uri);
 
-            const uri = getImage(imageObj, x, y, r, border);
-            this.props.updateField('overlay_x', Math.round(x));
-            this.props.updateField('overlay_y', Math.round(y));
-            this.props.updateField('overlayUri', uri);
-
-        };
-        imageObj.src = this.props.video.trim_thumb;
     };
 
     render() {
