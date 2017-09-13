@@ -100,15 +100,7 @@ class Trim extends Component {
         this.props.updateField('time_start', range[0]);
         this.props.updateField('time_end', range[1]);
     };
-    handleLoadedMetadata = () => {
-        const video = document.getElementById("video");
-        const max = Math.ceil(video.duration * 1000);
-        if (!this.props.video.time_end)
-            this.props.updateField('time_end', max);
-        if (this.props.video.time_start)
-            video.currentTime = this.props.video.time_start / 1000;
-        this.setState({min: 0, max})
-    };
+
     handleTimeUpdate = () => {
         const video = document.getElementById("video");
         if (video.currentTime >= this.props.video.time_end / 1000)
@@ -131,11 +123,10 @@ class Trim extends Component {
                 <video src={video.video_path}
                        id="video"
                        className={classes.video}
-                       onLoadedMetadata={this.handleLoadedMetadata}
                        onTimeUpdate={this.handleTimeUpdate}
                        controls/>
             </Paper>
-            {this.state.max && (
+            {!!this.state.max && (
                 <div className={classes.range}>
                     <RangeSlider min={this.state.min}
                                  max={this.state.max}
