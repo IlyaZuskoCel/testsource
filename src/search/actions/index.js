@@ -7,13 +7,16 @@ import {go} from '../../common/actions';
 import {get, post, auth, getPage} from '../../common/helpers/api';
 
 import {ERROR_ALERT, SUCCESS_ALERT} from '../../common/constants/actions';
-import {SET_PLAYERS,
-        SET_SCOUTS ,
-        CLEAR_LIST ,
-        SET_LEAGUES,
-        SET_HEADERS,
-        SET_FILTERS,
-        CLEAR_FILTERS} from "../constants/actions";
+import {
+    SET_PLAYERS,
+    SET_SCOUTS,
+    CLEAR_LIST,
+    SET_LEAGUES,
+    SET_HEADERS,
+    SET_FILTERS,
+    CLEAR_FILTERS,
+    SET_LEVELS
+} from "../constants/actions";
 import {LOAD} from '../../common/constants/actions';
 import {addRequestParams} from "../helpers/helpers";
 
@@ -97,9 +100,12 @@ export const filterPlayers = (params) => dispatch => {
 };
 
 
-export const follow = (player) => dispatch => {
-        post(player.is_tagged ? '/api/v2/activity/unfollow' : '/api/v2/activity/follow' , {"id_user_player" : player.id})
-            .catch(message => {
-                dispatch({type: ERROR_ALERT, payload: {message}});
-            });
+export const fetchLevels = () => dispatch => {
+    get('/api/v2/level/get-list')
+        .then(list => {
+            dispatch({type: SET_LEVELS , payload: list})
+        })
+        .catch(message => {
+            dispatch({type: ERROR_ALERT, payload: {message}});
+        })
 };

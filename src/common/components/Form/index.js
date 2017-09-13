@@ -115,10 +115,7 @@ class Form extends Component {
                                         value={this.state.DropDownCheckBoxes}
                                         label="Dropdown with no selection"
                                         onChange={(DropDownCheckBoxes) => this.setState({DropDownCheckBoxes})}/>
-
-
                 </Grid>
-
 
                 <Grid item xs={12}>
                     <Typography type="body1">Tags (need to do component)</Typography>

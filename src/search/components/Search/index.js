@@ -186,6 +186,7 @@ class Search extends Component {
             mobileFilterOn: true,
             appliedFilters: 0,
             clearFilters: '',
+            dropdownLeagues: [],
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -194,6 +195,7 @@ class Search extends Component {
         this.countFilters = this.countFilters.bind(this);
         this.onClearFilters = this.onClearFilters.bind(this);
         this.stopClearing = this.stopClearing.bind(this);
+
     }
 
     componentDidMount() {
@@ -263,6 +265,8 @@ class Search extends Component {
     }
 
     render() {
+
+
         const {classes , width} = this.props;
 
         return (<div className={classes.root}>
@@ -278,16 +282,22 @@ class Search extends Component {
                     <div className={classNames(classes.content)}>
                         {this.props.type === 'scout' && <ScoutFilter leagues={this.props.leagues}
                                                                      leagueOptions={this.props.leagueOptions}
+                                                                     levels={this.props.levels}
+                                                                     levelOptions={this.props.levelOptions ? this.props.levelOptions : []}
                                                                      teams={this.props.teams}
                                                                      teamOptions={this.props.teamOptions}
                                                                      filterScouts={this.props.filterScouts}
                                                                      activePage={this.state.activePage}
                                                                      query={this.state.query}
                                                                      clearFilters={this.state.clearFilters}
-                                                                     stopClearing={this.stopClearing}/>}
+                                                                     stopClearing={this.stopClearing}
+
+                        />}
 
                         {this.props.type === 'player' && <PlayerFilter leagues={this.props.leagues}
                                                                        leagueOptions={this.props.leagueOptions}
+                                                                       levels={this.props.levels}
+                                                                       levelOptions={this.props.levelOptions ? this.props.levelOptions : []}
                                                                        teams={this.props.teams}
                                                                        teamOptions={this.props.teamOptions}
                                                                        filterPlayers={this.props.filterPlayers}
@@ -333,6 +343,8 @@ class Search extends Component {
                 <div>
                     {this.props.type === 'scout' && <ScoutFilter leagues={this.props.leagues}
                                                                  leagueOptions={this.props.leagueOptions}
+                                                                 levels={this.props.levels}
+                                                                 levelOptions={this.props.levelOptions ? this.props.levelOptions : []}
                                                                  teams={this.props.teams}
                                                                  teamOptions={this.props.teamOptions}
                                                                  filterScouts={this.props.filterScouts}
@@ -342,11 +354,15 @@ class Search extends Component {
                                                                  query={this.state.query}
                                                                  clearField={this.state.clearField}
                                                                  stopClearing={this.stopClearing}
-                     />
+
+
+                    />
                     }
 
                     {this.props.type === 'player' && <PlayerFilter leagues={this.props.leagues}
                                                                    leagueOptions={this.props.leagueOptions}
+                                                                   levels={this.props.levels}
+                                                                   levelOptions={this.props.levelOptions ? this.props.levelOptions : []}
                                                                    teams={this.props.teams}
                                                                    teamOptions={this.props.teamOptions}
                                                                    filterPlayers={this.props.filterPlayers}
@@ -357,11 +373,14 @@ class Search extends Component {
                                                                    clearField={this.state.clearField}
                                                                    stopClearing={this.stopClearing}
 
+
                                                                    filters={this.props.filters && this.props.filters.player ? this.props.filters.player : {}}
                                                                    setFilters={this.props.setFilters}
                                                                   />}
                 </div>
             </Hidden>}
+
+
 
             {this.state.mobileFilterOn && <div className={classes.containerWrapper}>
                 {this.props.type === 'player' &&

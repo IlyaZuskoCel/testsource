@@ -14,6 +14,8 @@ import classNames from 'classnames';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import Hidden from 'material-ui/Hidden';
+import DropdownOptions from '../DropdownOptions';
+import InputText from '../InputText';
 
 
 import {PlAYER_MAX_AGE, PLAYER_MIN_AGE} from "../../../common/constants/playerSettings";
@@ -56,10 +58,6 @@ const styleSheet = createStyleSheet('ScoutFilter', theme => ({
         position: 'relative',
     },
 
-    mobileTextField: {
-        width: '100%',
-    },
-
     viewButton: {
         marginBottom: 45,
         marginTop: 50,
@@ -98,7 +96,7 @@ class PlayerFilter extends Component {
             year: '',
             position: '',
             leagues: [],
-            born: [PLAYER_MIN_AGE, PlAYER_MAX_AGE]
+            born: [PLAYER_MIN_AGE, PlAYER_MAX_AGE],
         };
 
         this.born = [PLAYER_MIN_AGE, PlAYER_MAX_AGE];
@@ -119,6 +117,7 @@ class PlayerFilter extends Component {
             this.makeFilterRequest();
         });
     };
+
 
     onChangeName(event) {
         this.setState({name: event.target.value}, () => {
@@ -164,10 +163,38 @@ class PlayerFilter extends Component {
             }
         }
 
-
         this.props.setFilters(filters);
         this.props.filterPlayers(queryString.slice(0, -1));
     }
+
+    changeName = (name) => {
+        if (name) {
+            this.setState({name: name} , () => {
+                this.makeFilterRequest();
+            })
+        }
+    };
+
+    changeLeague = (league) => {
+        if (league) {
+            this.setState({id_league : league } , () => {
+                this.makeFilterRequest();
+            });
+        }
+    };
+
+    clearLeague = () => {
+        this.setState({id_league : '' , dropdownLeagues: []} , () => {
+            this.makeFilterRequest();
+        });
+    };
+
+    clearName = () => {
+        this.setState({name : ''}, () => {
+            this.makeFilterRequest();
+        });
+    };
+
 
 
     componentWillReceiveProps(nextProps) {
@@ -206,11 +233,21 @@ class PlayerFilter extends Component {
         return (<div className={classNames(classes.row, classes.headerMedia)}>
             <Grid container gutter={40}>
                 <Grid item xs={12} sm={6} md={4}>
-                    <Autosuggest fullWidth
-                                 label="League"
-                                 value={this.props.leagues[this.state.id_league] || this.props.query['id_league'] || ''}
-                                 suggestions={this.props.leagueOptions}
-                                 onSuggestionSelected={this.onChangeAutosuggest('id_league')}/>
+
+
+                    <DropdownOptions  fullWidth
+                                        options={[]}
+                                        value={1}
+                                        label="League"
+                                        levels={this.props.levels}
+                                        levelOptions={this.props.levelOptions && this.props.levelOptions.length > 0 ? this.props.levelOptions: []}
+                                        leaguesOptions={this.props.leagueOptions}
+                                        leagues={this.props.leagues}
+                                        changeLeague={this.changeLeague}
+                                        clearLeague={this.clearLeague}
+                                        league={this.state.id_league || this.props.query['id_league'] || ''}
+                    />
+
 
                 </Grid>
                 <Grid item xs={12} sm={6} md={4}>
@@ -239,13 +276,26 @@ class PlayerFilter extends Component {
                                  max={PlAYER_MAX_AGE}/>
                 </Grid>
                 <Grid item xs={12} sm={6} md={4}>
-                    <TextField
-                        id="name"
-                        label="Name"
-                        value={this.state.name || this.props.query['name_search'] || ''}
-                        className={width === 'xl' || width === 'lg' || width === 'md' ? classes.textField : classes.mobileTextField}
-                        onChange={this.onChangeName}
-                    />
+                    <Hidden xsDown>
+                        <TextField
+                            id="name"
+                            label="Name"
+                            value={this.state.name || this.props.query['name_search'] || ''}
+                            className={classes.textField}
+                            onChange={this.onChangeName}
+                        />
+                    </Hidden>
+
+                    <Hidden smUp>
+                        <InputText options={[]}
+                                   value={1}
+                                   label="Name"
+                                   changeName={this.changeName}
+                                   name={this.state.name || this.props.query['name_search']}
+                                   clearName={this.clearName}
+                        />
+                    </Hidden>
+
                 </Grid>
 
                 <Hidden smUp>
@@ -259,7 +309,6 @@ class PlayerFilter extends Component {
                 </Hidden>
 
             </Grid>
-
         </div>);
     }
 }

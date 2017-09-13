@@ -5,7 +5,7 @@
 
 import {push as routerGo, goBack as routerBack} from 'react-router-redux';
 
-import {SUCCESS_ALERT, ERROR_ALERT, REMOVE_ALERT, SET_LEAGUES, SET_TEAMS, SET_COUNTRIES} from '../constants/actions';
+import {SUCCESS_ALERT, ERROR_ALERT, REMOVE_ALERT, SET_LEAGUES, SET_TEAMS, SET_COUNTRIES, FILTER_LEAGUES} from '../constants/actions';
 
 import {logOut} from '../../user/actions'
 
