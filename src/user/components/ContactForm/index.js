@@ -66,6 +66,7 @@ class ContactForm extends Component {
 
         this.props.sendEmail(this.props.user.id, this.state.contactSubject, this.state.contactMessage);
         this.setState({
+            errors: [],
             contactSubject: '',
             contactMessage: ''
         });

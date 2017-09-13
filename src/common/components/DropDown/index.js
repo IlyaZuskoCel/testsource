@@ -36,6 +36,9 @@ const styleSheet = createStyleSheet('DropDown', theme => {
             zIndex: 0,
             lineHeight: '40px'
         },
+        iconCross: {
+            zIndex: 10000
+        },
         container: {
             width: '100%',
             position: 'relative',
@@ -86,6 +89,10 @@ class DropDown extends Component {
     };
     handleChange = value => (event) => {
         this.props.onChange({...event, target: {value}});
+        this.toggleOpen();
+    };
+    handlerClear = (event) => {
+        this.props.onChange({...event, target: {value: ''}});
         this.toggleOpen();
     };
 
@@ -141,7 +148,13 @@ class DropDown extends Component {
                             </FormHelperText>
                         )}
                     </FormControl>
-                    <ScoutIcon className={classes.icon} onClick={this.toggleOpen}>dropdown-arrows</ScoutIcon>
+                    <ScoutIcon
+                        onClick={this.state.open && !required ? this.handlerClear : this.toggleOpen}
+                        className={classNames(classes.icon, {[classes.iconCross]: this.state.open && !required})}>
+                        {this.state.open && !required ? 'cross' : 'dropdown-arrows'}
+                    </ScoutIcon>
+
+
                 </div>
 
                 <div className={classes.container}>
@@ -164,6 +177,8 @@ class DropDown extends Component {
     }
 }
 
-DropDown.defaultProps = {};
+DropDown.defaultProps = {
+    required: false
+};
 
 export default withStyles(styleSheet)(DropDown);
