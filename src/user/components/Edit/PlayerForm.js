@@ -261,15 +261,20 @@ class PlayerForm extends Component {
         if (this.state.id_league === '-1' && !this.state.league)
             return this.setState({errors: ['league']});
 
+        if (this.state.id_league === '')
+            data.id_league = null;
+
         if (this.state.id_team_current === '-1' && !this.state.team)
             return this.setState({errors: ['team']});
+
+        if (this.state.id_team_current === '')
+            data.id_team_current = null;
 
         if (data.height && !data.height[0] && !data.height[1])
             data.height = null;
 
         if (data.birthday && data.birthday === '0000-00-01')
             data.height = null;
-
 
         this.props.save(data);
         return false;
