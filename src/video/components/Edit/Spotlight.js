@@ -172,18 +172,9 @@ class Trim extends Component {
     constructor(props) {
         super(props);
         this.state = {};
-        if (props.video) {
-            const imageObj = new Image();
-            imageObj.onload = () => {
+        if (props.video)
+            this.setDefaultPosition(props.video.overlay_x, props.video.overlay_y, props.video.width, props.video.height);
 
-                const width = imageObj.width;
-                const height = imageObj.height;
-
-                this.setDefaultPosition(props.video.overlay_x, props.video.overlay_y, width, height);
-            };
-
-            imageObj.src = props.video.trim_thumb;
-        }
 
     }
 
@@ -191,19 +182,7 @@ class Trim extends Component {
         if ((nextProps.video.overlay_x && !this.props.overlay_x && this.props.overlay_x !== nextProps.video.overlay_x)
             || (nextProps.video.overlay_y && !this.props.overlay_y && this.props.overlay_y !== nextProps.video.overlay_y)
             || (nextProps.video.trim_thumb && !this.props.trim_thumb && this.props.trim_thumb !== nextProps.video.trim_thumb)
-        ) {
-            const imageObj = new Image();
-            imageObj.onload = () => {
-
-                const width = imageObj.width;
-                const height = imageObj.height;
-
-                this.setDefaultPosition(nextProps.video.overlay_x, nextProps.video.overlay_y, width, height);
-            };
-
-            imageObj.src = nextProps.video.trim_thumb;
-        }
-
+        ) this.setDefaultPosition(nextProps.video.overlay_x, nextProps.video.overlay_y, props.video.width, props.video.height);
     }
 
     componentDidMount() {
