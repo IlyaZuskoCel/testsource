@@ -113,9 +113,9 @@ class PlayerFilter extends Component {
     };
 
     onChangeAutosuggest = name => (event, {suggestionValue}) => {
-        this.setState({[name]: filterOnReg(/^[0-9]+/, suggestionValue)}, () => {
-            this.makeFilterRequest();
-        });
+            this.setState({[name]: filterOnReg(/^[0-9]+/, suggestionValue)}, () => {
+                this.makeFilterRequest();
+            });
     };
 
 
@@ -177,14 +177,14 @@ class PlayerFilter extends Component {
 
     changeLeague = (league) => {
         if (league) {
-            this.setState({id_league : league } , () => {
+            this.setState({id_league : league , id_team_current: '' } , () => {
                 this.makeFilterRequest();
             });
         }
     };
 
     clearLeague = () => {
-        this.setState({id_league : '' , dropdownLeagues: []} , () => {
+        this.setState({id_league : '' , dropdownLeagues: [] , id_team_current: ''} , () => {
             this.makeFilterRequest();
         });
     };
@@ -254,7 +254,7 @@ class PlayerFilter extends Component {
 
                     <Autosuggest fullWidth
                                  label="Team"
-                                 value={this.props.leagues[this.state.id_team_current] || this.props.query['id_team_current'] || ''}
+                                 value={this.props.teams && this.state.id_team_current ? this.props.teams[this.state.id_team_current] || '' : ''}
                                  suggestions={this.state.id_league ? this.props.teamOptions.filter(i => i.item.id_league === parseInt(this.state.id_league)) : this.props.teamOptions}
                                  onSuggestionSelected={this.onChangeAutosuggest('id_team_current')}/>
                 </Grid>
