@@ -9,7 +9,7 @@ import {connect} from 'react-redux';
 
 import Edit from '../components/Edit';
 
-import {fetchVideo, update, fetchTags, updateVideoField} from '../actions';
+import {fetchVideo, update, trim, fetchTags, updateVideoField} from '../actions';
 
 import {map, mapOptions} from '../selectors';
 
@@ -26,6 +26,7 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(fetchTags());
     },
     update: data => dispatch(update(data)),
+    trim: (id, start, end) => dispatch(trim(id, start, end)),
     updateField: (name, value) => dispatch(updateVideoField(name, value)),
 });
 

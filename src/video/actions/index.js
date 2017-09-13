@@ -137,6 +137,22 @@ export const update = (data) => dispatch => {
         })
 };
 
+export const trim = (id_video, time_start, time_end) => dispatch => {
+
+    return post(`/api/v2/video/trim`, {id_video, time_start, time_end})
+        .then(result => {
+            if ('error' in result)
+                return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
+            dispatch({type: SET_VIDEO, payload: {...result, trim_thumb:result.thumb_lg}});
+        })
+        .catch((message) => {
+            if (message === 'Unauthorized') {
+                dispatch(logOut());
+            }
+            dispatch({type: ERROR_ALERT, payload: {message}});
+        })
+};
+
 
 export const deleteVideo = id_video => dispatch => {
     return post(`/api/v2/video/remove`, {id_video})

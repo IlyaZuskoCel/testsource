@@ -169,18 +169,12 @@ class Trim extends Component {
     state = {image: false};
     drag = false;
 
-    image = '';
-
     componentDidMount() {
         document.onmousedown = this.startDrag;
         document.onmouseup = this.stopDrag;
 
         document.ontouchstart = this.startDrag;
         document.ontouchend = this.stopDrag;
-
-        const video = document.getElementById("video");
-        if (this.props.video.time_start)
-            video.currentTime = this.props.video.time_start / 1000;
     }
 
     componentWillUnmount() {
@@ -190,47 +184,6 @@ class Trim extends Component {
         document.ontouchstart = null;
         document.ontouchend = null;
     }
-
-    handlePlay = () => {
-        const video = document.getElementById("video");
-        video.pause();
-        const width = video.videoWidth;
-        const height = video.videoHeight;
-        const canvas = document.createElement('canvas');
-        const context = canvas.getContext('2d');
-
-        canvas.width = width;
-        canvas.height = height;
-        context.drawImage(video, 0, 0, width, height);
-        this.image = canvas.toDataURL("image/png");
-
-        this.setState({image: true}, () => {
-            const circle = document.getElementById("circle");
-            const imageCircle = document.getElementById("imageCircle");
-
-
-            const image = document.getElementById("imageSrc");
-
-            if (image.width !== imageCircle.width)
-                imageCircle.width = image.width;
-            if (image.height !== imageCircle.height)
-                imageCircle.height = image.height;
-
-
-            const left = this.props.video.overlay_x * image.width / width - 2;
-            const top = this.props.video.overlay_y * image.height / height - 2;
-
-
-            circle.style['margin-left'] = left + 'px';
-            circle.style['margin-top'] = top + 'px';
-
-            imageCircle.style.left = (-1 * (left + 2)) + 'px';
-            imageCircle.style.top = (-1 * (top + 2)) + 'px';
-        });
-
-
-    };
-
 
     startDrag = (e) => {
         if (!e) {
@@ -339,10 +292,7 @@ class Trim extends Component {
             this.props.updateField('overlayUri', uri);
 
         };
-
-        imageObj.src = this.image;
-
-
+        imageObj.src = this.props.video.trim_thumb;
     };
 
     render() {
@@ -355,30 +305,18 @@ class Trim extends Component {
                 This is how the scout identifies you. Pinch and drag with 2 fingers to resize the marker.
             </Typography>
 
-            {this.state.image ? (
-                <Paper className={classes.uploadWrap} id="image">
+            <Paper className={classes.uploadWrap} id="image">
 
-                    <img src={this.image} className={classes.imageBg} id="imageSrc"/>
-                    <div className={classes.opacityBg}/>
-                    <div className={classes.imageWrap} id="imageWrap">
-                        <div className={classes.circle} id="circle">
-                            <img src={this.image} className={classes.imageCircle} id="imageCircle"/>
-                            <div className={classes.divCircle} id="divCircle"/>
+                <img src={video.trim_thumb} className={classes.imageBg} id="imageSrc"/>
+                <div className={classes.opacityBg}/>
+                <div className={classes.imageWrap} id="imageWrap">
+                    <div className={classes.circle} id="circle">
+                        <img src={video.trim_thumb} className={classes.imageCircle} id="imageCircle"/>
+                        <div className={classes.divCircle} id="divCircle"/>
 
-                        </div>
                     </div>
-                </Paper>
-            ) : (
-                <Paper className={classes.uploadWrap} id="image">
-                    <video src={video.video_path}
-                           id="video"
-                           autoPlay
-                           preload
-                           className={classes.video}
-                           onPlay={this.handlePlay}
-                           controls/>
-                </Paper>
-            )}
+                </div>
+            </Paper>
 
 
             <div className={classes.buttons}>

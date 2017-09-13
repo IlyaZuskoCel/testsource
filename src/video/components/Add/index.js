@@ -107,6 +107,10 @@ class Add extends Component {
         this.props.fetchData();
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.video.trim_thumb !== this.props.video.trim_thumb)
+            this.changeTab(2);
+    }
 
     changeTab = tab => {
         if (tab > 0 && !this.props.video.video_path) return;
@@ -123,7 +127,11 @@ class Add extends Component {
     handleNext = () => this.changeTab(this.state.tab + 1);
     handlePrev = () => this.changeTab(this.state.tab - 1);
 
-
+    handleTrim = () => {
+        if (!this.props.video.time_end) return;
+        if (this.props.video.time_end - this.props.video.time_start > 60000) return;
+        this.props.trim(this.props.video.id, this.props.video.time_start, this.props.video.time_end);
+    };
     handleSubmit = () => {
         this.props.update(this.props.video);
     };
@@ -140,6 +148,7 @@ class Add extends Component {
                       className={classes.tabs}
                       indicatorColor="white"
                       onChange={this.handleChangeTab}>
+
                     <Tab className={classNames(classes.tabWrap, {[classes.activeTabWrap]: this.state.tab >= 0})}
                          label={
                              <div>
@@ -266,7 +275,7 @@ class Add extends Component {
                                                          onNext={this.handleNext}
                                                          upload={this.props.upload}/>}
                         {this.state.tab === 1 && <Trim video={video}
-                                                       onNext={this.handleNext}
+                                                       onNext={this.handleTrim}
                                                        updateField={this.props.updateField}
                                                        onPrev={this.handlePrev}/>}
 

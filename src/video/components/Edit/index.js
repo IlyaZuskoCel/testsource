@@ -106,7 +106,10 @@ class Edit extends Component {
     componentDidMount() {
         this.props.fetchData(this.props.id);
     }
-
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.video.trim_thumb !== this.props.video.trim_thumb)
+            this.changeTab(2);
+    }
     changeTab = tab => {
         window.scrollTo(0, 0);
         this.setState({tab})
@@ -118,6 +121,11 @@ class Edit extends Component {
     handleNext = () => this.changeTab(this.state.tab + 1);
     handlePrev = () => this.changeTab(this.state.tab - 1);
 
+    handleTrim = () => {
+        if (!this.props.video.time_end) return;
+        if (this.props.video.time_end - this.props.video.time_start > 60000) return;
+        this.props.trim(this.props.video.id, this.props.video.time_start, this.props.video.time_end);
+    };
     handleSubmit = () => {
         this.props.update(this.props.video);
     };
@@ -229,7 +237,7 @@ class Edit extends Component {
                         </Hidden>
 
                         {this.state.tab === 0 && <Trim video={video}
-                                                       onNext={this.handleNext}
+                                                       onNext={this.handleTrim}
                                                        updateField={this.props.updateField}
                                                        onPrev={this.handlePrev}/>}
                         {this.state.tab === 1 && <Spotlight video={video}
