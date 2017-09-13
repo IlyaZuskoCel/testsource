@@ -172,16 +172,37 @@ class Trim extends Component {
     constructor(props) {
         super(props);
         this.state = {};
-        if (props.video && props.video.overlay_x && props.video.overlay_y)
-            this.setDefaultPosition(props.video.overlay_x, props.video.overlay_y);
+        if (props.video) {
+            const imageObj = new Image();
+            imageObj.onload = () => {
+
+                const width = imageObj.width;
+                const height = imageObj.height;
+
+                this.setDefaultPosition(props.video.overlay_x, props.video.overlay_y, width, height);
+            };
+
+            imageObj.src = props.video.trim_thumb;
+        }
+
     }
 
     componentWillReceiveProps(nextProps) {
         if ((nextProps.video.overlay_x && !this.props.overlay_x && this.props.overlay_x !== nextProps.video.overlay_x)
             || (nextProps.video.overlay_y && !this.props.overlay_y && this.props.overlay_y !== nextProps.video.overlay_y)
             || (nextProps.video.trim_thumb && !this.props.trim_thumb && this.props.trim_thumb !== nextProps.video.trim_thumb)
-        )
-            this.setDefaultPosition(nextProps.video.overlay_x, nextProps.video.overlay_y, nextProps.video.trim_thumb);
+        ) {
+            const imageObj = new Image();
+            imageObj.onload = () => {
+
+                const width = imageObj.width;
+                const height = imageObj.height;
+
+                this.setDefaultPosition(nextProps.video.overlay_x, nextProps.video.overlay_y, width, height);
+            };
+
+            imageObj.src = nextProps.video.trim_thumb;
+        }
 
     }
 
@@ -202,45 +223,36 @@ class Trim extends Component {
     }
 
 
-    setDefaultPosition = (x, y, src) => {
-        const imageObj = new Image();
-        imageObj.onload = () => {
+    setDefaultPosition = (x, y, width, height) => {
+        const r = Math.round(width / 20);
 
-            const width = imageObj.width;
-            const height = imageObj.height;
+        const circle = document.getElementById("circle");
+        const imageCircle = document.getElementById("imageCircle");
 
-            const r = Math.round(width / 20);
+        const image = document.getElementById("imageSrc");
 
-            const circle = document.getElementById("circle");
-            const imageCircle = document.getElementById("imageCircle");
-
-            const image = document.getElementById("imageSrc");
-
-            if (image.width !== imageCircle.width)
-                imageCircle.width = image.width;
-            if (image.height !== imageCircle.height)
-                imageCircle.height = image.height;
+        if (image.width !== imageCircle.width)
+            imageCircle.width = image.width;
+        if (image.height !== imageCircle.height)
+            imageCircle.height = image.height;
 
 
-            const left = Math.max(x * image.width / width - 2, 0);
+        const left = Math.max(x * image.width / width - 2, 0);
 
-            const top = Math.max(y * image.height / height - 2, 0);
+        const top = Math.max(y * image.height / height - 2, 0);
 
-            const radius = r * image.width / width;
+        const radius = r * image.width / width;
 
-            circle.style['margin-left'] = left + 'px';
-            circle.style['margin-top'] = top + 'px';
+        circle.style['margin-left'] = left + 'px';
+        circle.style['margin-top'] = top + 'px';
 
 
-            circle.style.width = radius * 2 + 'px';
-            circle.style.height = radius * 2 + 'px';
+        circle.style.width = radius * 2 + 'px';
+        circle.style.height = radius * 2 + 'px';
 
-            imageCircle.style.left = (-1 * (left + 2)) + 'px';
-            imageCircle.style.top = (-1 * (top + 2)) + 'px';
+        imageCircle.style.left = (-1 * (left + 2)) + 'px';
+        imageCircle.style.top = (-1 * (top + 2)) + 'px';
 
-        };
-
-        imageObj.src = src;
     };
 
     startDrag = (e) => {
