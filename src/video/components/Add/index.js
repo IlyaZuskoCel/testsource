@@ -111,10 +111,11 @@ class Add extends Component {
     componentWillReceiveProps(nextProps) {
         if (this.state.nextTrim && nextProps.video.trim_thumb !== this.props.video.trim_thumb) {
             this.setState({nextTrim: false}, () => {
-                this.changeTab(1);
+                this.changeTab(2);
             })
         }
     }
+
 
     changeTab = tab => {
         if (tab > 0 && !this.props.video.video_path) return;
