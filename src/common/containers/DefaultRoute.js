@@ -12,7 +12,8 @@ import {removeAlert} from '../actions';
 
 const mapStateToProps = (state) => ({
     isAuthenticated: state.user.current !== null,
-    alert: state.common.alert
+    alert: state.common.alert,
+    loader: state.common.loader,
 });
 
 

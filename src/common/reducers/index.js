@@ -10,6 +10,7 @@ import alert from './alert';
 import leagues from './leagues';
 import teams from './teams';
 import countries from './countries';
+import loader from './loader';
 
 export default combineReducers({
     load,
@@ -17,4 +18,5 @@ export default combineReducers({
     leagues,
     teams,
     countries,
+    loader,
 });

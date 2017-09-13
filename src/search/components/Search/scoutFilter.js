@@ -168,6 +168,7 @@ class ScoutFilter extends Component {
         }
     };
 
+
     render() {
         const {classes, width} = this.props;
 

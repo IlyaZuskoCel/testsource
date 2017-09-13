@@ -3,7 +3,6 @@
  * moonion.com
  */
 
-
 import React from 'react';
 import {Route} from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -14,9 +13,10 @@ import Grid from 'material-ui/Grid';
 import Snackbar from 'material-ui/Snackbar';
 import Typography from 'material-ui/Typography';
 
-
 import Header from '../../containers/Header'
 import Footer from '../../containers/Footer'
+
+ import gifImage from './assets/images/spinner.gif';
 
 import ScoutIcon from '../Icon';
 
@@ -46,11 +46,35 @@ const styleSheet = createStyleSheet('DefaultRoute', theme => ({
     },
     hideBackgroundTopHeader: {
         marginTop: 0,
+    },
+    showPreloader: {
+        display: 'block'
+    },
+    hidePreloader: {
+        display: 'none',
+        visibility: 'hidden',
+        height: 0,
+        width: 0,
+    },
+    preloader: {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        zIndex: 99999,
+        backgroundColor: 'transparent',
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    gifImage: {
+        width: 50,
     }
 }));
 
 
-const DefaultRoute = ({component: Component, isAuthenticated, alert, hideAlert, classes, hideBackgroundTopHeader, hideBackgroundTopMobileHeader, hideBackgroundTopMobileHeaderScroll, hideHeader, ...rest}) => (
+const DefaultRoute = ({component: Component, isAuthenticated, loader ,alert, hideAlert, classes, hideBackgroundTopHeader, hideBackgroundTopMobileHeader, hideBackgroundTopMobileHeaderScroll, hideHeader, ...rest}) => (
     <Route {...rest} render={props => (
         <div>
             <Grid
@@ -75,8 +99,10 @@ const DefaultRoute = ({component: Component, isAuthenticated, alert, hideAlert, 
                     <Typography type="body2"> {alert.message}</Typography>
 
                 </div>}
-
             />
+            <div className={classNames(classes.preloader , loader > 0 ? classes.showPreloader : classes.hidePreloader)}>
+                <img src={gifImage} alt='Preloading' className={classes.gifImage}/>
+            </div>
         </div>
     )}/>
 );

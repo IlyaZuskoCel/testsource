@@ -9,6 +9,7 @@ import {get, post, postForm, uploadForm} from '../../common/helpers/api';
 
 
 import {logOut} from '../../user/actions';
+import {startLoading , stopLoading} from "../../common/actions/index";
 
 
 import {ERROR_ALERT, SUCCESS_ALERT} from '../../common/constants/actions';
@@ -22,9 +23,12 @@ import {
 
 
 export const fetchVideo = id => dispatch => {
+    dispatch(startLoading());
     dispatch({type: SET_VIDEO, payload: {}});
+
     return get(`/api/v2/video/get/${id}`)
         .then(video => {
+            dispatch(stopLoading());
             if ('error' in video)
                 return dispatch({type: ERROR_ALERT, payload: {message: video.error.message}});
             dispatch({type: SET_VIDEO, payload: video});
@@ -34,6 +38,7 @@ export const fetchVideo = id => dispatch => {
                 dispatch(logOut());
             }
             dispatch({type: ERROR_ALERT, payload: {message}});
+            dispatch(stopLoading());
         })
 };
 
@@ -65,22 +70,32 @@ export const upload = file => dispatch => {
 
 
 export const postVideo = (data) => dispatch => {
+    dispatch(startLoading());
+
     const overlayUri = data.overlayUri;
     return post(`/api/v2/video/update-video`, {...data, overlayUri: null})
         .then(result => {
+            dispatch(stopLoading());
+
+
             if ('error' in result)
                 return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
 
+
             if (overlayUri) {
+                dispatch(startLoading());
+
                 return fetch(overlayUri)
                     .then(res => res.blob())
                     .then(blob => {
+
                         let form = new FormData();
                         form.append('UploadForm', blob);
                         form.append('video_id', data.id);
                         return postForm(`/api/v2/video/overlay`, form)
                     })
                     .then(() => {
+                        dispatch(stopLoading());
                         dispatch({type: SET_VIDEO, payload: {}});
                         dispatch(push('/profile'));
                         dispatch({type: SUCCESS_ALERT, payload: {message: 'Video was posted successfully'}});
@@ -98,18 +113,25 @@ export const postVideo = (data) => dispatch => {
                 dispatch(logOut());
             }
             dispatch({type: ERROR_ALERT, payload: {message}});
+            dispatch(stopLoading());
         })
 };
 
 export const update = (data) => dispatch => {
     const overlayUri = data.overlayUri;
+    dispatch(startLoading());
 
     return post(`/api/v2/video/update-video`, {...data, overlayUri: null})
         .then(result => {
+            dispatch(stopLoading());
+
             if ('error' in result)
                 return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
 
+
             if (overlayUri) {
+                dispatch(startLoading());
+
                 return fetch(overlayUri)
                     .then(res => res.blob())
                     .then(blob => {
@@ -119,6 +141,7 @@ export const update = (data) => dispatch => {
                         return postForm(`/api/v2/video/overlay`, form)
                     })
                     .then(() => {
+                        dispatch(stopLoading());
                         dispatch({type: SET_VIDEO, payload: {}});
                         dispatch(push('/profile'));
                         dispatch({type: SUCCESS_ALERT, payload: {message: 'Video was updated successfully'}});
@@ -134,13 +157,18 @@ export const update = (data) => dispatch => {
                 dispatch(logOut());
             }
             dispatch({type: ERROR_ALERT, payload: {message}});
+            dispatch(stopLoading());
         })
 };
 
 
 export const deleteVideo = id_video => dispatch => {
+    dispatch(startLoading());
+
     return post(`/api/v2/video/remove`, {id_video})
         .then(result => {
+            dispatch(stopLoading());
+
             if ('error' in result)
                 return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
 
@@ -153,6 +181,7 @@ export const deleteVideo = id_video => dispatch => {
                 dispatch(logOut());
             }
             dispatch({type: ERROR_ALERT, payload: {message}});
+            dispatch(stopLoading());
         })
 };
 
@@ -164,8 +193,12 @@ export const clear = () => dispatch => {
 };
 
 export const fetchTags = () => dispatch => {
+    dispatch(startLoading());
+
     return get(`/api/v2/video/get-tags`)
         .then(data => {
+            dispatch(stopLoading());
+
             if ('error' in data)
                 return dispatch({type: ERROR_ALERT, payload: {message: data.error.message}});
 
@@ -176,5 +209,6 @@ export const fetchTags = () => dispatch => {
                 dispatch(logOut());
             }
             dispatch({type: ERROR_ALERT, payload: {message}});
+            dispatch(stopLoading());
         })
 };
