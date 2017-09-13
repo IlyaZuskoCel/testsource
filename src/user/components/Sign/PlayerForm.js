@@ -72,13 +72,18 @@ class PlayerForm extends Component {
     handleSubmit = e => {
         e.preventDefault();
 
-        if (!this.state.password)
+        let data = this.state;
+        if (!data.password)
             return this.setState({errors: ['password']});
 
-        if (this.state.password !== this.state.password_repeat)
+        if (data.password !== data.password_repeat)
             return this.setState({errors: ['password_repeat']});
 
-        this.props.register(this.state);
+        if (data.birthday && data.birthday === '0000-00-01')
+            data.height = null;
+
+
+        this.props.register(data);
         return false;
     };
     handleRadio = name => (event, value) => {
