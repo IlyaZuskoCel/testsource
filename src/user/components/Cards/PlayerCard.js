@@ -197,6 +197,7 @@ class PlayerCard extends Component {
 
         this.state = {
             openRemoveAlert: false,
+            openConfirmAlert: false,
             currentPlayer: null,
         }
     }
@@ -204,7 +205,9 @@ class PlayerCard extends Component {
     follow = (event, player) => {
         event.preventDefault();
 
-        this.props.addFavorite && this.props.addFavorite(player.id);
+        this.setState({openConfirmAlert: true , currentPlayer : player} , () => {
+            this.props.addFavorite && this.props.addFavorite(player.id);
+        });
     };
 
     splitOnLength = (string , treshold) => {
@@ -231,6 +234,10 @@ class PlayerCard extends Component {
         });
     };
 
+    handleDialogConfirm = () => {
+        this.setState({openConfirmAlert:  false});
+    };
+
     render() {
         const {classes , player  , role , ...props} = this.props;
 
@@ -242,7 +249,7 @@ class PlayerCard extends Component {
                     ignoreEscapeKeyUp>
                     <DialogTitle disableTypography>
                         <Typography type="subheading">
-                            Remove {this.state.currentPlayer && this.splitOnLength(this.state.currentPlayer.first_name , nameLengthTreshold) } {this.state.currentPlayer && this.splitOnLength(this.state.currentPlayer.last_name , lastnameLengthTreshold)} from your Shortlist
+                            Remove {this.state.currentPlayer && this.state.currentPlayer.first_name } {this.state.currentPlayer &&this.state.currentPlayer.last_name } from your Shortlist
                         </Typography>
                     </DialogTitle>
                     <DialogActions>
@@ -251,6 +258,23 @@ class PlayerCard extends Component {
                         </Button>
                         <Button onClick={this.handleDialogDelete} color="primary">
                             Remove
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+
+
+                <Dialog
+                    open={this.state.openConfirmAlert}
+                    ignoreBackdropClick
+                    ignoreEscapeKeyUp>
+                    <DialogTitle disableTypography>
+                        <Typography type="subheading">
+                             {this.state.currentPlayer && this.state.currentPlayer.first_name } {this.state.currentPlayer &&this.state.currentPlayer.last_name } was added to your shortlist
+                        </Typography>
+                    </DialogTitle>
+                    <DialogActions>
+                        <Button onClick={this.handleDialogConfirm} color="primary">
+                            Ok
                         </Button>
                     </DialogActions>
                 </Dialog>
