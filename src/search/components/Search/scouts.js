@@ -16,6 +16,11 @@ import classNames from 'classnames';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import defaultPhoto from './assets/images/default-photo.png';
 
+
+const nameLengthTreshold = 12;
+const lastnameLengthTreshold = 12;
+
+
 const styleSheet = createStyleSheet('Scout', theme => ({
     content: {
         maxWidth: 1168,
@@ -187,6 +192,13 @@ class Scouts extends Component {
         this.setState({scouts: nextProp.scouts});
     }
 
+    splitOnLength = (string , treshold) => {
+        if (string.length > treshold) {
+            return string.split(' ')[0];
+        }
+        return string;
+    };
+
 
     roleShortener(role) {
         let result;
@@ -224,10 +236,10 @@ class Scouts extends Component {
                                                 <div className={classes.nameColumn}>
                                                     <Typography type='title'
                                                                 className={classNames(classes.nameFont, classes.nameFontFirst)}>
-                                                        {scout.first_name}
+                                                        {this.splitOnLength(scout.first_name , nameLengthTreshold)}
                                                     </Typography>
                                                     <Typography type='title' className={classes.nameFont}>
-                                                        {scout.last_name}
+                                                        {this.splitOnLength(scout.last_name , lastnameLengthTreshold)}
                                                     </Typography>
 
 

@@ -186,6 +186,10 @@ const styleSheet = createStyleSheet('Search', theme => ({
 
 }));
 
+const nameLengthTreshold = 12;
+const lastnameLengthTreshold = 12;
+
+
 class PlayerCard extends Component {
 
     constructor(props) {
@@ -202,6 +206,14 @@ class PlayerCard extends Component {
 
         this.props.addFavorite && this.props.addFavorite(player.id);
     };
+
+    splitOnLength = (string , treshold) => {
+        if (string.length > treshold) {
+            return string.split(' ')[0];
+        }
+        return string;
+    };
+
 
     unSubscribe = (event , player) => {
         event.preventDefault();
@@ -230,7 +242,7 @@ class PlayerCard extends Component {
                     ignoreEscapeKeyUp>
                     <DialogTitle disableTypography>
                         <Typography type="subheading">
-                            Remove {this.state.currentPlayer && this.state.currentPlayer.first_name} {this.state.currentPlayer && this.state.currentPlayer.last_name} from your Shortlist
+                            Remove {this.state.currentPlayer && this.splitOnLength(this.state.currentPlayer.first_name , nameLengthTreshold) } {this.state.currentPlayer && this.splitOnLength(this.state.currentPlayer.last_name , lastnameLengthTreshold)} from your Shortlist
                         </Typography>
                     </DialogTitle>
                     <DialogActions>
@@ -256,7 +268,7 @@ class PlayerCard extends Component {
                             <div className={classes.playerNameContainer}>
                                 <div className={classes.nameColumn}>
                                     <Typography type='title' className={classes.nameFont}>
-                                        {player.first_name} {player.last_name}
+                                        {this.splitOnLength(player.first_name , nameLengthTreshold)} {this.splitOnLength(player.last_name , lastnameLengthTreshold)}
                                     </Typography>
                                     <Typography type='caption'
                                                 className={classes.playerLeague}>{player.team ? player.team : ''} {player.league_short ? player.league_short : ''}</Typography>

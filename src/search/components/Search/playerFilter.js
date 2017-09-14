@@ -26,6 +26,7 @@ import {filterOnReg} from "../../helpers/helpers";
 
 import {POS_LIST} from '../../../user/constants';
 
+
 let positionOptions = Object.keys(POS_LIST).map(value => ({
     label: POS_LIST[value],
     value
@@ -39,7 +40,6 @@ const styleSheet = createStyleSheet('ScoutFilter', theme => ({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-start',
-
 
         [theme.breakpoints.down('sm')]: {
             padding: 16,
@@ -302,7 +302,7 @@ class PlayerFilter extends Component {
                     <div className={classes.buttonViewContainer}>
                         <Button raised color="primary" className={classes.viewButton} onClick={this.props.viewResults}>
                             <Typography className={classes.viewTypography}>
-                                view all {this.props.total} players
+                                {this.props.total > 0 ? `view all ${this.props.total} scouts` : 'Your search might be too specific'}
                             </Typography>
                         </Button>
                     </div>

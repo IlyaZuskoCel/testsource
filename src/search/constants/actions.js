@@ -15,3 +15,4 @@ export const SET_FILTERS = 'search:setFilters';
 export const CLEAR_FILTERS  = 'search:clearFilters';
 
 export const SET_LEVELS = 'search:setLevels';
+
