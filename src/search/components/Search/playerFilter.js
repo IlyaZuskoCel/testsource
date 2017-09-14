@@ -176,11 +176,9 @@ class PlayerFilter extends Component {
     };
 
     changeLeague = (league) => {
-        if (league) {
             this.setState({id_league : league , id_team_current: '' } , () => {
                 this.makeFilterRequest();
             });
-        }
     };
 
     clearLeague = () => {

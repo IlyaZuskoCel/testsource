@@ -103,7 +103,6 @@ const styleSheet = createStyleSheet('DropDownCheckBoxes', theme => {
     }
 });
 
-
 class DropDownCheckBoxes extends Component {
 
     constructor(props) {
