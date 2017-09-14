@@ -70,6 +70,26 @@ const styleSheet = createStyleSheet('DefaultRoute', theme => ({
     },
     gifImage: {
         width: 50,
+    },
+    spinner: {
+        width: 35,
+        height: 35,
+        display: 'block',
+        borderRadius: '100%',
+        border: '2px solid',
+        borderTopColor: 'rgba(233,68,71, 0.65)',
+        borderBottomColor:'rgba(233,68,71, 0.15)',
+        borderLeftColor:'rgba(233,68,71, 0.65)',
+        borderRightColor:'rgba(233,68,71, 0.15)',
+        animation: 'spinner 3000ms linear infinite',
+},
+    '@keyframes spinner': {
+        from: {
+            transform: 'rotate(0deg)',
+        },
+        to: {
+            transform: 'rotate(360deg)',
+        }
     }
 }));
 
@@ -101,7 +121,7 @@ const DefaultRoute = ({component: Component, isAuthenticated, loader ,alert, hid
                 </div>}
             />
             <div className={classNames(classes.preloader , loader > 0 ? classes.showPreloader : classes.hidePreloader)}>
-                <img src={gifImage} alt='Preloading' className={classes.gifImage}/>
+                <div className={classes.spinner}></div>
             </div>
         </div>
     )}/>
