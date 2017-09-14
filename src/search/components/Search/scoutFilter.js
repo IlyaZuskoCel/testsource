@@ -84,6 +84,7 @@ class ScoutFilter extends Component {
 
         this.changeName = this.changeName.bind(this);
         this.changeTeam = this.changeTeam.bind(this);
+        this.onChangeName = this.onChangeName.bind(this);
         this.makeFilterRequest = this.makeFilterRequest.bind(this);
     }
 
@@ -105,7 +106,7 @@ class ScoutFilter extends Component {
         }
     }
 
-    changeName(event) {
+    onChangeName(event) {
         this.setState({name: event.target.value}, () => {
             this.makeFilterRequest();
         })
@@ -216,7 +217,7 @@ class ScoutFilter extends Component {
                     <div className={classes.buttonViewContainer}>
                         <Button raised color="primary" className={classes.viewButton} onClick={this.props.viewResults}>
                             <Typography className={classes.viewTypography}>
-                                view all {this.props.total} scouts
+                                {this.props.total > 0 ? `view all ${this.props.total} scouts` : 'Your search might be too specific'}
                             </Typography>
                         </Button>
                     </div>

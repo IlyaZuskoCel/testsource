@@ -96,13 +96,12 @@ const styleSheet = createStyleSheet('DropDownCheckBoxes', theme => {
         applyButton: {
             color: '#d7001e',
         },
-        cancleButton: {
+        cancelButton: {
             color: '#cbcbcb',
             opacity: '0.6',
         }
     }
 });
-
 
 class DropDownCheckBoxes extends Component {
 
@@ -146,7 +145,7 @@ class DropDownCheckBoxes extends Component {
         });
     };
 
-    handleCancle = (event) => {
+    handleCancel = (event) => {
         this.setState({
             level_id: '',
             league_id: '',
@@ -236,7 +235,7 @@ class DropDownCheckBoxes extends Component {
                     <Paper style={{zIndex: 1000}} square className={classes.suggestionsContainerOpen}>
                         <Hidden smUp>
                             <div className={classes.controllBar}>
-                                <Button onClick={this.handleCancle} className={classes.cancleButton}>Cancle</Button>
+                                <Button onClick={this.handleCancel} className={classes.cancelButton}>Cancel</Button>
                                 <Button onClick={this.handleApply} className={classes.applyButton}>Apply</Button>
                             </div>
                         </Hidden>
@@ -258,7 +257,7 @@ class DropDownCheckBoxes extends Component {
 
                         <Hidden smDown>
                             <div className={classes.controllBar}>
-                                <Button onClick={this.handleCancle}>Cancle</Button>
+                                <Button onClick={this.handleCancel}>Cancel</Button>
                                 <Button onClick={this.handleApply}>Apply</Button>
                             </div>
                         </Hidden>
