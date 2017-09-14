@@ -206,7 +206,6 @@ class Trim extends Component {
 
 
     setDefaultPosition = (x, y, width, height) => {
-        const r = Math.round(width / 20);
 
         const circle = document.getElementById("circle");
         const imageCircle = document.getElementById("imageCircle");
@@ -223,7 +222,7 @@ class Trim extends Component {
 
         const top = Math.max(y * image.height / height - 2, 0);
 
-        const radius = r * image.width / width;
+        const radius =  Math.max(Math.round(width / 20) * image.width / width, Math.round(height / 20) * image.height / height);
 
         circle.style['margin-left'] = left + 'px';
         circle.style['margin-top'] = top + 'px';
