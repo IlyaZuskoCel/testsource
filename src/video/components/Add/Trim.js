@@ -159,8 +159,8 @@ class Trim extends Component {
                     Previous
                 </Button>
                 <Button onClick={this.handleNext} raised
-                        color={video.time_end - video.time_start > 60000 ? 'default' : 'primary'}
-                        disabled={video.time_end - video.time_start > 60000}>
+                        color={this.state.time_end - this.state.time_start > 60000 ? 'default' : 'primary'}
+                        disabled={this.state.time_end - this.state.time_start > 60000}>
                     Next
                 </Button>
             </div>
