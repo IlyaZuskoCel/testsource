@@ -44,11 +44,13 @@ const styleSheet = createStyleSheet('Video', theme => ({
         textAlign: 'center'
     },
     video: {
-        maxWidth: '100%',
+        width: '100%',
         boxShadow: '0 0px 4px 0 rgba(0, 0, 0, 0.3)',
+        backgroundColor: '#000',
         [theme.breakpoints.up('sm')]: {
             maxHeight: 264,
         },
+
     },
     image: {
         maxWidth: '100%',
@@ -168,7 +170,8 @@ class Video extends Component {
                     <video src={video.overlay_video_path || video.trim_video_file_path || video.video_path}
                            className={classes.video}
                            autoPlay
-                           controls/>
+                           controls
+                           controlsList="nodownload"/>
                 ) : [
                     <img key="overlay" src={video.overlay || video.thumb_lg} onClick={this.handleShow}
                          className={classes.image}/>,
