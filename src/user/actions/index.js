@@ -402,7 +402,7 @@ export const report = (id_violator, type, message) => dispatch => {
             if ('error' in result)
                 return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
 
-            return dispatch({type: SUCCESS_ALERT, payload: {message: "Report message was sent successfully! "}});
+            return dispatch({type: SUCCESS_ALERT, payload: {message: "Thanks! We will review this profile and take any necessary action."}});
         })
         .catch((message) => {
             if (message === 'Unauthorized') {
