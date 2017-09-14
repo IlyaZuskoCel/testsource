@@ -14,3 +14,6 @@ export const SET_TEAMS = 'teams:setTeams';
 export const SET_COUNTRIES = 'countries:set';
 
 export const FILTER_LEAGUES = 'leagues:filterLeagues';
+
+export const INC_LOADER = 'loader:incLoader';
+export const DEC_LOADER = 'loader:decLoader';

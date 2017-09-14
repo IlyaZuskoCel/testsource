@@ -3,7 +3,7 @@
  * moonion.com
  */
 
-import {go} from '../../common/actions';
+import {go ,startLoading , stopLoading} from '../../common/actions';
 import {get, post, auth, getPage} from '../../common/helpers/api';
 
 import {ERROR_ALERT, SUCCESS_ALERT} from '../../common/constants/actions';
@@ -22,12 +22,12 @@ import {addRequestParams} from "../helpers/helpers";
 
 import queryString from 'query-string';
 
-
 const playerSearch = '/api/v2/user/player-search';
 const scoutSearch =  '/api/v2/user/scout-search';
 
 export const uploadPlayers = (params) => dispatch => {
     dispatch({type: CLEAR_LIST});
+    dispatch(startLoading());
 
     let request = typeof params === 'object' ? addRequestParams(playerSearch , params) : playerSearch + params;
 
@@ -35,14 +35,18 @@ export const uploadPlayers = (params) => dispatch => {
         .then(players => {
             dispatch({type: SET_PLAYERS , payload: players.items});
             dispatch({type: SET_HEADERS , payload: {count: players.count , page: players.page , pageCount: players.pageCount , perPage: players.perPage}});
+            dispatch(stopLoading());
         })
         .catch((message) => {
             dispatch({type: ERROR_ALERT, payload: {message}});
+            dispatch(stopLoading());
         });
 };
 
 export const uploadScouts = (params) => dispatch => {
     dispatch({type: CLEAR_LIST});
+    dispatch(startLoading());
+
 
     let request = typeof params === 'object' ? addRequestParams(scoutSearch , params) : scoutSearch + params;
 
@@ -50,9 +54,12 @@ export const uploadScouts = (params) => dispatch => {
         .then(scouts => {
             dispatch({type: SET_SCOUTS , payload: scouts.items});
             dispatch({type: SET_HEADERS , payload: {count: scouts.count , page: scouts.page , pageCount: scouts.pageCount , perPage: scouts.perPage}});
+            dispatch(stopLoading());
+
         })
         .catch((message) => {
             dispatch({type: ERROR_ALERT , payload: {message}})
+            dispatch(stopLoading());
         });
 };
 
@@ -67,6 +74,8 @@ export const clearFilters = () => dispatch => {
 
 export const filterScouts = (params) => dispatch => {
     dispatch({type: CLEAR_LIST});
+    dispatch(startLoading());
+
 
     let request = typeof params === 'object' ? addRequestParams(playerSearch , params) : playerSearch + params;
 
@@ -76,14 +85,17 @@ export const filterScouts = (params) => dispatch => {
             dispatch({type: SET_SCOUTS , payload: scouts.items.length >= 1 ? scouts.items : []});
             dispatch({type: SET_HEADERS , payload: {count: scouts.count , page: scouts.page , pageCount: scouts.pageCount , perPage: scouts.perPage}});
             dispatch(go('/search/scout' + params));
+            dispatch(stopLoading());
         })
         .catch(message => {
             dispatch({type: ERROR_ALERT, payload: {message}});
+            dispatch(stopLoading());
         });
 };
 
 export const filterPlayers = (params) => dispatch => {
     dispatch({type: CLEAR_LIST});
+    dispatch(startLoading());
 
     let request = typeof params === 'object' ? addRequestParams(playerSearch , params) : playerSearch + params;
 
@@ -93,19 +105,25 @@ export const filterPlayers = (params) => dispatch => {
             dispatch({type: SET_PLAYERS , payload: players.items.length >= 1 ? players.items : [] });
             dispatch({type: SET_HEADERS , payload: {count: players.count , page: players.page , pageCount: players.pageCount , perPage: players.perPage}});
             dispatch(go('/search/player' + params));
+            dispatch(stopLoading());
+
         })
         .catch(message => {
             dispatch({type: ERROR_ALERT, payload: {message}});
+            dispatch(stopLoading());
         })
 };
 
 
 export const fetchLevels = () => dispatch => {
+    dispatch(startLoading());
     get('/api/v2/level/get-list')
         .then(list => {
             dispatch({type: SET_LEVELS , payload: list})
+            dispatch(stopLoading());
         })
         .catch(message => {
             dispatch({type: ERROR_ALERT, payload: {message}});
+            dispatch(stopLoading());
         })
 };

@@ -5,7 +5,10 @@
 
 import {push as routerGo, goBack as routerBack} from 'react-router-redux';
 
-import {SUCCESS_ALERT, ERROR_ALERT, REMOVE_ALERT, SET_LEAGUES, SET_TEAMS, SET_COUNTRIES, FILTER_LEAGUES} from '../constants/actions';
+import {
+    SUCCESS_ALERT, ERROR_ALERT, REMOVE_ALERT, SET_LEAGUES, SET_TEAMS, SET_COUNTRIES, FILTER_LEAGUES,
+    INC_LOADER, DEC_LOADER
+} from '../constants/actions';
 
 import {logOut} from '../../user/actions'
 
@@ -30,8 +33,11 @@ export const addSuccessAlert = (title, options) => dispatch => {
     dispatch({type: SUCCESS_ALERT, payload: {message, ...options}});
 };
 export const getLeagues = () => dispatch => {
+    dispatch(startLoading());
     return get(`/api/v2/league/get-list`)
         .then(leagues => {
+            dispatch(stopLoading());
+
             if ('error' in leagues)
                 return dispatch({type: ERROR_ALERT, payload: {message: leagues.error.message}});
             dispatch({type: SET_LEAGUES, payload: leagues});
@@ -41,12 +47,16 @@ export const getLeagues = () => dispatch => {
                 dispatch(logOut());
             }
             dispatch({type: ERROR_ALERT, payload: {message}});
+            dispatch(stopLoading())
         })
 };
 // /v2/team/get-list[?fields=id,name]
 export const getTeams = () => dispatch => {
+    dispatch(startLoading());
     return get(`/api/v2/team/get-list?fields=id,id_league,name`)
         .then(teams => {
+            dispatch(stopLoading());
+
             if ('error' in teams)
                 return dispatch({type: ERROR_ALERT, payload: {message: teams.error.message}});
             dispatch({type: SET_TEAMS, payload: teams});
@@ -56,12 +66,17 @@ export const getTeams = () => dispatch => {
                 dispatch(logOut());
             }
             dispatch({type: ERROR_ALERT, payload: {message}});
+            dispatch(stopLoading());
         })
 };
 
 export const getCountries = () => dispatch => {
+    dispatch(startLoading());
+
     return get(`/api/v2/country/get-list`)
         .then(data => {
+            dispatch(stopLoading());
+
             if ('error' in data)
                 return dispatch({type: ERROR_ALERT, payload: {message: data.error.message}});
             dispatch({type: SET_COUNTRIES, payload: data});
@@ -71,5 +86,14 @@ export const getCountries = () => dispatch => {
                 dispatch(logOut());
             }
             dispatch({type: ERROR_ALERT, payload: {message}});
+            dispatch(stopLoading());
         })
+};
+
+export const startLoading = () => dispatch => {
+    dispatch({type : INC_LOADER});
+};
+
+export const stopLoading = () => dispatch => {
+    dispatch({type: DEC_LOADER});
 };
