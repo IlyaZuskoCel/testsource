@@ -157,11 +157,14 @@ class DropDownCheckBoxes extends Component {
 
     onChangeLevel =  (event , {suggestionValue}) => {
         let leagues = suggestionValue ? this.state.leaguesOptions.filter(league => parseInt(league.item.id_level) === suggestionValue ) : this.state.leaguesOptions;
-        this.setState({'level_id': suggestionValue , filteredLeagues: leagues});
+        this.setState({'level_id': suggestionValue , filteredLeagues: leagues , 'league_id' : ''});
     };
 
     onChangeLeague = (event, {suggestionValue}) => {
-        this.setState({'league_id' : suggestionValue});
+        if (this.state.level_id)
+            this.setState({'league_id' : suggestionValue });
+        else
+            this.setState({'league_id' : suggestionValue , 'level_id' : '' });
     };
 
     render() {

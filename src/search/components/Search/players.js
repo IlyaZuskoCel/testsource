@@ -2,6 +2,7 @@
  * Created by kirill on 7/21/17.
  * moonion.com
  */
+
 import React, {Component} from 'react';
 import compose from 'recompose/compose';
 import PropTypes from 'prop-types';
@@ -9,6 +10,8 @@ import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 import withWidth from 'material-ui/utils/withWidth';
 import classNames from 'classnames';
+import Hidden from 'material-ui/Hidden';
+
 
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 
@@ -189,6 +192,15 @@ const styleSheet = createStyleSheet('Search', theme => ({
             justifyContent: 'center',
             alignItems: 'center',
         }
+    },
+    specificContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
+    },
+    specificText: {
+        marginBottom: 20,
     }
 }));
 
@@ -214,6 +226,12 @@ class Players extends Component {
                     <Typography type="caption">{this.props.total ? this.props.total : 0} players found</Typography>
                 </div>
                 <div className={classes.resultContainer}>
+
+                    {this.props.total == 0 && <Hidden smUp><div className={classes.specificContainer}>
+                        <div className={classes.specificText}><Typography type="body2">Your search might be too specific</Typography></div>
+                        <div><Typography type="caption">Try reducing the number of filters.</Typography></div>
+                    </div></Hidden>}
+
                     <Grid container gutter={40}>
                         {this.state.players && this.state.players.map(player => {
                             return <Grid item xs={12} md={4} sm={6} key={player.id}>
