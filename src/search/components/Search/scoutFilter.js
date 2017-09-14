@@ -84,6 +84,7 @@ class ScoutFilter extends Component {
 
         this.changeName = this.changeName.bind(this);
         this.changeTeam = this.changeTeam.bind(this);
+        this.onChangeName = this.onChangeName.bind(this);
         this.makeFilterRequest = this.makeFilterRequest.bind(this);
     }
 
@@ -105,7 +106,7 @@ class ScoutFilter extends Component {
         }
     }
 
-    changeName(event) {
+    onChangeName(event) {
         this.setState({name: event.target.value}, () => {
             this.makeFilterRequest();
         })
