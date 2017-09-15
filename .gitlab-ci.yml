@@ -94,7 +94,5 @@ deploy skyrocket gitlab:
     - tags@skyrocket/scoutzoo/app
   except:
     - master
-  services:
-    - git
   script:
     - git --version
