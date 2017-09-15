@@ -107,12 +107,13 @@ class DropDownCheckBoxes extends Component {
 
     constructor(props) {
         super(props);
-    }
 
-    state = {
-        open: false,
-        applied: false,
-    };
+        this.state = {
+            open: false,
+            applied: false,
+            league_id: this.props.league ? parseInt(this.props.league) : '',
+        };
+    }
 
     toggleOpen = () => {
         this.setState({open: !this.state.open});
@@ -141,7 +142,8 @@ class DropDownCheckBoxes extends Component {
             applied: true,
             open: false,
         } , () => {
-            this.props.changeLeague(this.state.league_id ? this.state.league_id : '');
+            this.props.changeLeague(this.state.league_id ? this.state.league_id : '',
+                this.state.level_id ? this.state.level_id : '');
         });
     };
 
@@ -157,7 +159,7 @@ class DropDownCheckBoxes extends Component {
 
     onChangeLevel =  (event , {suggestionValue}) => {
         let leagues = suggestionValue ? this.state.leaguesOptions.filter(league => parseInt(league.item.id_level) === suggestionValue ) : this.state.leaguesOptions;
-        this.setState({'level_id': suggestionValue , filteredLeagues: leagues , 'league_id' : ''});
+        this.setState({'level_id': suggestionValue , filteredLeagues: leagues, 'league_id' : ''});
     };
 
     onChangeLeague = (event, {suggestionValue}) => {
@@ -183,11 +185,12 @@ class DropDownCheckBoxes extends Component {
             FormHelperTextProps,
             helperText,
             id,
+            level,
+            league,
             levels,
             levelOptions,
             leaguesOptions,
             leagues,
-            league,
             getLeagues,
             changeLeague,
             clearLeague,
@@ -245,7 +248,7 @@ class DropDownCheckBoxes extends Component {
 
                         <div className={classes.dropdownItem}>
                             <Autosuggest fullWidth
-                                label="Levels" value={this.props.levels ? this.props.levels[this.state.level_id] || '' : ''}
+                                label="Levels" value={this.props.levels ? this.props.levels[this.state.level_id] ||  this.props.levels[level] || '' : ''}
                                          suggestions={this.props.levelOptions}
                                          onSuggestionSelected={this.onChangeLevel}/>
                         </div>
@@ -253,7 +256,7 @@ class DropDownCheckBoxes extends Component {
                         <div className={classes.dropdownItem}>
                             <Autosuggest fullWidth
                                          label="League"
-                                         value={this.state.league_id ? this.state.leagues[this.state.league_id] : ''}
+                                         value={this.state.league_id || league ? this.state.leagues[this.state.league_id] || this.state.leagues[league] || '' : ''}
                                          suggestions={this.state.filteredLeagues ? this.state.filteredLeagues : []}
                                          onSuggestionSelected={this.onChangeLeague}/>
                         </div>

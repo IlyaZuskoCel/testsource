@@ -243,7 +243,7 @@ class Search extends Component {
             let appliedFilters = this.state.appliedFilters;
 
             if ('player' in nextProps.filters && nextProps.filters.player) {
-                appliedFilters.playerFilters = Object.keys(nextProps.filters.player).length;
+                appliedFilters.playerFilters = Object.keys(nextProps.filters.player).filter(key => key !== 'id_level' ).length;
                 this.setState({appliedFilters})
             }
 
