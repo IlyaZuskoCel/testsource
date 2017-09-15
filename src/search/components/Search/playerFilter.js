@@ -17,7 +17,6 @@ import Hidden from 'material-ui/Hidden';
 import DropdownOptions from '../DropdownOptions';
 import InputText from '../InputText';
 
-
 import {PlAYER_MAX_AGE, PLAYER_MIN_AGE} from "../../../common/constants/playerSettings";
 
 import queryParse from 'query-string';
@@ -25,7 +24,6 @@ import {RangeSlider} from '../../../common/components';
 import {filterOnReg} from "../../helpers/helpers";
 
 import {POS_LIST} from '../../../user/constants';
-
 
 let positionOptions = Object.keys(POS_LIST).map(value => ({
     label: POS_LIST[value],
@@ -104,6 +102,7 @@ class PlayerFilter extends Component {
 
         this.onChangeName = this.onChangeName.bind(this);
         this.getRange = this.getRange.bind(this);
+
     }
 
     handleChange = (name) => event => {
@@ -124,6 +123,7 @@ class PlayerFilter extends Component {
         });
     }
 
+
     getRange(value) {
         this.setState({born: value}, () => {
             this.makeFilterRequest();
@@ -140,12 +140,13 @@ class PlayerFilter extends Component {
 
         let options = {
             id_league: this.state.id_league ? this.state.id_league : null,
+            id_level: this.state.id_level ? this.state.id_level : null,
             id_team_current: this.state.id_team_current ? this.state.id_team_current : null,
             position: this.state.position ? this.state.position : null,
             'name_search': this.state.name ? this.state.name : null,
         };
 
-        if (this.state.name || this.state.id_league || this.state.id_team_current || this.state.year || this.state.position || this.state.values || this.state.born) {
+        if (this.state.name || this.state.id_league || this.state.id_team_current || this.state.year || this.state.position || this.state.values || this.state.born || this.state.id_level) {
             queryString += '?';
 
             for (let key in options) {
@@ -174,8 +175,8 @@ class PlayerFilter extends Component {
         }
     };
 
-    changeLeague = (league) => {
-            this.setState({id_league : league , id_team_current: '' } , () => {
+    changeLeague = (league , level) => {
+            this.setState({id_league : league , id_team_current: '' , id_level : level} , () => {
                 this.makeFilterRequest();
             });
     };
@@ -192,7 +193,10 @@ class PlayerFilter extends Component {
         });
     };
 
-
+    getLevel = (id) => {
+        if (!id)
+            return '';
+    };
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.leagues.length > 0) {
@@ -229,12 +233,19 @@ class PlayerFilter extends Component {
                     id_league: '',
                     id_team_current: '',
                     position: '',
+                    dropdownLeagues: [],
                     born: [PLAYER_MIN_AGE, PlAYER_MAX_AGE],
                     name: '',
                 });
             }
         }
 
+        if ('query' in nextProps ) {
+            this.setState({
+                id_league_save: nextProps.query.id_league ? parseInt(nextProps.query.id_league ) : null,
+                id_level: nextProps.query.id_level ? parseInt(nextProps.query.id_level) : null
+            })
+        }
     }
 
     render() {
@@ -255,7 +266,8 @@ class PlayerFilter extends Component {
                                         leagues={this.props.leagues}
                                         changeLeague={this.changeLeague}
                                         clearLeague={this.clearLeague}
-                                        league={this.state.id_league || ''}
+                                        league={parseInt(this.state.id_league) || this.state.id_league_save ||  ''}
+                                        level={this.state.id_level || ''}
                     />
 
 
