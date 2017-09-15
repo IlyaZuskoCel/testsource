@@ -292,6 +292,8 @@ class Search extends Component {
                                                                      clearFilters={this.state.clearFilters}
                                                                      stopClearing={this.stopClearing}
 
+                                                                     filters={this.props.filters && this.props.filters.scout ? this.props.filters.scout : {}}
+                                                                     setFilters={this.props.setFilters}
                         />}
 
                         {this.props.type === 'player' && <PlayerFilter leagues={this.props.leagues}
@@ -355,7 +357,8 @@ class Search extends Component {
                                                                  clearField={this.state.clearField}
                                                                  stopClearing={this.stopClearing}
 
-
+                                                                 filters={this.props.filters && this.props.filters.scout ? this.props.filters.scout : {}}
+                                                                 setFilters={this.props.setFilters}
                     />
                     }
 

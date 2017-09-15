@@ -93,7 +93,6 @@ const styleSheet = createStyleSheet('DefaultRoute', theme => ({
     }
 }));
 
-
 const DefaultRoute = ({component: Component, isAuthenticated, loader ,alert, hideAlert, classes, hideBackgroundTopHeader, hideBackgroundTopMobileHeader, hideBackgroundTopMobileHeaderScroll, hideHeader, ...rest}) => (
     <Route {...rest} render={props => (
         <div>

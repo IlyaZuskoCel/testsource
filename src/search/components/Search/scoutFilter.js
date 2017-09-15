@@ -132,6 +132,8 @@ class ScoutFilter extends Component {
 
     makeFilterRequest() {
         let queryString = '';
+        let filters = {};
+
 
         let options = {
 
@@ -149,10 +151,12 @@ class ScoutFilter extends Component {
                     continue;
 
                 queryString += key + '=' + options[key] + '&'
+                filters[key] = options[key];
             }
         }
 
         this.props.filterScouts(queryString.slice(0, -1));
+        this.props.setFilters(filters , 'scout');
     }
 
     clearName = () => {
