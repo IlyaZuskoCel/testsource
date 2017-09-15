@@ -80,3 +80,18 @@ deploy moonion dev:
   environment:
     name: dev
     url: https://$CI_PROJECT_NAME.dev.moonion.com
+
+################################
+#   Skyrocket Gitlab Deploy    #
+################################
+
+deploy skyrocket gitlab:
+  stage: deploy
+  tags:
+    - dind
+  only:
+    - tags@skyrocket/scoutzoo/app
+  except:
+    - master
+  script:
+    - git --version
