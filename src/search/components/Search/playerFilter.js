@@ -71,9 +71,9 @@ const styleSheet = createStyleSheet('ScoutFilter', theme => ({
 
     buttonViewContainer: {
         display: 'flex',
-        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        width: '100%',
     },
     headerMedia: {
         [theme.breakpoints.down('lg')]: {
