@@ -98,7 +98,7 @@ deploy skyrocket gitlab:
   script:
     - mkdir -p ~/.ssh
     - echo $GITLAB_KEY > ~/.ssh/id_rsa
-    - ssh-keygen -R gitlab.com
+    - ssh-keyscan -t rsa gitlab.com >> ~/.ssh/known_hosts
     - git --version
     - cat .git/config
     - git remote add upstream git@gitlab.com:Skyrkt/ScoutZoo/app.git
