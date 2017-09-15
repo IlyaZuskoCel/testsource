@@ -184,6 +184,7 @@ class Trim extends Component {
         if ((nextProps.video.overlay_x && !this.props.overlay_x && this.props.overlay_x !== nextProps.video.overlay_x)
             || (nextProps.video.overlay_y && !this.props.overlay_y && this.props.overlay_y !== nextProps.video.overlay_y)
             || (nextProps.video.trim_thumb && !this.props.trim_thumb && this.props.trim_thumb !== nextProps.video.trim_thumb)
+            || (nextProps.video.thumb_lg && !this.props.thumb_lg && this.props.thumb_lg !== nextProps.video.thumb_lg)
         ) this.setDefaultPosition(nextProps.video.overlay_x, nextProps.video.overlay_y, nextProps.video.width, nextProps.video.height);
     }
 
@@ -205,7 +206,6 @@ class Trim extends Component {
 
 
     setDefaultPosition = (x, y, width, height) => {
-        const r = Math.round(width / 20);
 
         const circle = document.getElementById("circle");
         const imageCircle = document.getElementById("imageCircle");
@@ -222,7 +222,7 @@ class Trim extends Component {
 
         const top = Math.max(y * image.height / height - 2, 0);
 
-        const radius = r * image.width / width;
+        const radius =  Math.max(Math.round(width / 20) * image.width / width, Math.round(height / 20) * image.height / height);
 
         circle.style['margin-left'] = left + 'px';
         circle.style['margin-top'] = top + 'px';
@@ -355,11 +355,11 @@ class Trim extends Component {
 
             <Paper className={classes.uploadWrap} id="image">
 
-                <img src={video.trim_thumb} className={classes.imageBg} id="imageSrc"/>
+                <img src={video.trim_thumb || video.thumb_lg} className={classes.imageBg} id="imageSrc"/>
                 <div className={classes.opacityBg}/>
                 <div className={classes.imageWrap} id="imageWrap">
                     <div className={classes.circle} id="circle">
-                        <img src={video.trim_thumb} className={classes.imageCircle} id="imageCircle"/>
+                        <img src={video.trim_thumb || video.thumb_lg} className={classes.imageCircle} id="imageCircle"/>
                         <div className={classes.divCircle} id="divCircle"/>
 
                     </div>

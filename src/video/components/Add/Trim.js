@@ -6,7 +6,7 @@
 
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-
+import classNames from 'classnames';
 import moment from 'moment';
 
 import {withStyles, createStyleSheet} from 'material-ui/styles';
@@ -73,8 +73,15 @@ const styleSheet = createStyleSheet('Trim', theme => ({
         justifyContent: 'space-around',
         alignItems: 'center',
     },
+    videoWrap: {
+        width: '100%',
+        backgroundColor: '#000',
+        maxHeight: 264,
+    },
     video: {
-        width: '100%'
+        width: '100%',
+        maxHeight: 264,
+        backgroundColor: '#000',
     }
 }));
 
@@ -134,7 +141,7 @@ class Trim extends Component {
             </Typography>
 
 
-            <Paper className={classes.uploadWrap}>
+            <Paper className={classNames(classes.uploadWrap, classes.videoWrap)}>
                 <video src={video.video_path}
                        id="video"
                        className={classes.video}
@@ -159,8 +166,8 @@ class Trim extends Component {
                     Previous
                 </Button>
                 <Button onClick={this.handleNext} raised
-                        color={video.time_end - video.time_start > 60000 ? 'default' : 'primary'}
-                        disabled={video.time_end - video.time_start > 60000}>
+                        color={this.state.time_end - this.state.time_start > 60000 ? 'default' : 'primary'}
+                        disabled={this.state.time_end - this.state.time_start > 60000}>
                     Next
                 </Button>
             </div>

@@ -6,7 +6,7 @@
 
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-
+import classNames from 'classnames';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
@@ -85,8 +85,15 @@ const styleSheet = createStyleSheet('Upload', theme => ({
         justifyContent: 'space-around',
         alignItems: 'center',
     },
+    videoWrap: {
+        width: '100%',
+        backgroundColor: '#000',
+        maxHeight: 264,
+    },
     video: {
-        width: '100%'
+        width: '100%',
+        maxHeight: 264,
+        backgroundColor: '#000',
     }
 }));
 
@@ -151,7 +158,7 @@ class Upload extends Component {
                             className={classes.progressTitle}>{video.progress < 100 ? 'Upload in progress' : 'Convert in progress'}</Typography>
             </Paper>)}
 
-            {video.video_path && (<Paper className={classes.uploadWrap}>
+            {video.video_path && (<Paper className={classNames(classes.uploadWrap, classes.videoWrap)}>
                     <video src={video.video_path} className={classes.video} controls/>
                 </Paper>
             )}

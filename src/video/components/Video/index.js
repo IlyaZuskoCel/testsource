@@ -15,6 +15,7 @@ import Typography from 'material-ui/Typography';
 import Icon from 'material-ui/Icon';
 import Hidden from 'material-ui/Hidden';
 import Menu, {MenuItem} from 'material-ui/Menu';
+import Paper from 'material-ui/Paper';
 import IconButton from 'material-ui/IconButton';
 import Dialog, {DialogActions, DialogContent, DialogTitle} from 'material-ui/Dialog';
 import Button from 'material-ui/Button';
@@ -41,24 +42,19 @@ const styleSheet = createStyleSheet('Video', theme => ({
     videoWrap: {
         position: 'relative',
         width: '100%',
-        textAlign: 'center'
+        backgroundColor: '#000',
+        textAlign: 'center',
+        maxHeight: 264,
     },
     video: {
-        maxWidth: '100%',
-        boxShadow: '0 0px 4px 0 rgba(0, 0, 0, 0.3)',
-        [theme.breakpoints.up('sm')]: {
-            maxHeight: 264,
-        },
+        width: '100%',
+        maxHeight: 264,
+        backgroundColor: '#000',
     },
     image: {
         maxWidth: '100%',
-
-        boxShadow: '0 0px 4px 0 rgba(0, 0, 0, 0.3)',
         cursor: 'pointer',
-
-        [theme.breakpoints.up('sm')]: {
-            maxHeight: 264,
-        },
+        maxHeight: 264,
     },
 
     playControl: {
@@ -163,12 +159,13 @@ class Video extends Component {
     render() {
         const {classes, video, currentUser} = this.props;
         return <div className={classes.root}>
-            <div className={classes.videoWrap}>
+            <Paper className={classes.videoWrap}>
                 {this.state.isShow ? (
                     <video src={video.overlay_video_path || video.trim_video_file_path || video.video_path}
                            className={classes.video}
                            autoPlay
-                           controls/>
+                           controls
+                           controlsList="nodownload"/>
                 ) : [
                     <img key="overlay" src={video.overlay || video.thumb_lg} onClick={this.handleShow}
                          className={classes.image}/>,
@@ -177,7 +174,7 @@ class Video extends Component {
                                 className={classes.duration}>{getTime(video.time_start, video.time_end)}</Typography>
                 ]}
 
-            </div>
+            </Paper>
             <div className={classes.bottom}>
                 <div className={classes.titleWrap}>
                     <Typography type="subheading">

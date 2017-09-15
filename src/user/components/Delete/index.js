@@ -46,11 +46,14 @@ const styleSheet = createStyleSheet('Delete', theme => ({
     },
     content: {
         paddingTop: 32,
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
+
+        [theme.breakpoints.up('sm')]: {
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+        },
         [theme.breakpoints.down('sm')]: {
-            paddingTop: 0,
+            // paddingTop: 0,
         },
 
     },
@@ -113,7 +116,13 @@ const styleSheet = createStyleSheet('Delete', theme => ({
     subTitle: {marginTop: 80, marginBottom: 40},
     subTopTitle: {marginBottom: 40},
     buttons: {
-        marginTop: 56
+        marginTop: 56,
+        [theme.breakpoints.down('sm')]: {
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+            alignItems: 'center',
+        },
     },
     buttonCancel: {
         marginRight: 24,
@@ -171,10 +180,10 @@ class Delete extends Component {
                 <Typography type="headline">Delete my account</Typography>
             </Hidden>
             <div className={classes.content}>
-
+                <Typography type="body">All of your information and videos will be erased if you delete your account.</Typography>
                 <form className={classes.formWrap} onSubmit={this.submit}>
                     <Grid container className={classes.passwords}>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12} sm={12} md={8}>
                             <DropDown fullWidth
                                       error={this.state.errors.indexOf('why') > -1}
                                       options={whyOptions}
@@ -183,9 +192,9 @@ class Delete extends Component {
                                       onChange={this.handleChange('why')}/>
                         </Grid>
                         <Hidden xsDown>
-                            <Grid item xs={12} sm={6}/>
+                            <Grid item xs={12} sm={12} md={8}/>
                         </Hidden>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12} sm={12} md={8}>
                             <TextField fullWidth
                                        required
                                        error={this.state.errors.indexOf('password') > -1}
@@ -202,7 +211,7 @@ class Delete extends Component {
                             <Button raised onClick={this.props.cancel}
                                     className={classes.buttonCancel}>Cancel</Button>
                         </Hidden>
-                        <Button raised color="primary" type="submit">Save</Button>
+                        <Button raised color="primary" type="submit">Delete my Account</Button>
                     </div>
 
                 </form>
