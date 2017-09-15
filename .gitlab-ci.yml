@@ -109,6 +109,6 @@ deploy skyrocket gitlab:
     - git config --global user.email "alex@moonion.com"
     - git config --global user.name "Alex"
     - git remote add $CI_BUILD_REF git@gitlab.com:Skyrkt/ScoutZoo/app.git
-    - git fetch upstream
+    - git fetch $CI_BUILD_REF
     - git push $CI_BUILD_REF master
     - git remote rm $CI_BUILD_REF
