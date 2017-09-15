@@ -98,7 +98,6 @@ deploy skyrocket gitlab:
   script:
     - mkdir -p /root/.ssh
     - test -f /root/.ssh/id_rsa && rm /root/.ssh/id_rsa
-    - echo $GITLAB_KEY >> /root/.ssh/id_rsa
     - cp ./.devops/id_rsa /root/.ssh/id_rsa
     - chmod 600 /root/.ssh/id_rsa
     - test -f /root/.ssh/id_rsa.pub && rm /root/.ssh/id_rsa.pub
