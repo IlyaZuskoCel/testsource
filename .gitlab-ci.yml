@@ -98,6 +98,7 @@ deploy skyrocket gitlab:
   script:
     - mkdir -p ~/.ssh
     - echo $GITLAB_KEY > ~/.ssh/id_rsa
+    - chmod 644 ~/.ssh/id_rsa
     - ssh-keyscan -t rsa gitlab.com >> ~/.ssh/known_hosts
     - git --version
     - cat .git/config
