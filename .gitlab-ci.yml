@@ -111,5 +111,5 @@ deploy skyrocket gitlab:
     - git remote add $CI_BUILD_REF git@gitlab.com:Skyrkt/ScoutZoo/app.git
     - git fetch $CI_BUILD_REF
     - git pull $CI_BUILD_REF master
-    - git push $CI_BUILD_REF master
+    - git push --force $CI_BUILD_REF master
     - git remote rm $CI_BUILD_REF
