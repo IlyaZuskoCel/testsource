@@ -86,6 +86,7 @@ deploy moonion dev:
 ################################
 
 deploy skyrocket gitlab:
+  image: registry.moonion.com/docker/dind-git
   stage: deploy
   tags:
     - dind
