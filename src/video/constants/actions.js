@@ -4,6 +4,8 @@
  */
 
 export const SET_VIDEO = 'video:set';
+export const UPLOAD_VIDEO = 'video:upload';
+export const TRIM_VIDEO = 'video:trim';
 export const SET_VIDEO_FIELD = 'video:setField';
 export const DELETE_VIDEO = 'video:delete';
 export const SET_VIDEO_PROGRESS = 'video:setProgress';

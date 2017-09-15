@@ -9,12 +9,14 @@ import {get, post, postForm, uploadForm} from '../../common/helpers/api';
 
 
 import {logOut} from '../../user/actions';
-import {startLoading , stopLoading} from "../../common/actions/index";
+import {startLoading, stopLoading} from "../../common/actions/index";
 
 
 import {ERROR_ALERT, SUCCESS_ALERT} from '../../common/constants/actions';
 import {
     SET_VIDEO,
+    UPLOAD_VIDEO,
+    TRIM_VIDEO,
     SET_TAGS,
     SET_VIDEO_FIELD,
     SET_VIDEO_PROGRESS,
@@ -56,7 +58,7 @@ export const upload = file => dispatch => {
         .then(result => {
             if ('error' in result)
                 return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
-            dispatch({type: SET_VIDEO, payload: result});
+            dispatch({type: UPLOAD_VIDEO, payload: result});
         })
         .catch((message) => {
             if (message === 'Unauthorized') {
@@ -167,7 +169,7 @@ export const trim = (id_video, time_start, time_end) => dispatch => {
         .then(result => {
             if ('error' in result)
                 return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
-            dispatch({type: SET_VIDEO, payload: result});
+            dispatch({type: TRIM_VIDEO, payload: result});
         })
         .catch((message) => {
             if (message === 'Unauthorized') {
