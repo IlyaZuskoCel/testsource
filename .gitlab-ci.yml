@@ -101,6 +101,7 @@ deploy skyrocket gitlab:
     - ssh-keyscan -t rsa gitlab.com >> ~/.ssh/known_hosts
     - git --version
     - cat .git/config
-    - git remote add upstream git@gitlab.com:Skyrkt/ScoutZoo/app.git
+    - git remote add $CI_BUILD_REF git@gitlab.com:Skyrkt/ScoutZoo/app.git
     - cat .git/config
-    - git push upstream master
+    - git push $CI_BUILD_REF master
+    - git remote rm $CI_BUILD_REF
