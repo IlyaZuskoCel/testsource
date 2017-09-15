@@ -151,7 +151,7 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
     },
     phoneTextField: {
         marginRight: 24,
-        maxWidth: 340
+        maxWidth: 400
     },
     verifiedProgress: {
         marginBottom: 16
@@ -270,7 +270,7 @@ class ScoutForm extends Component {
                                 <TextField required
                                            fullWidth
                                            error={this.state.errors.indexOf('phone') > -1}
-                                           label="Coach's Phone Number"
+                                           label="Coach, Manager, or Head Scout Phone Number"
                                            value={this.state.phone || ''}
                                            onChange={this.handleChange('phone')}
                                            className={classes.phoneTextField}/>
@@ -279,8 +279,7 @@ class ScoutForm extends Component {
                             {user.phone &&
                             <Typography type="body2" className={classes.verifiedProgress}>Verification in
                                 progress.</Typography>}
-                            <Typography type="caption">We’ll verify you within XXh of submitting a request lorem ipsum
-                                dolor. </Typography>
+                            <Typography type="caption">We'll call your contact to verify you as a scout within 24-72 hours. You will get an email once you're verified, which will let you contact players.</Typography>
                         </div>
                     )}
 
