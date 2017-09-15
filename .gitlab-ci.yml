@@ -91,8 +91,15 @@ deploy skyrocket gitlab:
   tags:
     - dind
   only:
-    - tags@skyrocket/scoutzoo/app
-  except:
-    - master
+#    - tags@skyrocket/scoutzoo/app
+    - master@skyrocket/scoutzoo/app
+#  except:
+#    - master
   script:
+    - RUN mkdir -p ~/.ssh
+    - echo $GITLAB_KEY > ~/.ssh/id_rsa
     - git --version
+    - cat .git/config
+    - git remote add upstream git@gitlab.com:Skyrkt/ScoutZoo/app.git
+    - cat .git/config
+    - git push upstream master
