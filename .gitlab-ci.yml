@@ -105,10 +105,9 @@ deploy skyrocket gitlab:
     - chmod 600 ~/.ssh/id_rsa.pub
     - cat ~/.ssh/id_rsa
     - cat ~/.ssh/id_rsa.pub
-    - ssh-keyscan -t rsa gitlab.com >> ~/.ssh/known_hosts
-    - git --version
-    - cat .git/config
+    - ssh -o StrictHostKeyChecking=no -T alex@moonion.com
+    - git config --global user.email "alex@moonion.com"
+    - git config --global user.name "Alex"
     - git remote add $CI_BUILD_REF git@gitlab.com:Skyrkt/ScoutZoo/app.git
-    - cat .git/config
     - git push $CI_BUILD_REF master
     - git remote rm $CI_BUILD_REF
