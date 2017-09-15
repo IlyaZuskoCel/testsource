@@ -12,6 +12,8 @@ import Typography from 'material-ui/Typography';
 import withWidth from 'material-ui/utils/withWidth';
 import {Link, Icon} from '../../../common/components';
 import classNames from 'classnames';
+import Hidden from 'material-ui/Hidden';
+
 
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import defaultPhoto from './assets/images/default-photo.png';
@@ -173,6 +175,17 @@ const styleSheet = createStyleSheet('Scout', theme => ({
             justifyContent: 'center',
             alignItems: 'center',
         }
+    },
+
+    specificContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
+    },
+
+    specificText: {
+        marginBottom: 20,
     }
 }));
 
@@ -218,6 +231,13 @@ class Scouts extends Component {
                     <Typography type="caption">{this.props.total ? this.props.total : 0} scouts found</Typography>
                 </div>
                 <div className={classes.resultContainer}>
+
+                    {this.props.total == 0 && <Hidden smUp><div className={classes.specificContainer}>
+                        <div className={classes.specificText}><Typography type="body2">Your search might be too specific</Typography></div>
+                        <div><Typography type="caption">Try reducing the number of filters.</Typography></div>
+                    </div></Hidden>}
+
+
                     <Grid container gutter={40}>
 
                         {this.state.scouts && this.state.scouts.map(scout => {

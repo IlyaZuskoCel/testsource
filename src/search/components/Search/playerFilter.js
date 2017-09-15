@@ -118,7 +118,6 @@ class PlayerFilter extends Component {
             });
     };
 
-
     onChangeName(event) {
         this.setState({name: event.target.value}, () => {
             this.makeFilterRequest();
@@ -159,7 +158,7 @@ class PlayerFilter extends Component {
 
             if (this.state.born[0] !== PLAYER_MIN_AGE || this.state.born[1] !== PlAYER_MAX_AGE) {
                 queryString += `born[0]=${this.state.born[0]}&born[1]=${this.state.born[1]}&`;
-                filters.range = [parseInt(this.state.born[0]), parseInt(this.state.born[1])];
+                filters.born = [parseInt(this.state.born[0]), parseInt(this.state.born[1])];
             }
         }
 
@@ -216,13 +215,26 @@ class PlayerFilter extends Component {
             });
         }
 
+        if ('filters' in nextProps) {
+            Object.keys(nextProps.filters).forEach(key => {
+               this.setState({[key] : nextProps.filters[key]});
+            });
 
-        if ('filters' in nextProps && nextProps.filters.range) {
-            this.setState({born: nextProps.filters.range});
+            if ('name_search' in nextProps.filters) {
+                this.setState({'name' : nextProps.filters['name_search']});
+            }
+
+            if (Object.keys(nextProps.filters).length === 0) {
+                this.setState({
+                    id_league: '',
+                    id_team_current: '',
+                    position: '',
+                    born: [PLAYER_MIN_AGE, PlAYER_MAX_AGE],
+                    name: '',
+                });
+            }
         }
-        else {
-            this.setState({born: [PLAYER_MIN_AGE, PlAYER_MAX_AGE]});
-        }
+
     }
 
     render() {
@@ -243,7 +255,7 @@ class PlayerFilter extends Component {
                                         leagues={this.props.leagues}
                                         changeLeague={this.changeLeague}
                                         clearLeague={this.clearLeague}
-                                        league={this.state.id_league || this.props.query['id_league'] || ''}
+                                        league={this.state.id_league || ''}
                     />
 
 
@@ -260,7 +272,7 @@ class PlayerFilter extends Component {
                     <DropDown fullWidth
                               options={positionOptions}
                               label="Position"
-                              value={POS_LIST[this.state.position] || POS_LIST[this.props.query['position']] || ''}
+                              value={POS_LIST[this.state.position]  || ''}
                               onChange={this.handleChange('position')}/>
 
                 </Grid>
@@ -278,7 +290,7 @@ class PlayerFilter extends Component {
                         <TextField
                             id="name"
                             label="Name"
-                            value={this.state.name || this.props.query['name_search'] || ''}
+                            value={this.state.name || ''}
                             className={classes.textField}
                             onChange={this.onChangeName}
                         />
@@ -289,7 +301,7 @@ class PlayerFilter extends Component {
                                    value={1}
                                    label="Name"
                                    changeName={this.changeName}
-                                   name={this.state.name || this.props.query['name_search']}
+                                   name={this.state.name || ''}
                                    clearName={this.clearName}
                         />
                     </Hidden>

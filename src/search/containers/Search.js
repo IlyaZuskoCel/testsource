@@ -41,7 +41,7 @@ const mapDispatchToProps = (dispatch, props) => ({
     filterPlayers: (params) => dispatch(filterPlayers(params)),
     addFavorite: (playerId) => dispatch(addFavorite(playerId)),
     removeFavorite: (playerId) => dispatch(removeFavorite(playerId)),
-    setFilters: (filters) => dispatch(setFilters(filters)),
+    setFilters: (filters , type) => dispatch(setFilters(filters , type)),
     clearFilters: () => dispatch(clearFilters()),
 });
 
