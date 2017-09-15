@@ -178,13 +178,23 @@ class Search extends Component {
     constructor(props) {
         super(props);
 
+
+        let playerFilters = props.filters && props.filters.player ?  props.filters.player : {};
+        let scoutFilters = props.filters && props.filters.scout ?  props.filters.scout : {};
+
+
+        let propFilters = props.type === 'player' ? this.composeFiltersToQuery(playerFilters) : this.composeFiltersToQuery(scoutFilters);
+
         this.state = {
             activeTab:  this.props.type && this.props.type === 'scout' ? 1 : 0,
             activePage: 1,
-            query: queryString.parse(this.props.location.search),
+            query: Object.keys(this.props.location.search).length > 0 ? queryString.parse(this.props.location.search) : propFilters,
             numberOfResults: 0,
             mobileFilterOn: true,
-            appliedFilters: 0,
+            appliedFilters: {
+                playerFilters: 0,
+                scoutFilters: 0
+            },
             clearFilters: '',
             dropdownLeagues: [],
         };
@@ -192,10 +202,8 @@ class Search extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.changePagination = this.changePagination.bind(this);
         this.toggleMobileFilter = this.toggleMobileFilter.bind(this);
-        this.countFilters = this.countFilters.bind(this);
         this.onClearFilters = this.onClearFilters.bind(this);
         this.stopClearing = this.stopClearing.bind(this);
-
     }
 
     componentDidMount() {
@@ -203,32 +211,56 @@ class Search extends Component {
         this.props.fetchData();
     }
 
+    composeFiltersToQuery = (filters) => {
+        let queryFromFilters = {};
+
+        Object.keys(filters).forEach(key => {
+           if (!Array.isArray(filters[key])) {
+               queryFromFilters[key] = filters[key];
+           }
+        });
+
+        if ('born' in filters) {
+            queryFromFilters['born[0]'] = filters.born[0];
+            queryFromFilters['born[1]'] = filters.born[0];
+        }
+
+        if ('name_search' in filters) {
+            queryFromFilters['name'] = filters['name_search'];
+        }
+
+        return queryFromFilters;
+    };
+
     componentWillReceiveProps(nextProps) {
 
         if ('query' in nextProps) {
             let parsedQuery = queryString.parse(nextProps.query);
-
-            this.setState({query : parsedQuery} , () => {
-                this.countFilters();
-            });
-        }
-    }
-
-    countFilters() {
-        let count = 0;
-
-        for (let key in this.state.query) {
-            count++;
+            this.setState({query : parsedQuery});
         }
 
-        if ('born[0]' in this.state.query)
-            count--;
+        if ('filters' in nextProps && nextProps.filters) {
+            let appliedFilters = this.state.appliedFilters;
 
-        this.setState({appliedFilters: count});
+            if ('player' in nextProps.filters && nextProps.filters.player) {
+                appliedFilters.playerFilters = Object.keys(nextProps.filters.player).length;
+                this.setState({appliedFilters})
+            }
+
+            if ('scout' in nextProps.filters && nextProps.filters.scout) {
+                appliedFilters.scoutFilters = Object.keys(nextProps.filters.scout).length;
+                this.setState({appliedFilters})
+            }
+        }
     }
 
     handleChange(event , value) {
-            this.setState({activeTab : value} , ()  => {
+        this.props.clearFilters();
+        let appliedFilters = this.state.appliedFilters;
+        appliedFilters.playerFilters = 0;
+        appliedFilters.scoutFilters = 0;
+
+        this.setState({activeTab : value , appliedFilters} , ()  => {
                 this.props.go(value === 1 ? '/search/scout' : '/search/player');
                 this.props.upload(value === 1 ? 'scout' : 'player' , {page : 1 , 'per-page' : 18});
             });
@@ -239,12 +271,17 @@ class Search extends Component {
     }
 
     stopClearing() {
-        this.setState({clearField: '' } , () => {
+        let appliedFilters = this.state.appliedFilters;
+        appliedFilters.playerFilters = 0;
+        appliedFilters.scoutFilters = 0;
+
+        this.setState({clearField: '' , appliedFilters} , () => {
+            this.props.clearFilters();
             this.props.go(this.props.type === 'scout' ? '/search/scout' : '/search/player');
 
             setTimeout(() => {
-                this.props.clearFilters();
-                this.props.upload(this.props.type , {page : 1 , 'per-page': 18 , ...this.state.query});
+                this.props.upload(this.props.type , {page : 1 , 'per-page': 18 });
+                this.forceUpdate();
             } , 400);
         });
     }
@@ -331,7 +368,7 @@ class Search extends Component {
             <Hidden smUp>
                 <div className={classes.filterTogglerConntainer}>
                     <Button className={classes.buttonFilter} onClick={this.toggleMobileFilter}>
-                        <Typography  className={classes.filterTitle}>Filter ({this.state.appliedFilters})</Typography>
+                        <Typography  className={classes.filterTitle}>Filter ({this.props.type === 'player' ? this.state.appliedFilters.playerFilters : this.state.appliedFilters.scoutFilters})</Typography>
                         {this.state.mobileFilterOn && <Icon className={classes.arrow}>keyboard_arrow_down</Icon>}
                         {!this.state.mobileFilterOn && <Icon className={classes.arrow}>keyboard_arrow_up</Icon>}
                     </Button>

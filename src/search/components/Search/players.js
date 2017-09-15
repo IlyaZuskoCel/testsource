@@ -216,6 +216,7 @@ class Players extends Component {
 
     componentWillReceiveProps(nextProp) {
         this.setState({players: nextProp.players});
+
     }
 
     render() {

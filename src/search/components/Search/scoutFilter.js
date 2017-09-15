@@ -104,6 +104,24 @@ class ScoutFilter extends Component {
                 nextProps.stopClearing();
             });
         }
+
+        if ('filters' in nextProps) {
+            Object.keys(nextProps.filters).forEach(key => {
+                this.setState({[key] : nextProps.filters[key]});
+            });
+
+            if ('name_search' in nextProps.filters) {
+                this.setState({'name' : nextProps.filters['name_search']});
+            }
+
+            if (Object.keys(nextProps.filters).length === 0) {
+                this.setState({
+                    id_league: '',
+                    id_team_current: '',
+                    name: '',
+                });
+            }
+        }
     }
 
     onChangeName(event) {
@@ -183,7 +201,7 @@ class ScoutFilter extends Component {
                 <Grid item xs={12} sm={6} md={4}>
                     <Autosuggest fullWidth
                                  label="League"
-                                 value={this.props.leagues[this.state.id_league] || this.props.query['id_league'] || ''}
+                                 value={this.props.leagues[this.state.id_league] || ''}
                                  suggestions={this.props.leagueOptions}
                                  onSuggestionSelected={this.onChangeAutosuggest('id_league')}/>
                 </Grid>
@@ -200,7 +218,7 @@ class ScoutFilter extends Component {
                         <TextField
                             id="name"
                             label="Name"
-                            value={this.state.name || this.props.query['name_search'] || ''}
+                            value={this.state.name ||  ''}
                             className={ classes.textField }
                             onChange={this.onChangeName}
                         />
@@ -211,7 +229,7 @@ class ScoutFilter extends Component {
                                    value={1}
                                    label="Name"
                                    changeName={this.changeName }
-                                   name={this.state.name || this.props.query['name_search'] }
+                                   name={this.state.name}
                                    clearName={this.clearName}
                         />
                     </Hidden>
