@@ -23,17 +23,6 @@ build-docker-latest:
   only:
     - master@Skyrkt/ScoutZoo/app
 
-build-docker-release:
-  stage: build
-  image: docker:dind
-  script:
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
-    - docker build -t $CI_REGISTRY_IMAGE:${CI_BUILD_REF_NAME#release/}-latest .
-    - docker push $CI_REGISTRY_IMAGE:${CI_BUILD_REF_NAME#release/}-latest
-  only:
-    - branches@Skyrkt/ScoutZoo/app
-    - /^release.*$/
-
 build-docker-tag:
   stage: build
   image: docker:dind
@@ -121,34 +110,3 @@ deploy moonion dev:
     name: dev
     url: https://$CI_PROJECT_NAME.dev.moonion.com
 
-################################
-#   Skyrocket Gitlab Deploy    #
-################################
-
-deploy skyrocket gitlab:
-  image: registry.moonion.com/docker/dind-git
-  stage: deploy
-  tags:
-    - dind
-  only:
-#    - tags@skyrocket/scoutzoo/app
-    - master@skyrocket/scoutzoo/app
-#  except:
-#    - master
-  script:
-    - mkdir -p /root/.ssh
-    - test -f /root/.ssh/id_rsa && rm /root/.ssh/id_rsa
-    - cp ./.devops/id_rsa /root/.ssh/id_rsa
-    - chmod 600 /root/.ssh/id_rsa
-    - test -f /root/.ssh/id_rsa.pub && rm /root/.ssh/id_rsa.pub
-    - cp ./.devops/id_rsa.pub /root/.ssh/id_rsa.pub
-    - chmod 600 /root/.ssh/id_rsa.pub
-    - cat /root/.ssh/id_rsa
-    - cat /root/.ssh/id_rsa.pub
-    - ssh -o StrictHostKeyChecking=no -T git@gitlab.com
-    - git config --global user.email "alex@moonion.com"
-    - git config --global user.name "Alex"
-    - git remote add $CI_BUILD_REF git@gitlab.com:Skyrkt/ScoutZoo/app.git
-    - git fetch $CI_BUILD_REF
-    - git push --force $CI_BUILD_REF master
-    - git remote rm $CI_BUILD_REF
