@@ -16,6 +16,7 @@ import Button from 'material-ui/Button';
 import Hidden from 'material-ui/Hidden';
 
 import InputText from '../InputText';
+import DropdownOptions from '../DropdownOptions';
 
 import classNames from 'classnames';
 
@@ -63,9 +64,9 @@ const styleSheet = createStyleSheet('ScoutFilter', theme => ({
 
     buttonViewContainer: {
         display: 'flex',
-        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        width: '100%',
     }
 
 }));
@@ -103,6 +104,13 @@ class ScoutFilter extends Component {
             }, () => {
                 nextProps.stopClearing();
             });
+        }
+
+        if ('query' in nextProps ) {
+            this.setState({
+                id_league_save: nextProps.query.id_league ? parseInt(nextProps.query.id_league ) : null,
+                id_level: nextProps.query.id_level ? parseInt(nextProps.query.id_level) : null
+            })
         }
 
         if ('filters' in nextProps) {
@@ -157,11 +165,11 @@ class ScoutFilter extends Component {
 
             id_league: this.state.id_league ? this.state.id_league : null,
             id_team_current: this.state.id_team_current ? this.state.id_team_current : null,
+            id_level: this.state.id_level ? this.state.id_level : null,
             'name_search': this.state.name ? this.state.name : null,
         };
 
-
-        if (this.state.name || this.state.id_league || this.state.id_team_current) {
+        if (this.state.name || this.state.id_league || this.state.id_team_current || this.state.id_level) {
             queryString += '?';
 
             for (let key in options) {
@@ -191,6 +199,19 @@ class ScoutFilter extends Component {
         }
     };
 
+    changeLeague = (league , level) => {
+        this.setState({id_league : league , id_team_current: '' , id_level : level} , () => {
+            this.makeFilterRequest();
+        });
+    };
+
+    clearLeague = () => {
+        this.setState({id_league : '' , dropdownLeagues: [] , id_team_current: ''} , () => {
+            this.makeFilterRequest();
+        });
+    };
+
+
 
     render() {
         const {classes, width} = this.props;
@@ -199,11 +220,19 @@ class ScoutFilter extends Component {
 
             <Grid container gutter={40}>
                 <Grid item xs={12} sm={6} md={4}>
-                    <Autosuggest fullWidth
-                                 label="League"
-                                 value={this.props.leagues[this.state.id_league] || ''}
-                                 suggestions={this.props.leagueOptions}
-                                 onSuggestionSelected={this.onChangeAutosuggest('id_league')}/>
+                    <DropdownOptions  fullWidth
+                                      options={[]}
+                                      value={1}
+                                      label="League"
+                                      levels={this.props.levels}
+                                      levelOptions={this.props.levelOptions && this.props.levelOptions.length > 0 ? this.props.levelOptions: []}
+                                      leaguesOptions={this.props.leagueOptions}
+                                      leagues={this.props.leagues}
+                                      changeLeague={this.changeLeague}
+                                      clearLeague={this.clearLeague}
+                                      league={parseInt(this.state.id_league) || this.state.id_league_save ||  ''}
+                                      level={this.state.id_level || ''}
+                    />
                 </Grid>
                 <Grid item xs={12} sm={6} md={4}>
                     <Autosuggest fullWidth
