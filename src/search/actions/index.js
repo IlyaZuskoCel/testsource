@@ -81,7 +81,6 @@ export const filterScouts = (params) => dispatch => {
 
     getPage('/api/v2/user/scout-search' + params )
         .then(scouts => {
-
             dispatch({type: SET_SCOUTS , payload: scouts.items.length >= 1 ? scouts.items : []});
             dispatch({type: SET_HEADERS , payload: {count: scouts.count , page: scouts.page , pageCount: scouts.pageCount , perPage: scouts.perPage}});
             dispatch(go('/search/scout' + params));
