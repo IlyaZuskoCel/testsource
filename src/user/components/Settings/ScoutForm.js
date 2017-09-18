@@ -270,7 +270,7 @@ class ScoutForm extends Component {
                                 <TextField required
                                            fullWidth
                                            error={this.state.errors.indexOf('phone') > -1}
-                                           label="Coach, Manager, or Head Scout Phone Number"
+                                           label="Manager's Phone Number"
                                            value={this.state.phone || ''}
                                            onChange={this.handleChange('phone')}
                                            className={classes.phoneTextField}/>
@@ -279,7 +279,7 @@ class ScoutForm extends Component {
                             {user.phone &&
                             <Typography type="body2" className={classes.verifiedProgress}>Verification in
                                 progress.</Typography>}
-                            <Typography type="caption">We'll call your contact to verify you as a scout within 24-72 hours. You will get an email once you're verified, which will let you contact players.</Typography>
+                            <Typography type="caption">We need your coach, manager or head scout's phone number in order to verify you. We'll call your contact to verify you as a scout within 24-72 hours. You will get an email once you're verified, which will let you contact players.</Typography>
                         </div>
                     )}
 

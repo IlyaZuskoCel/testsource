@@ -357,7 +357,7 @@ export const verifyScout = phone => dispatch => {
                 return dispatch({type: SUCCESS_ALERT, payload: {message: "Your message was successfully sent!"}});
             }
 
-            return dispatch({type: ERROR_ALERT, payload: {message: "Your message wasn't sent!"}});
+            return dispatch({type: ERROR_ALERT, payload: {message: "Please include a valid phone number to get verified."}});
         })
         .catch((message) => {
             if (message === 'Unauthorized') {
