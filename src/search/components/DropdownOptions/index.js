@@ -218,7 +218,7 @@ class DropDownCheckBoxes extends Component {
                             <Typography type="body2" onClick={this.toggleOpen}
                                         id={id}
                                         className={classes.input}>
-                                {this.props.league ? this.props.leagues[this.props.league] : ''}
+                                {this.props.league ? this.props.leagues[this.props.league] : ''}{this.state.level_id && this.props.league ? `,${ this.props.levels[this.state.level_id]}` : ''}
                             </Typography>
                         ) : (
                             <div className={classes.openEmpty}
