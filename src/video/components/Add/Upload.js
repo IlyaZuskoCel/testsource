@@ -136,7 +136,6 @@ class Upload extends Component {
                             Choose a video to upload
                         </Button>
                         <input autoComplete="off" type="file"
-                               accept="video/*"
                                onChange={this.onUploadVideo}
                                className={classes.uploadInput}/>
                     </div>
