@@ -6,7 +6,7 @@
 import {push, goBack} from 'react-router-redux';
 
 import {get, post, postForm, auth, getAuth} from '../../common/helpers/api';
-import {startLoading , stopLoading} from "../../common/actions/index";
+import {startLoading, stopLoading} from "../../common/actions/index";
 
 
 import {ERROR_ALERT, SUCCESS_ALERT} from '../../common/constants/actions';
@@ -97,7 +97,7 @@ export const registerScout = user => dispatch => {
 
             dispatch({
                 type: SUCCESS_ALERT,
-                payload: {message: 'Your account was registered successfully! Please confirm your account.'}
+                payload: {message: 'An activation link has been sent to your email address.', autoHideDuration: null}
             });
 
             dispatch(push('/sign/in'))
@@ -120,7 +120,7 @@ export const registerPlayer = user => dispatch => {
 
             dispatch({
                 type: SUCCESS_ALERT,
-                payload: {message: 'Your account was registered successfully! Please confirm your account.'}
+                payload: {message: 'An activation link has been sent to your email address.', autoHideDuration: null}
             });
 
             dispatch(push('/sign/in'))
@@ -357,7 +357,10 @@ export const verifyScout = phone => dispatch => {
                 return dispatch({type: SUCCESS_ALERT, payload: {message: "Your message was successfully sent!"}});
             }
 
-            return dispatch({type: ERROR_ALERT, payload: {message: "Please include a valid phone number to get verified."}});
+            return dispatch({
+                type: ERROR_ALERT,
+                payload: {message: "Please include a valid phone number to get verified."}
+            });
         })
         .catch((message) => {
             if (message === 'Unauthorized') {
@@ -402,7 +405,10 @@ export const report = (id_violator, type, message) => dispatch => {
             if ('error' in result)
                 return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
 
-            return dispatch({type: SUCCESS_ALERT, payload: {message: "Thanks! We will review this profile and take any necessary action."}});
+            return dispatch({
+                type: SUCCESS_ALERT,
+                payload: {message: "Thanks! We will review this profile and take any necessary action."}
+            });
         })
         .catch((message) => {
             if (message === 'Unauthorized') {

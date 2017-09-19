@@ -111,7 +111,7 @@ const DefaultRoute = ({component: Component, isAuthenticated, loader ,alert, hid
                     vertical: 'top',
                     horizontal: 'center'
                 }}
-                autoHideDuration={3000}
+                autoHideDuration={typeof alert.autoHideDuration  === "undefined" ? 3000 : alert.autoHideDuration}
                 onRequestClose={hideAlert}
                 open={alert.open}
                 message={<div className={classes.message}>
@@ -122,7 +122,7 @@ const DefaultRoute = ({component: Component, isAuthenticated, loader ,alert, hid
                 </div>}
             />
             <div className={classNames(classes.preloader , loader > 0 ? classes.showPreloader : classes.hidePreloader)}>
-                <div className={classes.spinner}></div>
+                <div className={classes.spinner}/>
             </div>
         </div>
     )}/>
