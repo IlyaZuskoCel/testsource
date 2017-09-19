@@ -8,11 +8,15 @@ RUN yarn install
 
 RUN yarn run build
 
-WORKDIR /var/www/app
+WORKDIR /
 
 #nginx settings
 COPY ./nginx.conf /etc/nginx/conf.d/app/
 
+COPY ./run.sh /run.sh
+RUN chmod +x run.sh
+
+
 VOLUME ["/var/www/app", "/etc/nginx/conf.d/app"]
 
-CMD ["/bin/true"]
+CMD ["./run.sh"]

@@ -77,8 +77,7 @@ class InForm extends Component {
                                        type="email"
                                        value={this.state.username}
                                        onChange={this.handleChange('username')}
-                                       helperText="New users must click the verification link in their email inbox
-                                before logging in for the first time"/>
+                                       helperText="New users must click the verification link in their email inbox before logging in for the first time"/>
                         </Grid>
 
                         <Grid item xs={12}>
