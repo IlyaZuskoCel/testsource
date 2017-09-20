@@ -100,3 +100,11 @@
         width: 96%;
     }
 }
+
+.rc-slider-tooltip-placement-topRight .rc-slider-tooltip-content{
+    margin-left: -8px;
+}
+
+.rc-slider-tooltip-placement-topLeft .rc-slider-tooltip-content{
+    margin-left: 8px;
+}
