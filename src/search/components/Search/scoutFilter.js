@@ -162,7 +162,6 @@ class ScoutFilter extends Component {
 
 
         let options = {
-
             id_league: this.state.id_league ? this.state.id_league : null,
             id_team_current: this.state.id_team_current ? this.state.id_team_current : null,
             id_level: this.state.id_level ? this.state.id_level : null,
@@ -206,7 +205,7 @@ class ScoutFilter extends Component {
     };
 
     clearLeague = () => {
-        this.setState({id_league : '' , dropdownLeagues: [] , id_team_current: ''} , () => {
+        this.setState({id_league : '' , dropdownLeagues: [] , id_team_current: '' , id_level : ''} , () => {
             this.makeFilterRequest();
         });
     };

@@ -127,6 +127,7 @@ class DropDownCheckBoxes extends Component {
         if ('leaguesOptions' in nextProps) {
             this.setState({leaguesOptions : nextProps.leaguesOptions , filteredLeagues : nextProps.leaguesOptions});
         }
+
     }
 
     handleChange = value => (event, checked) => {
@@ -142,8 +143,11 @@ class DropDownCheckBoxes extends Component {
             applied: true,
             open: false,
         } , () => {
-            this.props.changeLeague(this.state.league_id ? this.state.league_id : '',
-                this.state.level_id ? this.state.level_id : '');
+            let league = this.state.league_id ? this.state.league_id : (this.props.league ?
+                this.props.league : '');
+            let level = this.state.level_id ? this.state.level_id : '';
+
+            this.props.changeLeague(league , level);
         });
     };
 
@@ -167,6 +171,13 @@ class DropDownCheckBoxes extends Component {
             this.setState({'league_id' : suggestionValue });
         else
             this.setState({'league_id' : suggestionValue , 'level_id' : '' });
+    };
+
+    getLevelLeagueText = () => {
+        let text = this.state.level_id && this.props.league ? `${this.props.leagues[this.props.league]},${this.props.levels[this.state.level_id]}`
+            : (this.props.league ? `${this.props.leagues[this.props.league]}` : (this.props.level ? `${this.props.levels[this.props.level]}` : ''));
+
+        return text;
     };
 
     render() {
@@ -208,17 +219,17 @@ class DropDownCheckBoxes extends Component {
                         {label && (
                             <InputLabel htmlFor={id}
                                         focused={this.state.open}
-                                        shrink={this.state.open || !!value.length || !!this.props.league}
+                                        shrink={this.state.open || !!value.length || !!this.props.league || !!this.state.level_id || !!this.props.level}
                                         onClick={this.toggleOpen}
                                         className={classNames(classes.label, labelClassName)} {...InputLabelProps}>
                                 {label}
                             </InputLabel>
                         )}
-                        {(value.length || this.state.open || this.props.league) ? (
+                        {(value.length || this.state.open || this.props.league || !!this.state.level_id || !!this.props.level) ? (
                             <Typography type="body2" onClick={this.toggleOpen}
                                         id={id}
                                         className={classes.input}>
-                                {this.props.league ? this.props.leagues[this.props.league] : ''}{this.state.level_id && this.props.league ? `,${ this.props.levels[this.state.level_id]}` : ''}
+                                {this.getLevelLeagueText()}
                             </Typography>
                         ) : (
                             <div className={classes.openEmpty}
