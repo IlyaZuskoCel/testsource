@@ -182,7 +182,7 @@ class PlayerFilter extends Component {
     };
 
     clearLeague = () => {
-        this.setState({id_league : '' , dropdownLeagues: [] , id_team_current: ''} , () => {
+        this.setState({id_league : '' , dropdownLeagues: [] , id_team_current: '' , id_level : ''} , () => {
             this.makeFilterRequest();
         });
     };
@@ -240,13 +240,23 @@ class PlayerFilter extends Component {
             }
         }
 
-        if ('query' in nextProps ) {
+        if ('query' in nextProps) {
             this.setState({
-                id_league_save: nextProps.query.id_league ? parseInt(nextProps.query.id_league ) : null,
+                id_league_save: nextProps.query.id_league ? parseInt(nextProps.query.id_league) : null,
                 id_level: nextProps.query.id_level ? parseInt(nextProps.query.id_level) : null
-            })
+            });
         }
     }
+
+    filterOnLevel = (teams) =>  {
+        // if (this.state.id_level) {
+        //    let leagues = this.props.leagueOptions.filter(i => i.item.id_level == this.state.id_level)
+        //        .map(i => parseInt(i.item.id));
+        //     teams = teams.filter(t => leagues.indexOf(t.item.id_league) !== -1 );
+        // }
+
+        return teams;
+    };
 
     render() {
         const {classes, width} = this.props;
@@ -277,7 +287,7 @@ class PlayerFilter extends Component {
                     <Autosuggest fullWidth
                                  label="Team"
                                  value={this.props.teams && this.state.id_team_current ? this.props.teams[this.state.id_team_current] || '' : ''}
-                                 suggestions={this.state.id_league ? this.props.teamOptions.filter(i => i.item.id_league === parseInt(this.state.id_league)) : this.props.teamOptions}
+                                 suggestions={this.filterOnLevel(this.state.id_league ? this.props.teamOptions.filter(i => i.item.id_league === parseInt(this.state.id_league)) : this.props.teamOptions)}
                                  onSuggestionSelected={this.onChangeAutosuggest('id_team_current')}/>
                 </Grid>
                 <Grid item xs={12} sm={6} md={4}>
