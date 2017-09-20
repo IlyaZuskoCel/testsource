@@ -176,13 +176,13 @@ class PlayerFilter extends Component {
     };
 
     changeLeague = (league , level) => {
-            this.setState({id_league : league , id_team_current: '' , id_level : level} , () => {
+            this.setState({id_league : league  , id_team_current: '' , id_level : level} , () => {
                 this.makeFilterRequest();
             });
     };
 
     clearLeague = () => {
-        this.setState({id_league : '' , dropdownLeagues: [] , id_team_current: '' , id_level : ''} , () => {
+        this.setState({id_league : '' , dropdownLeagues: []  , id_level : ''} , () => {
             this.makeFilterRequest();
         });
     };
@@ -191,11 +191,6 @@ class PlayerFilter extends Component {
         this.setState({name : ''}, () => {
             this.makeFilterRequest();
         });
-    };
-
-    getLevel = (id) => {
-        if (!id)
-            return '';
     };
 
     componentWillReceiveProps(nextProps) {
@@ -248,12 +243,16 @@ class PlayerFilter extends Component {
         }
     }
 
-    filterOnLevel = (teams) =>  {
-        // if (this.state.id_level) {
-        //    let leagues = this.props.leagueOptions.filter(i => i.item.id_level == this.state.id_level)
-        //        .map(i => parseInt(i.item.id));
-        //     teams = teams.filter(t => leagues.indexOf(t.item.id_league) !== -1 );
-        // }
+    filterTeams = (teams) =>  {
+
+        if (this.state.id_league) {
+            teams = this.props.teamOptions.filter(i => i.item.id_league === parseInt(this.state.id_league));
+        }
+        else if (this.state.id_level) {
+           let leagues = this.props.leagueOptions.filter(i => i.item.id_level == this.state.id_level)
+               .map(i => parseInt(i.item.id));
+            teams = teams.filter(t => leagues.indexOf(t.item.id_league) !== -1 );
+        }
 
         return teams;
     };
@@ -264,7 +263,6 @@ class PlayerFilter extends Component {
         return (<div className={classNames(classes.row, classes.headerMedia)}>
             <Grid container gutter={40}>
                 <Grid item xs={12} sm={6} md={4}>
-
 
                     <DropdownOptions  fullWidth
                                         options={[]}
@@ -283,11 +281,10 @@ class PlayerFilter extends Component {
 
                 </Grid>
                 <Grid item xs={12} sm={6} md={4}>
-
                     <Autosuggest fullWidth
                                  label="Team"
-                                 value={this.props.teams && this.state.id_team_current ? this.props.teams[this.state.id_team_current] || '' : ''}
-                                 suggestions={this.filterOnLevel(this.state.id_league ? this.props.teamOptions.filter(i => i.item.id_league === parseInt(this.state.id_league)) : this.props.teamOptions)}
+                                 value={this.props.teams && this.state.id_team_current ? this.props.teams[this.state.id_team_current]  : ''}
+                                 suggestions={this.filterTeams(this.props.teamOptions)}
                                  onSuggestionSelected={this.onChangeAutosuggest('id_team_current')}/>
                 </Grid>
                 <Grid item xs={12} sm={6} md={4}>

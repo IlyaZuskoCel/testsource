@@ -198,6 +198,20 @@ class ScoutFilter extends Component {
         }
     };
 
+    filterTeams = (teams) =>  {
+
+        if (this.state.id_league) {
+            teams = this.props.teamOptions.filter(i => i.item.id_league === parseInt(this.state.id_league));
+        }
+        else if (this.state.id_level) {
+            let leagues = this.props.leagueOptions.filter(i => i.item.id_level == this.state.id_level)
+                .map(i => parseInt(i.item.id));
+            teams = teams.filter(t => leagues.indexOf(t.item.id_league) !== -1 );
+        }
+
+        return teams;
+    };
+
     changeLeague = (league , level) => {
         this.setState({id_league : league , id_team_current: '' , id_level : level} , () => {
             this.makeFilterRequest();
@@ -205,7 +219,7 @@ class ScoutFilter extends Component {
     };
 
     clearLeague = () => {
-        this.setState({id_league : '' , dropdownLeagues: [] , id_team_current: '' , id_level : ''} , () => {
+        this.setState({id_league : '' , dropdownLeagues: []  , id_level : ''} , () => {
             this.makeFilterRequest();
         });
     };
@@ -237,7 +251,7 @@ class ScoutFilter extends Component {
                     <Autosuggest fullWidth
                                  label="Team"
                                  value={this.props.teams && this.state.id_team_current ? this.props.teams[this.state.id_team_current] || '' : ''}
-                                 suggestions={this.state.id_league ? this.props.teamOptions.filter(i => i.item.id_league === parseInt(this.state.id_league)) : this.props.teamOptions}
+                                 suggestions={this.filterTeams(this.props.teamOptions) }
                                  onSuggestionSelected={this.onChangeAutosuggest('id_team_current')}/>
                 </Grid>
                 <Grid item xs={12} sm={6} md={4}>
