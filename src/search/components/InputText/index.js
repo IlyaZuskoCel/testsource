@@ -208,7 +208,7 @@ class DropDownCheckBoxes extends Component {
                     {this.state.open &&
                     <Paper style={{zIndex: 1000}} square className={classes.suggestionsContainerOpen}>
                             <div className={classes.controllBar}>
-                                <Button onClick={this.handleCancle} className={classes.cancleButton}>Cancle</Button>
+                                <Button onClick={this.handleCancle} className={classes.cancleButton}>Cancel</Button>
                                 <Button onClick={this.handleApply} className={classes.applyButton}>Apply</Button>
                             </div>
 

@@ -259,7 +259,7 @@ class DropDownCheckBoxes extends Component {
 
                         <div className={classes.dropdownItem}>
                             <Autosuggest fullWidth
-                                label="Levels" value={this.props.levels ? this.props.levels[this.state.level_id] ||  this.props.levels[level] || '' : ''}
+                                label="Level" value={this.props.levels ? this.props.levels[this.state.level_id] ||  this.props.levels[level] || '' : ''}
                                          suggestions={this.props.levelOptions}
                                          onSuggestionSelected={this.onChangeLevel}/>
                         </div>
