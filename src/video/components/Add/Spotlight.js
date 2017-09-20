@@ -6,7 +6,7 @@
 
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-
+import classNames from 'classnames';
 
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
@@ -42,6 +42,11 @@ const styleSheet = createStyleSheet('Trim', theme => ({
         flexDirection: 'column',
         justifyContent: 'space-around',
         alignItems: 'center',
+    },
+    uploadWrapHeight: {
+        margin: 'auto',
+        width: '50%'
+
     },
     range: {
         padding: 16,
@@ -222,7 +227,7 @@ class Trim extends Component {
 
         const top = Math.max(y * image.height / height - 2, 0);
 
-        const radius =  Math.max(Math.round(width / 20) * image.width / width, Math.round(height / 20) * image.height / height);
+        const radius = Math.max(Math.round(width / 20) * image.width / width, Math.round(height / 20) * image.height / height);
 
         circle.style['margin-left'] = left + 'px';
         circle.style['margin-top'] = top + 'px';
@@ -353,7 +358,9 @@ class Trim extends Component {
                 This is how the scout identifies you. Pinch and drag with 2 fingers to resize the marker.
             </Typography>
 
-            <Paper className={classes.uploadWrap} id="image">
+            <Paper
+                className={classNames(classes.uploadWrap, {[classes.uploadWrapHeight]: this.props.video.height > this.props.video.width})}
+                id="image">
 
                 <img src={video.trim_thumb || video.thumb_lg} className={classes.imageBg} id="imageSrc"/>
                 <div className={classes.opacityBg}/>
