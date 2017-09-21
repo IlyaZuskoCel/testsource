@@ -229,6 +229,10 @@ class Search extends Component {
             queryFromFilters['name'] = filters['name_search'];
         }
 
+        if (this.props.headers) {
+            queryFromFilters['page'] = this.props.headers.page;
+        }
+
         return queryFromFilters;
     };
 
@@ -328,6 +332,8 @@ class Search extends Component {
                                                                      query={this.state.query}
                                                                      clearFilters={this.state.clearFilters}
                                                                      stopClearing={this.stopClearing}
+                                                                     page={this.props.headers ? this.props.headers.page : 1 }
+
 
                                                                      filters={this.props.filters && this.props.filters.scout ? this.props.filters.scout : {}}
                                                                      setFilters={this.props.setFilters}
@@ -344,6 +350,7 @@ class Search extends Component {
                                                                        query={this.state.query}
                                                                        clearFilters={this.state.clearFilters}
                                                                        stopClearing={this.stopClearing}
+                                                                       page={this.props.headers ? this.props.headers.page : 1 }
 
                                                                        filters={this.props.filters && this.props.filters.player ? this.props.filters.player : {}}
                                                                        setFilters={this.props.setFilters}
@@ -393,6 +400,7 @@ class Search extends Component {
                                                                  query={this.state.query}
                                                                  clearField={this.state.clearField}
                                                                  stopClearing={this.stopClearing}
+                                                                 page={this.props.headers ? this.props.headers.page : 1 }
 
                                                                  filters={this.props.filters && this.props.filters.scout ? this.props.filters.scout : {}}
                                                                  setFilters={this.props.setFilters}
@@ -412,6 +420,7 @@ class Search extends Component {
                                                                    query={this.state.query}
                                                                    clearField={this.state.clearField}
                                                                    stopClearing={this.stopClearing}
+                                                                   page={this.props.headers ? this.props.headers.page : 1 }
 
 
                                                                    filters={this.props.filters && this.props.filters.player ? this.props.filters.player : {}}
