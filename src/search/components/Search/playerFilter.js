@@ -246,6 +246,7 @@ class PlayerFilter extends Component {
                 id_level: nextProps.query.id_level ? parseInt(nextProps.query.id_level) : null
             });
         }
+
     }
 
     filterTeams = (teams) =>  {
