@@ -123,6 +123,10 @@ class ScoutFilter extends Component {
                 this.setState({'name' : nextProps.filters['name_search']});
             }
 
+            if ('id_team_current' in nextProps.filters) {
+                this.setState({id_team_current : parseInt(nextProps.filters.id_team_current) });
+            }
+
             if (Object.keys(nextProps.filters).length === 0) {
                 this.setState({
                     id_league: '',
@@ -171,6 +175,7 @@ class ScoutFilter extends Component {
             id_team_current: this.state.id_team_current ? this.state.id_team_current : null,
             id_level: this.state.id_level ? this.state.id_level : null,
             'name_search': this.state.name ? this.state.name : null,
+            page: this.props.page ? this.props.page : 1,
         };
 
         if (this.state.name || this.state.id_league || this.state.id_team_current || this.state.id_level) {
