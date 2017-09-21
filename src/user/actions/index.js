@@ -346,10 +346,10 @@ export const sendEmail = (id, subject, text) => dispatch => {
         })
 };
 
-export const verifyScout = phone => dispatch => {
+export const verifyScout = (phone, name) => dispatch => {
     dispatch(startLoading());
 
-    return post(`/api/v2/message/verify-message`, {phone})
+    return post(`/api/v2/message/verify-message`, {phone, coach: name})
         .then(result => {
             dispatch(stopLoading());
 
@@ -361,7 +361,7 @@ export const verifyScout = phone => dispatch => {
 
             return dispatch({
                 type: ERROR_ALERT,
-                payload: {message: "Please include a valid phone number to get verified."}
+                payload: {message: "Verify phone was sent yet"}
             });
         })
         .catch((message) => {

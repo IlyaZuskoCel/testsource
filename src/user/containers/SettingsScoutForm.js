@@ -19,7 +19,7 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchToProps = (dispatch) => ({
     cancel: () => dispatch(goBack()),
     save: (data) => dispatch(update(data)),
-    getVerifiedScout: phone => dispatch(verifyScout(phone)),
+    getVerifiedScout: (phone, name) => dispatch(verifyScout(phone, name)),
 });
 
 

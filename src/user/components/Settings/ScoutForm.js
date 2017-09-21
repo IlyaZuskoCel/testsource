@@ -155,6 +155,9 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
     },
     verifiedProgress: {
         marginBottom: 16
+    },
+    verifiedButtonWrap: {
+        textAlign: 'center'
     }
 }));
 
@@ -163,6 +166,7 @@ const getUserState = user => ({
     is_private: user.is_private,
     email: user.email,
     phone: user.phone,
+    coach: user.coach,
 });
 
 class ScoutForm extends Component {
@@ -181,7 +185,7 @@ class ScoutForm extends Component {
     }
 
     handleChange = name => event => {
-        if(name === 'phone' && isNaN(event.target.value)) return;
+        if (name === 'phone' && isNaN(event.target.value)) return;
         return this.setState({[name]: event.target.value})
     };
     handleSwitch = name => (event, checked) => {
@@ -202,7 +206,7 @@ class ScoutForm extends Component {
     };
     handleVerified = event => {
         event.preventDefault();
-        this.props.getVerifiedScout(this.state.phone);
+        this.props.getVerifiedScout(this.state.phone, this.state.coach);
         return false;
     };
 
@@ -266,20 +270,45 @@ class ScoutForm extends Component {
                     ) : (
                         <div>
                             <Typography type="subheading" className={classes.subTitle}>Get Verified</Typography>
-                            <div className={classes.verifiedWrap}>
-                                <TextField required
-                                           fullWidth
-                                           error={this.state.errors.indexOf('phone') > -1}
-                                           label="Manager's Phone Number"
-                                           value={this.state.phone || ''}
-                                           onChange={this.handleChange('phone')}
-                                           className={classes.phoneTextField}/>
-                                <Button raised color="primary" onClick={this.handleVerified}>Get verified</Button>
-                            </div>
-                            {user.phone &&
-                            <Typography type="body2" className={classes.verifiedProgress}>Verification in
-                                progress.</Typography>}
-                            <Typography type="caption">We need your coach, manager or head scout's phone number in order to verify you. We'll call your contact to verify you as a scout within 24-72 hours. You will get an email once you're verified, which will let you contact players.</Typography>
+                            <Typography type="caption">You need to be verified as a scout by Scout Zoo in order to
+                                contact players in the app. Please provide your coach, manager or head scout’s name and
+                                phone number and we'll contact them to verify you as a scout within 72 hours. You will
+                                get an email once you are verified.</Typography>
+
+                            <Grid container>
+                                <Grid item xs={12} md={6}>
+                                    <TextField required
+                                               fullWidth
+                                               error={this.state.errors.indexOf('coach') > -1}
+                                               label="Contact Name"
+                                               value={this.state.coach || ''}
+                                               onChange={this.handleChange('coach')}
+                                               className={classes.phoneTextField}/>
+                                </Grid>
+                                <Grid item xs={12} md={6}>
+                                    <TextField required
+                                               fullWidth
+                                               error={this.state.errors.indexOf('phone') > -1}
+                                               label="Contact Phone Number"
+                                               value={this.state.phone || ''}
+                                               onChange={this.handleChange('phone')}
+                                               className={classes.phoneTextField}/>
+                                </Grid>
+
+                                {user.phone && (
+                                    <Grid item xs={12}>
+                                        <Typography type="body1" className={classes.verifiedProgress}>Verification in
+                                            progress.</Typography>
+                                    </Grid>
+                                )}
+                                <Grid item xs={12} md={6} className={classes.verifiedButtonWrap}>
+                                    <Button raised color="primary" onClick={this.handleVerified}>
+                                        Get verified
+                                    </Button>
+                                </Grid>
+                            </Grid>
+
+
                         </div>
                     )}
 
