@@ -308,7 +308,9 @@ class ScoutForm extends Component {
                                     </Grid>
                                 )}
                                 <Grid item xs={12} className={classes.verifiedButtonWrap}>
-                                    <Button raised color="primary" onClick={this.handleVerified}>
+                                    <Button raised color={user.phone ? "default" : "primary"}
+                                            onClick={this.handleVerified}
+                                            disabled={user.phone}>
                                         Get verified
                                     </Button>
                                 </Grid>
