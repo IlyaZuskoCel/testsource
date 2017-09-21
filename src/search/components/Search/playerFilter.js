@@ -193,6 +193,11 @@ class PlayerFilter extends Component {
         });
     };
 
+    clearSubFields = () => {
+      this.setState({clearSubFields : false});
+    };
+
+
     componentWillReceiveProps(nextProps) {
         if (nextProps.leagues.length > 0) {
             this.setState({
@@ -208,9 +213,9 @@ class PlayerFilter extends Component {
                 position: '',
                 born: [PLAYER_MIN_AGE, PlAYER_MAX_AGE],
                 name: '',
+                clearSubFields: true,
             }, () => {
                 nextProps.stopClearing();
-                this.forceUpdate();
             });
         }
 
@@ -235,7 +240,7 @@ class PlayerFilter extends Component {
             }
         }
 
-        if ('query' in nextProps) {
+        if ('query' in nextProps ) {
             this.setState({
                 id_league_save: nextProps.query.id_league ? parseInt(nextProps.query.id_league) : null,
                 id_level: nextProps.query.id_level ? parseInt(nextProps.query.id_level) : null
@@ -276,6 +281,9 @@ class PlayerFilter extends Component {
                                         clearLeague={this.clearLeague}
                                         league={parseInt(this.state.id_league) || this.state.id_league_save ||  ''}
                                         level={this.state.id_level || ''}
+
+                                        clearSubFields={this.state.clearSubFields}
+                                        stopClearing={this.clearSubFields}
                     />
 
 
@@ -322,6 +330,9 @@ class PlayerFilter extends Component {
                                    changeName={this.changeName}
                                    name={this.state.name || ''}
                                    clearName={this.clearName}
+
+                                   clearSubFields={this.state.clearSubFields}
+                                   stopClearing={this.clearSubFields}
                         />
                     </Hidden>
                 </Grid>

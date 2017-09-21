@@ -101,6 +101,7 @@ class ScoutFilter extends Component {
                 id_league: '',
                 id_team_current: '',
                 name: '',
+                clearSubFields: true,
             }, () => {
                 nextProps.stopClearing();
             });
@@ -154,6 +155,10 @@ class ScoutFilter extends Component {
         this.setState({[name]: filterOnReg(/^[0-9]+/, suggestionValue)}, () => {
             this.makeFilterRequest();
         });
+    };
+
+    clearSubFields = () => {
+        this.setState({clearSubFields : false});
     };
 
     makeFilterRequest() {
@@ -245,6 +250,9 @@ class ScoutFilter extends Component {
                                       clearLeague={this.clearLeague}
                                       league={parseInt(this.state.id_league) || this.state.id_league_save ||  ''}
                                       level={this.state.id_level || ''}
+
+                                      clearSubFields={this.state.clearSubFields}
+                                      stopClearing={this.clearSubFields}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6} md={4}>
@@ -273,6 +281,9 @@ class ScoutFilter extends Component {
                                    changeName={this.changeName }
                                    name={this.state.name}
                                    clearName={this.clearName}
+
+                                   clearSubFields={this.state.clearSubFields}
+                                   stopClearing={this.clearSubFields}
                         />
                     </Hidden>
 

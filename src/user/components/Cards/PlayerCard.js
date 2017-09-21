@@ -307,9 +307,9 @@ class PlayerCard extends Component {
                             {player.position_short !== 'n/a' &&
                             <div className={classes.playerBottomDivider}></div>}
 
-                            {player.height && <Typography type='body1'
+                            {player.height &&  <Typography type='body1'
                                                           className={classes.bottomPlayerText}>{player.height[0] + "'" + player.height[1] + '"'}</Typography>}
-                            {player.height && <div className={classes.playerBottomDivider}></div>}
+                            {player.height &&  <div className={classes.playerBottomDivider}></div>}
 
                             {player.weight && <Typography type='body1'
                                                           className={classes.bottomPlayerText}>{parseInt(player.weight) + ' lbs'}</Typography>}
