@@ -182,7 +182,7 @@ class DropDownCheckBoxes extends Component {
     };
 
     getLevelLeagueText = () => {
-        let text = this.state.level_id && this.props.league ? `${this.props.leagues[this.props.league]}, ${this.props.levels[this.state.level_id]}`
+        let text = (this.state.level_id || this.props.level) && this.props.league ? `${this.props.leagues[this.props.league]}, ${this.props.levels[this.props.level]}`
             : (this.props.league ? `${this.props.leagues[this.props.league]}` : (this.props.level ? `${this.props.levels[this.props.level]}` : ''));
 
         return text;
