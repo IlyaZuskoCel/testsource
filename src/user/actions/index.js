@@ -356,7 +356,7 @@ export const verifyScout = (phone, name) => dispatch => {
 
             if (result.success) {
                 dispatch({type: SET_CURRENT_PHONE, payload: phone});
-                return dispatch({type: SUCCESS_ALERT, payload: {message: "Your message was successfully sent!"}});
+                return dispatch({type: SUCCESS_ALERT, payload: {message: "Contact information successfully sent."}});
             }
 
             return dispatch({

@@ -157,7 +157,13 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
         marginBottom: 16
     },
     verifiedButtonWrap: {
-        textAlign: 'center'
+        textAlign: 'right',
+        [theme.breakpoints.down('md')]: {
+            textAlign: 'center',
+        },
+    },
+    verifiedForm: {
+        marginTop: 16
     }
 }));
 
@@ -275,7 +281,7 @@ class ScoutForm extends Component {
                                 phone number and we'll contact them to verify you as a scout within 72 hours. You will
                                 get an email once you are verified.</Typography>
 
-                            <Grid container>
+                            <Grid container className={classes.verifiedForm}>
                                 <Grid item xs={12} md={6}>
                                     <TextField required
                                                fullWidth
@@ -301,7 +307,7 @@ class ScoutForm extends Component {
                                             progress.</Typography>
                                     </Grid>
                                 )}
-                                <Grid item xs={12} md={6} className={classes.verifiedButtonWrap}>
+                                <Grid item xs={12} className={classes.verifiedButtonWrap}>
                                     <Button raised color="primary" onClick={this.handleVerified}>
                                         Get verified
                                     </Button>
