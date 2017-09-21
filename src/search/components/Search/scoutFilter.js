@@ -123,6 +123,10 @@ class ScoutFilter extends Component {
                 this.setState({'name' : nextProps.filters['name_search']});
             }
 
+            if ('id_team_current' in nextProps.filters) {
+                this.setState({id_team_current : parseInt(nextProps.filters.id_team_current) });
+            }
+
             if (Object.keys(nextProps.filters).length === 0) {
                 this.setState({
                     id_league: '',

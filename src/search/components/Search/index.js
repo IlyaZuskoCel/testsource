@@ -256,6 +256,11 @@ class Search extends Component {
                 this.setState({appliedFilters})
             }
         }
+
+        if ('headers' in nextProps && nextProps.headers) {
+            this.setState({pageCurrentPosition : nextProps.headers.page});
+        }
+
     }
 
     handleChange(event , value) {
@@ -292,17 +297,25 @@ class Search extends Component {
 
     changePagination(page) {
         this.setState({activePage : page} , () => {
+
+            if ('page' in this.state.query) {
+                this.state.query.page = page.toString();
+            }
+
            this.props.upload(this.props.type , {page : page , 'per-page': 18 , ...this.state.query});
         });
 
         window.scroll(0 , 0);
     }
 
-
     toggleMobileFilter() {
         this.setState({mobileFilterOn: !this.state.mobileFilterOn} , () => {
             this.forceUpdate();
         });
+    }
+
+    componentWillMount() {
+       this.props.setFilters(this.state.query , this.props.type == 'scout' ? 'scout' : '');
     }
 
     render() {
@@ -332,7 +345,7 @@ class Search extends Component {
                                                                      query={this.state.query}
                                                                      clearFilters={this.state.clearFilters}
                                                                      stopClearing={this.stopClearing}
-                                                                     page={this.props.headers ? this.props.headers.page : 1 }
+                                                                     page={this.state.pageCurrentPosition ? this.state.pageCurrentPosition : 1 }
 
 
                                                                      filters={this.props.filters && this.props.filters.scout ? this.props.filters.scout : {}}
@@ -350,7 +363,7 @@ class Search extends Component {
                                                                        query={this.state.query}
                                                                        clearFilters={this.state.clearFilters}
                                                                        stopClearing={this.stopClearing}
-                                                                       page={this.props.headers ? this.props.headers.page : 1 }
+                                                                       page={this.state.pageCurrentPosition ? this.state.pageCurrentPosition : 1 }
 
                                                                        filters={this.props.filters && this.props.filters.player ? this.props.filters.player : {}}
                                                                        setFilters={this.props.setFilters}
@@ -400,7 +413,7 @@ class Search extends Component {
                                                                  query={this.state.query}
                                                                  clearField={this.state.clearField}
                                                                  stopClearing={this.stopClearing}
-                                                                 page={this.props.headers ? this.props.headers.page : 1 }
+                                                                 page={this.state.pageCurrentPosition ? this.state.pageCurrentPosition : 1 }
 
                                                                  filters={this.props.filters && this.props.filters.scout ? this.props.filters.scout : {}}
                                                                  setFilters={this.props.setFilters}
@@ -420,7 +433,7 @@ class Search extends Component {
                                                                    query={this.state.query}
                                                                    clearField={this.state.clearField}
                                                                    stopClearing={this.stopClearing}
-                                                                   page={this.props.headers ? this.props.headers.page : 1 }
+                                                                   page={this.state.pageCurrentPosition ? this.state.pageCurrentPosition : 1 }
 
 
                                                                    filters={this.props.filters && this.props.filters.player ? this.props.filters.player : {}}

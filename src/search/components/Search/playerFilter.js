@@ -138,12 +138,14 @@ class PlayerFilter extends Component {
         let queryString = '';
         let filters = {};
 
+
         let options = {
             id_league: this.state.id_league ? this.state.id_league : null,
             id_level: this.state.id_level ? this.state.id_level : null,
             id_team_current: this.state.id_team_current ? this.state.id_team_current : null,
             position: this.state.position ? this.state.position : null,
             'name_search': this.state.name ? this.state.name : null,
+            page: this.props.page ? this.props.page : 1
         };
 
         if (this.state.name || this.state.id_league || this.state.id_team_current || this.state.year || this.state.position || this.state.values || this.state.born || this.state.id_level) {
@@ -220,12 +222,21 @@ class PlayerFilter extends Component {
         }
 
         if ('filters' in nextProps) {
+
             Object.keys(nextProps.filters).forEach(key => {
                this.setState({[key] : nextProps.filters[key]});
             });
 
             if ('name_search' in nextProps.filters) {
                 this.setState({'name' : nextProps.filters['name_search']});
+            }
+
+            if ('born[0]' in nextProps.filters) {
+                this.setState({'born' : [parseInt(nextProps.filters['born[0]']) , parseInt(nextProps.filters['born[1]']) ]});
+            }
+
+            if ('id_team_current' in nextProps.filters) {
+                this.setState({id_team_current : parseInt(nextProps.filters.id_team_current) });
             }
 
             if (Object.keys(nextProps.filters).length === 0) {
@@ -242,9 +253,10 @@ class PlayerFilter extends Component {
 
         if ('query' in nextProps ) {
             this.setState({
-                id_league_save: nextProps.query.id_league ? parseInt(nextProps.query.id_league) : null,
-                id_level: nextProps.query.id_level ? parseInt(nextProps.query.id_level) : null
+                id_league: nextProps.query.id_league ? parseInt(nextProps.query.id_league) : null,
+                id_level: nextProps.query.id_level ? parseInt(nextProps.query.id_level) : null,
             });
+
         }
 
     }
@@ -292,7 +304,7 @@ class PlayerFilter extends Component {
                 <Grid item xs={12} sm={6} md={4}>
                     <Autosuggest fullWidth
                                  label="Team"
-                                 value={this.props.teams && this.state.id_team_current ? this.props.teams[this.state.id_team_current]  : ''}
+                                 value={this.props.teams && this.state.id_team_current ? this.props.teams[this.state.id_team_current] || ''  : ''}
                                  suggestions={this.filterTeams(this.props.teamOptions)}
                                  onSuggestionSelected={this.onChangeAutosuggest('id_team_current')}/>
                 </Grid>

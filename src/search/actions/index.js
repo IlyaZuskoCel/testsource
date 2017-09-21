@@ -35,6 +35,11 @@ export const uploadPlayers = (params) => dispatch => {
         .then(players => {
             dispatch({type: SET_PLAYERS , payload: players.items});
             dispatch({type: SET_HEADERS , payload: {count: players.count , page: players.page , pageCount: players.pageCount , perPage: players.perPage}});
+
+
+            request = request.replace('&per-page=18' , '');
+            dispatch(go('/search/player?' + request.split('?')[1]));
+
             dispatch(stopLoading());
         })
         .catch((message) => {
@@ -54,6 +59,10 @@ export const uploadScouts = (params) => dispatch => {
         .then(scouts => {
             dispatch({type: SET_SCOUTS , payload: scouts.items});
             dispatch({type: SET_HEADERS , payload: {count: scouts.count , page: scouts.page , pageCount: scouts.pageCount , perPage: scouts.perPage}});
+
+            request = request.replace('&per-page=18' , '');
+            dispatch(go('/search/scout?' + request.split('?')[1]));
+
             dispatch(stopLoading());
 
         })
