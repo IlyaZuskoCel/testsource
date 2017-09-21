@@ -299,10 +299,9 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
     infoCardPhotoWrap: {
         width: 270,
         height: 270,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
-        alignItems: 'center',
+        overflow: 'hidden',
+        position: 'relative',
+        margin: 'auto',
 
         [theme.breakpoints.down('sm')]: {
             height: 192,
@@ -315,12 +314,14 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
         justifyContent: 'center',
     },
     infoCardPhoto: {
-        maxWidth: 270,
-        maxHeight: 270,
-        [theme.breakpoints.down('sm')]: {
-            height: 192,
-            width: 218,
-        },
+        minWidth: '100%',
+        minHeight: '100%',
+        top: '50%',
+        left: '50%',
+        transform: 'translateX(-50%) translateY(-50%)',
+        position: 'absolute',
+        margin: 'auto',
+
     },
     infoCardPhotoDefault: {
         width: 176
