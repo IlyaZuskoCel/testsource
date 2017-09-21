@@ -85,6 +85,10 @@ export const filterScouts = (params) => dispatch => {
     dispatch({type: CLEAR_LIST});
     dispatch(startLoading());
 
+    // just for beautifull url , if delete this line nothing will change in
+    // flow of application but url won't show everything correctly
+    params = params.replace(/page=.*?&/ , 'page=1&');
+
 
     let request = typeof params === 'object' ? addRequestParams(playerSearch , params) : playerSearch + params;
 
@@ -105,7 +109,12 @@ export const filterPlayers = (params) => dispatch => {
     dispatch({type: CLEAR_LIST});
     dispatch(startLoading());
 
+    // just for beautifull url , if delete this line nothing will change in
+    // flow of application but url won't show everything correctly
+    params = params.replace(/page=.*?&/ , 'page=1&');
+
     let request = typeof params === 'object' ? addRequestParams(playerSearch , params) : playerSearch + params;
+
 
     getPage(request)
         .then(players => {
