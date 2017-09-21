@@ -247,12 +247,12 @@ class Search extends Component {
             let appliedFilters = this.state.appliedFilters;
 
             if ('player' in nextProps.filters && nextProps.filters.player) {
-                appliedFilters.playerFilters = Object.keys(nextProps.filters.player).length;
+                appliedFilters.playerFilters = Object.keys(nextProps.filters.player).filter(i => i !== 'page').length;
                 this.setState({appliedFilters})
             }
 
             if ('scout' in nextProps.filters && nextProps.filters.scout) {
-                appliedFilters.scoutFilters = Object.keys(nextProps.filters.scout).length
+                appliedFilters.scoutFilters = Object.keys(nextProps.filters.scout).filter(i => i !== 'page').length
                 this.setState({appliedFilters})
             }
         }
@@ -459,7 +459,7 @@ class Search extends Component {
                 }
             </div>}
 
-            {this.state.mobileFilterOn && <footer className={classes.footer}>
+            {this.state.mobileFilterOn && this.props.headers && parseInt(this.props.headers.pageCount) > 1 && <footer className={classes.footer}>
                 <Pagination currentPage={this.props.headers ? parseInt(this.props.headers.page) : 1} total={this.props.headers ? parseInt(this.props.headers.count) : 0}  perPage={18} onChange={this.changePagination}  />
             </footer>}
 
