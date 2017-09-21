@@ -61,9 +61,19 @@ class ContactForm extends Component {
         e.preventDefault();
         if (!this.props.currentUser.is_verify) return false;
         if (this.props.user.is_messaged > 2) return false;
+        if (!this.state.contactSubject && !this.state.contactMessage) {
+            this.setState({errors: ['contactSubject', 'contactMessage']});
+            return this.props.error('Please enter a Subject Line and a Message before sending your message.');
+        }
+        if (!this.state.contactSubject) {
+            this.setState({errors: ['contactSubject']});
+            return this.props.error('Please enter a Subject Line before sending your message.');
+        }
+        if (!this.state.contactMessage) {
+            this.setState({errors: ['contactMessage']});
+            return this.props.error('Please enter a Message before sending your message.');
+        }
 
-        if (!this.state.contactSubject) return this.setState({errors:['contactSubject']});
-        if (!this.state.contactMessage) return this.setState({errors:['contactMessage']});
 
         this.props.sendEmail(this.props.user.id, this.state.contactSubject, this.state.contactMessage);
         this.setState({

@@ -7,6 +7,8 @@
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux';
 
+import {addErrorAlert} from '../../common/actions';
+
 import ContactForm from '../components/ContactForm';
 
 import {sendEmail} from '../actions';
@@ -15,6 +17,7 @@ const mapStateToProps = (state, props) => ({
     currentUser: state.user.current
 });
 const mapDispatchToProps = (dispatch) => ({
+    error: message => dispatch(addErrorAlert(message)),
     sendEmail: (id, subject, text) => dispatch(sendEmail(id, subject, text)),
 });
 
