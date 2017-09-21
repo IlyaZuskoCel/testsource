@@ -175,6 +175,7 @@ class ScoutFilter extends Component {
             id_team_current: this.state.id_team_current ? this.state.id_team_current : null,
             id_level: this.state.id_level ? this.state.id_level : null,
             'name_search': this.state.name ? this.state.name : null,
+            page: this.props.page ? this.props.page : 1,
         };
 
         if (this.state.name || this.state.id_league || this.state.id_team_current || this.state.id_level) {
