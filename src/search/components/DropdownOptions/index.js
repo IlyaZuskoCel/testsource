@@ -128,6 +128,15 @@ class DropDownCheckBoxes extends Component {
             this.setState({leaguesOptions : nextProps.leaguesOptions , filteredLeagues : nextProps.leaguesOptions});
         }
 
+       if ('clearSubFields' in nextProps && nextProps.clearSubFields) {
+            this.setState({
+                level_id: '',
+                league_id: '',
+            }, () => {
+                nextProps.stopClearing();
+            });
+       }
+
     }
 
     handleChange = value => (event, checked) => {
@@ -143,9 +152,8 @@ class DropDownCheckBoxes extends Component {
             applied: true,
             open: false,
         } , () => {
-            let league = this.state.league_id ? this.state.league_id : (this.props.league ?
-                this.props.league : '');
-            let level = this.state.level_id ? this.state.level_id : '';
+            let league = this.state.league_id ? this.state.league_id : (this.props.league ? this.props.league : '');
+            let level = this.state.level_id ? this.state.level_id : (this.props.level ? this.props.level : '');
 
             this.props.changeLeague(league , level);
         });
@@ -198,6 +206,8 @@ class DropDownCheckBoxes extends Component {
             id,
             level,
             league,
+            clearSubFields,
+            stopClearing,
             levels,
             levelOptions,
             leaguesOptions,

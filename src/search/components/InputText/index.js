@@ -125,6 +125,16 @@ class DropDownCheckBoxes extends Component {
 
     };
 
+    componentWillReceiveProps(nextProps) {
+        if ('clearSubFields' in nextProps && nextProps.clearSubFields) {
+            this.setState({
+                nameSearch: ''
+            } , () => {
+                nextProps.stopClearing();
+            });
+        }
+    }
+
     onChangeName = (event) => {
       this.setState({nameSearch : event.target.value});
     };
@@ -162,6 +172,8 @@ class DropDownCheckBoxes extends Component {
             id,
             changeName,
             clearName,
+            clearSubFields,
+            stopClearing,
             ...other
         } = this.props;
         return (

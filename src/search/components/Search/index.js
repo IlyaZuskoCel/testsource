@@ -222,7 +222,7 @@ class Search extends Component {
 
         if ('born' in filters) {
             queryFromFilters['born[0]'] = filters.born[0];
-            queryFromFilters['born[1]'] = filters.born[0];
+            queryFromFilters['born[1]'] = filters.born[1];
         }
 
         if ('name_search' in filters) {

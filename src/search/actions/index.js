@@ -58,7 +58,7 @@ export const uploadScouts = (params) => dispatch => {
 
         })
         .catch((message) => {
-            dispatch({type: ERROR_ALERT , payload: {message}})
+            dispatch({type: ERROR_ALERT , payload: {message}});
             dispatch(stopLoading());
         });
 };
