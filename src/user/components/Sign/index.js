@@ -166,6 +166,13 @@ const styleSheet = createStyleSheet('Sign', theme => ({
             marginRight: 16,
 
         }
+    },
+    afterSignUp: {
+        marginTop: 64,
+    },
+
+    signupSubheading: {
+        marginBottom: 28,
     }
 }));
 
@@ -289,6 +296,19 @@ class Sign extends Component {
                             {type === 'up' && user === 'scout' && (
                                 <ScoutForm/>
                             )}
+
+                            {type === 'result' && (
+                                <div className={classes.afterSignUp}>
+                                    <Typography type="subheading" className={classes.signupSubheading}>
+                                        Activate your Scout Zoo account
+                                    </Typography>
+                                    <Typography type="body1">
+                                        The puck's about to drop. Please check your email and click on the verification link before logging in for the first time.
+                                    </Typography>
+                                </div>
+                            )}
+
+
                         </div>
                     </Grid>
                     <Grid item sm={4} md={6} hidden={{xsDown: true}}>
