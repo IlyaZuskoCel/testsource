@@ -128,15 +128,14 @@ class DropDownCheckBoxes extends Component {
             this.setState({leaguesOptions : nextProps.leaguesOptions , filteredLeagues : nextProps.leaguesOptions});
         }
 
-       if ('clearSubFields' in nextProps && nextProps.clearSubFields) {
+        if ('clearSubFields' in nextProps && nextProps.clearSubFields) {
             this.setState({
                 level_id: '',
                 league_id: '',
             }, () => {
                 nextProps.stopClearing();
             });
-       }
-
+        }
     }
 
     handleChange = value => (event, checked) => {
@@ -155,7 +154,7 @@ class DropDownCheckBoxes extends Component {
             let league = this.state.league_id ? this.state.league_id : (this.props.league ? this.props.league : '');
             let level = this.state.level_id ? this.state.level_id : (this.props.level ? this.props.level : '');
 
-            this.props.changeLeague(league , level);
+            this.props.changeLeague(!this.state.clearLeague ? league : '' , !this.state.clearLevel ? level : '');
         });
     };
 
@@ -163,6 +162,7 @@ class DropDownCheckBoxes extends Component {
         this.setState({
             level_id: '',
             league_id: '',
+            clearLevel: false,
             open: false,
         } , () => {
             this.props.clearLeague();
@@ -171,14 +171,14 @@ class DropDownCheckBoxes extends Component {
 
     onChangeLevel =  (event , {suggestionValue}) => {
         let leagues = suggestionValue ? this.state.leaguesOptions.filter(league => parseInt(league.item.id_level) === suggestionValue ) : this.state.leaguesOptions;
-        this.setState({'level_id': suggestionValue , filteredLeagues: leagues, 'league_id' : ''});
+        this.setState({'level_id': suggestionValue , filteredLeagues: leagues, 'league_id' : '' , clearLevel : !suggestionValue ? true : false });
     };
 
     onChangeLeague = (event, {suggestionValue}) => {
         if (this.state.level_id)
-            this.setState({'league_id' : suggestionValue });
+            this.setState({'league_id' : suggestionValue , clearLeague : !suggestionValue ? true : false  });
         else
-            this.setState({'league_id' : suggestionValue , 'level_id' : '' });
+            this.setState({'league_id' : suggestionValue , 'level_id' : '' , clearLeague : !suggestionValue ? true : false });
     };
 
     getLevelLeagueText = () => {
@@ -269,7 +269,7 @@ class DropDownCheckBoxes extends Component {
 
                         <div className={classes.dropdownItem}>
                             <Autosuggest fullWidth
-                                label="Level" value={this.props.levels ? this.props.levels[this.state.level_id] ||  this.props.levels[level] || '' : ''}
+                                         label="Level" value={this.props.levels && !this.state.clearLevel ? this.props.levels[this.state.level_id] ||  this.props.levels[level] || '' : ''}
                                          suggestions={this.props.levelOptions}
                                          onSuggestionSelected={this.onChangeLevel}/>
                         </div>
@@ -277,7 +277,7 @@ class DropDownCheckBoxes extends Component {
                         <div className={classes.dropdownItem}>
                             <Autosuggest fullWidth
                                          label="League"
-                                         value={this.state.league_id || league ? this.state.leagues[this.state.league_id] || this.state.leagues[league] || '' : ''}
+                                         value={ (this.state.league_id || league) && !this.state.clearLeague ? this.state.leagues[this.state.league_id] || this.state.leagues[league] || '' : ''}
                                          suggestions={this.state.filteredLeagues ? this.state.filteredLeagues : []}
                                          onSuggestionSelected={this.onChangeLeague}/>
                         </div>
