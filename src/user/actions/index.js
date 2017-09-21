@@ -39,9 +39,11 @@ export const logIn = (email, password) => dispatch => {
                 return dispatch({type: ERROR_ALERT, payload: {message: user.error.message}});
 
 
-            auth(user.access_token);
+            const url = auth(user.access_token);
             dispatch({type: LOGIN, payload: user});
 
+            if (url)
+                return dispatch(push(url));
             if (user.role === SCOUT_ROLE)
                 return dispatch(push('/search/player'));
 
@@ -138,7 +140,7 @@ export const logOut = () => dispatch => {
         .then(() => {
             dispatch(stopLoading());
 
-            auth('');
+            auth('', location.pathname);
             dispatch({type: LOGOUT});
             dispatch(push('/sign/in'));
         })

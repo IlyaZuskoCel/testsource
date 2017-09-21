@@ -131,11 +131,16 @@ export const getPage = (url, options) => {
 };
 
 
-export const auth = token => {
+export const auth = (token, url) => {
     if (token)
         localStorage.setItem('token', token);
     else
         localStorage.removeItem('token');
+
+    const lastUrl = localStorage.getItem('url');
+    if (url) localStorage.setItem('url', url);
+    return lastUrl;
+
 };
 
 
