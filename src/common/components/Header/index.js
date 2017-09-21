@@ -366,11 +366,19 @@ class Header extends Component {
                 <div className={classNames({[classes.rightBg]: !hideBackground})}/>
                 <Grid container gutter={8} className={classes.root}>
                     <Grid item xs={4}>
-                        <Link to={user && user.role === SCOUT_ROLE ? '/search/player' : `/profile/${user.id}`}
-                              className={classNames(classes.logoLink)}
-                              disabledUnderline>
-                            <ScoutIcon className={classes.logo}>scoutzoo-symbol</ScoutIcon>
-                        </Link>
+
+                        {user ? (
+                            <Link to={user.role === SCOUT_ROLE ? '/search/player' : `/profile/${user.id}`}
+                                  className={classNames(classes.logoLink)}
+                                  disabledUnderline>
+                                <ScoutIcon className={classes.logo}>scoutzoo-symbol</ScoutIcon>
+                            </Link>
+                        ) : (
+                            <a href="https://scoutzoo.com" target="_blank" className={classes.logoLink}>
+                                <ScoutIcon className={classes.logo}>scoutzoo-symbol</ScoutIcon>
+                            </a>
+                        )}
+
                     </Grid>
                     <Grid item xs={8} className={classes.right}>
                         {DropMenu ? (
