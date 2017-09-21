@@ -100,7 +100,7 @@ export const registerScout = user => dispatch => {
                 payload: {message: 'An activation link has been sent to your email address.', autoHideDuration: null}
             });
 
-            dispatch(push('/sign/in'))
+            dispatch(push('/sign/result'))
         })
         .catch((message) => {
             dispatch({type: ERROR_ALERT, payload: {message}});
@@ -123,7 +123,7 @@ export const registerPlayer = user => dispatch => {
                 payload: {message: 'An activation link has been sent to your email address.', autoHideDuration: null}
             });
 
-            dispatch(push('/sign/in'))
+            dispatch(push('/sign/result'))
         })
         .catch((message) => {
             dispatch({type: ERROR_ALERT, payload: {message}});
