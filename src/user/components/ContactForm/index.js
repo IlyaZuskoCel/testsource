@@ -53,6 +53,7 @@ class ContactForm extends Component {
         this.state = {
             contactSubject: '',
             contactMessage: '',
+            errors: [],
         };
     }
 
@@ -61,8 +62,8 @@ class ContactForm extends Component {
         if (!this.props.currentUser.is_verify) return false;
         if (this.props.user.is_messaged > 2) return false;
 
-        if (!this.state.contactSubject) return false;
-        if (!this.state.contactMessage) return false;
+        if (!this.state.contactSubject) return this.setState({errors:['contactSubject']});
+        if (!this.state.contactMessage) return this.setState({errors:['contactMessage']});
 
         this.props.sendEmail(this.props.user.id, this.state.contactSubject, this.state.contactMessage);
         this.setState({
@@ -73,7 +74,7 @@ class ContactForm extends Component {
         return false;
     };
 
-    handleChange = name => event => this.setState({[name]: event.target.value});
+    handleChange = name => event => this.setState({[name]: event.target.value, errors: [],});
 
 
     render() {
@@ -131,6 +132,7 @@ class ContactForm extends Component {
                     <Grid item xs={12}>
                         <TextField fullWidth
                                    required
+                                   error={this.state.errors.indexOf('contactSubject') > -1}
                                    className={classes.contactTextField}
                                    label="Subject Line"
                                    disabled={!this.props.currentUser.is_verify || this.props.user.is_messaged >= 2}
@@ -141,6 +143,7 @@ class ContactForm extends Component {
                     <Grid item xs={12}>
                         <TextArea fullWidth
                                   required
+                                  error={this.state.errors.indexOf('contactMessage') > -1}
                                   className={classes.contactTextField}
                                   rowsMax="4"
                                   label="Message"
