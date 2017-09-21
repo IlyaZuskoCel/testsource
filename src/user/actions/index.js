@@ -353,16 +353,12 @@ export const verifyScout = (phone, name) => dispatch => {
         .then(result => {
             dispatch(stopLoading());
 
+            if ('error' in result)
+                return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
 
-            if (result.success) {
-                dispatch({type: SET_CURRENT_PHONE, payload: phone});
-                return dispatch({type: SUCCESS_ALERT, payload: {message: "Contact information successfully sent."}});
-            }
+            dispatch({type: SET_CURRENT_PHONE, payload: phone});
+            return dispatch({type: SUCCESS_ALERT, payload: {message: "Contact information successfully sent."}});
 
-            return dispatch({
-                type: ERROR_ALERT,
-                payload: {message: "Verify phone was sent yet"}
-            });
         })
         .catch((message) => {
             if (message === 'Unauthorized') {
