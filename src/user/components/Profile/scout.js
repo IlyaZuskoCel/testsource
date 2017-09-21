@@ -430,8 +430,8 @@ class ScoutProfile extends Component {
                                 </div>
                             </Hidden>
                             <Typography type="subheading" align="center" className={classes.infoCardTeam}>
-                                {!!!user.team_status && user.team && 'Other / '}{user.team || 'Team Unknown'}
-                                {!!!user.league_status && user.league && ' - Other / '}{user.league_short ? ' - ' + user.league_short : (!!!user.league_status ? user.league : '')}
+                                {!!!user.team_status && user.team && 'Pending / '}{user.team || 'Team Unknown'}
+                                {!!!user.league_status && user.league && ' - Pending / '}{user.league_short ? ' - ' + user.league_short : (!!!user.league_status ? user.league : '')}
 
                             </Typography>
                             <Typography type="body1" align="center">
