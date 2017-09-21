@@ -99,7 +99,7 @@ export const postVideo = (data) => dispatch => {
                     .then(() => {
                         dispatch(stopLoading());
                         dispatch({type: SET_VIDEO, payload: {}});
-                        dispatch(push('/profile'));
+                        dispatch(push(`/profile/${result.id_user}`));
                         dispatch({type: SUCCESS_ALERT, payload: {message: 'Video was posted successfully'}});
                     })
                     .catch(console.log);
@@ -107,7 +107,7 @@ export const postVideo = (data) => dispatch => {
 
 
             dispatch({type: SET_VIDEO, payload: {}});
-            dispatch(push('/profile'));
+            dispatch(push(`/profile/${result.id_user}`));
             dispatch({type: SUCCESS_ALERT, payload: {message: 'Video was posted successfully'}});
         })
         .catch((message) => {
@@ -145,13 +145,13 @@ export const update = (data) => dispatch => {
                     .then(() => {
                         dispatch(stopLoading());
                         dispatch({type: SET_VIDEO, payload: {}});
-                        dispatch(push('/profile'));
+                        dispatch(push(`/profile/${result.id_user}`));
                         dispatch({type: SUCCESS_ALERT, payload: {message: 'Video was updated successfully'}});
                     })
                     .catch(console.log);
             }
             dispatch({type: SET_VIDEO, payload: {}});
-            dispatch(push('/profile'));
+            dispatch(push(`/profile/${result.id_user}`));
             dispatch({type: SUCCESS_ALERT, payload: {message: 'Video was updated successfully'}});
         })
         .catch((message) => {

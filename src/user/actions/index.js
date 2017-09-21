@@ -46,7 +46,7 @@ export const logIn = (email, password) => dispatch => {
                 return dispatch(push('/search/player'));
 
 
-            return dispatch(push('/profile'));
+            return dispatch(push(`/profile/${user.id}`));
         })
         .catch((message) => {
             dispatch({type: ERROR_ALERT, payload: {message}});
@@ -77,7 +77,7 @@ export const confirm = token => dispatch => {
             if (user.role === SCOUT_ROLE)
                 return dispatch(push('/search/player'));
 
-            return dispatch(push('/profile'));
+            return dispatch(push(`/profile/${user.id}`));
         })
         .catch((message) => {
             dispatch({type: ERROR_ALERT, payload: {message}});
@@ -199,14 +199,14 @@ export const update = (data) => dispatch => {
     dispatch(startLoading());
 
     return post(`/api/v2/profile/update`, data)
-        .then(result => {
+        .then(user => {
             dispatch(stopLoading());
 
-            if ('error' in result)
-                return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
+            if ('error' in user)
+                return dispatch({type: ERROR_ALERT, payload: {message: user.error.message}});
 
-            dispatch({type: SET_CURRENT, payload: result});
-            dispatch(push('/profile'));
+            dispatch({type: SET_CURRENT, payload: user});
+            dispatch(push(`/profile/${user.id}`));
             dispatch({type: SUCCESS_ALERT, payload: {message: 'Profile was updated successfully'}});
         })
         .catch((message) => {

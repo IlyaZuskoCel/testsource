@@ -9,7 +9,7 @@ import {Redirect} from 'react-router-dom'
 import PrivateRoute from './containers/PrivateRoute'
 import DefaultLayout from './containers/DefaultRoute'
 
-import NoMatch from './components/NoMatch';
+import NoMatch from './containers/NoMatch';
 import Typography from './components/Typography';
 import Form from './components/Form';
 

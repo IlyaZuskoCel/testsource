@@ -316,7 +316,7 @@ class Header extends Component {
             let items = [
                 <MenuItem key="profile"
                           className={classes.MenuItem}
-                          onClick={this.handleMenuRequestClose('/profile')}>Profile</MenuItem>,
+                          onClick={this.handleMenuRequestClose(`/profile/${user.id}`)}>Profile</MenuItem>,
                 <MenuItem key="settings"
                           className={classes.MenuItem}
                           onClick={this.handleMenuRequestClose('/settings')}>Settings</MenuItem>,
@@ -366,7 +366,7 @@ class Header extends Component {
                 <div className={classNames({[classes.rightBg]: !hideBackground})}/>
                 <Grid container gutter={8} className={classes.root}>
                     <Grid item xs={4}>
-                        <Link to={user && user.role === SCOUT_ROLE ? '/search/player' : '/profile'}
+                        <Link to={user && user.role === SCOUT_ROLE ? '/search/player' : `/profile/${user.id}`}
                               className={classNames(classes.logoLink)}
                               disabledUnderline>
                             <ScoutIcon className={classes.logo}>scoutzoo-symbol</ScoutIcon>

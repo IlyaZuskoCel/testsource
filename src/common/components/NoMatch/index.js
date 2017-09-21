@@ -57,7 +57,7 @@ const styleSheet = createStyleSheet('NoMatch', theme => ({
 }));
 
 
-const NoMatch = ({location, classes}) => (
+const NoMatch = ({location, classes, user}) => (
     <Grid container gutter={8} className={classes.root}>
         <img src={Img} className={classes.bg}/>
 
@@ -68,7 +68,7 @@ const NoMatch = ({location, classes}) => (
             <Typography type="subheading" className={classes.subheading}>Sorry, this page does not exist.</Typography>
         </Grid>
         <Grid item xs={12}>
-            <Link to="/profile">
+            <Link to={`/profile/${user.id}`}>
                 <Button raised color="primary" className={classes.button}>Back to my profile</Button>
             </Link>
         </Grid>

@@ -29,8 +29,7 @@ const routes = [
     <PrivateRoute key="Edit" path="/profile/edit" component={Edit} hideBackgroundTopMobileHeader/>,
     <PrivateRoute key="Shortlist" path="/profile/shortlist" component={Shortlist} hideBackgroundTopMobileHeader/>,
     <PrivateRoute key="Delete" path="/profile/delete" component={Delete}/>,
-    <DefaultLayout key="Profile" path="/profile/:id" component={Profile} hideBackgroundTopHeader/>,
-    <PrivateRoute key="CurrentProfile" path="/profile" component={Profile} hideBackgroundTopHeader/>,
+    <DefaultLayout key="Profile" path="/profile/:id" component={Profile} hideBackgroundTopHeader/>
 ];
 
 export default routes;
