@@ -223,7 +223,7 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
         position: 'relative',
         [theme.breakpoints.down('sm')]: {
             marginLeft: 20,
-            height: 324,
+            minHeight: 324,
             width: 218,
         },
 
@@ -358,7 +358,19 @@ class ScoutProfile extends Component {
 
     render() {
 
-        const {classes, user, currentUser, isCurrent} = this.props;
+        const {classes, user, currentUser, isCurrent, width} = this.props;
+
+        let userPhotoSrc = defaultPhoto;
+
+        if (user.profile_picture) {
+            userPhotoSrc = user.profile_picture;
+        }
+
+        if (width === "xs" && user.profile_picture_mobile) {
+            userPhotoSrc = user.profile_picture_mobile;
+        } else if (user.profile_picture_desktop) {
+            userPhotoSrc = user.profile_picture_desktop;
+        }
 
         return <div className={classes.root}>
             <div className={classes.backgroundImgWrap}>
@@ -414,7 +426,7 @@ class ScoutProfile extends Component {
                             className={classNames(classes.infoCardPhotoWrap, {[classes.infoCardPhotoDefaultWrap]: !user.profile_picture})}>
                             <img
                                 className={classNames(classes.infoCardPhoto, {[classes.infoCardPhotoDefault]: !user.profile_picture})}
-                                src={user.profile_picture || defaultPhoto}/>
+                                src={userPhotoSrc}/>
 
                         </div>
                         <div className={classes.infoCardLeagueLine}/>

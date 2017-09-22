@@ -72,27 +72,26 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
     },
     pictureWrap: {
         width: 270,
-        height: 280,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
-        alignItems: 'center',
+        height: 270,
+        overflow: 'hidden',
+        position: 'relative',
 
         [theme.breakpoints.down('sm')]: {
-            height: 72,
-            width: 72,
+            height: 192,
+            width: 218,
         },
     },
     pictureDefaultWrap: {
         justifyContent: 'center',
     },
     picture: {
-        maxWidth: 270,
-        maxHeight: 270,
-        [theme.breakpoints.down('sm')]: {
-            height: 72,
-            width: 72,
-        },
+        minWidth: '100%',
+        minHeight: '100%',
+        top: '50%',
+        left: '50%',
+        transform: 'translateX(-50%) translateY(-50%)',
+        position: 'absolute',
+        margin: 'auto',
     },
     pictureDefault: {
         width: 176,
@@ -281,7 +280,20 @@ class PlayerForm extends Component {
     };
 
     render() {
-        const {classes, user} = this.props;
+        const {classes, user, width} = this.props;
+
+
+        let userPhotoSrc = defaultPhoto;
+
+        if (user.profile_picture) {
+            userPhotoSrc = user.profile_picture;
+        }
+
+        if (width === "xs" && user.profile_picture_mobile) {
+            userPhotoSrc = user.profile_picture_mobile;
+        } else if (user.profile_picture_desktop) {
+            userPhotoSrc = user.profile_picture_desktop;
+        }
 
         return <div className={classes.root}>
             <Hidden smUp>
@@ -305,7 +317,7 @@ class PlayerForm extends Component {
                         className={classNames(classes.pictureWrap, {[classes.pictureDefaultWrap]: !user.profile_picture})}>
                         <img
                             className={classNames(classes.picture, {[classes.pictureDefault]: !user.profile_picture})}
-                            src={user.profile_picture || defaultPhoto}/>
+                            src={userPhotoSrc}/>
 
                     </div>
 
