@@ -468,7 +468,7 @@ class PlayerForm extends Component {
                                     <TextField fullWidth
                                                required
                                                error={this.state.errors.indexOf('league') > -1}
-                                               label="Type in the full League name"
+                                               label="Type the League and Level name"
                                                value={this.state.league || ''}
                                                onChange={this.handleChange('league')}
                                     />
