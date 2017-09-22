@@ -355,7 +355,7 @@ class Trim extends Component {
                 Drag the marker to position it over yourself
             </Typography>
             <Typography className={classes.desc} type="body1">
-                This is how the scout identifies you. Drag to resize the marker.
+                This is how the scout identifies you. Drag to move the marker.
             </Typography>
 
             <Paper
