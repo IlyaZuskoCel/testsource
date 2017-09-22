@@ -140,7 +140,7 @@ export const logOut = () => dispatch => {
         .then(() => {
             dispatch(stopLoading());
 
-            auth('', location.pathname);
+            auth('');
             dispatch({type: LOGOUT});
             dispatch(push('/sign/in'));
         })
@@ -189,11 +189,17 @@ export const getUser = (id) => dispatch => {
             dispatch({type: SET_USER, payload: user});
         })
         .catch((message) => {
-            if (message === 'Unauthorized') {
-                dispatch(logOut());
-            }
-            dispatch({type: ERROR_ALERT, payload: {message}});
             dispatch(stopLoading());
+            if (message === 'Unauthorized') {
+                auth('', location.pathname);
+                dispatch({type: LOGOUT});
+                dispatch(push('/sign/in'));
+                dispatch({type: ERROR_ALERT, payload: {message: 'Please log in to see this user\'s profile.'}});
+            } else {
+                dispatch({type: ERROR_ALERT, payload: {message}});
+            }
+
+
         })
 };
 

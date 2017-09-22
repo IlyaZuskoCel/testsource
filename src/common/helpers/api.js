@@ -137,8 +137,11 @@ export const auth = (token, url) => {
     else
         localStorage.removeItem('token');
 
-    const lastUrl = localStorage.getItem('url');
-    if (url) localStorage.setItem('url', url);
+    const lastUrl = localStorage.getItem('lastUrl');
+    if (url)
+        localStorage.setItem('lastUrl', url);
+    else
+        localStorage.removeItem('lastUrl');
     return lastUrl;
 
 };
