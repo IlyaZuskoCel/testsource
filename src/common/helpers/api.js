@@ -57,7 +57,7 @@ export const post = (url, data, options = {}) => {
                 throw 'Unauthorized';
             }
             if (response.status !== 200) {
-                throw 'error';
+                throw response.message || 'error';
             }
             return response.json();
         })
@@ -78,7 +78,7 @@ export const postForm = (url, form, options = {}) => {
                 throw 'Unauthorized';
             }
             if (response.status !== 200) {
-                throw 'error';
+                throw response.message || 'error';
             }
             return response.json();
         })
@@ -117,7 +117,7 @@ export const getPage = (url, options) => {
                 throw 'Unauthorized';
             }
             if (response.status !== 200) {
-                throw 'error';
+                throw response.message || 'error';
             }
 
             return response.json().then(items => ({
