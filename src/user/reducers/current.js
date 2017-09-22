@@ -12,7 +12,7 @@ function current(state = null, action) {
         case SET_CURRENT_PHONE:
             return {...state, phone: action.payload};
         case SET_CURRENT_PHOTO:
-            return {...state, profile_picture: action.payload};
+            return {...state, ...action.payload};
         case LOGIN:
         case SET_CURRENT:
             return Object.keys(action.payload).length > 0 ? {
