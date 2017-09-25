@@ -148,7 +148,10 @@ export const update = (data) => dispatch => {
                         dispatch(push(`/profile/${result.id_user}`));
                         dispatch({type: SUCCESS_ALERT, payload: {message: 'Video was updated successfully'}});
                     })
-                    .catch(console.log);
+                    .catch((message) => {
+                        dispatch({type: ERROR_ALERT, payload: {message}});
+                        dispatch(stopLoading());
+                    })
             }
             dispatch({type: SET_VIDEO, payload: {}});
             dispatch(push(`/profile/${result.id_user}`));

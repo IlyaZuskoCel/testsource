@@ -67,7 +67,7 @@ const styleSheet = createStyleSheet('Header', theme => ({
     },
 
     logoLink: {
-
+        textDecoration: 'none',
         height: 70,
         [theme.breakpoints.up('sm')]: {
             margin: 60

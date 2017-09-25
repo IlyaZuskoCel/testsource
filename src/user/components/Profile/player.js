@@ -523,6 +523,8 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
 }));
 
 
+
+
 class PlayerProfile extends Component {
     constructor(props) {
         super(props);
@@ -547,15 +549,6 @@ class PlayerProfile extends Component {
         this.setState(state)
     };
 
-    sendMessage = (e) => {
-        e.preventDefault();
-        this.props.sendEmail(this.props.user.id, this.state.contactSubject, this.state.contactMessage);
-        this.setState({
-            contactSubject: '',
-            contactMessage: ''
-        });
-        return false;
-    };
     handleChangeTab = (event, tab) => {
         this.setState({tab});
     };
@@ -565,8 +558,19 @@ class PlayerProfile extends Component {
 
     render() {
 
-        const {classes, user, currentUser, isCurrent} = this.props;
+        const {classes, user, currentUser, isCurrent, width} = this.props;
 
+        let userPhotoSrc = defaultPhoto;
+
+        if (user.profile_picture) {
+            userPhotoSrc = user.profile_picture;
+        }
+
+        if (width === "xs" && user.profile_picture_mobile) {
+            userPhotoSrc = user.profile_picture_mobile;
+        } else if (user.profile_picture_desktop) {
+            userPhotoSrc = user.profile_picture_desktop;
+        }
         return <div className={classes.root}>
             <div className={classes.backgroundImgWrap}>
                 <img className={classes.backgroundImg} src={playerBg}/>
@@ -674,7 +678,7 @@ class PlayerProfile extends Component {
                             className={classNames(classes.infoCardPhotoWrap, {[classes.infoCardPhotoDefaultWrap]: !user.profile_picture})}>
                             <img
                                 className={classNames(classes.infoCardPhoto, {[classes.infoCardPhotoDefault]: !user.profile_picture})}
-                                src={user.profile_picture || defaultPhoto}/>
+                                src={userPhotoSrc}/>
 
                         </div>
                         <div className={classes.infoCardLeagueLine}>

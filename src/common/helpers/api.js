@@ -57,7 +57,7 @@ export const post = (url, data, options = {}) => {
                 throw 'Unauthorized';
             }
             if (response.status !== 200) {
-                throw 'error';
+                throw response.message || 'error';
             }
             return response.json();
         })
@@ -78,7 +78,7 @@ export const postForm = (url, form, options = {}) => {
                 throw 'Unauthorized';
             }
             if (response.status !== 200) {
-                throw 'error';
+                throw response.message || 'error';
             }
             return response.json();
         })
@@ -117,7 +117,7 @@ export const getPage = (url, options) => {
                 throw 'Unauthorized';
             }
             if (response.status !== 200) {
-                throw 'error';
+                throw response.message || 'error';
             }
 
             return response.json().then(items => ({
@@ -137,8 +137,11 @@ export const auth = (token, url) => {
     else
         localStorage.removeItem('token');
 
-    const lastUrl = localStorage.getItem('url');
-    if (url) localStorage.setItem('url', url);
+    const lastUrl = localStorage.getItem('lastUrl');
+    if (url)
+        localStorage.setItem('lastUrl', url);
+    else
+        localStorage.removeItem('lastUrl');
     return lastUrl;
 
 };

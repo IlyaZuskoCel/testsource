@@ -20,7 +20,6 @@ const mapStateToProps = (state, props) => ({
 });
 const mapDispatchToProps = (dispatch) => ({
     fetchData: id => {
-        dispatch(getCurrent());
         dispatch(getUser(id));
     },
     sendEmail: (id, subject, text) => dispatch(sendEmail(id, subject, text)),
