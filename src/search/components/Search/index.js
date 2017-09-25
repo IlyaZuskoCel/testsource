@@ -206,11 +206,11 @@ class Search extends Component {
 
         setTimeout(() => {
             this.setState({activeTab:  this.props.type && this.props.type === 'scout' ? 1 : 0})
-        } , 150)
+        } ,  250)
     }
 
     componentDidMount() {
-        setTimeout(() => {this.props.upload(this.props.type , {page : 1 , 'per-page' : 18 , ...this.state.query})} , 150);
+        setTimeout(() => {this.props.upload(this.props.type , {page : 1 , 'per-page' : 18 , ...this.state.query})} , 250);
         this.props.fetchData();
     }
 
