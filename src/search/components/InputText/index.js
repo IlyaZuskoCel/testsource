@@ -228,7 +228,7 @@ class DropDownCheckBoxes extends Component {
                                 fullWidth
                                 id="search_name"
                                 label="Name"
-                                value={this.state.nameSearch}
+                                value={this.state.nameSearch }
                                 onChange={this.onChangeName}/>
                     </Paper>}
                 </div>

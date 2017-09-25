@@ -178,12 +178,11 @@ class Search extends Component {
     constructor(props) {
         super(props);
 
-
         let playerFilters = props.filters && props.filters.player ?  props.filters.player : {};
         let scoutFilters = props.filters && props.filters.scout ?  props.filters.scout : {};
 
-
         let propFilters = props.type === 'player' ? this.composeFiltersToQuery(playerFilters) : this.composeFiltersToQuery(scoutFilters);
+
 
         this.state = {
             activeTab:  this.props.type && this.props.type === 'scout' ? 1 : 0,
@@ -204,10 +203,14 @@ class Search extends Component {
         this.toggleMobileFilter = this.toggleMobileFilter.bind(this);
         this.onClearFilters = this.onClearFilters.bind(this);
         this.stopClearing = this.stopClearing.bind(this);
+
+        setTimeout(() => {
+            this.setState({activeTab:  this.props.type && this.props.type === 'scout' ? 1 : 0})
+        } , 150)
     }
 
     componentDidMount() {
-        this.props.upload(this.props.type , {page : 1 , 'per-page' : 18 , ...this.state.query});
+        setTimeout(() => {this.props.upload(this.props.type , {page : 1 , 'per-page' : 18 , ...this.state.query})} , 150);
         this.props.fetchData();
     }
 
@@ -237,14 +240,15 @@ class Search extends Component {
     };
 
     componentWillReceiveProps(nextProps) {
-
         if ('query' in nextProps) {
+
             let parsedQuery = queryString.parse(nextProps.query);
             this.setState({query : parsedQuery});
         }
 
         if ('filters' in nextProps && nextProps.filters) {
             let appliedFilters = this.state.appliedFilters;
+
 
             if ('player' in nextProps.filters && nextProps.filters.player) {
                 appliedFilters.playerFilters = Object.keys(nextProps.filters.player).filter(i => i !== 'page').length;
@@ -260,7 +264,6 @@ class Search extends Component {
         if ('headers' in nextProps && nextProps.headers) {
             this.setState({pageCurrentPosition : nextProps.headers.page});
         }
-
     }
 
     handleChange(event , value) {
@@ -319,8 +322,6 @@ class Search extends Component {
     }
 
     render() {
-
-
         const {classes , width} = this.props;
 
         return (<div className={classes.root}>
@@ -460,7 +461,7 @@ class Search extends Component {
             </div>}
 
             {this.state.mobileFilterOn && this.props.headers && parseInt(this.props.headers.pageCount) > 1 && <footer className={classes.footer}>
-                <Pagination currentPage={this.props.headers ? parseInt(this.props.headers.page) : 1} total={this.props.headers ? parseInt(this.props.headers.count) : 0}  perPage={18} onChange={this.changePagination}  />
+                <Pagination currentPage={this.state.pageCurrentPosition ? parseInt(this.state.pageCurrentPosition) : 1} total={this.props.headers ? parseInt(this.props.headers.count) : 0}  perPage={18} onChange={this.changePagination}  />
             </footer>}
 
         </div>)
