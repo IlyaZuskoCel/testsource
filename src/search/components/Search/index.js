@@ -204,10 +204,13 @@ class Search extends Component {
         this.onClearFilters = this.onClearFilters.bind(this);
         this.stopClearing = this.stopClearing.bind(this);
 
+        setTimeout(() => {
+            this.setState({activeTab:  this.props.type && this.props.type === 'scout' ? 1 : 0})
+        } , 150)
     }
 
     componentDidMount() {
-        this.props.upload(this.props.type , {page : 1 , 'per-page' : 18 , ...this.state.query});
+        setTimeout(() => {this.props.upload(this.props.type , {page : 1 , 'per-page' : 18 , ...this.state.query})} , 150);
         this.props.fetchData();
     }
 
