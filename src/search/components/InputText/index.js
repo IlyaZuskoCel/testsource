@@ -133,7 +133,6 @@ class DropDownCheckBoxes extends Component {
                 nextProps.stopClearing();
             });
         }
-        console.log(nextProps);
     }
 
     onChangeName = (event) => {

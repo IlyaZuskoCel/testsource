@@ -295,11 +295,6 @@ class Header extends Component {
         }
     };
 
-    handleDiscoverPage = (event) => {
-        event.preventDefault();
-        this.props.uploadPlayers({'page' : 1 , 'per-page' : 18});
-    };
-
     handleMenuClick(event) {
         this.setState({open: !this.state.open, anchorEl: event.currentTarget});
     }
@@ -388,7 +383,7 @@ class Header extends Component {
                     <Grid item xs={8} className={classes.right}>
                         {DropMenu ? (
                             <div className={classNames(classes.menu)}>
-                                <Link to="/" disabledUnderline onClick={this.handleDiscoverPage}
+                                <Link to="/" disabledUnderline
                                       className={classNames(classes.menuItem)}>
                                     <Button
                                         className={classNames(classes.searchButton, {[classes.searchButtonHideBackground]: hideBackground && !this.props.hideBackgroundTopMobileHeader && !this.props.hideBackgroundTopMobileHeaderScroll })}>
