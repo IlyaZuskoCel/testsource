@@ -146,7 +146,8 @@ class Trim extends Component {
                        id="video"
                        className={classes.video}
                        onTimeUpdate={this.handleTimeUpdate}
-                       controls/>
+                       controls
+                       controlsList="nodownload"/>
             </Paper>
 
             {!!video && !!this.state.max && "time_start" in video && "time_end" in video && video.time_start < video.time_end && (

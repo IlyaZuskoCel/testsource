@@ -158,7 +158,7 @@ class Upload extends Component {
             </Paper>)}
 
             {video.video_path && (<Paper className={classNames(classes.uploadWrap, classes.videoWrap)}>
-                    <video src={video.video_path} className={classes.video} controls/>
+                    <video src={video.video_path} className={classes.video} controls controlsList="nodownload"/>
                 </Paper>
             )}
             {this.state.error && <Typography type="body2">{this.state.error}</Typography>}
