@@ -246,7 +246,7 @@ class ScoutFilter extends Component {
                     <DropdownOptions  fullWidth
                                       options={[]}
                                       value={1}
-                                      label="League"
+                                      label="Level/League"
                                       levels={this.props.levels}
                                       levelOptions={this.props.levelOptions && this.props.levelOptions.length > 0 ? this.props.levelOptions: []}
                                       leaguesOptions={this.props.leagueOptions}
