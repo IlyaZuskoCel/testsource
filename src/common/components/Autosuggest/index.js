@@ -168,7 +168,7 @@ class IntegrationAutosuggest extends Component {
 
         const inputLength = inputValue.length;
         const suggestions = inputLength === 0 ? this.props.suggestions : this.props.suggestions.filter(item =>
-            item.label.toLowerCase().slice(0, inputLength) === inputValue || item.value === '-1'
+            item.value === '-1' || item.label.toLowerCase().search(inputValue) > -1
         );
 
         this.setState({
