@@ -333,13 +333,19 @@ class Trim extends Component {
         document.onmousemove = null;
         document.ontouchmove = null;
 
+
+        const width = this.props.video.width;
+        const height = this.props.video.height;
+
         const circle = document.getElementById("circle");
         const image = document.getElementById("imageSrc");
 
         const border = 2 * this.props.video.width / image.width;
-        const x = Math.round(parseInt(circle.style['margin-left']) * this.props.video.width / image.width + border);
-        const y = Math.round(parseInt(circle.style['margin-top']) * this.props.video.height / image.height + border);
-        const r = Math.round(parseInt(circle.style.width) / 2 * this.props.video.width / image.width + border / 2);
+        const x = Math.round(parseInt(circle.style['margin-left']) * width / image.width + border);
+        const y = Math.round(parseInt(circle.style['margin-top']) * height / image.height + border);
+        const r = Math.max(Math.round(width / 20) * image.width / width, Math.round(height / 20) * image.height / height);
+
+
 
         const uri = getImage(image, x, y, r, border, this.props.video.width, this.props.video.height);
         this.props.updateField('overlay_x', x);
