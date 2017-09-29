@@ -343,7 +343,7 @@ class Trim extends Component {
         const border = 2 * this.props.video.width / image.width;
         const x = Math.round(parseInt(circle.style['margin-left']) * width / image.width + border);
         const y = Math.round(parseInt(circle.style['margin-top']) * height / image.height + border);
-        const r = Math.max(Math.round(width / 20) * image.width / width, Math.round(height / 20) * image.height / height);
+        const r = Math.round(parseInt(circle.style.width) / 2 * Math.max(width / image.width, height/image.height) + border / 2);
 
 
 
