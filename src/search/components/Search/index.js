@@ -231,7 +231,7 @@ class Search extends Component {
 
         setTimeout(() => {
             this.setState({activeTab:  this.props.type && this.props.type === 'scout' ? 1 : 0})
-        } ,  250)
+        } ,  400)
     }
 
     handleScroll(event) {
@@ -251,8 +251,9 @@ class Search extends Component {
 
     componentDidMount() {
         window.addEventListener( "scroll", this.handleScroll);
+        let query = {...this.state.query}
 
-        setTimeout(() => {this.props.upload(this.props.type , {page : 1 , 'per-page' : 18 , ...this.state.query})} , 250);
+        setTimeout(() => {this.props.upload(this.props.type , {page : 1 , 'per-page' : 18 , ...query})} , 400);
         this.props.fetchData();
     }
 
@@ -319,6 +320,7 @@ class Search extends Component {
         appliedFilters.playerFilters = 0;
         appliedFilters.scoutFilters = 0;
 
+
         this.setState({activeTab : value , appliedFilters} , ()  => {
                 this.props.go(value === 1 ? '/search/scout' : '/search/player');
                 this.props.upload(value === 1 ? 'scout' : 'player' , {page : 1 , 'per-page' : 18});
@@ -330,6 +332,7 @@ class Search extends Component {
     }
 
     stopClearing() {
+
         let appliedFilters = this.state.appliedFilters;
         appliedFilters.playerFilters = 0;
         appliedFilters.scoutFilters = 0;
@@ -346,6 +349,7 @@ class Search extends Component {
     }
 
     changePagination(page) {
+
         this.setState({activePage : page} , () => {
 
             if ('page' in this.state.query) {
