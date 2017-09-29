@@ -467,10 +467,11 @@ class PlayerForm extends Component {
                                              label="Current or Most Recent League"
                                              suggestions={this.props.leagueOptions}
                                              onSuggestionSelected={(event, {suggestionValue}) => {
+                                                 if ((!this.state.id_league && !suggestionValue) || '' + this.state.id_league === '' + suggestionValue) return;
                                                  this.setState({
                                                      id_league: suggestionValue,
                                                      id_team_current: suggestionValue === '-1' ? '-1' : '',
-                                                     league: this.state.id_league !== suggestionValue ? '' : this.state.league,
+                                                     league: '',
                                                  });
                                              }}
                                              value={this.state.id_league ? (this.props.leagues[this.state.id_league] || this.props.leagues['-1']) : ''}/>
@@ -497,9 +498,10 @@ class PlayerForm extends Component {
                                                  label="Current or Most Recent Team"
                                                  suggestions={this.state.id_league ? this.props.teamOptions.filter(i => i.value === '-1' || i.item.id_league === parseInt(this.state.id_league)) : this.props.teamOptions}
                                                  onSuggestionSelected={(event, {suggestionValue}) => {
+                                                     if ((!this.state.id_team_current && !suggestionValue) || '' + this.state.id_team_current === '' + suggestionValue) return;
                                                      this.setState({
                                                          id_team_current: suggestionValue,
-                                                         team: this.state.id_team_current !== suggestionValue ? '' : this.state.team,
+                                                         team: '',
                                                      });
                                                  }}
                                                  value={this.state.id_team_current ? (this.props.teams[this.state.id_team_current] || this.props.teams['-1']) : ''}/>

@@ -154,10 +154,11 @@ class ScoutForm extends Component {
                                          value={this.state.id_league ? (this.props.leagues[this.state.id_league] || this.props.leagues['-1']) : ''}
                                          suggestions={this.props.leagueOptions}
                                          onSuggestionSelected={(event, {suggestionValue}) => {
+                                             if ((!this.state.id_league && !suggestionValue) || '' + this.state.id_league === '' + suggestionValue) return;
                                              this.setState({
                                                  id_league: suggestionValue,
                                                  id_team_current: suggestionValue === '-1' ? '-1' : '',
-                                                 league: this.state.id_league !== suggestionValue ? '' : this.state.league,
+                                                 league: '',
                                              });
                                          }}/>
 
@@ -183,9 +184,10 @@ class ScoutForm extends Component {
                                              error={this.state.errors.indexOf('id_team_current') > -1}
                                              suggestions={this.state.id_league ? this.props.teamOptions.filter(i => i.value === '-1' || i.item.id_league === parseInt(this.state.id_league)) : this.props.teamOptions}
                                              onSuggestionSelected={(event, {suggestionValue}) => {
+                                                 if ((!this.state.id_team_current && !suggestionValue) || '' + this.state.id_team_current === '' + suggestionValue) return;
                                                  this.setState({
                                                      id_team_current: suggestionValue,
-                                                     team: this.state.id_team_current !== suggestionValue ? '' : this.state.team,
+                                                     team: '',
                                                  });
                                              }}
                                              value={this.state.id_team_current ? (this.props.teams[this.state.id_team_current] || this.props.teams['-1']) : ''}
