@@ -66,8 +66,6 @@ export const upload = file => dispatch => {
             }
             dispatch({type: ERROR_ALERT, payload: {message}});
         })
-
-
 };
 
 
@@ -79,10 +77,8 @@ export const postVideo = (data) => dispatch => {
         .then(result => {
             dispatch(stopLoading());
 
-
             if ('error' in result)
                 return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
-
 
             if (overlayUri) {
                 dispatch(startLoading());
@@ -104,7 +100,6 @@ export const postVideo = (data) => dispatch => {
                     })
                     .catch(console.log);
             }
-
 
             dispatch({type: SET_VIDEO, payload: {}});
             dispatch(push(`/profile/${result.id_user}`));
