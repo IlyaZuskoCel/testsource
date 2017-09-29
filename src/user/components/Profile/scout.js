@@ -381,7 +381,21 @@ class ScoutProfile extends Component {
 
             <div className={classes.content}>
 
-                {!isCurrent ? (
+                {isCurrent ? (
+                    <div className={classes.topNavigate}>
+                        <ShareButton url={absUrl(`/profile/${user.id}`)}
+                                     title={`My profile on Scout Zoo`}/>
+                        <div className={classes.rightNavigate}>
+                            <Link to="/profile/edit" disabledUnderline>
+                                <Button className={classes.editButton}>
+                                    <Icon className={classes.editIcon}>pencil</Icon>
+                                    <span>Edit</span>
+                                </Button>
+                            </Link>
+                        </div>
+                    </div>
+
+                ) : (currentUser ? (
                     <div className={classes.topNavigate}>
                         <Link to="/" onClick={this.props.goBack} invert disabledUnderline className={classes.backLink}>
                             <Icon>previous</Icon>
@@ -404,20 +418,7 @@ class ScoutProfile extends Component {
                             </Menu>
                         </div>
                     </div>
-                ) : (
-                    <div className={classes.topNavigate}>
-                        <ShareButton url={absUrl(`/profile/${user.id}`)}
-                                     title={`My profile on Scout Zoo`}/>
-                        <div className={classes.rightNavigate}>
-                            <Link to="/profile/edit" disabledUnderline>
-                                <Button className={classes.editButton}>
-                                    <Icon className={classes.editIcon}>pencil</Icon>
-                                    <span>Edit</span>
-                                </Button>
-                            </Link>
-                        </div>
-                    </div>
-                )}
+                ) : null)}
 
                 <div className={classes.infoContainer}>
                     <Paper className={classes.infoCard} square>
