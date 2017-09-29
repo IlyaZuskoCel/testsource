@@ -354,7 +354,8 @@ class ScoutForm extends Component {
                                              onSuggestionSelected={(event, {suggestionValue}) => {
                                                  this.setState({
                                                      id_league: suggestionValue,
-                                                     id_team_current: suggestionValue === '-1' ? '-1' : ''
+                                                     id_team_current: suggestionValue === '-1' ? '-1' : '',
+                                                     league: this.state.id_league !== suggestionValue ? '' : this.state.league,
                                                  });
                                              }}/>
                             </Grid>
@@ -383,6 +384,7 @@ class ScoutForm extends Component {
                                                  onSuggestionSelected={(event, {suggestionValue}) => {
                                                      this.setState({
                                                          id_team_current: suggestionValue,
+                                                         team: this.state.id_team_current !== suggestionValue ? '' : this.state.team,
                                                      });
                                                  }}
                                                  value={this.state.id_team_current ? (this.props.teams[this.state.id_team_current] || this.props.teams['-1']) : ''}
