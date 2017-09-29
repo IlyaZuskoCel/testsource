@@ -18,7 +18,10 @@ const mapStateToProps = (state, props) => ({
     nationalities: map(state.common.countries),
     nationalityOptions: mapOptions(state.common.countries),
     leagues: {'-1': 'My League isn\'t listed', ...map(state.common.leagues)},
-    leagueOptions: [{label: 'My League isn\'t listed', value: '-1'}, ...mapOptions(state.common.leagues)],
+    leagueOptions: [{
+        label: 'My League isn\'t listed',
+        value: '-1'
+    }, ...mapOptions(state.common.leagues, item => item.name + ' ' + item.short_name)],
     teams: {'-1': 'My Team isn\'t listed', ...map(state.common.teams)},
     teamOptions: [{label: 'My Team isn\'t listed', value: '-1'}, ...mapOptions(state.common.teams)],
 });

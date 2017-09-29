@@ -1,8 +1,16 @@
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux';
 
-import {uploadPlayers, uploadScouts, filterScouts, filterPlayers , setFilters , clearFilters, fetchLevels } from '../actions';
-import {addFavorite , removeFavorite} from "../../user/actions/index";
+import {
+    uploadPlayers,
+    uploadScouts,
+    filterScouts,
+    filterPlayers,
+    setFilters,
+    clearFilters,
+    fetchLevels
+} from '../actions';
+import {addFavorite, removeFavorite} from "../../user/actions/index";
 import {go, getLeagues, getTeams} from '../../common/actions';
 
 import {mapOptions, map} from '../selectors';
@@ -14,7 +22,7 @@ const mapStateToProps = (state, props) => ({
     user: state.user.user,
     results: state.search.people,
     leagues: map(state.common.leagues),
-    leagueOptions: mapOptions(state.common.leagues),
+    leagueOptions: mapOptions(state.common.leagues, item => item.name + ' ' + item.short_name),
     teams: map(state.common.teams),
     teamOptions: mapOptions(state.common.teams),
     type: props.match.params.type || 'player',
@@ -22,7 +30,7 @@ const mapStateToProps = (state, props) => ({
     headers: state.search.headers,
     filters: state.search.filters,
     levelOptions: state.search.levels && state.search.levels.length > 0 ? mapOptions(state.search.levels) : [],
-    levels: state.search.levels? map(state.search.levels) : null,
+    levels: state.search.levels ? map(state.search.levels) : null,
 });
 
 
@@ -36,12 +44,14 @@ const mapDispatchToProps = (dispatch, props) => ({
         dispatch(fetchLevels());
     },
     go: (url) => dispatch(go(url)),
-    getLeagues: () => {dispatch(getLeagues())},
+    getLeagues: () => {
+        dispatch(getLeagues())
+    },
     filterScouts: (params) => dispatch(filterScouts(params)),
     filterPlayers: (params) => dispatch(filterPlayers(params)),
     addFavorite: (playerId) => dispatch(addFavorite(playerId)),
     removeFavorite: (playerId) => dispatch(removeFavorite(playerId)),
-    setFilters: (filters , type) => dispatch(setFilters(filters , type)),
+    setFilters: (filters, type) => dispatch(setFilters(filters, type)),
     clearFilters: () => dispatch(clearFilters()),
 });
 
