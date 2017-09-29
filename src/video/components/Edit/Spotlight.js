@@ -208,7 +208,9 @@ class Trim extends Component {
         document.ontouchstart = null;
         document.ontouchend = null;
     }
-
+    imageSrcLoad = () => {
+        this.setDefaultPosition(this.props.video.overlay_x, this.props.video.overlay_y, this.props.video.width, this.props.video.height);
+    };
 
     setDefaultPosition = (x, y, width, height) => {
 
@@ -366,7 +368,7 @@ class Trim extends Component {
                 className={classNames(classes.uploadWrap, {[classes.uploadWrapHeight]: this.props.video.height > this.props.video.width})}
                 id="image">
 
-                <img src={video.trim_thumb || video.thumb_lg} className={classes.imageBg} id="imageSrc"/>
+                <img src={video.trim_thumb || video.thumb_lg} className={classes.imageBg} id="imageSrc" onLoad={this.imageSrcLoad}/>
                 <div className={classes.opacityBg}/>
                 <div className={classes.imageWrap} id="imageWrap">
                     <div className={classes.circle} id="circle">
