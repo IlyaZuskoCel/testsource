@@ -108,7 +108,7 @@ class VideoList extends Component {
         const sortVideo = videos.map(v => ({
             ...v,
             tagCount: v.video_tags.reduce((a, c) => a + (this.state.tags.indexOf('' + c.id) > -1 ? 1 : 0), 0)
-        })).sort(sortVideoTags);
+        })).filter(v => this.state.tags.length === 0 || v.tagCount > 0).sort(sortVideoTags);
 
 
         return <div className={className}>
