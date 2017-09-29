@@ -260,6 +260,20 @@ const styleSheet = createStyleSheet('Header', theme => ({
         '&:last-child': {
             borderBottom: 0,
         }
+    },
+
+    hideShadowScroll: {
+        [theme.breakpoints.down('sm')]: {
+            boxShadow: 'none',
+        }
+    },
+
+    hideShadowBackground: {
+        [theme.breakpoints.down('sm')]: {
+            backgroundColor: 'transparent',
+            transform: 'none',
+            backgroundImage: 'none'
+        }
     }
 }));
 
@@ -272,12 +286,13 @@ class Header extends Component {
             scroll: false,
             anchorEl: undefined,
             open: false,
+            direction:'',
+            lastScrollPos:0,
         };
 
         this.handleMenuClick = this.handleMenuClick.bind(this);
         this.handleMenuRequestClose = this.handleMenuRequestClose.bind(this);
         this.onScroll = this.onScroll.bind(this);
-
     }
 
     componentDidMount() {
@@ -292,6 +307,20 @@ class Header extends Component {
         const scroll = window.scrollY > 0;
         if (scroll !== this.state.scroll) {
             this.setState({scroll})
+        }
+
+
+        if(this.state.lastScrollPos > window.scrollY) {
+            this.setState({
+                direction:'top',
+                lastScrollPos: window.scrollY
+            });
+        } else if(this.state.lastScrollPos < window.scrollY) {
+
+            this.setState({
+                direction:'bottom',
+                lastScrollPos: window.scrollY
+            });
         }
     };
 
@@ -352,8 +381,6 @@ class Header extends Component {
                     {items}
                 </Menu>;
             }
-
-
         }
 
         const hideBackground = (this.props.hideBackgroundTopHeader && !this.state.scroll)
@@ -361,7 +388,8 @@ class Header extends Component {
             || (this.props.hideBackgroundTopMobileHeader && width === 'xs');
 
         return (
-            <AppBar position="fixed" className={classNames(classes.container, {[classes.hideShadow]: hideBackground})}>
+            <AppBar position="fixed" className={classNames(classes.container, {[classes.hideShadow]: hideBackground} , this.props.hideBoxShadowScroll ? classes.hideShadowScroll : null ,
+                this.props.hideBoxShadowScroll && this.state.direction === 'top' ? classes.hideShadowBackground : null)}>
                 <div className={classNames({[classes.leftBg]: !hideBackground})}/>
                 <div className={classNames({[classes.rightBg]: !hideBackground})}/>
                 <Grid container gutter={8} className={classes.root}>
