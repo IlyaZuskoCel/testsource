@@ -354,9 +354,15 @@ class ScoutForm extends Component {
                                              onSuggestionSelected={(event, {suggestionValue}) => {
                                                  if ((!this.state.id_league && !suggestionValue) || '' + this.state.id_league === '' + suggestionValue) return;
 
+                                                 let id_team_current = !suggestionValue ? this.state.id_team_current : '';
+                                                 if (suggestionValue && this.state.id_team_current && this.state.id_team_current !== '-1' && this.props.teamOptions.find(i => i.value === this.state.id_team_current && i.item.id_league === parseInt(suggestionValue))) {
+                                                     id_team_current = this.state.id_team_current
+                                                 }
+
+
                                                  this.setState({
                                                      id_league: suggestionValue,
-                                                     id_team_current: suggestionValue === '-1' ? '-1' : '',
+                                                     id_team_current: suggestionValue === '-1' ? '-1' : id_team_current,
                                                      league: '',
                                                  });
                                              }}/>
