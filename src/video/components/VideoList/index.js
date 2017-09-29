@@ -61,6 +61,9 @@ const styleSheet = createStyleSheet('VideoList', theme => ({
             color: '#c2a24d',
         }
     },
+    tagsCaption: {
+        marginBottom: 8,
+    },
     tags: {
         marginBottom: 32
     },
@@ -113,12 +116,16 @@ class VideoList extends Component {
 
         return <div className={className}>
             {tags.length > 0 && (
-                <div className={classes.tags}>
-                    {tags.map(tag => (<Button key={tag.id}
-                                              onClick={this.toggleTag(tag.id)}
-                                              className={classNames(classes.button, {[classes.buttonActive]: this.state.tags.indexOf(tag.id) > -1})}>
-                        {`${tag.title} (${tag.count})`}
-                    </Button>))}
+                <div>
+                    <Typography type="caption" className={classes.tagsCaption}>Tags</Typography>
+                    <div className={classes.tags}>
+                        {tags.map(tag => (<Button key={tag.id}
+                                                  onClick={this.toggleTag(tag.id)}
+                                                  className={classNames(classes.button, {[classes.buttonActive]: this.state.tags.indexOf(tag.id) > -1})}>
+                            {`${tag.title} (${tag.count})`}
+                        </Button>))}
+
+                    </div>
                 </div>
             )}
             <Grid container gutter={40}>
