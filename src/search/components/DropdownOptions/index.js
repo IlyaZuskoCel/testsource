@@ -165,12 +165,7 @@ class DropDownCheckBoxes extends Component {
 
     handleCancel = (event) => {
         this.setState({
-            level_id: '',
-            league_id: '',
-            clearLevel: false,
             open: false,
-        } , () => {
-            this.props.clearLeague();
         });
     };
 

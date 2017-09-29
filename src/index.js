@@ -45,12 +45,10 @@ const AppReducer = combineReducers({
     router: routerReducer
 });
 
-
 const store = createStore(AppReducer, undefined,
     composeWithDevTools(
         applyMiddleware(thunk, routerMiddleware(history)),
     ));
-
 
 class Layout extends Component {
     constructor(props) {
@@ -62,7 +60,6 @@ class Layout extends Component {
     }
 
     render() {
-
         if (!this.props.load)
             return null;
 

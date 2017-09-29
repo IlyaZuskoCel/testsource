@@ -6,7 +6,6 @@
 import React, {Component} from 'react';
 import classNames from 'classnames';
 
-
 import Input, {InputLabel} from 'material-ui/Input';
 import FormControl from 'material-ui/Form/FormControl';
 import FormHelperText from 'material-ui/Form/FormHelperText';
@@ -153,8 +152,6 @@ class DropDown extends Component {
                         className={classNames(classes.icon, {[classes.iconCross]: this.state.open && !required})}>
                         {this.state.open && !required ? 'cross' : 'dropdown-arrows'}
                     </ScoutIcon>
-
-
                 </div>
 
                 <div className={classes.container}>
