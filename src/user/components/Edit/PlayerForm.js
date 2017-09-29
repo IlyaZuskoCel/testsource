@@ -6,6 +6,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
+import {Prompt} from 'react-router';
 import classNames from 'classnames';
 import withWidth from 'material-ui/utils/withWidth';
 import compose from 'recompose/compose';
@@ -205,6 +206,7 @@ class PlayerForm extends Component {
         this.state = {
             isDeletePhotoOpen: false,
             ...getUserState(props.user),
+            isUpdate: false,
             errors: []
         };
     }
@@ -220,7 +222,7 @@ class PlayerForm extends Component {
 
     handleChange = name => event => {
         if (name === 'player_num' && event.target.value.length > 0 && (isNaN(parseInt(event.target.value)) || parseInt(event.target.value) < 1 || parseInt(event.target.value) > 99)) return;
-        return this.setState({[name]: event.target.value})
+        return this.setState({[name]: event.target.value, isUpdate: true})
     };
 
     onUploadPicture = event => {
@@ -275,7 +277,10 @@ class PlayerForm extends Component {
         if (data.birthday && data.birthday === '0000-00-01')
             data.height = null;
 
-        this.props.save(data);
+        this.setState({isUpdate: false}, () => {
+            this.props.save(data);
+        });
+
         return false;
     };
 
@@ -296,6 +301,10 @@ class PlayerForm extends Component {
         }
 
         return <div className={classes.root}>
+            <Prompt
+                message="Your profile hasn't been saved! All changes will be lost. Are you sure you want to leave?"
+                when={this.state.isUpdate}
+            />
             <Hidden smUp>
                 <div className={classes.headerNavigation}>
                     <Link to="/" onClick={this.cancel} invert disabledUnderline className={classes.backLink}>
@@ -405,6 +414,7 @@ class PlayerForm extends Component {
                                          onSuggestionSelected={(event, {suggestionValue}) => {
                                              this.setState({
                                                  nationality: suggestionValue,
+                                                 isUpdate: true
                                              });
                                          }}
                                          value={this.props.nationalities[this.state.nationality] || ''}/>
@@ -478,6 +488,7 @@ class PlayerForm extends Component {
                                                      id_league: suggestionValue,
                                                      id_team_current: suggestionValue === '-1' ? '-1' : id_team_current,
                                                      league: '',
+                                                     isUpdate: true
                                                  });
                                              }}
                                              value={this.state.id_league ? (this.props.leagues[this.state.id_league] || this.props.leagues['-1']) : ''}/>
@@ -508,6 +519,7 @@ class PlayerForm extends Component {
                                                      this.setState({
                                                          id_team_current: suggestionValue,
                                                          team: '',
+                                                         isUpdate: true
                                                      });
                                                  }}
                                                  value={this.state.id_team_current ? (this.props.teams[this.state.id_team_current] || this.props.teams['-1']) : ''}/>

@@ -8,6 +8,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
+import {Prompt} from 'react-router';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
@@ -102,6 +103,7 @@ class Add extends Component {
     state = {
         tab: 0,
         nextTrim: false,
+        isUpdate: true,
     };
 
     componentDidMount() {
@@ -144,7 +146,10 @@ class Add extends Component {
         });
     };
     handleSubmit = () => {
-        this.props.update(this.props.video);
+        this.setState({isUpdate: false}, () => {
+            this.props.update(this.props.video);
+        });
+
     };
 
     render() {
@@ -152,7 +157,10 @@ class Add extends Component {
 
 
         return <div className={classes.root}>
-
+            <Prompt
+                message="Your video hasn't been uploaded yet! All changes will be lost. Are you sure you want to leave?"
+                when={(!!this.props.video.id || 'progress' in this.props.video) && this.state.isUpdate}
+            />
             <Hidden smUp>
                 <Tabs index={this.state.tab}
                       centered

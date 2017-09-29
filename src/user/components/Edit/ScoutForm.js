@@ -6,6 +6,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
+import {Prompt} from 'react-router';
 import classNames from 'classnames';
 import withWidth from 'material-ui/utils/withWidth';
 import compose from 'recompose/compose';
@@ -223,7 +224,9 @@ class ScoutForm extends Component {
     };
     submit = event => {
         event.preventDefault();
-        this.props.save(this.state);
+        this.setState({isUpdate: false}, () => {
+            this.props.save(this.state);
+        });
         return false;
     };
     cancel = event => {
@@ -249,6 +252,10 @@ class ScoutForm extends Component {
         }
 
         return <div className={classes.root}>
+            <Prompt
+                message="Your profile hasn't been saved! All changes will be lost. Are you sure you want to leave?"
+                when={this.state.isUpdate}
+            />
             <Hidden smUp>
                 <div className={classes.headerNavigation}>
                     <Link to="/" onClick={this.cancel} invert disabledUnderline className={classes.backLink}>
@@ -364,6 +371,7 @@ class ScoutForm extends Component {
                                                      id_league: suggestionValue,
                                                      id_team_current: suggestionValue === '-1' ? '-1' : id_team_current,
                                                      league: '',
+                                                     isUpdate: true
                                                  });
                                              }}/>
                             </Grid>
@@ -394,6 +402,7 @@ class ScoutForm extends Component {
                                                      this.setState({
                                                          id_team_current: suggestionValue,
                                                          team: '',
+                                                         isUpdate: true
                                                      });
                                                  }}
                                                  value={this.state.id_team_current ? (this.props.teams[this.state.id_team_current] || this.props.teams['-1']) : ''}
