@@ -34,8 +34,6 @@ const styleSheet = createStyleSheet('Footer', theme => ({
         [theme.breakpoints.down('sm')]: {
             height: 376,
         },
-
-
     },
     logo: {
         fontSize: 40,

@@ -140,9 +140,7 @@ class DropDownCheckBoxes extends Component {
     };
 
     handleCancle = (event) => {
-        this.setState({nameSearch: '' , open: false} , () => {
-            this.props.clearName();
-        });
+        this.setState({open: false});
     };
 
     handleApply = (e) => {
