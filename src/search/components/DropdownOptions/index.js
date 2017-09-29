@@ -112,6 +112,8 @@ class DropDownCheckBoxes extends Component {
             open: false,
             applied: false,
             league_id: this.props.league ? parseInt(this.props.league) : '',
+            backstore_league_id: '',
+            backstore_level_id: '',
         };
     }
 
@@ -127,6 +129,8 @@ class DropDownCheckBoxes extends Component {
         if ('leaguesOptions' in nextProps) {
             this.setState({leaguesOptions : nextProps.leaguesOptions , filteredLeagues : nextProps.leaguesOptions});
         }
+
+
 
         if ('clearSubFields' in nextProps && nextProps.clearSubFields) {
             this.setState({
@@ -159,12 +163,15 @@ class DropDownCheckBoxes extends Component {
             let league = this.state.league_id ? this.state.league_id : '';
             let level = this.state.level_id ? this.state.level_id : (this.props.level ? this.props.level : '');
 
+            this.setState({backstore_league_id: league , backstore_level_id: level});
             this.props.changeLeague(!this.state.clearLeague ? league : '' , !this.state.clearLevel ? level : '');
         });
     };
 
     handleCancel = (event) => {
         this.setState({
+            league_id: this.state.backstore_league_id || this.state.league_id || '',
+            level_id: this.state.backstore_level_id,
             open: false,
         });
     };
@@ -172,15 +179,19 @@ class DropDownCheckBoxes extends Component {
     onChangeLevel =  (event , {suggestionValue}) => {
         let leagues = suggestionValue ? this.state.leaguesOptions.filter(league => parseInt(league.item.id_level) === suggestionValue ) : this.state.leaguesOptions;
 
-        this.setState({'level_id': suggestionValue , filteredLeagues: leagues, 'league_id' : '' , clearLevel : !suggestionValue ? true : false  });
+        this.setState({'level_id': suggestionValue , filteredLeagues: leagues,
+            'league_id' : '' ,
+            clearLevel : !suggestionValue ? true : false ,
+
+        });
     };
 
 
     onChangeLeague = (event, {suggestionValue}) => {
         if (this.state.level_id)
-            this.setState({'league_id' : suggestionValue , clearLeague : !suggestionValue ? true : false  });
+            this.setState({'league_id' : suggestionValue , clearLeague : !suggestionValue ? true : false});
         else
-            this.setState({'league_id' : suggestionValue , 'level_id' : '' , clearLeague : !suggestionValue ? true : false });
+            this.setState({'league_id' : suggestionValue , 'level_id' : '' , clearLeague : !suggestionValue ? true : false});
     };
 
     getLevelLeagueText = () => {

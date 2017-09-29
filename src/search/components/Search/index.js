@@ -368,7 +368,6 @@ class Search extends Component {
         });
     }
 
-
     componentWillMount() {
        this.props.setFilters(this.state.query , this.props.type == 'scout' ? 'scout' : '');
     }
