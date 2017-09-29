@@ -370,6 +370,7 @@ class ScoutForm extends Component {
                                                  this.setState({
                                                      id_league: suggestionValue,
                                                      id_team_current: suggestionValue === '-1' ? '-1' : id_team_current,
+                                                     team: suggestionValue === '-1' ? '' : this.state.team,
                                                      league: '',
                                                      isUpdate: true
                                                  });
