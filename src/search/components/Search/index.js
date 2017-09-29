@@ -26,6 +26,7 @@ import Icon from 'material-ui/Icon';
 
 import queryString from 'query-string';
 import './assets/style.css';
+import * as ReactDOM from "react-dom";
 
 const styleSheet = createStyleSheet('Search' , theme => ({
     root: {},
@@ -171,7 +172,28 @@ const styleSheet = createStyleSheet('Search' , theme => ({
     arrow: {
       color: '#ffffff',
     },
+    fixNav: {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        zIndex: 9,
+    },
+    headerMobNavFix: {
+        position: 'fixed',
+        top: 60,
+        left: 0,
+        zIndex: 99,
+    },
+    filterTogglerConntainerFix: {
+        position: 'fixed',
+        top: 115,
+        left: 0,
+        zIndex: 99,
+    }
 }));
+
+
+const fixedMainNavigationTrashold = 350;
 
 class Search extends Component {
 
@@ -190,6 +212,8 @@ class Search extends Component {
             query: Object.keys(this.props.location.search).length > 0 ? queryString.parse(this.props.location.search) : propFilters,
             numberOfResults: 0,
             mobileFilterOn: true,
+            direction:'',
+            lastScrollPos:0,
             appliedFilters: {
                 playerFilters: 0,
                 scoutFilters: 0
@@ -203,16 +227,39 @@ class Search extends Component {
         this.toggleMobileFilter = this.toggleMobileFilter.bind(this);
         this.onClearFilters = this.onClearFilters.bind(this);
         this.stopClearing = this.stopClearing.bind(this);
+        this.handleScroll = this.handleScroll.bind(this);
 
         setTimeout(() => {
             this.setState({activeTab:  this.props.type && this.props.type === 'scout' ? 1 : 0})
         } ,  250)
     }
 
+    handleScroll(event) {
+        if(this.state.lastScrollPos > window.scrollY) {
+            this.setState({
+                direction:'top',
+                lastScrollPos: window.scrollY
+            });
+        } else if(this.state.lastScrollPos < window.scrollY) {
+
+            this.setState({
+                direction:'bottom',
+                lastScrollPos: window.scrollY
+            });
+        }
+    };
+
     componentDidMount() {
+        window.addEventListener( "scroll", this.handleScroll);
+
         setTimeout(() => {this.props.upload(this.props.type , {page : 1 , 'per-page' : 18 , ...this.state.query})} , 250);
         this.props.fetchData();
     }
+
+    componentWillUnmount() {
+        window.removeEventListener( "scroll", this.handleScroll);
+    }
+
 
     composeFiltersToQuery = (filters) => {
         let queryFromFilters = {};
@@ -317,6 +364,7 @@ class Search extends Component {
         });
     }
 
+
     componentWillMount() {
        this.props.setFilters(this.state.query , this.props.type == 'scout' ? 'scout' : '');
     }
@@ -373,12 +421,12 @@ class Search extends Component {
                 </header></Hidden>
 
             <Hidden smUp>
-                <div className={classes.headerWholeBackground}>
+                <div className={classNames(classes.headerWholeBackground , this.state.direction === 'top' && this.state.lastScrollPos > fixedMainNavigationTrashold && this.state.mobileFilterOn ? classes.fixNav : null)}>
                     <div className={classes.line}></div>
                 </div>
             </Hidden>
             <Hidden smUp>
-                <div className={classes.headerMobNav}>
+                <div className={classNames(classes.headerMobNav , this.state.direction === 'top' && this.state.lastScrollPos > fixedMainNavigationTrashold && this.state.mobileFilterOn ? classes.headerMobNavFix : null)}>
                     <Tabs index={this.state.activeTab} onChange={this.handleChange} className={classes.navigationWrapper}
                           centered classes={{flexContainer : classes.headerMobCointainer}} textColor='#ffffff' indicatorColor={'#ffffff'}>
                         <Tab label={<Typography type='body2' className={classNames(classes.headerMobTab, classes.firstMobTab)}>Players</Typography>} style={{marginRight: 100}}/>
@@ -387,7 +435,7 @@ class Search extends Component {
                 </div>
             </Hidden>
             <Hidden smUp>
-                <div className={classes.filterTogglerConntainer}>
+                <div className={classNames(classes.filterTogglerConntainer ,  this.state.direction === 'top' && this.state.lastScrollPos > fixedMainNavigationTrashold  && this.state.mobileFilterOn ? classes.filterTogglerConntainerFix : null)}>
                     <Button className={classes.buttonFilter} onClick={this.toggleMobileFilter}>
                         <Typography  className={classes.filterTitle}>Filter ({this.props.type === 'player' ? this.state.appliedFilters.playerFilters : this.state.appliedFilters.scoutFilters})</Typography>
                         {this.state.mobileFilterOn && <Icon className={classes.arrow}>keyboard_arrow_down</Icon>}
