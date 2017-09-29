@@ -11,7 +11,7 @@ import DefaultLayout from '../common/containers/DefaultRoute'
 import Search from './containers/Search';
 
 const routes = [
-    <PrivateRoute key="Search" path="/search/:type?" component={Search} hideBackgroundTopMobileHeaderScroll/>
+    <PrivateRoute key="Search" path="/search/:type?" component={Search} hideBackgroundTopMobileHeaderScroll hideBoxShadowScroll={true}/>
 ];
 
 export default routes;
