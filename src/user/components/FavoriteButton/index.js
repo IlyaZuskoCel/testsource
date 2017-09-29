@@ -40,15 +40,13 @@ const styleSheet = createStyleSheet('FavoriteButton', theme => ({
         '&:hover': {
             backgroundImage: 'linear-gradient(284deg, #f55e58, #c9011b)',
         },
-        '&:hover $defaultIcon': {
-            opacity: 0,
-            width: 0
-        },
+
         '&:hover $defaultName:after': {
             content: '"Remove"',
 
             [theme.breakpoints.down('sm')]: {
-               color:'#d7001e',
+                content: '"Shortlisted"',
+                color: '#000',
             },
         },
 
