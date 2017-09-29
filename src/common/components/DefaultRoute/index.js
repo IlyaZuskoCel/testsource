@@ -111,10 +111,10 @@ const DefaultRoute = ({component: Component, isAuthenticated, loader ,alert, hid
                     vertical: 'top',
                     horizontal: 'center'
                 }}
-                autoHideDuration={typeof alert.autoHideDuration  === "undefined" ? 3000 : alert.autoHideDuration}
-                onRequestClose={hideAlert}
+                onClick={hideAlert}
+                autoHideDuration={typeof alert.autoHideDuration  === "undefined" ? 5000 : alert.autoHideDuration}
                 open={alert.open}
-                message={<div className={classes.message} onClick={hideAlert}>
+                message={<div className={classes.message} >
                     <ScoutIcon className={classes.alertIcon}
                                color={alert.type}>{alert.type === 'error' ? 'cross' : 'checkmark'}</ScoutIcon>
                     <Typography type="body2"> {alert.message}</Typography>
