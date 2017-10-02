@@ -9,7 +9,7 @@ import Tooltip from 'rc-tooltip';
 
 import 'rc-slider/assets/index.css';
 import './assets/style.css';
-import {PlAYER_MAX_AGE, PLAYER_MIN_AGE} from "../../constants/playerSettings";
+import {PLAYER_MAX_AGE, PLAYER_MIN_AGE} from "../../constants/playerSettings";
 
 const Handle = Slider.Handle;
 

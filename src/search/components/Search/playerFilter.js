@@ -17,7 +17,7 @@ import Hidden from 'material-ui/Hidden';
 import DropdownOptions from '../DropdownOptions';
 import InputText from '../InputText';
 
-import {PlAYER_MAX_AGE, PLAYER_MIN_AGE} from "../../../common/constants/playerSettings";
+import {PLAYER_MAX_AGE, PLAYER_MIN_AGE} from "../../../common/constants/playerSettings";
 
 import queryParse from 'query-string';
 import {RangeSlider} from '../../../common/components';
@@ -94,10 +94,10 @@ class PlayerFilter extends Component {
             year: '',
             position: '',
             leagues: [],
-            born: [PLAYER_MIN_AGE, PlAYER_MAX_AGE],
+            born: [PLAYER_MIN_AGE, PLAYER_MAX_AGE],
         };
 
-        this.born = [PLAYER_MIN_AGE, PlAYER_MAX_AGE];
+        this.born = [PLAYER_MIN_AGE, PLAYER_MAX_AGE];
         this.makeFilterRequest = this.makeFilterRequest.bind(this);
 
         this.onChangeName = this.onChangeName.bind(this);
@@ -159,7 +159,7 @@ class PlayerFilter extends Component {
                 queryString += key + '=' + options[key] + '&'
             }
 
-            if (this.state.born[0] !== PLAYER_MIN_AGE || this.state.born[1] !== PlAYER_MAX_AGE) {
+            if (this.state.born[0] !== PLAYER_MIN_AGE || this.state.born[1] !== PLAYER_MAX_AGE) {
                 queryString += `born[0]=${this.state.born[0]}&born[1]=${this.state.born[1]}&`;
                 filters.born = [parseInt(this.state.born[0]), parseInt(this.state.born[1])];
             }
@@ -213,7 +213,7 @@ class PlayerFilter extends Component {
                 id_league: '',
                 id_team_current: '',
                 position: '',
-                born: [PLAYER_MIN_AGE, PlAYER_MAX_AGE],
+                born: [PLAYER_MIN_AGE, PLAYER_MAX_AGE],
                 name: '',
                 clearSubFields: true,
             }, () => {
@@ -245,7 +245,7 @@ class PlayerFilter extends Component {
                     id_team_current: '',
                     position: '',
                     dropdownLeagues: [],
-                    born: [PLAYER_MIN_AGE, PlAYER_MAX_AGE],
+                    born: [PLAYER_MIN_AGE, PLAYER_MAX_AGE],
                     name: '',
                 });
             }
@@ -320,10 +320,10 @@ class PlayerFilter extends Component {
                     <RangeSlider onAfterChange={this.getRange}
                                  onChange={this.handleChangeRange}
                                  value={this.state.born}
-                                 defaultValue={[PLAYER_MIN_AGE, PlAYER_MAX_AGE]}
+                                 defaultValue={[PLAYER_MIN_AGE, PLAYER_MAX_AGE]}
                                  label={'Year born'}
                                  min={PLAYER_MIN_AGE}
-                                 max={PlAYER_MAX_AGE}/>
+                                 max={PLAYER_MAX_AGE}/>
                 </Grid>
                 <Grid item xs={12} sm={6} md={4}>
                     <Hidden xsDown>
