@@ -35,7 +35,7 @@ const handle = ({tipFormatter}) => (props) => {
     return (
         <Tooltip
             prefixCls="rc-slider-tooltip"
-            overlay={tipFormatter ? tipFormatter(value) : value}
+            overlay={tipFormatter ? tipFormatter(value, index) : value}
             visible={true}
             placement={index === 0 ? 'topRight' : 'topLeft'}
             key={index}

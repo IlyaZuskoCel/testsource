@@ -19,7 +19,6 @@ import InputText from '../InputText';
 
 import {PLAYER_MAX_AGE, PLAYER_MIN_AGE} from "../../../common/constants/playerSettings";
 
-import queryParse from 'query-string';
 import {RangeSlider} from '../../../common/components';
 import {filterOnReg} from "../../helpers/helpers";
 
@@ -31,6 +30,12 @@ let positionOptions = Object.keys(POS_LIST).map(value => ({
 }));
 
 positionOptions.unshift({label: 'None', value: ''});
+
+
+const tipFormatter = (value, index) => {
+    return index ? parseInt(value)-1 : value;
+};
+
 
 const styleSheet = createStyleSheet('ScoutFilter', theme => ({
     row: {
@@ -321,6 +326,7 @@ class PlayerFilter extends Component {
                                  onChange={this.handleChangeRange}
                                  value={this.state.born}
                                  defaultValue={[PLAYER_MIN_AGE, PLAYER_MAX_AGE]}
+                                 tipFormatter={tipFormatter}
                                  label={'Year born'}
                                  min={PLAYER_MIN_AGE}
                                  max={PLAYER_MAX_AGE}/>
