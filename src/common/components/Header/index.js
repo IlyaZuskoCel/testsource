@@ -411,7 +411,7 @@ class Header extends Component {
                     <Grid item xs={8} className={classes.right}>
                         {DropMenu ? (
                             <div className={classNames(classes.menu)}>
-                                <Link to="/" disabledUnderline
+                                <Link to="/search" disabledUnderline
                                       className={classNames(classes.menuItem)}>
                                     <Button
                                         className={classNames(classes.searchButton, {[classes.searchButtonHideBackground]: hideBackground && !this.props.hideBackgroundTopMobileHeader && !this.props.hideBackgroundTopMobileHeaderScroll })}>
