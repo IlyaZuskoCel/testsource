@@ -642,7 +642,7 @@ class PlayerProfile extends Component {
                                 <div className={classes.infoRow}>
                                     <Typography type="caption" className={classes.infoCaption}>Weight</Typography>
                                     <Typography type="body2" className={classes.infoValue}>
-                                        {user.weight} lbs
+                                        {parseFloat(user.weight)} lbs
                                     </Typography>
 
                                 </div>

@@ -191,7 +191,7 @@ const getUserState = user => ({
     shot: user.shot,
     player_num: user.player_num,
     height: user.height,
-    weight: user.weight,
+    weight: '' + parseFloat(user.weight),
     id_league: user.id_league,
     id_team_current: user.id_team_current,
     league: user.league,
@@ -221,7 +221,19 @@ class PlayerForm extends Component {
     }
 
     handleChange = name => event => {
-        if (name === 'player_num' && event.target.value.length > 0 && (isNaN(parseInt(event.target.value)) || parseInt(event.target.value) < 1 || parseInt(event.target.value) > 99)) return;
+        if (name === 'player_num' && event.target.value.length > 0
+            && (
+                isNaN(parseInt(event.target.value)) ||
+                parseInt(event.target.value) < 1 ||
+                parseInt(event.target.value) > 99 ||
+                event.target.value !== '' + parseInt(event.target.value))) return;
+
+        if (name === 'weight' && event.target.value.length > 0
+            && (
+                isNaN(parseInt(event.target.value)) ||
+                parseInt(event.target.value) < 1 ||
+                event.target.value !== '' + parseInt(event.target.value))) return;
+
         return this.setState({[name]: event.target.value, isUpdate: true})
     };
 
