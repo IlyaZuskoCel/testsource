@@ -20,7 +20,7 @@ import {RangeSlider} from '../../../common/components';
 
 const tipFormatter = value => {
 
-    if (value === 0) return '00.000';
+    if (value === 0) return '00:00';
 
     const duration = moment.duration(value);
     let time = '';
@@ -29,8 +29,8 @@ const tipFormatter = value => {
     if (duration.get('minutes'))
         time += ('00' + duration.get('minutes')).slice(-2) + ':';
 
-    time += ('00' + duration.get('seconds')).slice(-2) + '.';
-    time += ('000' + duration.get('milliseconds')).slice(-3);
+    time += ('00' + duration.get('seconds')).slice(-2) + ':';
+    time += ('00' + duration.get('milliseconds')).slice(-2);
 
     return time;
 };
