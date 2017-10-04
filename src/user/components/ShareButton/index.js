@@ -138,7 +138,7 @@ class ShareButton extends Component {
                 </DialogTitle>
                 <DialogContent>
                     <div className={classes.buttonsWrap}>
-                        <FacebookShareButton url={url} quote={title} beforeOnClick={this.handleCancel('facebook')}>
+                        <FacebookShareButton url={url} beforeOnClick={this.handleCancel('facebook')}>
                             <Typography type="body2" className={classNames(classes.button, classes.facebookButton)}>
                                 <Icon className={classes.icon}>social-facebook</Icon>
                                 Share on Facebook
