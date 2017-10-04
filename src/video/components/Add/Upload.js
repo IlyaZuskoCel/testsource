@@ -154,7 +154,7 @@ class Upload extends Component {
                                 value={video.progress}
                                 className={classes.linearProgress}/>
                 <Typography type="body1"
-                            className={classes.progressTitle}>{video.progress < 100 ? 'Upload in progress' : 'Convert in progress'}</Typography>
+                            className={classes.progressTitle}>{video.progress < 100 ? 'Upload in Progress' : 'Conversion in Progress'}</Typography>
             </Paper>)}
 
             {video.video_path && (<Paper className={classNames(classes.uploadWrap, classes.videoWrap)}>
