@@ -122,7 +122,12 @@ class Video extends Component {
         anchorVideoMenuEl: null,
         isDeleteOpen: false
     };
-    handleShow = event => this.setState({isShow: true});
+    handleShow = event => this.setState({isShow: true}, () => {
+        setTimeout(() => {
+            const video = document.getElementById("video");
+            video.play();
+        }, 100);
+    });
 
 
     handleEdit = event => {
@@ -141,7 +146,6 @@ class Video extends Component {
     handleDelete = event => {
         event.preventDefault();
         this.setState({isDeleteOpen: true});
-
         return false
     };
     handleDialogCancel = event => {
@@ -162,8 +166,8 @@ class Video extends Component {
             <Paper className={classes.videoWrap}>
                 {this.state.isShow ? (
                     <video src={video.overlay_video_path || video.trim_video_file_path || video.video_path}
+                           id="video"
                            className={classes.video}
-                           autoPlay
                            controls
                            controlsList="nodownload"/>
                 ) : [
