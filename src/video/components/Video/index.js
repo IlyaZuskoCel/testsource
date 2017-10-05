@@ -124,7 +124,7 @@ class Video extends Component {
     };
     handleShow = event => this.setState({isShow: true}, () => {
         setTimeout(() => {
-            const video = document.getElementById("video");
+            const video = document.getElementById(`video-${this.props.video.id}`);
             video.play();
         }, 100);
     });
@@ -166,7 +166,7 @@ class Video extends Component {
             <Paper className={classes.videoWrap}>
                 {this.state.isShow ? (
                     <video src={video.overlay_video_path || video.trim_video_file_path || video.video_path}
-                           id="video"
+                           id={`video-${video.id}`}
                            className={classes.video}
                            controls
                            controlsList="nodownload"/>
