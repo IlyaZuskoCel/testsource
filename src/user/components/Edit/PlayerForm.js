@@ -191,7 +191,7 @@ const getUserState = user => ({
     shot: user.shot,
     player_num: user.player_num,
     height: user.height,
-    weight: '' + parseFloat(user.weight),
+    weight: user.weight ? '' + parseFloat(user.weight) : '',
     id_league: user.id_league,
     id_team_current: user.id_team_current,
     league: user.league,

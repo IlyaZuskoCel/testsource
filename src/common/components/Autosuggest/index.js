@@ -151,11 +151,6 @@ class IntegrationAutosuggest extends Component {
 
     handlerClear = (event) => {
         this.props.onSuggestionSelected(event, {suggestionValue: ''});
-        this.nameInput.focus();
-        setTimeout(() => {
-            this.setState({focus: true});
-        }, 100);
-
     };
 
     handleSuggestionsFetchRequested = ({value}) => {
