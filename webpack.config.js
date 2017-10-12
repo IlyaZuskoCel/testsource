@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     entry: {
-        app: ['./src/index.js'],
+        app: ['babel-polyfill', './src/index.js'],
     },
     output: {
         filename: 'js/[name].js',
@@ -30,10 +30,16 @@ module.exports = {
 
         ]
     },
-    plugins: [new HtmlWebpackPlugin({
-        title: 'Scout Zoo App',
-        template: 'src/index.ejs',
-        hash: true,
-        cache: false
-    })]
+    plugins: [
+        new webpack.ProvidePlugin({
+            'Promise': 'es6-promise', // Thanks Aaron (https://gist.github.com/Couto/b29676dd1ab8714a818f#gistcomment-1584602)
+            fetch: 'imports-loader?this=>global!exports-loader?global.fetch!whatwg-fetch'
+        }),
+        new HtmlWebpackPlugin({
+            title: 'Scout Zoo App',
+            template: 'src/index.ejs',
+            hash: true,
+            cache: false
+        })
+    ]
 };
