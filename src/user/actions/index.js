@@ -43,6 +43,18 @@ export const logIn = (email, password) => dispatch => {
             dispatch({type: LOGIN, payload: user});
 
             if (url)
+            
+                // INTERCOM USER REGISTRATION 
+                /*
+                window.intercomSettings = {
+                app_id: "coswd1k2",
+                //  name: <%= current_user.name %>, // Full name
+                email: email, // Email address
+                // created_at: <%= current_user.created_at.to_i %> // Signup Date
+                };
+                */
+                // Intercom END
+
                 return dispatch(push(url));
             if (user.role === SCOUT_ROLE)
                 return dispatch(push('/search/player'));
