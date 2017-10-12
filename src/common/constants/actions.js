@@ -17,3 +17,7 @@ export const FILTER_LEAGUES = 'leagues:filterLeagues';
 
 export const INC_LOADER = 'loader:incLoader';
 export const DEC_LOADER = 'loader:decLoader';
+
+
+export const FOOTER_SHOW = 'footer:show';
+export const FOOTER_HIDE = 'footer:hide';

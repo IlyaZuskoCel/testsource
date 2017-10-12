@@ -130,6 +130,10 @@ class Footer extends Component {
 
     render() {
         const {user, classes} = this.props;
+
+
+        if (!this.props.hide) return null;
+
         return (
             <footer className={classes.root}>
                 <Grid container gutter={8} className={classes.footer}>

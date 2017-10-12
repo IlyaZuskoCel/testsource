@@ -13,7 +13,8 @@ import {go} from '../actions';
 
 const mapStateToProps = (state) => ({
     isAuthenticated: state.user.current !== null,
-    user: state.user.current
+    user: state.user.current,
+    hide: state.common.footer
 });
 
 
@@ -22,4 +23,4 @@ const mapDispatchToProps = (dispatch) => ({
     go: page => dispatch(go(page)),
 });
 
-export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Footer))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Footer))

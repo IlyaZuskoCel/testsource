@@ -6,8 +6,10 @@
 import {push as routerGo, goBack as routerBack} from 'react-router-redux';
 
 import {
-    SUCCESS_ALERT, ERROR_ALERT, REMOVE_ALERT, SET_LEAGUES, SET_TEAMS, SET_COUNTRIES, FILTER_LEAGUES,
-    INC_LOADER, DEC_LOADER
+    SUCCESS_ALERT, ERROR_ALERT, REMOVE_ALERT, SET_LEAGUES, SET_TEAMS, SET_COUNTRIES,
+    INC_LOADER, DEC_LOADER,
+    FOOTER_SHOW,
+    FOOTER_HIDE
 } from '../constants/actions';
 
 import {logOut} from '../../user/actions'
@@ -91,9 +93,17 @@ export const getCountries = () => dispatch => {
 };
 
 export const startLoading = () => dispatch => {
-    dispatch({type : INC_LOADER});
+    dispatch({type: INC_LOADER});
 };
 
 export const stopLoading = () => dispatch => {
     dispatch({type: DEC_LOADER});
+};
+
+export const showFooter = () => dispatch => {
+    dispatch({type: FOOTER_SHOW});
+};
+
+export const hideFooter = () => dispatch => {
+    dispatch({type: FOOTER_HIDE});
 };

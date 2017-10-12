@@ -6,12 +6,12 @@ import React, {Component} from 'react';
 import compose from 'recompose/compose';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import Tabs, { Tab } from 'material-ui/Tabs';
+import Tabs, {Tab} from 'material-ui/Tabs';
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import withWidth from 'material-ui/utils/withWidth';
-import {Link, Pagination , Autosuggest} from '../../../common/components';
+import {Link, Pagination, Autosuggest} from '../../../common/components';
 import Hidden from 'material-ui/Hidden';
 import Button from 'material-ui/Button';
 
@@ -28,7 +28,7 @@ import queryString from 'query-string';
 import './assets/style.css';
 import * as ReactDOM from "react-dom";
 
-const styleSheet = createStyleSheet('Search' , theme => ({
+const styleSheet = createStyleSheet('Search', theme => ({
     root: {},
     content: {
         maxWidth: 1168,
@@ -40,7 +40,7 @@ const styleSheet = createStyleSheet('Search' , theme => ({
         backgroundColor: '#f5f5f5',
 
         [theme.breakpoints.down('lg')]: {
-            padding: [0 , 20],
+            padding: [0, 20],
         }
     },
     footer: {
@@ -61,7 +61,7 @@ const styleSheet = createStyleSheet('Search' , theme => ({
         },
 
         [theme.breakpoints.down('sm')]: {
-            padding: [28 , 0],
+            padding: [28, 0],
             boxShadow: 'none',
         }
     },
@@ -143,7 +143,7 @@ const styleSheet = createStyleSheet('Search' , theme => ({
         fontSize: 16,
         fontWeight: '900',
         textAlign: 'center',
-        fontFamily:  'UnitedSansSemiCond-Heavy',
+        fontFamily: 'UnitedSansSemiCond-Heavy',
         letterSpacing: .3,
     },
 
@@ -170,7 +170,7 @@ const styleSheet = createStyleSheet('Search' , theme => ({
         color: '#ffffff',
     },
     arrow: {
-      color: '#ffffff',
+        color: '#ffffff',
     },
     fixNav: {
         position: 'fixed',
@@ -200,20 +200,20 @@ class Search extends Component {
     constructor(props) {
         super(props);
 
-        let playerFilters = props.filters && props.filters.player ?  props.filters.player : {};
-        let scoutFilters = props.filters && props.filters.scout ?  props.filters.scout : {};
+        let playerFilters = props.filters && props.filters.player ? props.filters.player : {};
+        let scoutFilters = props.filters && props.filters.scout ? props.filters.scout : {};
 
         let propFilters = props.type === 'player' ? this.composeFiltersToQuery(playerFilters) : this.composeFiltersToQuery(scoutFilters);
 
 
         this.state = {
-            activeTab:  this.props.type && this.props.type === 'scout' ? 1 : 0,
+            activeTab: this.props.type && this.props.type === 'scout' ? 1 : 0,
             activePage: 1,
             query: Object.keys(this.props.location.search).length > 0 ? queryString.parse(this.props.location.search) : propFilters,
             numberOfResults: 0,
             mobileFilterOn: true,
-            direction:'',
-            lastScrollPos:0,
+            direction: '',
+            lastScrollPos: 0,
             appliedFilters: {
                 playerFilters: 0,
                 scoutFilters: 0
@@ -230,35 +230,37 @@ class Search extends Component {
         this.handleScroll = this.handleScroll.bind(this);
 
         setTimeout(() => {
-            this.setState({activeTab:  this.props.type && this.props.type === 'scout' ? 1 : 0})
-        } ,  400)
+            this.setState({activeTab: this.props.type && this.props.type === 'scout' ? 1 : 0})
+        }, 400)
     }
 
     handleScroll(event) {
-        if(this.state.lastScrollPos > window.scrollY) {
+        if (this.state.lastScrollPos > window.scrollY) {
             this.setState({
-                direction:'top',
+                direction: 'top',
                 lastScrollPos: window.scrollY
             });
-        } else if(this.state.lastScrollPos < window.scrollY) {
+        } else if (this.state.lastScrollPos < window.scrollY) {
 
             this.setState({
-                direction:'bottom',
+                direction: 'bottom',
                 lastScrollPos: window.scrollY
             });
         }
     };
 
     componentDidMount() {
-        window.addEventListener( "scroll", this.handleScroll);
+        window.addEventListener("scroll", this.handleScroll);
         let query = {...this.state.query}
 
-        setTimeout(() => {this.props.upload(this.props.type , {page : 1 , 'per-page' : 18 , ...query})} , 400);
+        setTimeout(() => {
+            this.props.upload(this.props.type, {page: 1, 'per-page': 18, ...query})
+        }, 400);
         this.props.fetchData();
     }
 
     componentWillUnmount() {
-        window.removeEventListener( "scroll", this.handleScroll);
+        window.removeEventListener("scroll", this.handleScroll);
     }
 
 
@@ -266,9 +268,9 @@ class Search extends Component {
         let queryFromFilters = {};
 
         Object.keys(filters).forEach(key => {
-           if (!Array.isArray(filters[key])) {
-               queryFromFilters[key] = filters[key];
-           }
+            if (!Array.isArray(filters[key])) {
+                queryFromFilters[key] = filters[key];
+            }
         });
 
         if ('born' in filters) {
@@ -291,7 +293,7 @@ class Search extends Component {
         if ('query' in nextProps) {
 
             let parsedQuery = queryString.parse(nextProps.query);
-            this.setState({query : parsedQuery});
+            this.setState({query: parsedQuery});
         }
 
         if ('filters' in nextProps && nextProps.filters) {
@@ -310,25 +312,25 @@ class Search extends Component {
         }
 
         if ('headers' in nextProps && nextProps.headers) {
-            this.setState({pageCurrentPosition : nextProps.headers.page});
+            this.setState({pageCurrentPosition: nextProps.headers.page});
         }
     }
 
-    handleChange(event , value) {
+    handleChange(event, value) {
         this.props.clearFilters();
         let appliedFilters = this.state.appliedFilters;
         appliedFilters.playerFilters = 0;
         appliedFilters.scoutFilters = 0;
 
 
-        this.setState({activeTab : value , appliedFilters} , ()  => {
-                this.props.go(value === 1 ? '/search/scout' : '/search/player');
-                this.props.upload(value === 1 ? 'scout' : 'player' , {page : 1 , 'per-page' : 18});
-            });
+        this.setState({activeTab: value, appliedFilters}, () => {
+            this.props.go(value === 1 ? '/search/scout' : '/search/player');
+            this.props.upload(value === 1 ? 'scout' : 'player', {page: 1, 'per-page': 18});
+        });
     }
 
     onClearFilters() {
-        this.setState({clearField : this.props.type});
+        this.setState({clearField: this.props.type});
     }
 
     stopClearing() {
@@ -337,51 +339,63 @@ class Search extends Component {
         appliedFilters.playerFilters = 0;
         appliedFilters.scoutFilters = 0;
 
-        this.setState({clearField: '' , appliedFilters} , () => {
+        this.setState({clearField: '', appliedFilters}, () => {
             this.props.clearFilters();
             this.props.go(this.props.type === 'scout' ? '/search/scout' : '/search/player');
 
             setTimeout(() => {
-                this.props.upload(this.props.type , {page : 1 , 'per-page': 18 });
+                this.props.upload(this.props.type, {page: 1, 'per-page': 18});
                 this.forceUpdate();
-            } , 400);
+            }, 400);
         });
     }
 
     changePagination(page) {
 
-        this.setState({activePage : page} , () => {
+        this.setState({activePage: page}, () => {
 
             if ('page' in this.state.query) {
                 this.state.query.page = page.toString();
             }
 
-           this.props.upload(this.props.type , {page : page , 'per-page': 18 , ...this.state.query});
+            this.props.upload(this.props.type, {page: page, 'per-page': 18, ...this.state.query});
         });
 
-        window.scroll(0 , 0);
+        window.scroll(0, 0);
     }
 
     toggleMobileFilter() {
-        this.setState({mobileFilterOn: !this.state.mobileFilterOn} , () => {
+        if (this.state.mobileFilterOn)
+            this.props.hideFooter();
+        else
+            this.props.showFooter();
+
+
+        this.setState({mobileFilterOn: !this.state.mobileFilterOn}, () => {
             this.forceUpdate();
         });
     }
 
     componentWillMount() {
-       this.props.setFilters(this.state.query , this.props.type == 'scout' ? 'scout' : '');
+        this.props.setFilters(this.state.query, this.props.type == 'scout' ? 'scout' : '');
     }
 
     render() {
-        const {classes , width} = this.props;
+        const {classes, width} = this.props;
 
         return (<div className={classes.root}>
 
-                <Hidden xsDown><header className={classes.header}>
-                    <div className={classNames(classes.content , classes.noMargin)}>
-                        <Tabs index={this.state.activeTab}   indicatorClassName="indicatorxsDown"	 textColor={'#cbcbcb'}  onChange={this.handleChange} width={this.state.width}>
-                            <Tab label={<Typography type={"title"} className={classNames(this.state.activeTab === 0 ? classes.activeTab : classes.tabColor)}>Players</Typography>}   className={classes.navItem} />
-                            <Tab label={<Typography type={"title"} className={classNames(this.state.activeTab === 1 ? classes.activeTab : classes.tabColor)}>Scouts</Typography>} className={classes.navItem} />
+            <Hidden xsDown>
+                <header className={classes.header}>
+                    <div className={classNames(classes.content, classes.noMargin)}>
+                        <Tabs index={this.state.activeTab} indicatorClassName="indicatorxsDown" textColor={'#cbcbcb'}
+                              onChange={this.handleChange} width={this.state.width}>
+                            <Tab label={<Typography type={"title"}
+                                                    className={classNames(this.state.activeTab === 0 ? classes.activeTab : classes.tabColor)}>Players</Typography>}
+                                 className={classes.navItem}/>
+                            <Tab label={<Typography type={"title"}
+                                                    className={classNames(this.state.activeTab === 1 ? classes.activeTab : classes.tabColor)}>Scouts</Typography>}
+                                 className={classes.navItem}/>
                         </Tabs>
                     </div>
 
@@ -397,7 +411,7 @@ class Search extends Component {
                                                                      query={this.state.query}
                                                                      clearFilters={this.state.clearFilters}
                                                                      stopClearing={this.stopClearing}
-                                                                     page={this.state.pageCurrentPosition ? this.state.pageCurrentPosition : 1 }
+                                                                     page={this.state.pageCurrentPosition ? this.state.pageCurrentPosition : 1}
 
 
                                                                      filters={this.props.filters && this.props.filters.scout ? this.props.filters.scout : {}}
@@ -415,36 +429,46 @@ class Search extends Component {
                                                                        query={this.state.query}
                                                                        clearFilters={this.state.clearFilters}
                                                                        stopClearing={this.stopClearing}
-                                                                       page={this.state.pageCurrentPosition ? this.state.pageCurrentPosition : 1 }
+                                                                       page={this.state.pageCurrentPosition ? this.state.pageCurrentPosition : 1}
 
                                                                        filters={this.props.filters && this.props.filters.player ? this.props.filters.player : {}}
                                                                        setFilters={this.props.setFilters}
                         />}
                     </div>
-                </header></Hidden>
+                </header>
+            </Hidden>
 
             <Hidden smUp>
-                <div className={classNames(classes.headerWholeBackground , this.state.direction === 'top' && this.state.lastScrollPos > fixedMainNavigationTrashold && this.state.mobileFilterOn ? classes.fixNav : null)}>
+                <div
+                    className={classNames(classes.headerWholeBackground, this.state.direction === 'top' && this.state.lastScrollPos > fixedMainNavigationTrashold && this.state.mobileFilterOn ? classes.fixNav : null)}>
                     <div className={classes.line}></div>
                 </div>
             </Hidden>
             <Hidden smUp>
-                <div className={classNames(classes.headerMobNav , this.state.direction === 'top' && this.state.lastScrollPos > fixedMainNavigationTrashold && this.state.mobileFilterOn ? classes.headerMobNavFix : null)}>
-                    <Tabs index={this.state.activeTab} onChange={this.handleChange} className={classes.navigationWrapper}
-                          centered classes={{flexContainer : classes.headerMobCointainer}} textColor='#ffffff' indicatorColor={'#ffffff'}>
-                        <Tab label={<Typography type='body2' className={classNames(classes.headerMobTab, classes.firstMobTab)}>Players</Typography>} style={{marginRight: 100}}/>
-                        <Tab label={<Typography type='body2' className={classes.headerMobTab}>Scouts</Typography>} />
+                <div
+                    className={classNames(classes.headerMobNav, this.state.direction === 'top' && this.state.lastScrollPos > fixedMainNavigationTrashold && this.state.mobileFilterOn ? classes.headerMobNavFix : null)}>
+                    <Tabs index={this.state.activeTab} onChange={this.handleChange}
+                          className={classes.navigationWrapper}
+                          centered classes={{flexContainer: classes.headerMobCointainer}} textColor='#ffffff'
+                          indicatorColor={'#ffffff'}>
+                        <Tab label={<Typography type='body2'
+                                                className={classNames(classes.headerMobTab, classes.firstMobTab)}>Players</Typography>}
+                             style={{marginRight: 100}}/>
+                        <Tab label={<Typography type='body2' className={classes.headerMobTab}>Scouts</Typography>}/>
                     </Tabs>
                 </div>
             </Hidden>
             <Hidden smUp>
-                <div className={classNames(classes.filterTogglerConntainer ,  this.state.direction === 'top' && this.state.lastScrollPos > fixedMainNavigationTrashold  && this.state.mobileFilterOn ? classes.filterTogglerConntainerFix : null)}>
+                <div
+                    className={classNames(classes.filterTogglerConntainer, this.state.direction === 'top' && this.state.lastScrollPos > fixedMainNavigationTrashold && this.state.mobileFilterOn ? classes.filterTogglerConntainerFix : null)}>
                     <Button className={classes.buttonFilter} onClick={this.toggleMobileFilter}>
-                        <Typography  className={classes.filterTitle}>Filter ({this.props.type === 'player' ? this.state.appliedFilters.playerFilters : this.state.appliedFilters.scoutFilters})</Typography>
+                        <Typography className={classes.filterTitle}>Filter
+                            ({this.props.type === 'player' ? this.state.appliedFilters.playerFilters : this.state.appliedFilters.scoutFilters})</Typography>
                         {this.state.mobileFilterOn && <Icon className={classes.arrow}>keyboard_arrow_down</Icon>}
                         {!this.state.mobileFilterOn && <Icon className={classes.arrow}>keyboard_arrow_up</Icon>}
                     </Button>
-                    {!this.state.mobileFilterOn && <Button className={classes.clearFilters} onClick={this.onClearFilters}>
+                    {!this.state.mobileFilterOn &&
+                    <Button className={classes.clearFilters} onClick={this.onClearFilters}>
                         <Typography className={classes.clearFilterTypography}>Clear All</Typography>
                     </Button>}
                 </div>
@@ -465,7 +489,7 @@ class Search extends Component {
                                                                  query={this.state.query}
                                                                  clearField={this.state.clearField}
                                                                  stopClearing={this.stopClearing}
-                                                                 page={this.state.pageCurrentPosition ? this.state.pageCurrentPosition : 1 }
+                                                                 page={this.state.pageCurrentPosition ? this.state.pageCurrentPosition : 1}
 
                                                                  filters={this.props.filters && this.props.filters.scout ? this.props.filters.scout : {}}
                                                                  setFilters={this.props.setFilters}
@@ -485,34 +509,36 @@ class Search extends Component {
                                                                    query={this.state.query}
                                                                    clearField={this.state.clearField}
                                                                    stopClearing={this.stopClearing}
-                                                                   page={this.state.pageCurrentPosition ? this.state.pageCurrentPosition : 1 }
+                                                                   page={this.state.pageCurrentPosition ? this.state.pageCurrentPosition : 1}
 
 
                                                                    filters={this.props.filters && this.props.filters.player ? this.props.filters.player : {}}
                                                                    setFilters={this.props.setFilters}
-                                                                  />}
+                    />}
                 </div>
             </Hidden>}
 
 
-
             {this.state.mobileFilterOn && <div className={classes.containerWrapper}>
                 {this.props.type === 'player' &&
-                    <Players players={this.props.results}
-                             total={this.props.headers ? this.props.headers.count : 0}
-                             role={this.props.currentUser ? this.props.currentUser.role : ''}
-                             addFavorite={this.props.addFavorite}
-                             removeFavorite={this.props.removeFavorite}
-                    />
+                <Players players={this.props.results}
+                         total={this.props.headers ? this.props.headers.count : 0}
+                         role={this.props.currentUser ? this.props.currentUser.role : ''}
+                         addFavorite={this.props.addFavorite}
+                         removeFavorite={this.props.removeFavorite}
+                />
                 }
                 {this.props.type === 'scout' &&
-                    <Scouts scouts={this.props.results}
-                            total={this.props.headers ? this.props.headers.count : 0}/>
+                <Scouts scouts={this.props.results}
+                        total={this.props.headers ? this.props.headers.count : 0}/>
                 }
             </div>}
 
-            {this.state.mobileFilterOn && this.props.headers && parseInt(this.props.headers.pageCount) > 1 && <footer className={classes.footer}>
-                <Pagination currentPage={this.state.pageCurrentPosition ? parseInt(this.state.pageCurrentPosition) : 1} total={this.props.headers ? parseInt(this.props.headers.count) : 0}  perPage={18} onChange={this.changePagination}  />
+            {this.state.mobileFilterOn && this.props.headers && parseInt(this.props.headers.pageCount) > 1 &&
+            <footer className={classes.footer}>
+                <Pagination currentPage={this.state.pageCurrentPosition ? parseInt(this.state.pageCurrentPosition) : 1}
+                            total={this.props.headers ? parseInt(this.props.headers.count) : 0} perPage={18}
+                            onChange={this.changePagination}/>
             </footer>}
 
         </div>)

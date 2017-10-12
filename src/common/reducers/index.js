@@ -11,6 +11,7 @@ import leagues from './leagues';
 import teams from './teams';
 import countries from './countries';
 import loader from './loader';
+import footer from './footer';
 
 export default combineReducers({
     load,
@@ -19,4 +20,5 @@ export default combineReducers({
     teams,
     countries,
     loader,
+    footer
 });
