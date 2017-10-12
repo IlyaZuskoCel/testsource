@@ -11,7 +11,15 @@ import {
     fetchLevels
 } from '../actions';
 import {addFavorite, removeFavorite} from "../../user/actions/index";
-import {go, getLeagues, getTeams, showFooter, hideFooter} from '../../common/actions';
+import {
+    go,
+    getLeagues,
+    getTeams,
+    showHeaderBackground,
+    hideHeaderBackground,
+    showFooter,
+    hideFooter
+} from '../../common/actions';
 
 import {mapOptions, map} from '../selectors';
 
@@ -53,8 +61,10 @@ const mapDispatchToProps = (dispatch, props) => ({
     removeFavorite: (playerId) => dispatch(removeFavorite(playerId)),
     setFilters: (filters, type) => dispatch(setFilters(filters, type)),
     clearFilters: () => dispatch(clearFilters()),
-    showFooter: ()=>dispatch(showFooter()),
-    hideFooter: ()=>dispatch(hideFooter()),
+    showHeaderBackground: () => dispatch(showHeaderBackground()),
+    hideHeaderBackground: () => dispatch(hideHeaderBackground()),
+    showFooter: () => dispatch(showFooter()),
+    hideFooter: () => dispatch(hideFooter()),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Search))

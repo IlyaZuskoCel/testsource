@@ -49,7 +49,7 @@ const styleSheet = createStyleSheet('DropDownCheckBoxes', theme => {
             zIndex: 1000,
 
             boxSizing: 'border-box',
-            padding: [15 , 25],
+            padding: [15, 25],
 
 
             [theme.breakpoints.down('sm')]: {
@@ -61,7 +61,7 @@ const styleSheet = createStyleSheet('DropDownCheckBoxes', theme => {
             }
         },
         formControl: {
-          width: '100%',
+            width: '100%',
         },
         overlay: {
             position: 'fixed',
@@ -85,7 +85,7 @@ const styleSheet = createStyleSheet('DropDownCheckBoxes', theme => {
             cursor: 'pointer',
         },
         controllBar: {
-            display:'flex',
+            display: 'flex',
             flexDirection: 'row',
             flex: 1,
             alignItems: 'center',
@@ -115,6 +115,7 @@ class DropDownCheckBoxes extends Component {
     };
 
     toggleOpen = () => {
+        document.body.style.overflow = this.state.open ? "visible" : "hidden";
         this.setState({open: !this.state.open});
     };
     handleChange = value => (event, checked) => {
@@ -129,24 +130,26 @@ class DropDownCheckBoxes extends Component {
         if ('clearSubFields' in nextProps && nextProps.clearSubFields) {
             this.setState({
                 nameSearch: ''
-            } , () => {
+            }, () => {
                 nextProps.stopClearing();
             });
         }
     }
 
     onChangeName = (event) => {
-      this.setState({nameSearch : event.target.value});
+        this.setState({nameSearch: event.target.value});
     };
 
     handleCancle = (event) => {
+        document.body.style.overflow = "visible";
         this.setState({open: false});
     };
 
     handleApply = (e) => {
+        document.body.style.overflow = "visible";
         this.setState({
             open: false,
-        } , () => {
+        }, () => {
 
             this.props.changeName(this.state.nameSearch);
         });
@@ -217,17 +220,17 @@ class DropDownCheckBoxes extends Component {
                     {this.state.open && <div className={classes.overlay} onClick={this.toggleOpen}/>}
                     {this.state.open &&
                     <Paper style={{zIndex: 1000}} square className={classes.suggestionsContainerOpen}>
-                            <div className={classes.controllBar}>
-                                <Button onClick={this.handleCancle} className={classes.cancleButton}>Cancel</Button>
-                                <Button onClick={this.handleApply} className={classes.applyButton}>Apply</Button>
-                            </div>
+                        <div className={classes.controllBar}>
+                            <Button onClick={this.handleCancle} className={classes.cancleButton}>Cancel</Button>
+                            <Button onClick={this.handleApply} className={classes.applyButton}>Apply</Button>
+                        </div>
 
-                            <TextField
-                                fullWidth
-                                id="search_name"
-                                label="Name"
-                                value={this.state.nameSearch }
-                                onChange={this.onChangeName}/>
+                        <TextField
+                            fullWidth
+                            id="search_name"
+                            label="Name"
+                            value={this.state.nameSearch}
+                            onChange={this.onChangeName}/>
                     </Paper>}
                 </div>
             </div>

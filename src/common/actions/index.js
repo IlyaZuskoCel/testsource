@@ -9,7 +9,9 @@ import {
     SUCCESS_ALERT, ERROR_ALERT, REMOVE_ALERT, SET_LEAGUES, SET_TEAMS, SET_COUNTRIES,
     INC_LOADER, DEC_LOADER,
     FOOTER_SHOW,
-    FOOTER_HIDE
+    FOOTER_HIDE,
+    HEADER_BACKGROUND_SHOW,
+    HEADER_BACKGROUND_HIDE
 } from '../constants/actions';
 
 import {logOut} from '../../user/actions'
@@ -100,6 +102,15 @@ export const stopLoading = () => dispatch => {
     dispatch({type: DEC_LOADER});
 };
 
+
+export const showHeaderBackground = () => dispatch => {
+    dispatch({type: HEADER_BACKGROUND_SHOW});
+};
+
+export const hideHeaderBackground = () => dispatch => {
+    dispatch({type: HEADER_BACKGROUND_HIDE});
+};
+
 export const showFooter = () => dispatch => {
     dispatch({type: FOOTER_SHOW});
 };
@@ -107,3 +118,4 @@ export const showFooter = () => dispatch => {
 export const hideFooter = () => dispatch => {
     dispatch({type: FOOTER_HIDE});
 };
+

@@ -116,6 +116,7 @@ class DropDownCheckBoxes extends Component {
     }
 
     toggleOpen = () => {
+        document.body.style.overflow = this.state.open ? "visible" : "hidden";
         this.setState({open: !this.state.open});
     };
 
@@ -159,7 +160,7 @@ class DropDownCheckBoxes extends Component {
             // let league = this.state.league_id ? this.state.league_id : (this.props.league ? this.props.league : '');
             let league = this.state.league_id ? this.state.league_id : '';
             let level = this.state.level_id ? this.state.level_id : (this.props.level ? this.props.level : '');
-
+            document.body.style.overflow = "visible";
             this.props.changeLeague(!this.state.clearLeague ? league : '', !this.state.clearLevel ? level : '');
         });
     };
@@ -170,6 +171,7 @@ class DropDownCheckBoxes extends Component {
             level_id: this.props.level || '',
             open: false,
         });
+        document.body.style.overflow = "visible";
     };
 
     onChangeLevel = (event, {suggestionValue}) => {

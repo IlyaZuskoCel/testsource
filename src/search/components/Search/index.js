@@ -125,7 +125,9 @@ const styleSheet = createStyleSheet('Search', theme => ({
     buttonFilter: {
         color: '#ffffff',
     },
-
+    filterTopHeight: {
+        height: 118
+    },
     navItem: {
         marginTop: 40
     },
@@ -196,6 +198,7 @@ const styleSheet = createStyleSheet('Search', theme => ({
 const fixedMainNavigationTrashold = 350;
 
 class Search extends Component {
+    scrollY = 0;
 
     constructor(props) {
         super(props);
@@ -235,18 +238,26 @@ class Search extends Component {
     }
 
     handleScroll(event) {
-        if (this.state.lastScrollPos > window.scrollY) {
-            this.setState({
-                direction: 'top',
-                lastScrollPos: window.scrollY
-            });
-        } else if (this.state.lastScrollPos < window.scrollY) {
 
-            this.setState({
-                direction: 'bottom',
-                lastScrollPos: window.scrollY
-            });
-        }
+        if (!this.state.mobileFilterOn || Math.abs(this.scrollY - window.scrollY) < 10) return;
+
+        const direction = this.scrollY - window.scrollY > 0 ? 'top' : 'bottom';
+
+        this.scrollY = window.scrollY;
+
+        if (direction === this.state.direction) return;
+
+        this.setState({
+            direction
+        });
+
+
+
+        if (direction === 'top')
+            this.props.hideHeaderBackground();
+        else
+            this.props.showHeaderBackground();
+
     };
 
     componentDidMount() {
@@ -365,11 +376,14 @@ class Search extends Component {
     }
 
     toggleMobileFilter() {
+
+
         if (this.state.mobileFilterOn)
             this.props.hideFooter();
         else
             this.props.showFooter();
 
+        this.props.showHeaderBackground();
 
         this.setState({mobileFilterOn: !this.state.mobileFilterOn}, () => {
             this.forceUpdate();
@@ -439,38 +453,45 @@ class Search extends Component {
             </Hidden>
 
             <Hidden smUp>
-                <div
-                    className={classNames(classes.headerWholeBackground, this.state.direction === 'top' && this.state.lastScrollPos > fixedMainNavigationTrashold && this.state.mobileFilterOn ? classes.fixNav : null)}>
-                    <div className={classes.line}></div>
-                </div>
-            </Hidden>
-            <Hidden smUp>
-                <div
-                    className={classNames(classes.headerMobNav, this.state.direction === 'top' && this.state.lastScrollPos > fixedMainNavigationTrashold && this.state.mobileFilterOn ? classes.headerMobNavFix : null)}>
-                    <Tabs index={this.state.activeTab} onChange={this.handleChange}
-                          className={classes.navigationWrapper}
-                          centered classes={{flexContainer: classes.headerMobCointainer}} textColor='#ffffff'
-                          indicatorColor={'#ffffff'}>
-                        <Tab label={<Typography type='body2'
-                                                className={classNames(classes.headerMobTab, classes.firstMobTab)}>Players</Typography>}
-                             style={{marginRight: 100}}/>
-                        <Tab label={<Typography type='body2' className={classes.headerMobTab}>Scouts</Typography>}/>
-                    </Tabs>
-                </div>
-            </Hidden>
-            <Hidden smUp>
-                <div
-                    className={classNames(classes.filterTogglerConntainer, this.state.direction === 'top' && this.state.lastScrollPos > fixedMainNavigationTrashold && this.state.mobileFilterOn ? classes.filterTogglerConntainerFix : null)}>
-                    <Button className={classes.buttonFilter} onClick={this.toggleMobileFilter}>
-                        <Typography className={classes.filterTitle}>Filter
-                            ({this.props.type === 'player' ? this.state.appliedFilters.playerFilters : this.state.appliedFilters.scoutFilters})</Typography>
-                        {this.state.mobileFilterOn && <Icon className={classes.arrow}>keyboard_arrow_down</Icon>}
-                        {!this.state.mobileFilterOn && <Icon className={classes.arrow}>keyboard_arrow_up</Icon>}
-                    </Button>
-                    {!this.state.mobileFilterOn &&
-                    <Button className={classes.clearFilters} onClick={this.onClearFilters}>
-                        <Typography className={classes.clearFilterTypography}>Clear All</Typography>
-                    </Button>}
+                <div className={this.state.direction === 'top'
+                && this.state.mobileFilterOn ? classes.filterTopHeight : null}>
+                    <div
+                        className={classNames(classes.headerWholeBackground,
+                            this.state.direction === 'top'
+                            && this.state.mobileFilterOn ? classes.fixNav : null)}>
+                        <div className={classes.line}></div>
+                    </div>
+
+                    <div
+                        className={classNames(classes.headerMobNav,
+                            this.state.direction === 'top'
+                            && this.state.mobileFilterOn ? classes.headerMobNavFix : null)}>
+                        <Tabs index={this.state.activeTab} onChange={this.handleChange}
+                              className={classes.navigationWrapper}
+                              centered classes={{flexContainer: classes.headerMobCointainer}} textColor='#ffffff'
+                              indicatorColor={'#ffffff'}>
+                            <Tab label={<Typography type='body2'
+                                                    className={classNames(classes.headerMobTab, classes.firstMobTab)}>Players</Typography>}
+                                 style={{marginRight: 100}}/>
+                            <Tab label={<Typography type='body2' className={classes.headerMobTab}>Scouts</Typography>}/>
+                        </Tabs>
+                    </div>
+
+                    <div
+                        className={classNames(classes.filterTogglerConntainer,
+                            this.state.direction === 'top'
+                            && this.state.mobileFilterOn ? classes.filterTogglerConntainerFix : null)}>
+                        <Button className={classes.buttonFilter} onClick={this.toggleMobileFilter}>
+                            <Typography className={classes.filterTitle}>Filter
+                                ({this.props.type === 'player' ? this.state.appliedFilters.playerFilters : this.state.appliedFilters.scoutFilters})</Typography>
+                            {this.state.mobileFilterOn && <Icon className={classes.arrow}>keyboard_arrow_down</Icon>}
+                            {!this.state.mobileFilterOn && <Icon className={classes.arrow}>keyboard_arrow_up</Icon>}
+                        </Button>
+                        {!this.state.mobileFilterOn &&
+                        <Button className={classes.clearFilters} onClick={this.onClearFilters}>
+                            <Typography className={classes.clearFilterTypography}>Clear All</Typography>
+                        </Button>}
+                    </div>
                 </div>
             </Hidden>
 

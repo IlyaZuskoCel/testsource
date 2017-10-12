@@ -285,9 +285,7 @@ class Header extends Component {
         this.state = {
             scroll: false,
             anchorEl: undefined,
-            open: false,
-            direction:'',
-            lastScrollPos:0,
+            open: false
         };
 
         this.handleMenuClick = this.handleMenuClick.bind(this);
@@ -310,18 +308,6 @@ class Header extends Component {
         }
 
 
-        if(this.state.lastScrollPos > window.scrollY) {
-            this.setState({
-                direction:'top',
-                lastScrollPos: window.scrollY
-            });
-        } else if(this.state.lastScrollPos < window.scrollY) {
-
-            this.setState({
-                direction:'bottom',
-                lastScrollPos: window.scrollY
-            });
-        }
     };
 
     handleMenuClick(event) {
@@ -383,13 +369,16 @@ class Header extends Component {
             }
         }
 
-        const hideBackground = (this.props.hideBackgroundTopHeader && !this.state.scroll)
+        const hideBackground = (this.props.hideBackground
+            || this.props.hideBackgroundTopHeader && !this.state.scroll)
             || (this.props.hideBackgroundTopMobileHeaderScroll && width === 'xs' && !this.state.scroll)
             || (this.props.hideBackgroundTopMobileHeader && width === 'xs');
 
         return (
-            <AppBar position="fixed" className={classNames(classes.container, {[classes.hideShadow]: hideBackground} , this.props.hideBoxShadowScroll ? classes.hideShadowScroll : null ,
-                this.props.hideBoxShadowScroll && this.state.direction === 'top' ? classes.hideShadowBackground : null)}>
+            <AppBar position="fixed"
+                    className={classNames(classes.container,
+                        {[classes.hideShadow]: hideBackground}
+                    )}>
                 <div className={classNames({[classes.leftBg]: !hideBackground})}/>
                 <div className={classNames({[classes.rightBg]: !hideBackground})}/>
                 <Grid container gutter={8} className={classes.root}>
@@ -414,7 +403,7 @@ class Header extends Component {
                                 <Link to="/search" disabledUnderline
                                       className={classNames(classes.menuItem)}>
                                     <Button
-                                        className={classNames(classes.searchButton, {[classes.searchButtonHideBackground]: hideBackground && !this.props.hideBackgroundTopMobileHeader && !this.props.hideBackgroundTopMobileHeaderScroll })}>
+                                        className={classNames(classes.searchButton, {[classes.searchButtonHideBackground]: hideBackground && !this.props.hideBackgroundTopMobileHeader && !this.props.hideBackgroundTopMobileHeaderScroll})}>
                                         <ScoutIcon className={classes.searchIcon}>search</ScoutIcon>
                                         <span>Discover</span>
                                     </Button>

@@ -19,5 +19,8 @@ export const INC_LOADER = 'loader:incLoader';
 export const DEC_LOADER = 'loader:decLoader';
 
 
+export const HEADER_BACKGROUND_SHOW = 'header:showBackground';
+export const HEADER_BACKGROUND_HIDE = 'header:hideBackground';
+
 export const FOOTER_SHOW = 'footer:show';
 export const FOOTER_HIDE = 'footer:hide';

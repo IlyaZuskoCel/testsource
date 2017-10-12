@@ -13,6 +13,7 @@ import {go} from '../actions';
 
 const mapStateToProps = (state) => ({
     user: state.user.current,
+    hideBackground: !state.common.header.background
 });
 
 
