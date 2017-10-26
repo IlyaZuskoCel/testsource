@@ -10,7 +10,7 @@ function loader(state = 0, action) {
         case INC_LOADER:
             return state + 1;
         case DEC_LOADER:
-            return state - 1;
+            return Math.max(state - 1, 0);
         default:
             return state;
     }

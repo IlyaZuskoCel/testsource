@@ -16,6 +16,9 @@ import Tabs, {Tab} from 'material-ui/Tabs';
 import Typography from 'material-ui/Typography';
 import Hidden from 'material-ui/Hidden';
 
+
+import * as VIDEO_STATUS from '../../constants/video';
+
 import Upload from './Upload';
 import Trim from './Trim';
 import Form from './Form';
@@ -111,7 +114,7 @@ class Add extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.state.nextTrim && nextProps.video.trim_thumb !== this.props.video.trim_thumb) {
+        if (this.state.nextTrim && nextProps.video.status === VIDEO_STATUS.STATUS_TRIMMED) {
             this.setState({nextTrim: false}, () => {
                 this.changeTab(2);
             })

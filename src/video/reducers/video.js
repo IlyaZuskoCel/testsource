@@ -16,6 +16,7 @@ function video(state = {}, action) {
         case TRIM_VIDEO:
             return {
                 ...state,
+                status: action.payload.status,
                 trim_video_file_path: action.payload.trim_video_file_path,
                 trim_thumb: action.payload.trim_thumb,
                 time_start: action.payload.time_start,
@@ -26,6 +27,7 @@ function video(state = {}, action) {
                 ...state,
                 id: action.payload.id,
                 video_path: action.payload.video_path,
+                status: action.payload.status,
                 time_start: action.payload.time_start,
                 time_end: action.payload.time_end,
                 thumb_lg: action.payload.thumb_lg,

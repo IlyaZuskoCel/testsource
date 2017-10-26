@@ -23,6 +23,8 @@ import {
     DELETE_VIDEO
 } from '../constants/actions';
 
+import * as VIDEO_STATUS from '../constants/video';
+
 
 export const fetchVideo = id => dispatch => {
     dispatch(startLoading());
@@ -44,6 +46,21 @@ export const fetchVideo = id => dispatch => {
         })
 };
 
+
+const getStatusVideo = (id, status, type) => dispatch => {
+    setTimeout(() => {
+        get(`/api/v2/video/get/${id}`)
+            .then(video => {
+                console.log(id, status, type, video.status === status);
+                if (video.status === status) {
+                    dispatch(stopLoading());
+                    return dispatch({type, payload: video});
+                }
+                return dispatch(getStatusVideo(id, status, type))
+            })
+    }, 1000);
+};
+
 export const upload = file => dispatch => {
 
     let form = new FormData();
@@ -59,6 +76,10 @@ export const upload = file => dispatch => {
             if ('error' in result)
                 return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
             dispatch({type: UPLOAD_VIDEO, payload: result});
+
+
+            dispatch(getStatusVideo(result.id, VIDEO_STATUS.STATUS_CONVERT, UPLOAD_VIDEO));
+
         })
         .catch((message) => {
             if (message === 'Unauthorized') {
@@ -73,7 +94,7 @@ export const postVideo = (data) => dispatch => {
     dispatch(startLoading());
 
     const overlayUri = data.overlayUri;
-    return post(`/api/v2/video/update-video`, {...data, overlayUri: null})
+    return post(`/api/v2/video/update-video`, {...data, overlayUri: null, is_published: overlayUri ? 0 : 1})
         .then(result => {
             dispatch(stopLoading());
 
@@ -96,7 +117,7 @@ export const postVideo = (data) => dispatch => {
                         dispatch(stopLoading());
                         dispatch({type: SET_VIDEO, payload: {}});
                         dispatch(push(`/profile/${result.id_user}`));
-                        dispatch({type: SUCCESS_ALERT, payload: {message: 'Video was posted successfully'}});
+                        dispatch({type: SUCCESS_ALERT, payload: {message: 'You will receive email when video will be posted'}});
                     })
                     .catch(console.log);
             }
@@ -162,12 +183,19 @@ export const update = (data) => dispatch => {
 };
 
 export const trim = (id_video, time_start, time_end) => dispatch => {
-
+    dispatch(startLoading());
     return post(`/api/v2/video/trim`, {id_video, time_start, time_end})
         .then(result => {
             if ('error' in result)
                 return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
             dispatch({type: TRIM_VIDEO, payload: result});
+
+            if (result.status === VIDEO_STATUS.STATUS_TRIMMED) {
+                return dispatch(stopLoading());
+            }
+
+            dispatch(getStatusVideo(result.id, VIDEO_STATUS.STATUS_TRIMMED, TRIM_VIDEO));
+
         })
         .catch((message) => {
             if (message === 'Unauthorized') {

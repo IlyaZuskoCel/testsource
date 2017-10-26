@@ -108,7 +108,7 @@ class Upload extends Component {
         if (event.target.files[0].size > 2147483648)
             return this.setState({error: 'Please upload another video - the file size should be under 2 GB'});
 
-        if (event.target.files[0].type.search('video') < 0)
+        if (event.target.files[0].type.search('video') < 0 && event.target.files[0].name.search('webm') < 0  && event.target.files[0].name.search('mp4') < 0)
             return this.setState({error: 'Please upload another video - the file type should be video'});
 
         this.setState({error: ''});
@@ -142,7 +142,7 @@ class Upload extends Component {
                 </Paper>
             )}
 
-            {!video.video_path && video.progress >= 0 && ( <Paper className={classes.uploadWrap}>
+            {video.status !== 3 && video.progress >= 0 && ( <Paper className={classes.uploadWrap}>
                 {video.progress < 100 ? (
                     <Typography type="headline"
                                 className={classes.progress}>{video.progress}%</Typography>
@@ -157,15 +157,15 @@ class Upload extends Component {
                             className={classes.progressTitle}>{video.progress < 100 ? 'Upload in Progress' : 'Conversion in Progress'}</Typography>
             </Paper>)}
 
-            {video.video_path && (<Paper className={classNames(classes.uploadWrap, classes.videoWrap)}>
+            {video.status === 3 && (<Paper className={classNames(classes.uploadWrap, classes.videoWrap)}>
                     <video src={video.video_path} className={classes.video} controls controlsList="nodownload"/>
                 </Paper>
             )}
             {this.state.error && <Typography type="body2">{this.state.error}</Typography>}
 
             <div className={classes.buttons}>
-                <Button onClick={this.props.onNext} raised color={video.video_path ? 'primary' : 'default'}
-                        disabled={!video.video_path}>
+                <Button onClick={this.props.onNext} raised color={video.status !== 3 ? 'default' : 'primary'}
+                        disabled={video.status !== 3}>
                     Next
                 </Button>
             </div>
