@@ -117,7 +117,7 @@ export const postVideo = (data) => dispatch => {
                         dispatch(stopLoading());
                         dispatch({type: SET_VIDEO, payload: {}});
                         dispatch(push(`/profile/${result.id_user}`));
-                        dispatch({type: SUCCESS_ALERT, payload: {message: 'You will receive email when video will be posted'}});
+                        dispatch({type: SUCCESS_ALERT, payload: {message: 'Your video is being processed. We will send you an email once it\'s posted.'}});
                     })
                     .catch(console.log);
             }
@@ -162,7 +162,7 @@ export const update = (data) => dispatch => {
                         dispatch(stopLoading());
                         dispatch({type: SET_VIDEO, payload: {}});
                         dispatch(push(`/profile/${result.id_user}`));
-                        dispatch({type: SUCCESS_ALERT, payload: {message: 'Video was updated successfully'}});
+                        dispatch({type: SUCCESS_ALERT, payload: {message: 'Your video is being processed. We will send you an email once it\'s updated.'}});
                     })
                     .catch((message) => {
                         dispatch({type: ERROR_ALERT, payload: {message}});
