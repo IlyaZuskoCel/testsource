@@ -9,7 +9,7 @@ import {withRouter} from 'react-router-dom'
 
 import PlayerForm from '../components/Edit/PlayerForm';
 
-import {goBack, getCountries, getLeagues, getTeams} from '../../common/actions';
+import {goBack, getLevels, getCountries, getLeagues, getTeams} from '../../common/actions';
 import {update, uploadPhoto} from '../actions';
 import {mapOptions, map} from '../selectors';
 
@@ -17,6 +17,9 @@ const mapStateToProps = (state, props) => ({
     user: state.user.current,
     nationalities: map(state.common.countries),
     nationalityOptions: mapOptions(state.common.countries),
+    countries: map(state.common.countries),
+    countryOptions: mapOptions(state.common.countries),
+    levels: state.common.levels,
     leagues: {'-1': 'My League isn\'t listed', ...map(state.common.leagues)},
     leagueOptions: [{
         label: 'My League isn\'t listed',
@@ -29,6 +32,7 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchToProps = (dispatch) => ({
     fetchData: () => {
         dispatch(getCountries());
+        dispatch(getLevels());
         dispatch(getLeagues());
         dispatch(getTeams());
     },

@@ -48,7 +48,10 @@ const styleSheet = createStyleSheet('ScoutForm', theme => ({
     hasLabel: {
         marginLeft: -12,
         marginRight: 16,
-        marginTop: 48
+        marginTop: 16
+    },
+    requiredCaption: {
+        marginTop: 40
     }
 }));
 
@@ -97,6 +100,12 @@ class ScoutForm extends Component {
 
     render() {
         const {classes} = this.props;
+
+        let levels = null;
+
+        if (this.state.id_country)
+            levels = this.props.levels.filter(l => parseInt(l.id_country) === parseInt(this.state.id_country)).map(l => l.id);
+
         return (
             <div className={classes.root}>
                 <form onSubmit={this.handleSubmit}>
@@ -148,11 +157,30 @@ class ScoutForm extends Component {
 
                         <Grid item xs={12}>
                             <Autosuggest fullWidth
+                                         error={this.state.errors.indexOf('id_country') > -1}
+                                         label="Country"
+                                         suggestions={this.props.countryOptions}
+                                         onSuggestionSelected={(event, {suggestionValue}) => {
+                                             this.setState({
+                                                 id_country: suggestionValue,
+                                                 id_league: '',
+                                                 id_team_current: '',
+                                                 league: '',
+                                                 team: '',
+                                             });
+                                         }}
+                                         value={this.props.countries[this.state.id_country] || ''}/>
+
+                        </Grid>
+
+
+                        <Grid item xs={12}>
+                            <Autosuggest fullWidth
                                          required
                                          error={this.state.errors.indexOf('id_league') > -1}
                                          label="League"
                                          value={this.state.id_league ? (this.props.leagues[this.state.id_league] || this.props.leagues['-1']) : ''}
-                                         suggestions={this.props.leagueOptions}
+                                         suggestions={levels ? this.props.leagueOptions.filter(l => l.value === '-1' || levels.indexOf(parseInt(l.item.id_level)) > -1) : this.props.leagueOptions}
                                          onSuggestionSelected={(event, {suggestionValue}) => {
                                              if ((!this.state.id_league && !suggestionValue) || '' + this.state.id_league === '' + suggestionValue) return;
 
@@ -216,6 +244,9 @@ class ScoutForm extends Component {
                             </Grid>
                         )}
 
+                        <Grid item xs={12}>
+                            <Typography type="caption" className={classes.requiredCaption}>*Required fields</Typography>
+                        </Grid>
                         <Grid item xs={12}>
                             <FormControlLabel
                                 className={classes.hasLabel}

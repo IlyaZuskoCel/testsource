@@ -250,6 +250,9 @@ class ScoutForm extends Component {
         } else if (user.profile_picture_desktop) {
             userPhotoSrc = user.profile_picture_desktop;
         }
+        let levels = null;
+        if (this.state.id_country)
+            levels = this.props.levels.filter(l => parseInt(l.id_country) === parseInt(this.state.id_country)).map(l => l.id);
 
         return <div className={classes.root}>
             <Prompt
@@ -350,6 +353,26 @@ class ScoutForm extends Component {
                     </Grid>
                     <Typography type="subheading" className={classes.subTitle}>Team Information</Typography>
                     <Grid container>
+                        <Grid item xs={12}>
+                            <Grid item xs={12} md={6}>
+                                <Autosuggest fullWidth
+                                             error={this.state.errors.indexOf('id_country') > -1}
+                                             label="Country"
+                                             suggestions={this.props.countryOptions}
+                                             onSuggestionSelected={(event, {suggestionValue}) => {
+                                                 this.setState({
+                                                     id_country: suggestionValue,
+                                                     id_league: '',
+                                                     id_team_current: '',
+                                                     league: '',
+                                                     team: '',
+                                                 });
+                                             }}
+                                             value={this.props.countries[this.state.id_country] || ''}/>
+                            </Grid>
+                        </Grid>
+
+
                         <Grid item xs={12} md={6}>
                             <Grid item xs={12}>
                                 <Autosuggest fullWidth
@@ -357,7 +380,7 @@ class ScoutForm extends Component {
                                              error={this.state.errors.indexOf('id_league') > -1}
                                              label="Current League"
                                              value={this.state.id_league ? (this.props.leagues[this.state.id_league] || this.props.leagues['-1']) : ''}
-                                             suggestions={this.props.leagueOptions}
+                                             suggestions={levels ? this.props.leagueOptions.filter(l => l.value === '-1' || levels.indexOf(parseInt(l.item.id_level)) > -1) : this.props.leagueOptions}
                                              onSuggestionSelected={(event, {suggestionValue}) => {
                                                  if ((!this.state.id_league && !suggestionValue) || '' + this.state.id_league === '' + suggestionValue) return;
 

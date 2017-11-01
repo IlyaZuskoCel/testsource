@@ -6,7 +6,7 @@
 import {push as routerGo, goBack as routerBack} from 'react-router-redux';
 
 import {
-    SUCCESS_ALERT, ERROR_ALERT, REMOVE_ALERT, SET_LEAGUES, SET_TEAMS, SET_COUNTRIES,
+    SUCCESS_ALERT, ERROR_ALERT, REMOVE_ALERT, SET_LEAGUES, SET_TEAMS, SET_COUNTRIES, SET_LEVELS,
     INC_LOADER, DEC_LOADER,
     FOOTER_SHOW,
     FOOTER_HIDE,
@@ -36,6 +36,28 @@ export const addErrorAlert = (message, options) => dispatch => {
 export const addSuccessAlert = (title, options) => dispatch => {
     dispatch({type: SUCCESS_ALERT, payload: {message, ...options}});
 };
+
+
+
+export const getLevels = () => dispatch => {
+    dispatch(startLoading());
+    get('/api/v2/level/get-list')
+        .then(levels => {
+            dispatch(stopLoading());
+            if ('error' in levels)
+                return dispatch({type: ERROR_ALERT, payload: {message: levels.error.message}});
+            dispatch({type: SET_LEVELS, payload: levels});
+        })
+        .catch(message => {
+            if (message === 'Unauthorized') {
+                dispatch(logOut());
+            }
+            dispatch({type: ERROR_ALERT, payload: {message}});
+            dispatch(stopLoading());
+        })
+};
+
+
 export const getLeagues = () => dispatch => {
     dispatch(startLoading());
     return get(`/api/v2/league/get-list`)

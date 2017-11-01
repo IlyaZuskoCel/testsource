@@ -9,6 +9,7 @@ export const LOAD = 'common:Load';
 export const ERROR_ALERT = 'alert:error';
 export const SUCCESS_ALERT = 'alert:success';
 export const REMOVE_ALERT = 'alert:remove';
+export const SET_LEVELS = 'leagues:setLevels';
 export const SET_LEAGUES = 'leagues:setLeagues';
 export const SET_TEAMS = 'teams:setTeams';
 export const SET_COUNTRIES = 'countries:set';

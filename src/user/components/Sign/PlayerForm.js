@@ -48,7 +48,10 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
     hasLabel: {
         marginLeft: -12,
         marginRight: 16,
-        marginTop: 48
+        marginTop: 16
+    },
+    requiredCaption: {
+        marginTop: 40
     }
 }));
 
@@ -165,6 +168,8 @@ class PlayerForm extends Component {
 
                             <Typography type="caption">If you have an agent, scouts will contact your agent
                                 directly.</Typography>
+
+                            <Typography type="caption" className={classes.requiredCaption}>*Required fields</Typography>
 
 
                         </Grid>

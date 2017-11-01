@@ -10,11 +10,14 @@ import {connect} from 'react-redux';
 import SignScoutForm from '../components/Sign/ScoutForm';
 
 import {registerScout} from '../actions';
-import {getLeagues, getTeams} from '../../common/actions';
+import {getLevels, getLeagues, getTeams, getCountries} from '../../common/actions';
 
 import {map, mapOptions,} from '../selectors'
 
 const mapStateToProps = (state) => ({
+    countries: map(state.common.countries),
+    countryOptions: mapOptions(state.common.countries),
+    levels: state.common.levels,
     leagues: {'-1': 'My League isn\'t listed', ...map(state.common.leagues)},
     leagueOptions: [{
         label: 'My League isn\'t listed',
@@ -26,6 +29,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     register: (user) => dispatch(registerScout(user)),
     fetchData: () => {
+        dispatch(getCountries());
+        dispatch(getLevels());
         dispatch(getLeagues());
         dispatch(getTeams());
     },

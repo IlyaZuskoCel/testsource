@@ -696,7 +696,7 @@ class PlayerProfile extends Component {
                                 {!!!user.league_status && user.league && ' - Pending / '}{user.league_short ? ' - ' + user.league_short : (!!!user.league_status ? user.league : '')}
                             </Typography>
                             <Typography type="body1" align="center">
-                                {(user.team_location !== 'n/a' && user.team_location) || user.team_country || 'Location Unknown'}
+                                {user.country || (user.team_location !== 'n/a' && user.team_location) || user.team_country || 'Location Unknown'}
                             </Typography>
 
                         </div>

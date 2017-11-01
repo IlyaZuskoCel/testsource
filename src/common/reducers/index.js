@@ -7,6 +7,7 @@ import {combineReducers} from 'redux';
 
 import load from './load';
 import alert from './alert';
+import levels from './levels';
 import leagues from './leagues';
 import teams from './teams';
 import countries from './countries';
@@ -17,6 +18,7 @@ import footer from './footer';
 export default combineReducers({
     load,
     alert,
+    levels,
     leagues,
     teams,
     countries,
