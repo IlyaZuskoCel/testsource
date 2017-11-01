@@ -220,6 +220,8 @@ class ScoutFilter extends Component {
             let leagues = this.props.leagueOptions.filter(i => i.item.id_level == this.state.id_level)
                 .map(i => parseInt(i.item.id));
             teams = teams.filter(t => leagues.indexOf(t.item.id_league) !== -1 );
+        }else if (this.state.id_country) {
+            teams = this.props.teamOptions.filter(i => i.item.id_country === parseInt(this.state.id_country));
         }
 
         return teams;

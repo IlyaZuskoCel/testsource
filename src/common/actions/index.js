@@ -79,7 +79,7 @@ export const getLeagues = () => dispatch => {
 // /v2/team/get-list[?fields=id,name]
 export const getTeams = () => dispatch => {
     dispatch(startLoading());
-    return get(`/api/v2/team/get-list?fields=id,id_league,name`)
+    return get(`/api/v2/team/get-list?fields=id,id_league,id_country,name`)
         .then(teams => {
             dispatch(stopLoading());
 
