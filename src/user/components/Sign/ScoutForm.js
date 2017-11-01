@@ -82,10 +82,10 @@ class ScoutForm extends Component {
         e.preventDefault();
 
         if (!this.state.password)
-            return this.setthis.state({errors: ['password']});
+            return this.state({errors: ['password']});
 
         if (this.state.password !== this.state.password_repeat)
-            return this.setthis.state({errors: ['password_repeat']});
+            return this.state({errors: ['password_repeat']});
 
 
         if (this.state.id_league === '-1' && !this.state.league)

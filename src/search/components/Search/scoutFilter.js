@@ -110,7 +110,9 @@ class ScoutFilter extends Component {
         if ('query' in nextProps ) {
             this.setState({
                 id_league_save: nextProps.query.id_league ? parseInt(nextProps.query.id_league ) : null,
-                id_level: nextProps.query.id_level ? parseInt(nextProps.query.id_level) : null
+                id_level: nextProps.query.id_level ? parseInt(nextProps.query.id_level) : null,
+                id_country: nextProps.query.id_country ? parseInt(nextProps.query.id_country) : null,
+
             })
         }
 
@@ -171,6 +173,7 @@ class ScoutFilter extends Component {
 
 
         let options = {
+            id_country: this.state.id_country ? this.state.id_country : null,
             id_league: this.state.id_league ? this.state.id_league : null,
             id_team_current: this.state.id_team_current ? this.state.id_team_current : null,
             id_level: this.state.id_level ? this.state.id_level : null,
@@ -178,7 +181,7 @@ class ScoutFilter extends Component {
             page: this.props.page ? this.props.page : 1,
         };
 
-        if (this.state.name || this.state.id_league || this.state.id_team_current || this.state.id_level) {
+        if (this.state.name || this.state.id_league || this.state.id_team_current || this.state.id_level || this.state.id_country) {
             queryString += '?';
 
             for (let key in options) {
@@ -222,14 +225,14 @@ class ScoutFilter extends Component {
         return teams;
     };
 
-    changeLeague = (league , level) => {
-        this.setState({id_league : league , id_team_current: '' , id_level : level} , () => {
+    changeLeague = (league , level, country) => {
+        this.setState({id_league : league , id_team_current: '' , id_level : level,  id_country: country} , () => {
             this.makeFilterRequest();
         });
     };
 
     clearLeague = () => {
-        this.setState({id_league : '' , dropdownLeagues: []  , id_level : ''} , () => {
+        this.setState({id_league : '' , dropdownLeagues: []  , id_level : '', id_country:''} , () => {
             this.makeFilterRequest();
         });
     };
@@ -246,7 +249,9 @@ class ScoutFilter extends Component {
                     <DropdownOptions  fullWidth
                                       options={[]}
                                       value={1}
-                                      label="Level/League"
+                                      label="Company/Level/League"
+                                      countries={this.props.countries}
+                                      countryOptions={this.props.countryOptions}
                                       levels={this.props.levels}
                                       levelOptions={this.props.levelOptions && this.props.levelOptions.length > 0 ? this.props.levelOptions: []}
                                       leaguesOptions={this.props.leagueOptions}
@@ -255,7 +260,7 @@ class ScoutFilter extends Component {
                                       clearLeague={this.clearLeague}
                                       league={parseInt(this.state.id_league) || this.state.id_league_save ||  ''}
                                       level={this.state.id_level || ''}
-
+                                      country={this.state.id_country || ''}
                                       clearSubFields={this.state.clearSubFields}
                                       stopClearing={this.clearSubFields}
                     />

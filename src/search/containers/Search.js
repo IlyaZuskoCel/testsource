@@ -13,6 +13,7 @@ import {
 import {addFavorite, removeFavorite} from "../../user/actions/index";
 import {
     go,
+    getCountries,
     getLeagues,
     getTeams,
     showHeaderBackground,
@@ -29,6 +30,8 @@ const mapStateToProps = (state, props) => ({
     currentUser: state.user.current,
     user: state.user.user,
     results: state.search.people,
+    countries: map(state.common.countries),
+    countryOptions: mapOptions(state.common.countries),
     leagues: map(state.common.leagues),
     leagueOptions: mapOptions(state.common.leagues, item => item.name + ' ' + item.short_name),
     teams: map(state.common.teams),
@@ -47,6 +50,7 @@ const mapDispatchToProps = (dispatch, props) => ({
     uploadPlayers: (params) => dispatch(uploadPlayers(params)),
     uploadScouts: (params) => dispatch(uploadScouts(params)),
     fetchData: () => {
+        dispatch(getCountries());
         dispatch(getLeagues());
         dispatch(getTeams());
         dispatch(fetchLevels());

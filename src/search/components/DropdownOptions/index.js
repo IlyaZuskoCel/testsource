@@ -121,12 +121,27 @@ class DropDownCheckBoxes extends Component {
     };
 
     componentWillReceiveProps(nextProps) {
+
+        if ('levels' in nextProps) {
+            this.setState({levels: nextProps.levels});
+        }
+
+        if ('levelOptions' in nextProps) {
+            this.setState({
+                levelOptions: nextProps.levelOptions,
+                filteredLevels: nextProps.country ? nextProps.levelOptions.filter(level => parseInt(level.item.id_country) === parseInt(nextProps.country)) : nextProps.levelOptions
+
+            });
+        }
+
         if ('leagues' in nextProps) {
             this.setState({leagues: nextProps.leagues});
         }
-
         if ('leaguesOptions' in nextProps) {
-            this.setState({leaguesOptions: nextProps.leaguesOptions, filteredLeagues: nextProps.leaguesOptions});
+            this.setState({
+                leaguesOptions: nextProps.leaguesOptions,
+                filteredLeagues: nextProps.level ? nextProps.leaguesOptions.filter(league => parseInt(league.item.id_level) === parseInt(nextProps.level)) : nextProps.leaguesOptions
+            });
         }
 
 
@@ -134,6 +149,7 @@ class DropDownCheckBoxes extends Component {
             this.setState({
                 level_id: '',
                 league_id: '',
+                country_id: '',
             }, () => {
                 nextProps.stopClearing();
             });
@@ -141,6 +157,9 @@ class DropDownCheckBoxes extends Component {
 
         if ('league' in nextProps) {
             this.setState({league_id: nextProps.league});
+        }
+        if ('level' in nextProps) {
+            this.setState({level_id: nextProps.level});
         }
     }
 
@@ -160,13 +179,15 @@ class DropDownCheckBoxes extends Component {
             // let league = this.state.league_id ? this.state.league_id : (this.props.league ? this.props.league : '');
             let league = this.state.league_id ? this.state.league_id : '';
             let level = this.state.level_id ? this.state.level_id : (this.props.level ? this.props.level : '');
+            let country = this.state.country_id ? this.state.country_id : (this.props.country ? this.props.country : '');
             document.body.style.overflow = "visible";
-            this.props.changeLeague(!this.state.clearLeague ? league : '', !this.state.clearLevel ? level : '');
+            this.props.changeLeague(!this.state.clearLeague ? league : '', !this.state.clearLevel ? level : '', !this.state.clearCountry ? country : '');
         });
     };
 
     handleCancel = (event) => {
         this.setState({
+            country_id: this.props.country || '',
             league_id: this.props.league || '',
             level_id: this.props.level || '',
             open: false,
@@ -178,9 +199,23 @@ class DropDownCheckBoxes extends Component {
         let leagues = suggestionValue ? this.state.leaguesOptions.filter(league => parseInt(league.item.id_level) === suggestionValue) : this.state.leaguesOptions;
 
         this.setState({
-            'level_id': suggestionValue, filteredLeagues: leagues,
+            'level_id': suggestionValue,
+            filteredLeagues: leagues,
             'league_id': '',
             clearLevel: !suggestionValue ? true : false,
+
+        });
+    };
+    onChangeCountry = (event, {suggestionValue}) => {
+        let levels = suggestionValue ? this.state.levelOptions.filter(level => parseInt(level.item.id_country) === parseInt(suggestionValue)) : this.state.levelOptions;
+        this.setState({
+            'country_id': suggestionValue,
+            'level_id': '',
+            filteredLevels: levels,
+            'league_id': '',
+            clearCountry: !suggestionValue ? true : false,
+            clearLevel: !suggestionValue ? true : false,
+            clearLeague: !suggestionValue ? true : false,
 
         });
     };
@@ -194,10 +229,20 @@ class DropDownCheckBoxes extends Component {
     };
 
     getLevelLeagueText = () => {
-        let text = (this.state.level_id || this.props.level) && this.props.league ? `${this.props.leagues[this.props.league]}, ${this.props.levels[this.props.level]}`
-            : (this.props.league ? `${this.props.leagues[this.props.league]}` : (this.props.level ? `${this.props.levels[this.props.level]}` : ''));
 
-        return text;
+        let a = [];
+
+        if (this.props.league)
+            a.push(this.props.leagues[this.props.league]);
+
+        if (this.state.level_id || this.props.level)
+            a.push(this.props.levels[this.state.level_id || this.props.level]);
+
+        if (this.state.country_id || this.props.country)
+            a.push(this.props.countries[this.state.country_id || this.props.country]);
+
+
+        return a.join(', ');
     };
 
     render() {
@@ -217,6 +262,7 @@ class DropDownCheckBoxes extends Component {
             helperText,
             id,
             level,
+            country,
             league,
             clearSubFields,
             stopClearing,
@@ -227,8 +273,13 @@ class DropDownCheckBoxes extends Component {
             getLeagues,
             changeLeague,
             clearLeague,
+            countries,
+            countryOptions,
             ...other
         } = this.props;
+
+
+
         return (
             <div className={classNames(classes.root, className)}>
                 <div className={classes.inputRow}>
@@ -241,13 +292,13 @@ class DropDownCheckBoxes extends Component {
                         {label && (
                             <InputLabel htmlFor={id}
                                         focused={this.state.open}
-                                        shrink={this.state.open || !!value.length || !!this.props.league || !!this.state.level_id || !!this.props.level}
+                                        shrink={this.state.open || !!value.length || !!this.props.league || !!this.state.level_id || !!this.props.level || !!this.state.country_id || !!this.props.country}
                                         onClick={this.toggleOpen}
                                         className={classNames(classes.label, labelClassName)} {...InputLabelProps}>
                                 {label}
                             </InputLabel>
                         )}
-                        {(value.length || this.state.open || this.props.league || !!this.state.level_id || !!this.props.level) ? (
+                        {(value.length || this.state.open || this.props.league || !!this.state.level_id || !!this.props.level || !!this.state.country_id || !!this.props.country) ? (
                             <Typography type="body2" onClick={this.toggleOpen}
                                         id={id}
                                         className={classes.input}>
@@ -279,11 +330,20 @@ class DropDownCheckBoxes extends Component {
                             </div>
                         </Hidden>
 
+
+                        <div className={classes.dropdownItem}>
+                            <Autosuggest fullWidth
+                                         label="Country"
+                                         value={this.props.countries && !this.state.clearCountry ? this.props.countries[this.state.country_id] || this.props.countries[country] || '' : ''}
+                                         suggestions={this.props.countryOptions}
+                                         onSuggestionSelected={this.onChangeCountry}/>
+                        </div>
+
                         <div className={classes.dropdownItem}>
                             <Autosuggest fullWidth
                                          label="Level"
-                                         value={this.props.levels && !this.state.clearLevel ? this.props.levels[this.state.level_id] || this.props.levels[level] || '' : ''}
-                                         suggestions={this.props.levelOptions}
+                                         value={this.state.level_id && !this.state.clearLevel ? this.props.levels[this.state.level_id] || '' : ''}
+                                         suggestions={this.state.filteredLevels || []}
                                          onSuggestionSelected={this.onChangeLevel}/>
                         </div>
 

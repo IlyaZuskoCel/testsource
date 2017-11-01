@@ -173,6 +173,7 @@ const getUserState = user => ({
     league: user.league,
     team: user.team,
     biography: user.biography,
+    id_country: user.id_country
 });
 
 class ScoutForm extends Component {

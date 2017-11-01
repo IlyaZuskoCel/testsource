@@ -414,7 +414,9 @@ class Search extends Component {
                     </div>
 
                     <div className={classNames(classes.content)}>
-                        {this.props.type === 'scout' && <ScoutFilter leagues={this.props.leagues}
+                        {this.props.type === 'scout' && <ScoutFilter countries={this.props.countries}
+                                                                     countryOptions={this.props.countryOptions}
+                                                                     leagues={this.props.leagues}
                                                                      leagueOptions={this.props.leagueOptions}
                                                                      levels={this.props.levels}
                                                                      levelOptions={this.props.levelOptions ? this.props.levelOptions : []}
@@ -432,7 +434,9 @@ class Search extends Component {
                                                                      setFilters={this.props.setFilters}
                         />}
 
-                        {this.props.type === 'player' && <PlayerFilter leagues={this.props.leagues}
+                        {this.props.type === 'player' && <PlayerFilter countries={this.props.countries}
+                                                                       countryOptions={this.props.countryOptions}
+                                                                       leagues={this.props.leagues}
                                                                        leagueOptions={this.props.leagueOptions}
                                                                        levels={this.props.levels}
                                                                        levelOptions={this.props.levelOptions ? this.props.levelOptions : []}
@@ -497,7 +501,9 @@ class Search extends Component {
 
             {(!this.state.mobileFilterOn && (width === 'sm' || width === 'xs')) && <Hidden smUp>
                 <div>
-                    {this.props.type === 'scout' && <ScoutFilter leagues={this.props.leagues}
+                    {this.props.type === 'scout' && <ScoutFilter countries={this.props.countries}
+                                                                 countryOptions={this.props.countryOptions}
+                                                                 leagues={this.props.leagues}
                                                                  leagueOptions={this.props.leagueOptions}
                                                                  levels={this.props.levels}
                                                                  levelOptions={this.props.levelOptions ? this.props.levelOptions : []}
@@ -517,7 +523,9 @@ class Search extends Component {
                     />
                     }
 
-                    {this.props.type === 'player' && <PlayerFilter leagues={this.props.leagues}
+                    {this.props.type === 'player' && <PlayerFilter countries={this.props.countries}
+                                                                   countryOptions={this.props.countryOptions}
+                                                                   leagues={this.props.leagues}
                                                                    leagueOptions={this.props.leagueOptions}
                                                                    levels={this.props.levels}
                                                                    levelOptions={this.props.levelOptions ? this.props.levelOptions : []}
