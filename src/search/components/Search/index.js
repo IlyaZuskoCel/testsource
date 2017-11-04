@@ -125,8 +125,15 @@ const styleSheet = createStyleSheet('Search', theme => ({
     buttonFilter: {
         color: '#ffffff',
     },
+    '@keyframes fadeIn': {
+        from: {opacity: 0},
+        to: {opacity: 1}
+    },
     filterTopHeight: {
-        height: 118
+        height: 118,
+
+        animation: 'fadeIn .7s'
+
     },
     navItem: {
         marginTop: 40
@@ -250,7 +257,6 @@ class Search extends Component {
         this.setState({
             direction
         });
-
 
 
         if (direction === 'top')
@@ -457,13 +463,14 @@ class Search extends Component {
             </Hidden>
 
             <Hidden smUp>
-                <div className={this.state.direction === 'top'
-                && this.state.mobileFilterOn ? classes.filterTopHeight : null}>
+                <div
+                    className={classNames({
+                        [classes.filterTopHeight]: this.state.direction === 'top' && this.state.mobileFilterOn,
+
+                    })}>
                     <div
-                        className={classNames(classes.headerWholeBackground,
-                            this.state.direction === 'top'
-                            && this.state.mobileFilterOn ? classes.fixNav : null)}>
-                        <div className={classes.line}></div>
+                        className={classNames(classes.headerWholeBackground, {[classes.fixNav]: this.state.direction === 'top' && this.state.mobileFilterOn})}>
+                        <div className={classes.line}/>
                     </div>
 
                     <div
