@@ -177,9 +177,9 @@ class DropDownCheckBoxes extends Component {
             open: false,
         }, () => {
             // let league = this.state.league_id ? this.state.league_id : (this.props.league ? this.props.league : '');
-            let league = this.state.league_id ? this.state.league_id : '';
-            let level = this.state.level_id ? this.state.level_id : (this.props.level ? this.props.level : '');
-            let country = this.state.country_id ? this.state.country_id : (this.props.country ? this.props.country : '');
+            let league = this.state.league_id || '';
+            let level = this.state.level_id || '';
+            let country = this.state.country_id || '';
             document.body.style.overflow = "visible";
             this.props.changeLeague(!this.state.clearLeague ? league : '', !this.state.clearLevel ? level : '', !this.state.clearCountry ? country : '');
         });
@@ -202,44 +202,46 @@ class DropDownCheckBoxes extends Component {
             'level_id': suggestionValue,
             filteredLeagues: leagues,
             'league_id': '',
-            clearLevel: !suggestionValue ? true : false,
+            clearLevel: !suggestionValue,
 
         });
     };
     onChangeCountry = (event, {suggestionValue}) => {
         let levels = suggestionValue ? this.state.levelOptions.filter(level => parseInt(level.item.id_country) === parseInt(suggestionValue)) : this.state.levelOptions;
+        console.log(!suggestionValue, !suggestionValue ? true : false);
         this.setState({
             'country_id': suggestionValue,
             'level_id': '',
-            filteredLevels: levels,
             'league_id': '',
-            clearCountry: !suggestionValue ? true : false,
-            clearLevel: !suggestionValue ? true : false,
-            clearLeague: !suggestionValue ? true : false,
+            filteredLevels: levels,
+
+            clearCountry: !suggestionValue,
+            clearLevel: !suggestionValue,
+            clearLeague: !suggestionValue,
 
         });
     };
 
 
     onChangeLeague = (event, {suggestionValue}) => {
-        if (this.state.level_id)
-            this.setState({'league_id': suggestionValue, clearLeague: !suggestionValue ? true : false});
-        else
-            this.setState({'league_id': suggestionValue, 'level_id': '', clearLeague: !suggestionValue ? true : false});
+        this.setState({
+            'league_id': suggestionValue,
+            clearLeague: !suggestionValue
+        });
     };
 
     getLevelLeagueText = () => {
 
         let a = [];
 
-        if (this.props.league)
-            a.push(this.props.leagues[this.props.league]);
+        if (this.state.league_id)
+            a.push(this.props.leagues[this.state.league_id]);
 
-        if (this.state.level_id || this.props.level)
-            a.push(this.props.levels[this.state.level_id || this.props.level]);
+        if (this.state.level_id)
+            a.push(this.props.levels[this.state.level_id]);
 
-        if (this.state.country_id || this.props.country)
-            a.push(this.props.countries[this.state.country_id || this.props.country]);
+        if (this.state.country_id)
+            a.push(this.props.countries[this.state.country_id]);
 
 
         return a.join(', ');
@@ -277,7 +279,6 @@ class DropDownCheckBoxes extends Component {
             countryOptions,
             ...other
         } = this.props;
-
 
 
         return (
