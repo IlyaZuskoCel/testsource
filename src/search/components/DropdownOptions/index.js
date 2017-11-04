@@ -208,7 +208,6 @@ class DropDownCheckBoxes extends Component {
     };
     onChangeCountry = (event, {suggestionValue}) => {
         let levels = suggestionValue ? this.state.levelOptions.filter(level => parseInt(level.item.id_country) === parseInt(suggestionValue)) : this.state.levelOptions;
-        console.log(!suggestionValue, !suggestionValue ? true : false);
         this.setState({
             'country_id': suggestionValue,
             'level_id': '',
