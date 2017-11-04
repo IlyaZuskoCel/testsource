@@ -116,9 +116,7 @@ const styleSheet = createStyleSheet('Scout', theme => ({
         marginLeft: 30,
 
 
-        [theme.breakpoints.down('md')]: {
-          marginLeft: 0,
-        },
+
 
         [theme.breakpoints.down('sm')]: {
             justifyContent: 'flex-start',
@@ -186,8 +184,58 @@ const styleSheet = createStyleSheet('Scout', theme => ({
 
     specificText: {
         marginBottom: 20,
-    }
+    },
+    infoCardPhotoWrap: {
+        width: 126,
+        height: 126,
+        overflow: 'hidden',
+        position: 'relative',
+        margin: 'auto',
+
+        [theme.breakpoints.down('sm')]: {
+            height: 96,
+            width: 96,
+        },
+
+
+    },
+    infoCardPhotoDefaultWrap: {
+        justifyContent: 'center',
+    },
+    infoCardPhoto: {
+        minWidth: '100%',
+        minHeight: '100%',
+        top: '50%',
+        left: '50%',
+        transform: 'translateX(-50%) translateY(-50%)',
+        position: 'absolute',
+        margin: 'auto',
+
+    },
+    infoCardPhotoDefault: {
+        width: 126,
+        [theme.breakpoints.down('sm')]: {
+            width: 96,
+        }
+    },
 }));
+
+
+const getPhotoUrl = (user, width) => {
+    let userPhotoSrc = defaultPhoto;
+
+    if (user.profile_picture) {
+        userPhotoSrc = user.profile_picture;
+    }
+
+    if (width === "xs" && user.profile_picture_96) {
+        userPhotoSrc = user.profile_picture_96;
+    } else if (user.profile_picture_126) {
+        userPhotoSrc = user.profile_picture_126;
+    }
+
+    return userPhotoSrc;
+};
 
 class Scouts extends Component {
 
@@ -205,7 +253,7 @@ class Scouts extends Component {
         this.setState({scouts: nextProp.scouts});
     }
 
-    splitOnLength = (string , treshold) => {
+    splitOnLength = (string, treshold) => {
         if (string.length > treshold) {
             return string.split(' ')[0];
         }
@@ -222,8 +270,10 @@ class Scouts extends Component {
         return result ? result : role;
     }
 
+
     render() {
-        const {classes} = this.props;
+        const {classes, width} = this.props;
+
 
         return (
             <div className={classes.content}>
@@ -232,39 +282,47 @@ class Scouts extends Component {
                 </div>
                 <div className={classes.resultContainer}>
 
-                    {this.props.total == 0 && <Hidden smUp><div className={classes.specificContainer}>
-                        <div className={classes.specificText}><Typography type="body2">Your search might be too specific</Typography></div>
-                        <div><Typography type="caption">Try reducing the number of filters.</Typography></div>
-                    </div></Hidden>}
+                    {this.props.total == 0 && <Hidden smUp>
+                        <div className={classes.specificContainer}>
+                            <div className={classes.specificText}><Typography type="body2">Your search might be too
+                                specific</Typography></div>
+                            <div><Typography type="caption">Try reducing the number of filters.</Typography></div>
+                        </div>
+                    </Hidden>}
 
 
                     <Grid container gutter={40} justify="center">
 
                         {this.state.scouts && this.state.scouts.map(scout => {
-                            return <Grid item xs={12}  sm={8} md={6} lg={4} key={scout.id}>
+                            return <Grid item xs={12} sm={8} md={6} lg={4} key={scout.id}>
                                 <Link to={`/profile/${scout.id}`} disabledUnderline>
                                     <Paper classes={{root: classes.resultCard}} elevation={1}>
                                         <div className={classes.leftStripe}></div>
 
                                         <div className={classes.playerInfo}>
-                                            <div className={classes.photoContainer}>
-                                                <img src={scout.profile_picture || defaultPhoto}
-                                                     className={classes.playerPhoto} alt="Player's photo"/>
-                                            </div>
 
+
+                                            <div
+                                                className={classNames(classes.infoCardPhotoWrap, {[classes.infoCardPhotoDefaultWrap]: !scout.profile_picture})}>
+                                                <img
+                                                    className={classNames(classes.infoCardPhoto, {[classes.infoCardPhotoDefault]: !scout.profile_picture})}
+                                                    src={getPhotoUrl(scout, width)}
+                                                    alt="Scout's photo"/>
+
+                                            </div>
                                             <div className={classes.playerNameContainer}>
                                                 <div className={classes.nameColumn}>
                                                     <Typography type='title'
                                                                 className={classNames(classes.nameFont, classes.nameFontFirst)}>
-                                                        {this.splitOnLength(scout.first_name , nameLengthTreshold)}
+                                                        {this.splitOnLength(scout.first_name, nameLengthTreshold)}
                                                     </Typography>
                                                     <Typography type='title' className={classes.nameFont}>
-                                                        {this.splitOnLength(scout.last_name , lastnameLengthTreshold)}
+                                                        {this.splitOnLength(scout.last_name, lastnameLengthTreshold)}
                                                     </Typography>
 
 
                                                     {scout.job_title && <Typography type="body1"
-                                                                className={classes.scoutRole}>{this.roleShortener(scout.job_title)}</Typography>}
+                                                                                    className={classes.scoutRole}>{this.roleShortener(scout.job_title)}</Typography>}
                                                     <Typography type='caption'
                                                                 className={classes.playerLeague}>{scout.league || 'Unknown'}</Typography>
                                                 </div>

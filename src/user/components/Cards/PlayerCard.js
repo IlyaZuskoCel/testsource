@@ -7,6 +7,7 @@
 import React, {Component} from 'react';
 import compose from 'recompose/compose';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
@@ -106,9 +107,7 @@ const styleSheet = createStyleSheet('Search', theme => ({
         height: 126,
         marginLeft: 20,
 
-        [theme.breakpoints.down('md')]: {
-          marginLeft: 5,
-        },
+
 
         [theme.breakpoints.down('sm')]: {
             justifyContent: 'flex-start',
@@ -182,7 +181,42 @@ const styleSheet = createStyleSheet('Search', theme => ({
 
     alertTitle: {
         color: '#000000',
-    }
+    },
+
+
+    infoCardPhotoWrap: {
+        width: 126,
+        height: 126,
+        overflow: 'hidden',
+        position: 'relative',
+        margin: 'auto',
+
+        [theme.breakpoints.down('sm')]: {
+            height: 96,
+            width: 96,
+        },
+
+
+    },
+    infoCardPhotoDefaultWrap: {
+        justifyContent: 'center',
+    },
+    infoCardPhoto: {
+        minWidth: '100%',
+        minHeight: '100%',
+        top: '50%',
+        left: '50%',
+        transform: 'translateX(-50%) translateY(-50%)',
+        position: 'absolute',
+        margin: 'auto',
+
+    },
+    infoCardPhotoDefault: {
+        width: 126,
+        [theme.breakpoints.down('sm')]: {
+            width: 96,
+        }
+    },
 
 }));
 
@@ -205,12 +239,12 @@ class PlayerCard extends Component {
     follow = (event, player) => {
         event.preventDefault();
 
-        this.setState({openConfirmAlert: true , currentPlayer : player} , () => {
+        this.setState({openConfirmAlert: true, currentPlayer: player}, () => {
             this.props.addFavorite && this.props.addFavorite(player.id);
         });
     };
 
-    splitOnLength = (string , treshold) => {
+    splitOnLength = (string, treshold) => {
         if (string.length > treshold) {
             return string.split(' ')[0];
         }
@@ -218,28 +252,40 @@ class PlayerCard extends Component {
     };
 
 
-    unSubscribe = (event , player) => {
+    unSubscribe = (event, player) => {
         event.preventDefault();
         this.setState({openRemoveAlert: true, currentPlayer: player});
     };
 
     handleDialogCancel = () => {
-      this.setState({openRemoveAlert : false});
+        this.setState({openRemoveAlert: false});
     };
 
     handleDialogDelete = () => {
-        this.setState({openRemoveAlert: false} , () => {
+        this.setState({openRemoveAlert: false}, () => {
 
             this.props.removeFavorite && this.props.removeFavorite(this.state.currentPlayer.id);
         });
     };
 
     handleDialogConfirm = () => {
-        this.setState({openConfirmAlert:  false});
+        this.setState({openConfirmAlert: false});
     };
 
     render() {
-        const {classes , player  , role , ...props} = this.props;
+        const {classes, player, role, width, ...props} = this.props;
+
+        let userPhotoSrc = defaultPhoto;
+
+        if (player.profile_picture) {
+            userPhotoSrc = player.profile_picture;
+        }
+
+        if (width === "xs" && player.profile_picture_96) {
+            userPhotoSrc = player.profile_picture_96;
+        } else if (player.profile_picture_126) {
+            userPhotoSrc = player.profile_picture_126;
+        }
 
         return (
             <div>
@@ -249,7 +295,8 @@ class PlayerCard extends Component {
                     ignoreEscapeKeyUp>
                     <DialogTitle disableTypography>
                         <Typography type="subheading">
-                            Remove {this.state.currentPlayer && this.state.currentPlayer.first_name } {this.state.currentPlayer &&this.state.currentPlayer.last_name } from your Shortlist
+                            Remove {this.state.currentPlayer && this.state.currentPlayer.first_name} {this.state.currentPlayer && this.state.currentPlayer.last_name}
+                            from your Shortlist
                         </Typography>
                     </DialogTitle>
                     <DialogActions>
@@ -269,7 +316,8 @@ class PlayerCard extends Component {
                     ignoreEscapeKeyUp>
                     <DialogTitle disableTypography>
                         <Typography type="subheading">
-                             {this.state.currentPlayer && this.state.currentPlayer.first_name } {this.state.currentPlayer &&this.state.currentPlayer.last_name } was added to your shortlist
+                            {this.state.currentPlayer && this.state.currentPlayer.first_name} {this.state.currentPlayer && this.state.currentPlayer.last_name}
+                            was added to your shortlist
                         </Typography>
                     </DialogTitle>
                     <DialogActions>
@@ -284,15 +332,19 @@ class PlayerCard extends Component {
                         <div className={classes.leftStripe}></div>
 
                         <div className={classes.playerInfo}>
-                            <div className={classes.playerImage}>
-                                <img src={player.profile_picture || defaultPhoto}
-                                     className={classes.playerPhoto} alt="Player's photo"/>
+                            <div
+                                className={classNames(classes.infoCardPhotoWrap, {[classes.infoCardPhotoDefaultWrap]: !player.profile_picture})}>
+                                <img
+                                    className={classNames(classes.infoCardPhoto, {[classes.infoCardPhotoDefault]: !player.profile_picture})}
+                                    src={userPhotoSrc}
+                                    alt="Player's photo"/>
+
                             </div>
 
                             <div className={classes.playerNameContainer}>
                                 <div className={classes.nameColumn}>
                                     <Typography type='title' className={classes.nameFont}>
-                                        {this.splitOnLength(player.first_name , nameLengthTreshold)} {this.splitOnLength(player.last_name , lastnameLengthTreshold)}
+                                        {this.splitOnLength(player.first_name, nameLengthTreshold)} {this.splitOnLength(player.last_name, lastnameLengthTreshold)}
                                     </Typography>
                                     <Typography type='caption'
                                                 className={classes.playerLeague}>{player.team ? player.team : ''} {player.league_short ? player.league_short : ''}</Typography>
@@ -307,9 +359,10 @@ class PlayerCard extends Component {
                             {player.position_short !== 'n/a' &&
                             <div className={classes.playerBottomDivider}></div>}
 
-                            {player.height && player.height[0] > 0 &&  <Typography type='body1'
-                                                          className={classes.bottomPlayerText}>{player.height[0] + "'" + player.height[1] + '"'}</Typography>}
-                            {player.height && player.height[0] > 0 && <div className={classes.playerBottomDivider}></div>}
+                            {player.height && player.height[0] > 0 && <Typography type='body1'
+                                                                                  className={classes.bottomPlayerText}>{player.height[0] + "'" + player.height[1] + '"'}</Typography>}
+                            {player.height && player.height[0] > 0 &&
+                            <div className={classes.playerBottomDivider}></div>}
 
                             {player.weight && <Typography type='body1'
                                                           className={classes.bottomPlayerText}>{parseInt(player.weight) + ' lbs'}</Typography>}
