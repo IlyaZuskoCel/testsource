@@ -30,7 +30,7 @@ const styleSheet = createStyleSheet('ContactForm', theme => ({
     },
     contactTextField: {
         marginTop: 24,
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             marginTop: 8,
         }
 
@@ -38,7 +38,7 @@ const styleSheet = createStyleSheet('ContactForm', theme => ({
 
     contactButton: {
         marginTop: 64,
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             marginTop: 40,
             marginBottom: 40,
         }
@@ -92,7 +92,7 @@ class ContactForm extends Component {
         const {classes, currentUser, user} = this.props;
 
         return <Grid container>
-            <Grid item sm={3} xs={12}>
+            <Grid item md={3} xs={12}>
 
 
                 {!this.props.currentUser.is_verify && (
@@ -129,7 +129,7 @@ class ContactForm extends Component {
                 )}
 
             </Grid>
-            <Grid item sm={8} xs={12}>
+            <Grid item md={8} xs={12}>
                 <form onSubmit={this.sendMessage}>
                     <Grid item xs={12}>
                         <TextField fullWidth

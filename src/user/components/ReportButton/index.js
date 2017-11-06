@@ -22,7 +22,7 @@ const styleSheet = createStyleSheet('ReportButton', theme => ({
     root: {
         textTransform: 'uppercase',
         marginLeft: 48,
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             fontSize: 18,
             marginLeft: 16,
         },

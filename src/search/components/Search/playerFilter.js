@@ -44,7 +44,7 @@ const styleSheet = createStyleSheet('ScoutFilter', theme => ({
         alignItems: 'center',
         justifyContent: 'flex-start',
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             padding: 16,
         }
     },
@@ -53,7 +53,7 @@ const styleSheet = createStyleSheet('ScoutFilter', theme => ({
         maxWidth: 360,
         margin: [0, 44, 44, 0],
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             margin: [0, 15, 44, 15]
         }
     },
@@ -285,11 +285,11 @@ class PlayerFilter extends Component {
     };
 
     render() {
-        const {classes, width} = this.props;
+        const {classes} = this.props;
 
         return (<div className={classNames(classes.row, classes.headerMedia)}>
             <Grid container gutter={40}>
-                <Grid item xs={12} sm={6} md={4}>
+                <Grid item xs={12} md={4}>
 
                     <DropdownOptions fullWidth
                                      options={[]}
@@ -314,14 +314,14 @@ class PlayerFilter extends Component {
 
 
                 </Grid>
-                <Grid item xs={12} sm={6} md={4}>
+                <Grid item xs={12}  md={4}>
                     <Autosuggest fullWidth
                                  label="Team"
                                  value={this.props.teams && this.state.id_team_current ? this.props.teams[this.state.id_team_current] || '' : ''}
                                  suggestions={this.filterTeams(this.props.teamOptions)}
                                  onSuggestionSelected={this.onChangeAutosuggest('id_team_current')}/>
                 </Grid>
-                <Grid item xs={12} sm={6} md={4}>
+                <Grid item xs={12}  md={4}>
                     <DropDown fullWidth
                               options={positionOptions}
                               label="Position"
@@ -329,7 +329,7 @@ class PlayerFilter extends Component {
                               onChange={this.handleChange('position')}/>
 
                 </Grid>
-                <Grid item xs={12} sm={6} md={4}>
+                <Grid item xs={12}  md={4}>
                     <RangeSlider onAfterChange={this.getRange}
                                  onChange={this.handleChangeRange}
                                  value={this.state.born}
@@ -339,8 +339,8 @@ class PlayerFilter extends Component {
                                  min={PLAYER_MIN_AGE}
                                  max={PLAYER_MAX_AGE}/>
                 </Grid>
-                <Grid item xs={12} sm={6} md={4}>
-                    <Hidden xsDown>
+                <Grid item xs={12}  md={4}>
+                    <Hidden only={['xs', 'sm']}>
                         <TextField
                             id="name"
                             label="Name"
@@ -350,7 +350,7 @@ class PlayerFilter extends Component {
                         />
                     </Hidden>
 
-                    <Hidden smUp>
+                    <Hidden only={['md', 'lg', 'xl']}>
                         <InputText options={[]}
                                    value={1}
                                    label="Name"
@@ -364,7 +364,7 @@ class PlayerFilter extends Component {
                     </Hidden>
                 </Grid>
 
-                <Hidden smUp>
+                <Hidden only={['md', 'lg', 'xl']}>
                     <div className={classes.buttonViewContainer}>
                         <Button raised color="primary" className={classes.viewButton} onClick={this.props.viewResults}>
                             <Typography className={classes.viewTypography}>

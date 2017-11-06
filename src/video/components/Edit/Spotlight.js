@@ -17,13 +17,13 @@ import Hidden from 'material-ui/Hidden';
 
 const styleSheet = createStyleSheet('Trim', theme => ({
     root: {
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             paddingLeft: 16,
             paddingRight: 16,
         }
     },
     title: {
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             textAlign: "left"
         }
     },
@@ -34,7 +34,7 @@ const styleSheet = createStyleSheet('Trim', theme => ({
     },
     uploadWrap: {
         marginBottom: 16,
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             margin: 16,
         },
         position: 'relative',
@@ -385,7 +385,7 @@ class Trim extends Component {
                     Previous
                 </Button>
 
-                <Hidden smUp>
+                <Hidden only={['md', 'lg', 'xl']}>
                     <Button onClick={this.props.onNext} raised
                             color={video.time_end - video.time_start > 60000 ? 'default' : 'primary'}
                             disabled={video.time_end - video.time_start > 60000}>

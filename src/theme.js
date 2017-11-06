@@ -30,7 +30,7 @@ const theme = (outerTheme) => {
         fontFamily: "UnitedSansReg-Medium",
         fontSize: 18,
         fontWeight: 500,
-        [outerTheme.breakpoints.down('sm')]: {
+        [outerTheme.breakpoints.down('md')]: {
             fontSize: 14,
         },
 
@@ -78,7 +78,7 @@ const theme = (outerTheme) => {
             letterSpacing: 0.6,
             color: '#000',
             fontFamily: "UnitedSerifCond-Black",
-            [outerTheme.breakpoints.down('sm')]: {
+            [outerTheme.breakpoints.down('md')]: {
                 fontSize: 40,
                 lineHeight: '40px',
                 letterSpacing: 0.4,
@@ -91,7 +91,7 @@ const theme = (outerTheme) => {
             letterSpacing: 0.4,
             color: '#000',
             fontFamily: "UnitedSerifCond-Heavy",
-            [outerTheme.breakpoints.down('sm')]: {
+            [outerTheme.breakpoints.down('md')]: {
                 fontSize: 32,
                 lineHeight: '32px',
                 letterSpacing: 0.2,
@@ -105,7 +105,7 @@ const theme = (outerTheme) => {
             letterSpacing: 0.4,
             color: '#000',
             fontFamily: "UnitedSerifCond-Medium",
-            [outerTheme.breakpoints.down('sm')]: {
+            [outerTheme.breakpoints.down('md')]: {
                 fontSize: 24,
                 lineHeight: '24px',
                 letterSpacing: 0.2,
@@ -118,7 +118,7 @@ const theme = (outerTheme) => {
             lineHeight: '22px',
             color: '#000',
             fontFamily: "UnitedSerifCond-Heavy",
-            [outerTheme.breakpoints.down('sm')]: {
+            [outerTheme.breakpoints.down('md')]: {
                 fontSize: 20,
                 lineHeight: '20px',
                 letterSpacing: 0.6,
@@ -130,7 +130,7 @@ const theme = (outerTheme) => {
             fontWeight: 500,
             color: '#000',
             fontFamily: "UnitedSansReg-Medium",
-            [outerTheme.breakpoints.down('sm')]: {
+            [outerTheme.breakpoints.down('md')]: {
                 fontSize: 14,
                 lineHeight: '14px',
             }
@@ -150,7 +150,7 @@ const theme = (outerTheme) => {
             fontWeight: 900,
             fontFamily: 'UnitedSansSemiCond-Heavy',
             letterSpacing: '0.4px',
-            [outerTheme.breakpoints.down('sm')]: {
+            [outerTheme.breakpoints.down('md')]: {
                 fontSize: 16,
                 lineHeight: '16px',
                 letterSpacing: '0.3px',
@@ -240,7 +240,7 @@ const theme = (outerTheme) => {
                     padding: '8px 16px',
 
 
-                    [outerTheme.breakpoints.down('sm')]: {
+                    [outerTheme.breakpoints.down('md')]: {
                         minWidth: 120,
                     },
 
@@ -280,7 +280,7 @@ const theme = (outerTheme) => {
                         color: '#ffffff',
                     },
 
-                    [outerTheme.breakpoints.down('sm')]: {
+                    [outerTheme.breakpoints.down('md')]: {
                         backgroundImage: 'linear-gradient(288deg, #f55e58, #c9011b)',
                     },
                 }
@@ -321,12 +321,12 @@ const theme = (outerTheme) => {
                     paddingBottom: 4,
                     paddingLeft: 12,
                     paddingRight: 12,
-                    [outerTheme.breakpoints.down('sm')]: {}
+                    [outerTheme.breakpoints.down('md')]: {}
                 }
             },
             MuiDrawer: {
                 paper: {
-                    [outerTheme.breakpoints.down('sm')]: {
+                    [outerTheme.breakpoints.down('md')]: {
                         paddingLeft: 12,
                         paddingRight: 12,
                     }
@@ -470,7 +470,7 @@ const theme = (outerTheme) => {
                     zIndex: 1000,
                     top: 80,
 
-                    [outerTheme.breakpoints.down('sm')]: {
+                    [outerTheme.breakpoints.down('md')]: {
                         top: 70,
                     }
                 }
@@ -480,10 +480,10 @@ const theme = (outerTheme) => {
                     height: 70,
 
                     backgroundColor: '#fff',
-                    [outerTheme.breakpoints.down('md')]: {
+                    [outerTheme.breakpoints.down('sm')]: {
                         width: 'auto'
                     },
-                    [outerTheme.breakpoints.up('md')]: {
+                    [outerTheme.breakpoints.up('sm')]: {
                         width: '100%',
                         maxWidth: 1168,
                     },

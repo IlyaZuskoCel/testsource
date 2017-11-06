@@ -75,10 +75,10 @@ const styleSheet = createStyleSheet('Video', theme => ({
         right: 40
     },
     bottom: {
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             paddingLeft: 8,
         },
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             padding: 8,
         },
     },
@@ -187,7 +187,7 @@ class Video extends Component {
                     {currentUser && currentUser.id === video.id_user && (
                         <div>
 
-                            <Hidden smDown>
+                            <Hidden only={['xs', 'sm']}>
                                 <div>
                                     <Link to={`/video/edit/${video.id}`} disabledUnderline className={classes.link}
                                           onClick={this.handleEdit}>
@@ -199,7 +199,7 @@ class Video extends Component {
                                     </Link>
                                 </div>
                             </Hidden>
-                            <Hidden smUp>
+                            <Hidden only={['md', 'lg', 'xl']}>
                                 <div>
                                     <IconButton
                                         className={classes.moreButton}

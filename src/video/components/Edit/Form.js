@@ -17,11 +17,11 @@ import {DropDownCheckBoxes, DateTextField, TextArea} from '../../../common/compo
 
 const styleSheet = createStyleSheet('Form', theme => ({
     root: {
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             marginTop: 40,
             marginLeft: 80,
         },
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             paddingLeft: 16,
             paddingRight: 16,
         }
@@ -88,7 +88,7 @@ class Form extends Component {
 
 
             <div className={classes.buttons}>
-                <Hidden smUp>
+                <Hidden only={['md', 'lg', 'xl']}>
                     <Button onClick={this.props.onPrev} raised>
                         Previous
                     </Button>

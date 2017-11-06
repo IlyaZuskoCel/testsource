@@ -54,7 +54,7 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
         maxWidth: 1168,
         margin: 'auto',
         marginTop: 56,
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             marginTop: 0,
         },
 
@@ -181,7 +181,7 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
     backLink: {
         textTransform: 'uppercase',
         marginLeft: 48,
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             fontSize: 18,
             marginLeft: 16,
         },
@@ -217,13 +217,13 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
         marginBottom: 72,
 
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             padding: 0,
             marginBottom: 8
         },
     },
     descTitle: {
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             paddingTop: 32,
             paddingBottom: 8,
         },
@@ -233,7 +233,7 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
     },
     point: {
         paddingTop: 32,
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             paddingBottom: 96,
             color: '#9b9b9b'
         },
@@ -382,7 +382,7 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
         marginLeft: 20,
         marginRight: 20,
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'space-around',
@@ -396,7 +396,7 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
     infoRow: {
         paddingTop: 15,
         paddingBottom: 15,
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             paddingTop: 0,
             paddingBottom: 0,
         }
@@ -407,7 +407,7 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
     infoValue: {
         color: '#fff',
         textTransform: 'uppercase',
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             color: '#000',
             textTransform: 'capitalize'
         },
@@ -425,7 +425,7 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             marginLeft: 24,
             marginRight: 24,
             justifyContent: 'space-around',
@@ -441,17 +441,17 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
     },
     infoRightCaption: {
         paddingBottom: 4,
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             textAlign: 'center',
             paddingBottom: 8,
         },
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             color: '#000',
 
         },
     },
     infoRightValue: {
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             textAlign: 'center'
         },
 
@@ -461,7 +461,7 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
         lineHeight: 1.5,
         wordWrap: "break-word",
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             paddingBottom: 16,
             fontSize: 14,
             lineHeight: 1.71,
@@ -478,14 +478,14 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
     contactTextField: {
         width: '100%',
         marginTop: 24,
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             marginTop: 8,
         }
 
     },
     contactButton: {
         marginTop: 64,
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             marginTop: 40,
             marginBottom: 40,
         }
@@ -557,14 +557,14 @@ class PlayerProfile extends Component {
     render() {
 
         const {classes, user, currentUser, isCurrent, width} = this.props;
-
+        const smallWidth = width === 'sm'|| width === 'xs';
         let userPhotoSrc = defaultPhoto;
 
         if (user.profile_picture) {
             userPhotoSrc = user.profile_picture;
         }
 
-        if (width === "xs" && user.profile_picture_mobile) {
+        if (smallWidth && user.profile_picture_mobile) {
             userPhotoSrc = user.profile_picture_mobile;
         } else if (user.profile_picture_desktop) {
             userPhotoSrc = user.profile_picture_desktop;
@@ -588,7 +588,7 @@ class PlayerProfile extends Component {
                                     <span>Edit</span>
                                 </Button>
                             </Link>
-                            <Hidden xsDown>
+                            <Hidden only={['xs', 'sm']}>
                                 <Link to="/video/add" disabledUnderline>
                                     <Button color="primary" raised className={classes.addVideoButton}>
                                         Add a Video
@@ -602,7 +602,7 @@ class PlayerProfile extends Component {
                     <div className={classes.topNavigate}>
                         <Link to="/" onClick={this.props.goBack} invert disabledUnderline className={classes.backLink}>
                             <Icon>previous</Icon>
-                            <Hidden xsDown><span className={classes.backTitle}>Back to search</span></Hidden></Link>
+                            <Hidden only={['xs', 'sm']}><span className={classes.backTitle}>Back to search</span></Hidden></Link>
                         <div>
                             {currentUser && currentUser.role === SCOUT_ROLE &&
                             <FavoriteButton user={user.id} active={user.is_tagged}/>}
@@ -627,7 +627,7 @@ class PlayerProfile extends Component {
                 ) : null)}
 
                 <div className={classes.infoContainer}>
-                    <Hidden smDown>
+                    <Hidden only={['xs', 'sm']}>
                         <div className={classes.info}>
                             {user.height && (user.height[0] > 0 || user.height[1] > 0 ) && (
                                 <div className={classes.infoRow}>
@@ -687,7 +687,7 @@ class PlayerProfile extends Component {
 
                         </div>
                         <div className={classes.infoCardData}>
-                            <Hidden smUp>
+                            <Hidden only={['md', 'lg', 'xl']}>
                                 <Typography type="headline" align="center"
                                             className={classes.infoCardName}>{user.first_name} {user.last_name}</Typography>
                             </Hidden>
@@ -701,7 +701,7 @@ class PlayerProfile extends Component {
 
                         </div>
                     </Paper>
-                    <Hidden xsDown>
+                    <Hidden only={['xs', 'sm']}>
                         <div className={classes.infoRight}>
                             <Typography type="headline"
                                         className={classes.infoRightName}>{user.first_name} {user.last_name}</Typography>
@@ -739,7 +739,7 @@ class PlayerProfile extends Component {
                     </Hidden>
                 </div>
 
-                <Hidden smUp>
+                <Hidden only={['md', 'lg', 'xl']}>
                     <div className={classes.infoRightColumn}>
                         <div>
                             <Typography type="caption" className={classes.infoRightCaption}>
@@ -768,7 +768,7 @@ class PlayerProfile extends Component {
 
                     </div>
                 </Hidden>
-                <Hidden smUp>
+                <Hidden only={['md', 'lg', 'xl']}>
                     <Paper square className={classes.mobileContent}>
                         {!isCurrent && currentUser && currentUser.role === SCOUT_ROLE ? (
                             <Tabs index={this.state.tab}
@@ -897,7 +897,7 @@ class PlayerProfile extends Component {
 
                 </Hidden>
 
-                <Hidden only={['xs']}>
+                <Hidden only={['xs', 'sm']}>
                     <div>
                         <Paper className={classes.videoList} square>
 

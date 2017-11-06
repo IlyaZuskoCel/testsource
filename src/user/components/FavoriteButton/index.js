@@ -20,7 +20,7 @@ const styleSheet = createStyleSheet('FavoriteButton', theme => ({
         boxShadow: '0 0 7px 0 rgba(0, 0, 0, 0.3)',
         minWidth: 160,
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             padding: 0,
             backgroundColor: 'transparent',
             boxShadow: 'none',
@@ -44,14 +44,14 @@ const styleSheet = createStyleSheet('FavoriteButton', theme => ({
         '&:hover $defaultName:after': {
             content: '"Remove"',
 
-            [theme.breakpoints.down('sm')]: {
+            [theme.breakpoints.down('md')]: {
                 content: '"Shortlisted"',
                 color: '#000',
             },
         },
 
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             backgroundImage: 'none',
             '&:hover': {
                 backgroundImage: 'none',
@@ -68,7 +68,7 @@ const styleSheet = createStyleSheet('FavoriteButton', theme => ({
     },
     activeIcon: {
         color: '#fff',
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             color: '#c2a24d',
         },
 
@@ -79,7 +79,7 @@ const styleSheet = createStyleSheet('FavoriteButton', theme => ({
             color: '#c2a24d',
 
         },
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             '&:after': {
                 color: '#000'
             },
@@ -92,7 +92,7 @@ const styleSheet = createStyleSheet('FavoriteButton', theme => ({
         },
 
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             '&:after': {
                 color: '#000'
             },

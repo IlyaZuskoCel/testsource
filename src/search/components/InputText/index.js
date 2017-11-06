@@ -52,7 +52,7 @@ const styleSheet = createStyleSheet('DropDownCheckBoxes', theme => {
             padding: [15, 25],
 
 
-            [theme.breakpoints.down('sm')]: {
+            [theme.breakpoints.down('md')]: {
                 position: 'fixed',
                 left: 0,
                 top: 52,
@@ -93,7 +93,7 @@ const styleSheet = createStyleSheet('DropDownCheckBoxes', theme => {
             marginTop: 30,
 
 
-            [theme.breakpoints.down('sm')]: {
+            [theme.breakpoints.down('md')]: {
                 marginTop: 0,
             }
         },

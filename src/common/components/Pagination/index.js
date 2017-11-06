@@ -20,7 +20,7 @@ import Icon from 'material-ui/Icon';
 const styleSheet = createStyleSheet('Pagination', (theme) => ({
     root: {},
     button: {
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             width: 'auto',
             minWidth: 24,
             marginLeft: 4,
@@ -32,7 +32,7 @@ const styleSheet = createStyleSheet('Pagination', (theme) => ({
                 backgroundColor: 'transparent'
             }
         },
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             width: '100%',
         }
     },
@@ -68,8 +68,9 @@ class Pagination extends Component {
         const {currentPage, total, perPage, classes, width} = this.props;
 
         const countPages = Math.ceil(total / perPage);
+        const smallWidth = width === 'sm'|| width === 'xs';
 
-        if (width === 'xs') {
+        if (smallWidth) {
             return (
                 <Grid container>
                     {currentPage > 1 && (

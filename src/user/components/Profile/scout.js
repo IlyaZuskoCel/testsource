@@ -35,7 +35,7 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
         marginTop: 56,
         width: '100%',
         margin: 'auto',
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             marginTop: 0,
         },
     },
@@ -159,7 +159,7 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
     backLink: {
         textTransform: 'uppercase',
         marginLeft: 48,
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             fontSize: 18,
             marginLeft: 16,
         },
@@ -210,8 +210,8 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
         justifyContent: 'space-around',
         alignItems: 'center',
         marginTop: 12,
-        [theme.breakpoints.down('sm')]: {
-            marginBottom: 32,
+        [theme.breakpoints.down('md')]: {
+            marginBottom: 40,
         },
     },
     infoCard: {
@@ -221,8 +221,11 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
         marginRight: 20,
         backgroundColor: '#f7f7f7',
         position: 'relative',
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             marginLeft: 20,
+        },
+        [theme.breakpoints.down('sm')]: {
+
             minHeight: 324,
             width: 218,
         },
@@ -310,7 +313,7 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
         lineHeight: 1.5,
         marginTop: 38,
         wordWrap: "break-word",
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             marginTop: 0,
             fontSize: 14,
             lineHeight: 1.71,
@@ -326,7 +329,7 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
         paddingTop: 24,
     },
     descTitle: {
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             paddingTop: 32,
             paddingBottom: 8,
         },
@@ -359,14 +362,14 @@ class ScoutProfile extends Component {
     render() {
 
         const {classes, user, currentUser, isCurrent, width} = this.props;
-
+        const smallWidth = width === 'sm'|| width === 'xs';
         let userPhotoSrc = defaultPhoto;
 
         if (user.profile_picture) {
             userPhotoSrc = user.profile_picture;
         }
 
-        if (width === "xs" && user.profile_picture_mobile) {
+        if (smallWidth && user.profile_picture_mobile) {
             userPhotoSrc = user.profile_picture_mobile;
         } else if (user.profile_picture_desktop) {
             userPhotoSrc = user.profile_picture_desktop;
@@ -433,7 +436,7 @@ class ScoutProfile extends Component {
                         <div className={classes.infoCardLeagueLine}/>
 
                         <div className={classes.infoCardData}>
-                            <Hidden smUp>
+                            <Hidden only={['md', 'lg', 'xl']}>
                                 <div>
                                     <Typography type="title" align="center"
                                                 className={classes.infoCardName}>{user.first_name} {user.last_name}</Typography>
@@ -453,7 +456,7 @@ class ScoutProfile extends Component {
 
                         </div>
                     </Paper>
-                    <Hidden xsDown>
+                    <Hidden only={['xs', 'sm']}>
                         <div className={classes.infoRight}>
                             <Typography type="headline"
                                         className={classes.infoRightName}>{user.first_name} {user.last_name}</Typography>
@@ -486,7 +489,7 @@ class ScoutProfile extends Component {
 
 
                 {(isCurrent || user.biography) && (
-                    <Hidden smUp>
+                    <Hidden only={['md', 'lg', 'xl']}>
                         <Paper square className={classes.mobileContent}>
                             <div className={classes.tabContent}>
 

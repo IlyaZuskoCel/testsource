@@ -29,10 +29,11 @@ const styleSheet = createStyleSheet('DefaultRoute', theme => ({
 
         overflowX: 'hidden',
         paddingTop: 70,
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             minHeight: window.innerHeight - 70,
         },
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
+            minHeight: window.innerHeight - 60,
             paddingTop: 60,
         }
     },

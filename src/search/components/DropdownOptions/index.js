@@ -51,7 +51,7 @@ const styleSheet = createStyleSheet('DropDownCheckBoxes', theme => {
             padding: [15, 25],
 
 
-            [theme.breakpoints.down('sm')]: {
+            [theme.breakpoints.down('md')]: {
                 position: 'fixed',
                 left: 0,
                 top: 52,
@@ -89,7 +89,7 @@ const styleSheet = createStyleSheet('DropDownCheckBoxes', theme => {
             marginTop: 30,
 
 
-            [theme.breakpoints.down('sm')]: {
+            [theme.breakpoints.down('md')]: {
                 marginTop: 0,
             }
         },
@@ -323,7 +323,7 @@ class DropDownCheckBoxes extends Component {
                     {this.state.open && <div className={classes.overlay} onClick={this.toggleOpen}/>}
                     {this.state.open &&
                     <Paper style={{zIndex: 1000}} square className={classes.suggestionsContainerOpen}>
-                        <Hidden smUp>
+                        <Hidden only={['md', 'lg', 'xl']}>
                             <div className={classes.controllBar}>
                                 <Button onClick={this.handleCancel} className={classes.cancelButton}>Cancel</Button>
                                 <Button onClick={this.handleApply} className={classes.applyButton}>Apply</Button>
@@ -355,7 +355,7 @@ class DropDownCheckBoxes extends Component {
                                          onSuggestionSelected={this.onChangeLeague}/>
                         </div>
 
-                        <Hidden smDown>
+                        <Hidden only={['xs', 'sm']}>
                             <div className={classes.controllBar}>
                                 <Button onClick={this.handleCancel}>Cancel</Button>
                                 <Button onClick={this.handleApply}>Apply</Button>

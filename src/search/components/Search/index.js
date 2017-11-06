@@ -56,11 +56,11 @@ const styleSheet = createStyleSheet('Search', theme => ({
         padding: 56,
         boxShadow: '0 -8px 8px -8px rgba(0, 0, 0, 0.2)',
 
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('lg')]: {
             padding: [56, 20]
         },
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             padding: [28, 0],
             boxShadow: 'none',
         }
@@ -402,10 +402,10 @@ class Search extends Component {
 
     render() {
         const {classes, width} = this.props;
-
+        const smallWidth = width === 'sm'|| width === 'xs';
         return (<div className={classes.root}>
 
-            <Hidden xsDown>
+            <Hidden only={['xs', 'sm']}>
                 <header className={classes.header}>
                     <div className={classNames(classes.content, classes.noMargin)}>
                         <Tabs index={this.state.activeTab} indicatorClassName="indicatorxsDown" textColor={'#cbcbcb'}
@@ -462,7 +462,7 @@ class Search extends Component {
                 </header>
             </Hidden>
 
-            <Hidden smUp>
+            <Hidden only={['md', 'lg', 'xl']}>
                 <div
                     className={classNames({
                         [classes.filterTopHeight]: this.state.direction === 'top' && this.state.mobileFilterOn,
@@ -506,7 +506,7 @@ class Search extends Component {
                 </div>
             </Hidden>
 
-            {(!this.state.mobileFilterOn && (width === 'sm' || width === 'xs')) && <Hidden smUp>
+            {(!this.state.mobileFilterOn && smallWidth) && <Hidden only={['md', 'lg', 'xl']}>
                 <div>
                     {this.props.type === 'scout' && <ScoutFilter countries={this.props.countries}
                                                                  countryOptions={this.props.countryOptions}

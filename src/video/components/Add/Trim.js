@@ -37,13 +37,13 @@ const tipFormatter = value => {
 
 const styleSheet = createStyleSheet('Trim', theme => ({
     root: {
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             paddingLeft: 16,
             paddingRight: 16,
         }
     },
     title: {
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             textAlign: "left"
         }
     },
@@ -54,7 +54,7 @@ const styleSheet = createStyleSheet('Trim', theme => ({
     },
     uploadWrap: {
         marginBottom: 16,
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             margin: 16,
         },
         display: 'flex',

@@ -31,7 +31,7 @@ const styleSheet = createStyleSheet('Footer', theme => ({
         backgroundColor: '#f5f5f5',
 
         zIndex: 1,
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             height: 376,
         },
     },
@@ -41,7 +41,7 @@ const styleSheet = createStyleSheet('Footer', theme => ({
         [theme.breakpoints.down('lg')]: {
             fontSize: 32,
         },
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             fontSize: 24,
         }
     },
@@ -50,7 +50,7 @@ const styleSheet = createStyleSheet('Footer', theme => ({
         maxWidth: 1440,
         paddingLeft: 104,
         paddingRight: 104,
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('lg')]: {
             paddingLeft: 32,
             paddingRight: 32,
         }
@@ -63,30 +63,28 @@ const styleSheet = createStyleSheet('Footer', theme => ({
 
         maxWidth: 760,
         margin: 'auto',
-        [theme.breakpoints.up('md')]: {
+        [theme.breakpoints.up('lg')]: {
             alignItems: 'center',
         },
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             flexDirection: 'column',
         }
     },
     link: {
         textDecoration: 'none',
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             marginBottom: 20
         }
     },
     followContainer: {
         display: 'flex',
         flexDirection: 'row',
-
+        justifyContent: 'flex-end',
         alignItems: 'center',
-        [theme.breakpoints.up('sm')]: {
-            justifyContent: 'flex-end',
+        [theme.breakpoints.down('md')]: {
+            paddingRight: "24px !important"
         },
-        [theme.breakpoints.down('sm')]: {
-            justifyContent: 'flex-start',
-        }
+
 
     },
     followLink: {
@@ -137,7 +135,7 @@ class Footer extends Component {
         return (
             <footer className={classes.root}>
                 <Grid container gutter={8} className={classes.footer}>
-                    <Grid item xs={6} sm={4} md={3} lg={2}>
+                    <Grid item xs={6} md={3} lg={2}>
                         {user ? (
                             <Link to={user.role === SCOUT_ROLE ? '/search/player' : `/profile/${user.id}`}
                                   className={classes.logoLink} disabledUnderline>
@@ -150,7 +148,7 @@ class Footer extends Component {
                         )}
 
                     </Grid>
-                    <Grid item xs={6} sm={8} md={5} lg={6} className={classes.links}>
+                    <Grid item xs={6} md={5} lg={6} className={classes.links}>
                         <a href="https://scoutzoo.com/aboutus" target="_blank" className={classes.link}>
                             <Typography type="caption">About Us</Typography>
                         </a>
@@ -164,12 +162,12 @@ class Footer extends Component {
                             <Typography type="caption">Terms & Conditions</Typography>
                         </a>
                     </Grid>
-                    <Grid item xs={6} sm={10} md={2} lg={2} className={classes.followContainer}>
+                    <Grid item xs={6} md={2} lg={2} className={classes.followContainer}>
                         <Typography type="caption">
                             Follow Us On
                         </Typography>
                     </Grid>
-                    <Grid item xs={6} sm={2} md={2} lg={2} className={classes.followContainerLinks}>
+                    <Grid item xs={6} md={2} lg={2} className={classes.followContainerLinks}>
                         <a href="https://www.facebook.com/scoutzoo" target="_blank" className={classes.followLink}>
                             <Icon className={classes.socialLogo}>facebook-filled</Icon>
                         </a>

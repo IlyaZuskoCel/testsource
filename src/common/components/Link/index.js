@@ -17,7 +17,7 @@ const styleSheet = createStyleSheet('Link', (theme) => ({
         textDecoration: 'none',
         letterSpacing: '0.4px',
         fontFamily: 'UnitedSansReg-Medium',
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             fontSize: 16,
         },
 

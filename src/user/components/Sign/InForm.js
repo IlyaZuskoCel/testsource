@@ -17,7 +17,7 @@ import Link from '../../../common/components/Link/index';
 const styleSheet = createStyleSheet('InForm', theme => ({
     root: {
         marginTop: 64,
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             marginTop: 0,
         }
     },

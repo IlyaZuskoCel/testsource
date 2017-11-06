@@ -29,17 +29,17 @@ const styleSheet = createStyleSheet('Add', theme => ({
         maxWidth: 1168,
         width: '100%',
         margin: '76px auto',
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             marginTop: 80,
         },
 
     },
     paper: {
 
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             padding: 32,
         },
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             boxShadow: 'none'
         },
     },
@@ -49,12 +49,12 @@ const styleSheet = createStyleSheet('Add', theme => ({
         marginBottom: 36,
 
 
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             borderBottom: 'solid 1px #cbcbcb60',
             maxWidth: 320,
         },
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             height: 48,
             zIndex: 500,
             position: 'fixed',
@@ -72,7 +72,7 @@ const styleSheet = createStyleSheet('Add', theme => ({
     tabWrap: {
         minWidth: 80,
         height: 72,
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             height: 48,
         }
     },
@@ -82,7 +82,7 @@ const styleSheet = createStyleSheet('Add', theme => ({
     tab: {
         color: '#9b9b9b',
         marginTop: -38,
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             marginTop: -30,
             color: '#ffffff',
             opacity: 0.6
@@ -90,7 +90,7 @@ const styleSheet = createStyleSheet('Add', theme => ({
     },
     activeTab: {
         color: '#d7001e',
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             color: '#ffffff',
             opacity: 1
         }
@@ -164,7 +164,7 @@ class Add extends Component {
                 message="Your video hasn't been uploaded yet! All changes will be lost. Are you sure you want to leave?"
                 when={(!!this.props.video.id || 'progress' in this.props.video) && this.state.isUpdate}
             />
-            <Hidden smUp>
+            <Hidden only={['md', 'lg', 'xl']}>
                 <Tabs index={this.state.tab}
                       centered
                       className={classes.tabs}
@@ -237,10 +237,10 @@ class Add extends Component {
             </Hidden>
 
             <Grid container>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} md={6}>
                     <Paper className={classes.paper}>
 
-                        <Hidden xsDown>
+                        <Hidden only={['xs', 'sm']}>
                             <Tabs index={this.state.tab}
                                   centered
                                   className={classes.tabs}
@@ -316,7 +316,7 @@ class Add extends Component {
 
                     </Paper>
                 </Grid>
-                <Grid item sm={6} hidden={{xsDown: true}}>
+                <Grid item md={6} hidden={{smDown: true}}>
                     <Form video={video}
                           hideButton={this.state.tab < 2}
                           tags={this.props.tags}

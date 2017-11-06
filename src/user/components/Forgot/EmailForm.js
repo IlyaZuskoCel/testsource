@@ -16,7 +16,7 @@ import Typography from 'material-ui/Typography';
 const styleSheet = createStyleSheet('EmailForm', theme => ({
     root: {
         marginTop: 64,
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             marginTop: 0,
         }
     },

@@ -38,11 +38,11 @@ const styleSheet = createStyleSheet('Header', theme => ({
         alignItems: 'center',
         height: 70,
         backgroundColor: '#ffffff',
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             boxShadow: '0 0 7px 0 rgba(0, 0, 0, 0.2)',
         },
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             height: 60,
             backgroundImage: 'linear-gradient(279deg, #f55e58, #c9011b)'
         }
@@ -54,11 +54,11 @@ const styleSheet = createStyleSheet('Header', theme => ({
     logo: {
         fontSize: 26,
         color: '#fff',
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             lineHeight: '70px',
             height: 70,
         },
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             marginLeft: 10,
             fontSize: 24,
             lineHeight: '60px'
@@ -69,10 +69,10 @@ const styleSheet = createStyleSheet('Header', theme => ({
     logoLink: {
         textDecoration: 'none',
         height: 70,
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             margin: 60
         },
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             height: 60,
         }
     },
@@ -84,7 +84,7 @@ const styleSheet = createStyleSheet('Header', theme => ({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
 
             marginRight: -20,
             paddingRight: 20,
@@ -92,7 +92,7 @@ const styleSheet = createStyleSheet('Header', theme => ({
             minWidth: 480,
 
         },
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             justifyContent: 'flex-end'
         }
     },
@@ -100,7 +100,7 @@ const styleSheet = createStyleSheet('Header', theme => ({
         marginLeft: 24,
         marginRight: 24,
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             marginLeft: 0,
             marginRight: 0,
 
@@ -116,7 +116,7 @@ const styleSheet = createStyleSheet('Header', theme => ({
         '&:hover': {
             backgroundColor: 'transparent',
         },
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             minWidth: 0
         }
 
@@ -136,7 +136,7 @@ const styleSheet = createStyleSheet('Header', theme => ({
     containerMenu: {
 
 
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             overflowX: 'visible',
             overflowY: 'visible',
             marginTop: 50,
@@ -153,7 +153,7 @@ const styleSheet = createStyleSheet('Header', theme => ({
             }
         },
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             zIndex: 1000,
             '& > div': {
                 top: 60
@@ -174,7 +174,7 @@ const styleSheet = createStyleSheet('Header', theme => ({
             backgroundColor: 'transparent',
             color: '#000'
         },
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             color: '#ffffff',
             opacity: 0.6,
         }
@@ -208,7 +208,7 @@ const styleSheet = createStyleSheet('Header', theme => ({
         top: 0,
         height: 70,
 
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             backgroundImage: 'linear-gradient(290deg, #f55e58, #c9011b)',
             transform: 'skew(-20deg)',
             width: 'calc( ( 100% - 1440px ) / 2 + 196px )',
@@ -223,7 +223,7 @@ const styleSheet = createStyleSheet('Header', theme => ({
         position: 'absolute',
         top: 0,
         height: 70,
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             backgroundColor: '#f5f5f5',
             transform: 'skew(-20deg)',
             width: 'calc( ( 100% - 1440px ) / 2 + 480px )',
@@ -245,7 +245,7 @@ const styleSheet = createStyleSheet('Header', theme => ({
         padding: '8px 4px',
         minWidth: 160,
         borderBottom: 'solid 1px #e2e2e2',
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             minWidth: 120,
             fontSize: 16,
             letterSpacing: '0.3px',
@@ -263,13 +263,13 @@ const styleSheet = createStyleSheet('Header', theme => ({
     },
 
     hideShadowScroll: {
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             boxShadow: 'none',
         }
     },
 
     hideShadowBackground: {
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             backgroundColor: 'transparent',
             transform: 'none',
             backgroundImage: 'none'
@@ -327,6 +327,8 @@ class Header extends Component {
         const {user, classes, width} = this.props;
         let DropMenu = null;
 
+        const smallWidth = width === 'sm'|| width === 'xs';
+
         if (user) {
             let items = [
                 <MenuItem key="profile"
@@ -347,7 +349,7 @@ class Header extends Component {
                                         onClick={this.handleMenuRequestClose('/profile/shortlist')}>ShortList</MenuItem>);
 
 
-            if (width === 'xs') {
+            if (smallWidth) {
                 DropMenu = <Drawer
                     id="simple-menu"
                     anchor="top"
@@ -368,11 +370,10 @@ class Header extends Component {
                 </Menu>;
             }
         }
-
         const hideBackground = (this.props.hideBackground
             || this.props.hideBackgroundTopHeader && !this.state.scroll)
-            || (this.props.hideBackgroundTopMobileHeaderScroll && width === 'xs' && !this.state.scroll)
-            || (this.props.hideBackgroundTopMobileHeader && width === 'xs');
+            || (this.props.hideBackgroundTopMobileHeaderScroll && smallWidth && !this.state.scroll)
+            || (this.props.hideBackgroundTopMobileHeader && smallWidth);
 
         return (
             <AppBar position="fixed"

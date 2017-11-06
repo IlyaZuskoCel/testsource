@@ -42,7 +42,7 @@ const styleSheet = createStyleSheet('Search', theme => ({
             easing: theme.transitions.easing.ease,
         }),
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             height: 160,
         },
 
@@ -61,7 +61,7 @@ const styleSheet = createStyleSheet('Search', theme => ({
         padding: [12, 15],
         flex: 1,
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             height: 120,
         }
     },
@@ -72,7 +72,7 @@ const styleSheet = createStyleSheet('Search', theme => ({
         height: 192,
         backgroundColor: '#d7001e',
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             height: 162
         },
     },
@@ -81,7 +81,7 @@ const styleSheet = createStyleSheet('Search', theme => ({
         maxWidth: 126,
         maxHeight: 126,
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             maxWidth: 96,
             maxHeight: 96,
         }
@@ -93,7 +93,7 @@ const styleSheet = createStyleSheet('Search', theme => ({
         height: 150,
         flex: 1,
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             width: 120,
             height: 120,
         }
@@ -109,12 +109,12 @@ const styleSheet = createStyleSheet('Search', theme => ({
 
 
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             justifyContent: 'flex-start',
             alignItems: 'flex-start',
         },
 
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('md')]: {
             justifyContent: 'center',
         }
 
@@ -127,7 +127,7 @@ const styleSheet = createStyleSheet('Search', theme => ({
             fontSize: 32,
         },
 
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('md')]: {
             marginTop: 0,
         }
     },
@@ -191,7 +191,7 @@ const styleSheet = createStyleSheet('Search', theme => ({
         position: 'relative',
         margin: 'auto',
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             height: 96,
             width: 96,
         },
@@ -213,7 +213,7 @@ const styleSheet = createStyleSheet('Search', theme => ({
     },
     infoCardPhotoDefault: {
         width: 126,
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             width: 96,
         }
     },
@@ -275,13 +275,15 @@ class PlayerCard extends Component {
     render() {
         const {classes, player, role, width, ...props} = this.props;
 
+        const smallWidth = width === 'sm'|| width === 'xs';
+
         let userPhotoSrc = defaultPhoto;
 
         if (player.profile_picture) {
             userPhotoSrc = player.profile_picture;
         }
 
-        if (width === "xs" && player.profile_picture_96) {
+        if (smallWidth && player.profile_picture_96) {
             userPhotoSrc = player.profile_picture_96;
         } else if (player.profile_picture_126) {
             userPhotoSrc = player.profile_picture_126;

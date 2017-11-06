@@ -39,7 +39,7 @@ const styleSheet = createStyleSheet('Delete', theme => ({
             paddingLeft: 16,
             paddingRight: 16,
         },
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             marginTop: 48,
             width: 'auto',
         },
@@ -47,12 +47,12 @@ const styleSheet = createStyleSheet('Delete', theme => ({
     content: {
         paddingTop: 32,
 
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'center',
         },
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             // paddingTop: 0,
         },
 
@@ -62,7 +62,7 @@ const styleSheet = createStyleSheet('Delete', theme => ({
         paddingBottom: 96,
         marginLeft: 40,
         marginRight: 40,
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             marginLeft: 0,
             marginRight: 0,
             marginTop: 40,
@@ -84,7 +84,7 @@ const styleSheet = createStyleSheet('Delete', theme => ({
         color: '#eb3941',
         textDecoration: 'underline',
         marginTop: 24,
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             marginTop: 8,
         },
     },
@@ -117,7 +117,7 @@ const styleSheet = createStyleSheet('Delete', theme => ({
     subTopTitle: {marginBottom: 40},
     buttons: {
         marginTop: 56,
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'space-around',
@@ -167,7 +167,7 @@ class Delete extends Component {
         const {classes} = this.props;
 
         return <div className={classes.root}>
-            <Hidden smUp>
+            <Hidden only={['md', 'lg', 'xl']}>
                 <div className={classes.headerNavigation}>
                     <Link to="/" onClick={this.cancel} invert disabledUnderline className={classes.backLink}>
                         <Icon>previous</Icon>
@@ -176,7 +176,7 @@ class Delete extends Component {
                     <div className={classes.backLink}/>
                 </div>
             </Hidden>
-            <Hidden xsDown>
+            <Hidden only={['xs', 'sm']}>
                 <Typography type="headline">Delete my account</Typography>
             </Hidden>
             <div className={classes.content}>
@@ -207,7 +207,7 @@ class Delete extends Component {
 
 
                     <div className={classes.buttons}>
-                        <Hidden xsDown>
+                        <Hidden only={['xs', 'sm']}>
                             <Button raised onClick={this.props.cancel}
                                     className={classes.buttonCancel}>Cancel</Button>
                         </Hidden>

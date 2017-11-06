@@ -44,7 +44,7 @@ const styleSheet = createStyleSheet('Scout', theme => ({
             easing: theme.transitions.easing.ease,
         }),
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             height: 'auto',
             minHeight: 120,
         },
@@ -64,7 +64,7 @@ const styleSheet = createStyleSheet('Scout', theme => ({
         padding: [12, 15],
         flex: 1,
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             height: 'auto',
             minHeight: 120,
         }
@@ -76,7 +76,7 @@ const styleSheet = createStyleSheet('Scout', theme => ({
         height: 150,
         backgroundColor: '#d7001e',
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             minHeight: 120,
             maxHeight: 145,
         },
@@ -86,7 +86,7 @@ const styleSheet = createStyleSheet('Scout', theme => ({
         width: 126,
         height: 126,
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             width: 96,
             height: 96,
             justifyContent: 'space-around'
@@ -99,7 +99,7 @@ const styleSheet = createStyleSheet('Scout', theme => ({
         height: 150,
         flex: 1,
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             width: 120,
             height: 'auto',
             minHeight: 120,
@@ -118,7 +118,7 @@ const styleSheet = createStyleSheet('Scout', theme => ({
 
 
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             justifyContent: 'flex-start',
             alignItems: 'flex-start',
             height: 120,
@@ -157,7 +157,7 @@ const styleSheet = createStyleSheet('Scout', theme => ({
         justifyContent: 'center',
         alignItems: 'flex-start',
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             alignItems: 'center',
             height: '100%'
         }
@@ -165,11 +165,9 @@ const styleSheet = createStyleSheet('Scout', theme => ({
     total: {
         display: 'flex',
 
+
         [theme.breakpoints.down('md')]: {
             marginLeft: 20,
-        },
-
-        [theme.breakpoints.down('sm')]: {
             justifyContent: 'center',
             alignItems: 'center',
         }
@@ -192,7 +190,7 @@ const styleSheet = createStyleSheet('Scout', theme => ({
         position: 'relative',
         margin: 'auto',
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             height: 96,
             width: 96,
         },
@@ -214,7 +212,7 @@ const styleSheet = createStyleSheet('Scout', theme => ({
     },
     infoCardPhotoDefault: {
         width: 126,
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             width: 96,
         }
     },
@@ -282,7 +280,7 @@ class Scouts extends Component {
                 </div>
                 <div className={classes.resultContainer}>
 
-                    {this.props.total == 0 && <Hidden smUp>
+                    {this.props.total === 0 && <Hidden smUp>
                         <div className={classes.specificContainer}>
                             <div className={classes.specificText}><Typography type="body2">Your search might be too
                                 specific</Typography></div>
@@ -294,7 +292,7 @@ class Scouts extends Component {
                     <Grid container gutter={40} justify="center">
 
                         {this.state.scouts && this.state.scouts.map(scout => {
-                            return <Grid item xs={12} sm={8} md={6} lg={4} key={scout.id}>
+                            return <Grid item xs={12} md={6} lg={4} key={scout.id}>
                                 <Link to={`/profile/${scout.id}`} disabledUnderline>
                                     <Paper classes={{root: classes.resultCard}} elevation={1}>
                                         <div className={classes.leftStripe}></div>

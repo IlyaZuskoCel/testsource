@@ -20,7 +20,6 @@ import PlayerCard from '../../../user/components/Cards/PlayerCard';
 const styleSheet = createStyleSheet('Search', theme => ({
     content: {
         maxWidth: 1168,
-        maxWidth: 1168,
         width: '100%',
         margin: 'auto',
     },
@@ -38,7 +37,7 @@ const styleSheet = createStyleSheet('Search', theme => ({
             easing: theme.transitions.easing.ease,
         }),
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             height: 160,
         },
 
@@ -57,7 +56,7 @@ const styleSheet = createStyleSheet('Search', theme => ({
         padding: [12, 15],
         flex: 1,
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             height: 120,
         }
     },
@@ -68,7 +67,7 @@ const styleSheet = createStyleSheet('Search', theme => ({
         height: 192,
         backgroundColor: '#d7001e',
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             height: 162
         },
     },
@@ -77,7 +76,7 @@ const styleSheet = createStyleSheet('Search', theme => ({
         maxWidth: 126,
         maxHeight: 126,
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             maxWidth: 96,
             maxHeight: 96,
         }
@@ -89,7 +88,7 @@ const styleSheet = createStyleSheet('Search', theme => ({
         height: 150,
         // flex: 1,
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             width: 120,
             height: 120,
         }
@@ -104,29 +103,27 @@ const styleSheet = createStyleSheet('Search', theme => ({
         marginLeft: 29,
 
 
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('lg')]: {
             marginLeft: 5,
         },
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             justifyContent: 'flex-start',
             alignItems: 'flex-start',
         },
 
-        [theme.breakpoints.down('xs')]: {
-            justifyContent: 'center',
-        }
+
 
     },
     nameFont: {
         fontSize: 40,
         marginTop: 20,
 
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('lg')]: {
             fontSize: 32,
         },
 
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('md')]: {
             marginTop: 0,
         }
     },
@@ -184,11 +181,11 @@ const styleSheet = createStyleSheet('Search', theme => ({
     total: {
         display: 'flex',
 
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('lg')]: {
           marginLeft: 20,
         },
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             justifyContent: 'center',
             alignItems: 'center',
         }
@@ -228,14 +225,14 @@ class Players extends Component {
                 </div>
                 <div className={classes.resultContainer}>
 
-                    {this.props.total == 0 && <Hidden smUp><div className={classes.specificContainer}>
+                    {this.props.total === 0 && <Hidden only={['md', 'lg', 'xl']}><div className={classes.specificContainer}>
                         <div className={classes.specificText}><Typography type="body2">Your search might be too specific</Typography></div>
                         <div><Typography type="caption">Try reducing the number of filters.</Typography></div>
                     </div></Hidden>}
 
                     <Grid container gutter={40} justify="center">
                         {this.state.players && this.state.players.map(player => {
-                            return <Grid item xs={12}  sm={8} md={6} lg={4} key={player.id}>
+                            return <Grid item xs={12} md={6} lg={4} key={player.id}>
                                 <PlayerCard player={player}
                                             role={this.props.role}
                                             addFavorite={this.props.addFavorite}

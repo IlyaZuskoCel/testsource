@@ -50,7 +50,7 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
             paddingLeft: 16,
             paddingRight: 16,
         },
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             marginTop: 48,
             width: 'auto',
         },
@@ -59,7 +59,7 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
         paddingTop: 32,
         display: 'flex',
         flexDirection: 'row',
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             flexDirection: 'column',
         },
 
@@ -67,7 +67,7 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
     left: {
         display: 'flex',
         flexDirection: 'column',
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             flexDirection: 'row',
         },
     },
@@ -77,7 +77,7 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
         overflow: 'hidden',
         position: 'relative',
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             height: 192,
             width: 218,
         },
@@ -96,7 +96,7 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
     },
     pictureDefault: {
         width: 176,
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             width: 72,
         },
     },
@@ -109,7 +109,7 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
         cursor: 'pointer',
         textDecoration: 'underline',
         marginTop: 24,
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             marginTop: 8,
             marginLeft: 24,
         },
@@ -129,11 +129,11 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
     formWrap: {
         marginLeft: 88,
         paddingBottom: 96,
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('lg')]: {
             marginLeft: 40,
             marginRight: 40,
         },
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             marginLeft: 0,
             marginRight: 0,
             marginTop: 40,
@@ -299,7 +299,7 @@ class PlayerForm extends Component {
 
     render() {
         const {classes, user, width} = this.props;
-
+        const smallWidth = width === 'sm'|| width === 'xs';
 
         let userPhotoSrc = defaultPhoto;
 
@@ -307,7 +307,7 @@ class PlayerForm extends Component {
             userPhotoSrc = user.profile_picture;
         }
 
-        if (width === "xs" && user.profile_picture_mobile) {
+        if (smallWidth && user.profile_picture_mobile) {
             userPhotoSrc = user.profile_picture_mobile;
         } else if (user.profile_picture_desktop) {
             userPhotoSrc = user.profile_picture_desktop;
@@ -321,7 +321,7 @@ class PlayerForm extends Component {
                 message="Your profile hasn't been saved! All changes will be lost. Are you sure you want to leave?"
                 when={this.state.isUpdate}
             />
-            <Hidden smUp>
+            <Hidden only={['md', 'lg', 'xl']}>
                 <div className={classes.headerNavigation}>
                     <Link to="/" onClick={this.cancel} invert disabledUnderline className={classes.backLink}>
                         <Icon>previous</Icon>
@@ -332,7 +332,7 @@ class PlayerForm extends Component {
                     </Link>
                 </div>
             </Hidden>
-            <Hidden xsDown>
+            <Hidden only={['xs', 'sm']}>
                 <Typography type="headline">Edit Profile</Typography>
             </Hidden>
             <div className={classes.content}>
@@ -594,7 +594,7 @@ class PlayerForm extends Component {
 
                         </Grid>
                     </Grid>
-                    <Hidden xsDown>
+                    <Hidden only={['xs', 'sm']}>
                         <div className={classes.buttons}>
                             <Button raised onClick={this.props.cancel} className={classes.buttonCancel}>Cancel</Button>
                             <Button raised color="primary" type="submit">Save</Button>

@@ -24,7 +24,7 @@ const styleSheet = createStyleSheet('Sign', theme => ({
     content: {
         maxWidth: 1168,
         margin: 'auto',
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             marginTop: 0,
         },
     },
@@ -55,11 +55,11 @@ const styleSheet = createStyleSheet('Sign', theme => ({
     logo: {
         fontSize: 26,
         color: '#fff',
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             lineHeight: '70px',
             height: 70,
         },
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             fontSize: 100,
             lineHeight: '140px',
 
@@ -69,10 +69,10 @@ const styleSheet = createStyleSheet('Sign', theme => ({
     logoLink: {
         textDecoration: 'none',
         height: 70,
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             margin: 60
         },
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             height: 60,
         }
     },
@@ -83,7 +83,7 @@ const styleSheet = createStyleSheet('Sign', theme => ({
         top: 0,
         height: 70,
 
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             backgroundImage: 'linear-gradient(290deg, #f55e58, #c9011b)',
             transform: 'skew(-20deg)',
             width: 'calc( ( 100% - 1440px ) / 2 + 196px )',
@@ -98,7 +98,7 @@ const styleSheet = createStyleSheet('Sign', theme => ({
         position: 'absolute',
         top: 0,
         height: 70,
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             backgroundColor: '#f5f5f5',
             transform: 'skew(-20deg)',
             width: 'calc( ( 100% - 1440px ) / 2 + 480px )',
@@ -109,7 +109,7 @@ const styleSheet = createStyleSheet('Sign', theme => ({
     },
 
     text: {
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             color: '#ffffff'
         }
     },
@@ -120,15 +120,15 @@ const styleSheet = createStyleSheet('Sign', theme => ({
 
         paddingTop: 88,
         paddingBottom: 72,
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             paddingRight: 16,
             paddingLeft: 16,
         },
-        [theme.breakpoints.up('md')]: {
+        [theme.breakpoints.up('lg')]: {
             paddingRight: 88,
             paddingLeft: 16,
         },
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             padding: 16,
             paddingTop: 48,
             paddingBottom: 56,
@@ -149,7 +149,7 @@ const styleSheet = createStyleSheet('Sign', theme => ({
         justifyContent: 'flex-start',
         alignItems: 'center',
         marginTop: 64,
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             marginTop: 0,
 
         }
@@ -162,7 +162,7 @@ const styleSheet = createStyleSheet('Sign', theme => ({
     },
     radioLabel: {
         marginRight: 40,
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             marginRight: 16,
 
         }
@@ -199,7 +199,7 @@ class Sign extends Component {
 
         return (<div>
 
-            <Hidden xsDown>
+            <Hidden only={['xs', 'sm']}>
                 <div className={classNames(classes.header)}>
                     <div className={classes.leftBg}/>
                     <div className={classes.rightBg}/>
@@ -216,7 +216,7 @@ class Sign extends Component {
 
             <div className={classes.content}>
 
-                <Hidden smUp>
+                <Hidden only={['md', 'lg', 'xl']}>
                     <div className={classes.headerTab}>
                         <a href="https://scoutzoo.com" className={classNames(classes.logoLink)}>
                             <Icon className={classes.logo}>scoutzoo-symbol</Icon>
@@ -242,10 +242,10 @@ class Sign extends Component {
 
 
                 <Grid container direction={'row'} className={classes.root}>
-                    <Grid item xs={12} sm={8} md={6}>
+                    <Grid item xs={12} md={6}>
                         <div className={classes.tabContent}>
 
-                            <Hidden xsDown>
+                            <Hidden only={['xs', 'sm']}>
 
                                 <Tabs index={type === 'in' ? 0 : 1}
                                       centered fullWidth
@@ -311,7 +311,7 @@ class Sign extends Component {
 
                         </div>
                     </Grid>
-                    <Grid item sm={4} md={6} hidden={{xsDown: true}}>
+                    <Grid item sm={4} md={6} hidden={{smDown: true}}>
                         <div className={classes.hockeyMenWrap}>
                             <img className={classes.hockeyMen}
                                  src={hockeyMen}/>

@@ -27,7 +27,7 @@ const styleSheet = createStyleSheet('ScoutFilter', theme => ({
         alignItems: 'center',
         justifyContent: 'flex-start',
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             padding: 16,
         }
     },
@@ -36,12 +36,12 @@ const styleSheet = createStyleSheet('ScoutFilter', theme => ({
         maxWidth: 360,
         margin: [0, 44, 44, 0],
 
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('lg')]: {
             width: '90%',
             maxWidth: 340,
         },
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             maxWidth: '100%',
             width: '100%',
             margin: [0, 0, 0, 0],
@@ -242,12 +242,12 @@ class ScoutFilter extends Component {
 
 
     render() {
-        const {classes, width} = this.props;
+        const {classes} = this.props;
 
         return ( <div className={classes.row}>
 
             <Grid container gutter={40}>
-                <Grid item xs={12} sm={6} md={4}>
+                <Grid item xs={12} md={4}>
                     <DropdownOptions  fullWidth
                                       options={[]}
                                       value={1}
@@ -267,16 +267,16 @@ class ScoutFilter extends Component {
                                       stopClearing={this.clearSubFields}
                     />
                 </Grid>
-                <Grid item xs={12} sm={6} md={4}>
+                <Grid item xs={12} md={4}>
                     <Autosuggest fullWidth
                                  label="Team"
                                  value={this.props.teams && this.state.id_team_current ? this.props.teams[this.state.id_team_current] || '' : ''}
                                  suggestions={this.filterTeams(this.props.teamOptions) }
                                  onSuggestionSelected={this.onChangeAutosuggest('id_team_current')}/>
                 </Grid>
-                <Grid item xs={12} sm={6} md={4}>
+                <Grid item xs={12} md={4}>
 
-                    <Hidden xsDown>
+                    <Hidden only={['xs', 'sm']}>
                         <TextField
                             id="name"
                             label="Name"
@@ -286,7 +286,7 @@ class ScoutFilter extends Component {
                         />
                     </Hidden>
 
-                    <Hidden smUp>
+                    <Hidden only={['md', 'lg', 'xl']}>
                         <InputText options={[]}
                                    value={1}
                                    label="Name"
@@ -301,7 +301,7 @@ class ScoutFilter extends Component {
 
                 </Grid>
 
-                <Hidden smUp>
+                <Hidden only={['md', 'lg', 'xl']}>
                     <div className={classes.buttonViewContainer}>
                         <Button raised color="primary" className={classes.viewButton} onClick={this.props.viewResults}>
                             <Typography className={classes.viewTypography}>

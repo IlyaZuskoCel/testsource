@@ -52,7 +52,7 @@ const styleSheet = createStyleSheet('VideoList', theme => ({
         maxWidth: 1168,
         width: '100%',
         margin: '76px auto',
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             marginTop: 0,
             margin: 0,
         },
@@ -69,7 +69,7 @@ const styleSheet = createStyleSheet('VideoList', theme => ({
         '&:hover': {
             color: '#9b9b9b',
         },
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             fontSize: 14,
             height: 32
         },
@@ -88,7 +88,7 @@ const styleSheet = createStyleSheet('VideoList', theme => ({
         marginBottom: 32
     },
     videoGrid: {
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             boxShadow: '0 0 6px 0 rgba(0, 0, 0, 0.15)',
             marginBottom: 8
         },
@@ -150,7 +150,7 @@ class VideoList extends Component {
             )}
             <Grid container gutter={40}>
                 {sortVideo.map(item => (
-                    <Grid key={item.id} item xs={12} sm={6} className={classes.videoGrid}>
+                    <Grid key={item.id} item xs={12} md={6} className={classes.videoGrid}>
                         <Video video={item}/>
                     </Grid>
                 ))}

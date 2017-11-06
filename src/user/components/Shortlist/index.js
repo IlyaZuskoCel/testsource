@@ -17,7 +17,6 @@ const styleSheet = createStyleSheet('Shortlist' , theme => ({
     root: {},
     content: {
         maxWidth: 1168,
-        maxWidth: 1168,
         width: '100%',
         margin: 'auto',
     },

@@ -34,7 +34,7 @@ const styleSheet = createStyleSheet('ShareButton', theme => ({
     root: {
         textTransform: 'uppercase',
         marginLeft: 48,
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             fontSize: 18,
             marginLeft: 16,
         },
@@ -46,7 +46,7 @@ const styleSheet = createStyleSheet('ShareButton', theme => ({
     buttonsWrap: {
         display: 'flex',
         flexDirection: 'row',
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             flexDirection: 'column',
         },
     },
@@ -74,13 +74,13 @@ const styleSheet = createStyleSheet('ShareButton', theme => ({
     },
     facebookButton: {
         backgroundColor: '#3f51b5',
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             marginRight: 8
         }
     },
     twitterButton: {
         backgroundColor: '#03a9f4',
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             marginTop: 16
         }
     },

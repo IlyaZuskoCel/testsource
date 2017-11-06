@@ -30,7 +30,7 @@ const styleSheet = createStyleSheet('ChangePassword', theme => ({
             paddingLeft: 16,
             paddingRight: 16,
         },
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             marginTop: 48,
             width: 'auto',
         },
@@ -40,7 +40,7 @@ const styleSheet = createStyleSheet('ChangePassword', theme => ({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             paddingTop: 0,
         },
 
@@ -50,7 +50,7 @@ const styleSheet = createStyleSheet('ChangePassword', theme => ({
         paddingBottom: 96,
         marginLeft: 40,
         marginRight: 40,
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             marginLeft: 0,
             marginRight: 0,
             marginTop: 40,
@@ -72,7 +72,7 @@ const styleSheet = createStyleSheet('ChangePassword', theme => ({
         color: '#eb3941',
         textDecoration: 'underline',
         marginTop: 24,
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             marginTop: 8,
         },
     },
@@ -159,7 +159,7 @@ class ChangePassword extends Component {
         const {classes} = this.props;
 
         return <div className={classes.root}>
-            <Hidden smUp>
+            <Hidden only={['md', 'lg', 'xl']}>
                 <div className={classes.headerNavigation}>
                     <Link to="/" onClick={this.cancel} invert disabledUnderline className={classes.backLink}>
                         <Icon>previous</Icon>
@@ -170,7 +170,7 @@ class ChangePassword extends Component {
                     </Link>
                 </div>
             </Hidden>
-            <Hidden xsDown>
+            <Hidden only={['xs', 'sm']}>
                 <Typography type="headline">Change my password</Typography>
             </Hidden>
             <div className={classes.content}>
@@ -185,7 +185,7 @@ class ChangePassword extends Component {
                                        type="password"
                                        onChange={this.handleChange('password_old')}/>
                         </Grid>
-                        <Hidden xsDown>
+                        <Hidden only={['xs', 'sm']}>
                             <Grid item xs={12} md={6}/>
                         </Hidden>
                         <Grid item xs={12} md={6}>
@@ -209,7 +209,7 @@ class ChangePassword extends Component {
                     <Link to="/" onClick={this.handleEmailMe} className={classes.link}>
                         Email me a temporary password
                     </Link>
-                    <Hidden xsDown>
+                    <Hidden only={['xs', 'sm']}>
                         <div className={classes.buttons}>
                             <Button raised onClick={this.props.cancel}
                                     className={classes.buttonCancel}>Cancel</Button>
