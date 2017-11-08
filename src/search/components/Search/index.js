@@ -185,24 +185,23 @@ const styleSheet = createStyleSheet('Search', theme => ({
         position: 'fixed',
         top: 0,
         left: 0,
-        zIndex: 9,
+        zIndex:9,
     },
     headerMobNavFix: {
         position: 'fixed',
         top: 60,
         left: 0,
-        zIndex: 99,
+        zIndex:9999,
     },
     filterTogglerConntainerFix: {
         position: 'fixed',
         top: 115,
         left: 0,
-        zIndex: 99,
+        zIndex:9999,
     }
 }));
 
 
-const fixedMainNavigationTrashold = 350;
 
 class Search extends Component {
     scrollY = 0;
@@ -245,8 +244,9 @@ class Search extends Component {
     }
 
     handleScroll(event) {
-
-        if (!this.state.mobileFilterOn || Math.abs(this.scrollY - window.scrollY) < 10) return;
+        const {width} = this.props;
+        const smallWidth = width === 'sm'|| width === 'xs';
+        if (!smallWidth || !this.state.mobileFilterOn || Math.abs(this.scrollY - window.scrollY) < 10) return;
 
         const direction = this.scrollY - window.scrollY > 0 ? 'top' : 'bottom';
 
@@ -257,7 +257,6 @@ class Search extends Component {
         this.setState({
             direction
         });
-
 
         if (direction === 'top')
             this.props.hideHeaderBackground();
