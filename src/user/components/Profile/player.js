@@ -553,6 +553,11 @@ class PlayerProfile extends Component {
 
     handleChange = name => event => this.setState({[name]: event.target.value});
 
+    goBack = e => {
+        e.preventDefault();
+        this.props.goBack();
+        return false;
+    };
 
     render() {
 
@@ -600,7 +605,7 @@ class PlayerProfile extends Component {
 
                 ) : (currentUser ? (
                     <div className={classes.topNavigate}>
-                        <Link to="/" onClick={this.props.goBack} invert disabledUnderline className={classes.backLink}>
+                        <Link to="/" onClick={this.goBack} invert disabledUnderline className={classes.backLink}>
                             <Icon>previous</Icon>
                             <Hidden only={['xs', 'sm']}><span className={classes.backTitle}>Back to search</span></Hidden></Link>
                         <div>

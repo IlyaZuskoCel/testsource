@@ -358,6 +358,11 @@ class ScoutProfile extends Component {
         this.setState(state)
     };
 
+    goBack = e => {
+        e.preventDefault();
+        this.props.goBack();
+        return false;
+    };
 
     render() {
 
@@ -400,7 +405,7 @@ class ScoutProfile extends Component {
 
                 ) : (currentUser ? (
                     <div className={classes.topNavigate}>
-                        <Link to="/" onClick={this.props.goBack} invert disabledUnderline className={classes.backLink}>
+                        <Link to="/" onClick={this.goBack} invert disabledUnderline className={classes.backLink}>
                             <Icon>previous</Icon>
                             <Hidden xsDown><span className={classes.backTitle}>Back to search</span></Hidden></Link>
                         <div>
