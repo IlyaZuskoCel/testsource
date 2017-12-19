@@ -22,14 +22,18 @@ import {PLAYER_MAX_AGE, PLAYER_MIN_AGE} from "../../../common/constants/playerSe
 import {RangeSlider} from '../../../common/components';
 import {filterOnReg} from "../../helpers/helpers";
 
-import {POS_LIST} from '../../../user/constants';
+import {GENDER_LIST, POS_LIST} from '../../../user/constants';
 
 let positionOptions = Object.keys(POS_LIST).map(value => ({
     label: POS_LIST[value],
     value
 }));
 
-positionOptions.unshift({label: 'None', value: ''});
+const genderOptions = Object.keys(GENDER_LIST).map(value => ({
+    label: GENDER_LIST[value],
+    value
+}));
+
 
 
 const tipFormatter = (value, index) => {
@@ -97,6 +101,7 @@ class PlayerFilter extends Component {
             name: '',
             team: '',
             year: '',
+            gender:'',
             position: '',
             leagues: [],
             born: [PLAYER_MIN_AGE, PLAYER_MAX_AGE],
@@ -150,11 +155,12 @@ class PlayerFilter extends Component {
             id_level: this.state.id_level ? this.state.id_level : null,
             id_team_current: this.state.id_team_current ? this.state.id_team_current : null,
             position: this.state.position ? this.state.position : null,
+            gender: this.state.gender ? this.state.gender : null,
             'name_search': this.state.name ? this.state.name : null,
             page: this.props.page ? this.props.page : 1
         };
 
-        if (this.state.name || this.state.id_league || this.state.id_team_current || this.state.year || this.state.position || this.state.values || this.state.born || this.state.id_level|| this.state.id_country) {
+        if (this.state.name || this.state.id_league || this.state.id_team_current || this.state.year || this.state.position || this.state.gender || this.state.values || this.state.born || this.state.id_level|| this.state.id_country) {
             queryString += '?';
 
             for (let key in options) {
@@ -219,6 +225,7 @@ class PlayerFilter extends Component {
                 id_league: '',
                 id_team_current: '',
                 position: '',
+                gender: '',
                 born: [PLAYER_MIN_AGE, PLAYER_MAX_AGE],
                 name: '',
                 clearSubFields: true,
@@ -250,6 +257,7 @@ class PlayerFilter extends Component {
                     id_league: '',
                     id_team_current: '',
                     position: '',
+                    gender: '',
                     dropdownLeagues: [],
                     born: [PLAYER_MIN_AGE, PLAYER_MAX_AGE],
                     name: '',
@@ -338,6 +346,13 @@ class PlayerFilter extends Component {
                                  label={'Year born'}
                                  min={PLAYER_MIN_AGE}
                                  max={PLAYER_MAX_AGE}/>
+                </Grid>
+                <Grid item xs={12}  md={4}>
+                    <DropDown fullWidth
+                              options={genderOptions}
+                              label="Gender"
+                              value={GENDER_LIST[this.state.gender] || ''}
+                              onChange={this.handleChange('gender')}/>
                 </Grid>
                 <Grid item xs={12}  md={4}>
                     <Hidden only={['xs', 'sm']}>
