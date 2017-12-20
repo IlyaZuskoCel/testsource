@@ -26,6 +26,7 @@ import ShareButton from '../ShareButton';
 
 import scoutBg from './assets/images/profile-scout-background.jpg';
 import defaultPhoto from './assets/images/default-photo.png';
+import verifiedImage from '../../../assets/image/check.png';
 
 
 const styleSheet = createStyleSheet('ScoutProfile', theme => ({
@@ -336,6 +337,14 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
     },
     descBottom: {
         paddingBottom: 64
+    },
+    verifiedImage: {
+        width: 32,
+        paddingLeft: 16,
+        [theme.breakpoints.down('md')]: {
+            width: 20,
+            paddingLeft: 4,
+        }
     }
 }));
 
@@ -367,7 +376,7 @@ class ScoutProfile extends Component {
     render() {
 
         const {classes, user, currentUser, isCurrent, width} = this.props;
-        const smallWidth = width === 'sm'|| width === 'xs';
+        const smallWidth = width === 'sm' || width === 'xs';
         let userPhotoSrc = defaultPhoto;
 
         if (user.profile_picture) {
@@ -444,7 +453,9 @@ class ScoutProfile extends Component {
                             <Hidden only={['md', 'lg', 'xl']}>
                                 <div>
                                     <Typography type="title" align="center"
-                                                className={classes.infoCardName}>{user.first_name} {user.last_name}</Typography>
+                                                className={classes.infoCardName}>{user.first_name} {user.last_name}
+                                        {!!user.is_verify && <img src={verifiedImage} className={classes.verifiedImage}/>}
+                                                </Typography>
                                     {user.job_title && (
                                         <Typography type="body1" align="center">{user.job_title}</Typography>)}
                                     <div className={classes.infoCardDataSeparator}/>
@@ -464,7 +475,9 @@ class ScoutProfile extends Component {
                     <Hidden only={['xs', 'sm']}>
                         <div className={classes.infoRight}>
                             <Typography type="headline"
-                                        className={classes.infoRightName}>{user.first_name} {user.last_name}</Typography>
+                                        className={classes.infoRightName}>{user.first_name} {user.last_name}
+                                {!!user.is_verify && <img src={verifiedImage} className={classes.verifiedImage}/>}
+                            </Typography>
 
                             <Typography type="body2">{user.job_title || 'Title Unknown'}</Typography>
 

@@ -23,6 +23,9 @@ import Radio, {RadioGroup} from 'material-ui/Radio';
 import {Link, Icon} from '../../../common/components';
 
 
+import verifiedImage from '../../../assets/image/check.png';
+
+
 const styleSheet = createStyleSheet('PlayerForm', theme => ({
     root: {
         width: '100%',
@@ -164,6 +167,9 @@ const styleSheet = createStyleSheet('PlayerForm', theme => ({
     },
     verifiedForm: {
         marginTop: 16
+    },
+    verifiedImage: {
+        width: 24
     }
 }));
 
@@ -269,7 +275,8 @@ class ScoutForm extends Component {
                     {user.is_verify ? (
                         <div>
                             <Typography type="subheading" className={classes.subTitle}>You are a verified
-                                scout!</Typography>
+                                scout! <img src={verifiedImage} className={classes.verifiedImage}/></Typography>
+
                             <Typography type="caption">You can contact players or their agents.</Typography>
                         </div>
 
