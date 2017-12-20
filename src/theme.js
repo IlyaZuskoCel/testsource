@@ -357,7 +357,7 @@ const theme = (outerTheme) => {
                     }
                 },
                 inputDisabled: {
-                    color: palette.text.disabled
+                    color: '#000'
                 },
                 error: {
                     '&:after': {
