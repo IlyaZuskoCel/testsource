@@ -18,6 +18,7 @@ import Hidden from 'material-ui/Hidden';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import defaultPhoto from './assets/images/default-photo.png';
 
+import verifiedImage from '../../../assets/image/check.png';
 
 const nameLengthTreshold = 12;
 const lastnameLengthTreshold = 12;
@@ -114,8 +115,6 @@ const styleSheet = createStyleSheet('Scout', theme => ({
         flex: 1,
         height: 150,
         marginLeft: 30,
-
-
 
 
         [theme.breakpoints.down('md')]: {
@@ -216,6 +215,10 @@ const styleSheet = createStyleSheet('Scout', theme => ({
             width: 96,
         }
     },
+    verifiedImage: {
+        width: 16,
+        paddingLeft: 4,
+    }
 }));
 
 
@@ -316,6 +319,8 @@ class Scouts extends Component {
                                                     </Typography>
                                                     <Typography type='title' className={classes.nameFont}>
                                                         {this.splitOnLength(scout.last_name, lastnameLengthTreshold)}
+                                                        {!!scout.is_confirmed &&
+                                                        <img src={verifiedImage} className={classes.verifiedImage}/>}
                                                     </Typography>
 
 
