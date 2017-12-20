@@ -11,7 +11,7 @@ import {withStyles, createStyleSheet} from 'material-ui/styles';
 import withWidth from 'material-ui/utils/withWidth';
 import compose from 'recompose/compose';
 import Grid from 'material-ui/Grid';
-import Hidden from 'material-ui/Hidden';
+import Icon from 'material-ui/Icon';
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
 
@@ -43,6 +43,25 @@ const styleSheet = createStyleSheet('ContactForm', theme => ({
             marginBottom: 40,
         }
     },
+    link: {
+        color: '#eb3941',
+        cursor: 'pointer',
+        textDecoration: 'underline',
+        textUnderlinePosition:'under',
+        [theme.breakpoints.down('md')]: {
+            marginBottom: 16
+        }
+
+    },
+    linkIcon: {
+        color: '#eb3941',
+        cursor: 'pointer',
+        fontSize: 18,
+        marginLeft: -14,
+        [theme.breakpoints.down('md')]: {
+            fontSize: 14
+        }
+    }
 
 }));
 
@@ -92,6 +111,29 @@ class ContactForm extends Component {
         const {classes, currentUser, user} = this.props;
 
         return <Grid container>
+
+            {!!this.props.currentUser.is_verify && !user.have_agent && user.team_website && [
+                <Grid item md={3} xs={12} key="1">
+                    <Typography type="body1">
+                        Contact this player's coach via the team's website
+                    </Typography>
+                </Grid>,
+                <Grid item md={8} xs={12} key="2">
+
+                    <Typography type="body1">
+                        <a target="_blank"
+                           href={user.team_website.indexOf("http") === 0 ? user.team_website : "http://" + user.team_website}
+                           className={classes.link}>
+                            Team's website &nbsp; &nbsp; &nbsp;
+                            <Icon className={classes.linkIcon}>open_in_new</Icon>
+                        </a>
+                    </Typography>
+
+
+                </Grid>
+            ]}
+
+
             <Grid item md={3} xs={12}>
 
 
@@ -120,11 +162,11 @@ class ContactForm extends Component {
                 )}
 
 
-                {!!this.props.currentUser.is_verify && !!!user.have_agent && (
+                {!!this.props.currentUser.is_verify && !user.have_agent && (
                     <Typography type="body1">
-                        You can send a message to a player here. Responses will be send directly
-                        to your
-                        email as indicated.
+                        You can {user.team_website && 'also'} send a message to the player here. Make sure you follow
+                        the League's rules or
+                        contracting players before you do so.
                     </Typography>
                 )}
 
@@ -137,6 +179,7 @@ class ContactForm extends Component {
                                    label="Your Email Address"
                                    value={currentUser.email}
                                    disabled
+                                   helperText="Responses will be send directly to this email address"
                         />
                     </Grid>
                     <Grid item xs={12}>
