@@ -236,11 +236,11 @@ class PlayerForm extends Component {
                                value={this.state.email || ''}
                                onChange={this.handleChange('email')}
                                className={classes.emailTextField}/>
-                    <Typography type="caption">This is the email address you will use to login to your Scout Zoo
-                        account, and that will receive emails from scouts, unless you have an agent.</Typography>
+                    <Typography type="caption">Your email address is used to log in to Scout Zoo, and will also be used to receive messages from Verified Scouts (if you have an agent, the message will go to them instead).
+                    </Typography>
                     <br/>
-                    <Typography type="caption">Note: Your email address will not be made public. Scouts will only see
-                        your email if you personally reply to their initial message.</Typography>
+                    <Typography type="caption">Note: Your email address will not be made public. Scouts can only see if your email address if you respond to one of their messages via email.
+                    </Typography>
 
                     <div className={classes.links}>
                         <Link to="/settings/password" className={classes.link}>Change my password</Link>

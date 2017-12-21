@@ -115,7 +115,7 @@ class ContactForm extends Component {
             {!!this.props.currentUser.is_verify && !user.have_agent && user.team_website && [
                 <Grid item md={3} xs={12} key="1">
                     <Typography type="body1">
-                        Contact this player's coach via the team's website
+                        Contact this player's coach via the team's website.
                     </Typography>
                 </Grid>,
                 <Grid item md={8} xs={12} key="2">
