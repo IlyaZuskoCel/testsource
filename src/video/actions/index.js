@@ -52,6 +52,13 @@ const getStatusVideo = (id, status, type) => dispatch => {
         get(`/api/v2/video/get/${id}`)
             .then(video => {
                 console.log(id, status, type, video.status === status);
+
+                if (video.status === -1) {
+                    dispatch(stopLoading());
+                    dispatch({type: ERROR_ALERT, payload: {message: "Error"}});
+                    return dispatch({type, payload: video});
+                }
+
                 if (video.status === status) {
                     dispatch(stopLoading());
                     return dispatch({type, payload: video});
@@ -117,7 +124,10 @@ export const postVideo = (data) => dispatch => {
                         dispatch(stopLoading());
                         dispatch({type: SET_VIDEO, payload: {}});
                         dispatch(push(`/profile/${result.id_user}`));
-                        dispatch({type: SUCCESS_ALERT, payload: {message: 'Your video is being processed. We will send you an email once it\'s posted.'}});
+                        dispatch({
+                            type: SUCCESS_ALERT,
+                            payload: {message: 'Your video is being processed. We will send you an email once it\'s posted.'}
+                        });
                     })
                     .catch(console.log);
             }
@@ -162,7 +172,10 @@ export const update = (data) => dispatch => {
                         dispatch(stopLoading());
                         dispatch({type: SET_VIDEO, payload: {}});
                         dispatch(push(`/profile/${result.id_user}`));
-                        dispatch({type: SUCCESS_ALERT, payload: {message: 'Your video is being processed. We will send you an email once it\'s updated.'}});
+                        dispatch({
+                            type: SUCCESS_ALERT,
+                            payload: {message: 'Your video is being processed. We will send you an email once it\'s updated.'}
+                        });
                     })
                     .catch((message) => {
                         dispatch({type: ERROR_ALERT, payload: {message}});
