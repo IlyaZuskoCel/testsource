@@ -232,6 +232,20 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
         },
 
     },
+    infoCardName: {
+        marginTop: 8,
+        fontSize: 32,
+        lineHeight: 0.97,
+        letterSpacing: '0.2px'
+    },
+
+    infoCardDataBottom: {
+        position: "absolute",
+        bottom: 0,
+        width: "100%",
+        backgroundColor: '#ffffff'
+    },
+
     infoCardData: {
         backgroundImage: 'linear-gradient(196deg, #d1d1d1, rgba(255, 255, 255, 0.74) 53%, #d9d9d9)',
         minHeight: 129,
@@ -241,7 +255,6 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
         alignItems: 'center',
         padding: 8,
         [theme.breakpoints.down('sm')]: {
-            height: 132,
             backgroundImage: 'none',
             backgroundColor: '#ffffff'
 
@@ -345,6 +358,12 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
             width: 20,
             paddingLeft: 4,
         }
+    },
+    pendingVerification: {
+        marginTop: 16,
+        [theme.breakpoints.down('md')]: {
+            marginTop: 8,
+        }
     }
 }));
 
@@ -447,29 +466,37 @@ class ScoutProfile extends Component {
                                 src={userPhotoSrc}/>
 
                         </div>
-                        <div className={classes.infoCardLeagueLine}/>
+                        <div className={classes.infoCardDataBottom}>
+                            <div className={classes.infoCardLeagueLine}/>
 
-                        <div className={classes.infoCardData}>
-                            <Hidden only={['md', 'lg', 'xl']}>
-                                <div>
-                                    <Typography type="title" align="center"
-                                                className={classes.infoCardName}>{user.first_name} {user.last_name}
-                                        {!!user.is_verify && <img src={verifiedImage} className={classes.verifiedImage}/>}
-                                                </Typography>
-                                    {user.job_title && (
-                                        <Typography type="body1" align="center">{user.job_title}</Typography>)}
-                                    <div className={classes.infoCardDataSeparator}/>
-                                </div>
-                            </Hidden>
-                            <Typography type="subheading" align="center" className={classes.infoCardTeam}>
-                                {!!!user.team_status && user.team && 'Pending / '}{user.team || 'Team Unknown'}
-                                {!!!user.league_status && user.league && ' - Pending / '}{user.league_short ? ' - ' + user.league_short : (!!!user.league_status ? user.league : '')}
+                            <div className={classes.infoCardData}>
+                                <Hidden only={['md', 'lg', 'xl']}>
+                                    <div>
+                                        <Typography type="title" align="center"
+                                                    className={classes.infoCardName}>{user.first_name} {user.last_name}
+                                            {!!user.is_verify &&
+                                            <img src={verifiedImage} className={classes.verifiedImage}/>}
+                                        </Typography>
+                                        {user.job_title && (
+                                            <Typography type="body1" align="center">{user.job_title}</Typography>)}
+                                        <div className={classes.infoCardDataSeparator}/>
+                                    </div>
+                                </Hidden>
+                                <Typography type="subheading" align="center" className={classes.infoCardTeam}>
+                                    {user.team || 'Team Unknown'}
+                                    {user.league_short ? ' - ' + user.league_short : (!user.league_status ? user.league : '')}
+                                    {(!user.team_status && user.team || !user.league_status && user.league) && "*"}
+                                </Typography>
+                                <Typography type="body1" align="center">
+                                    {(user.team_location !== 'n/a' && user.team_location) || user.team_country || 'Location Unknown'}
+                                </Typography>
+                                {(!user.team_status && user.team || !user.league_status && user.league) && (
+                                    <Typography type="caption" align="center" className={classes.pendingVerification}>
+                                        *Pending verification by Scout Zoo.
+                                    </Typography>
+                                )}
 
-                            </Typography>
-                            <Typography type="body1" align="center">
-                                {(user.team_location !== 'n/a' && user.team_location) || user.team_country || 'Location Unknown'}
-                            </Typography>
-
+                            </div>
                         </div>
                     </Paper>
                     <Hidden only={['xs', 'sm']}>
