@@ -263,6 +263,12 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
 
 
     },
+    infoCardDataBottom: {
+        position: "absolute",
+        bottom: 0,
+        width:"100%",
+        backgroundColor: '#ffffff'
+    },
     infoCardData: {
         backgroundImage: 'linear-gradient(196deg, #d1d1d1, rgba(255, 255, 255, 0.74) 53%, #d9d9d9)',
         minHeight: 129,
@@ -375,7 +381,9 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
     },
     infoCardTeam: {},
     infoCardName: {
+        marginTop: 8,
         fontSize: 32,
+        lineHeight: 0.97,
         letterSpacing: '0.2px'
     },
     info: {
@@ -519,6 +527,12 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
         height: 36,
         marginLeft: 10,
         marginRight: 10,
+    },
+    pendingVerification: {
+        marginTop: 16,
+        [theme.breakpoints.down('md')]: {
+            marginTop: 8,
+        }
     }
 }));
 
@@ -562,7 +576,7 @@ class PlayerProfile extends Component {
     render() {
 
         const {classes, user, currentUser, isCurrent, width} = this.props;
-        const smallWidth = width === 'sm'|| width === 'xs';
+        const smallWidth = width === 'sm' || width === 'xs';
         let userPhotoSrc = defaultPhoto;
 
         if (user.profile_picture) {
@@ -607,7 +621,8 @@ class PlayerProfile extends Component {
                     <div className={classes.topNavigate}>
                         <Link to="/" onClick={this.goBack} invert disabledUnderline className={classes.backLink}>
                             <Icon>previous</Icon>
-                            <Hidden only={['xs', 'sm']}><span className={classes.backTitle}>Back to search</span></Hidden></Link>
+                            <Hidden only={['xs', 'sm']}><span
+                                className={classes.backTitle}>Back to search</span></Hidden></Link>
                         <div>
                             {currentUser && currentUser.role === SCOUT_ROLE &&
                             <FavoriteButton user={user.id} active={user.is_tagged}/>}
@@ -634,7 +649,7 @@ class PlayerProfile extends Component {
                 <div className={classes.infoContainer}>
                     <Hidden only={['xs', 'sm']}>
                         <div className={classes.info}>
-                            {user.height && (user.height[0] > 0 || user.height[1] > 0 ) && (
+                            {user.height && (user.height[0] > 0 || user.height[1] > 0) && (
                                 <div className={classes.infoRow}>
                                     <Typography type="caption" className={classes.infoCaption}>Height</Typography>
                                     <Typography type="body2" className={classes.infoValue}>
@@ -685,25 +700,34 @@ class PlayerProfile extends Component {
                                 src={userPhotoSrc}/>
 
                         </div>
-                        <div className={classes.infoCardLeagueLine}>
-                            <Icon className={classes.infoCardLeagueShield}>shield</Icon>
-                            <Typography type="body2" align="center"
-                                        className={classes.infoCardLeague}>{user.position_short || '/'}</Typography>
+                        <div className={classes.infoCardDataBottom}>
+                            <div className={classes.infoCardLeagueLine}>
+                                <Icon className={classes.infoCardLeagueShield}>shield</Icon>
+                                <Typography type="body2" align="center"
+                                            className={classes.infoCardLeague}>{user.position_short || '/'}</Typography>
 
-                        </div>
-                        <div className={classes.infoCardData}>
-                            <Hidden only={['md', 'lg', 'xl']}>
-                                <Typography type="headline" align="center"
-                                            className={classes.infoCardName}>{user.first_name} {user.last_name}</Typography>
-                            </Hidden>
-                            <Typography type="subheading" align="center" className={classes.infoCardTeam}>
-                                {!!!user.team_status && user.team && 'Pending / '}{user.team || 'Team Unknown'}
-                                {!!!user.league_status && user.league && ' - Pending / '}{user.league_short ? ' - ' + user.league_short : (!!!user.league_status ? user.league : '')}
-                            </Typography>
-                            <Typography type="body1" align="center">
-                                {user.country || (user.team_location !== 'n/a' && user.team_location) || user.team_country || 'Location Unknown'}
-                            </Typography>
+                            </div>
+                            <div className={classes.infoCardData}>
+                                <Hidden only={['md', 'lg', 'xl']}>
+                                    <Typography type="headline" align="center"
+                                                className={classes.infoCardName}>{user.first_name} {user.last_name}</Typography>
+                                </Hidden>
+                                <Typography type="subheading" align="center" className={classes.infoCardTeam}>
+                                    {user.team || 'Team Unknown'}
+                                    {user.league_short ? ' - ' + user.league_short : (!user.league_status ? user.league : '')}
+                                    {(!user.team_status && user.team || !user.league_status && user.league) && "*"}
+                                </Typography>
+                                <Typography type="body1" align="center">
+                                    {user.country || (user.team_location !== 'n/a' && user.team_location) || user.team_country || 'Location Unknown'}
+                                </Typography>
+                                {(!user.team_status && user.team || !user.league_status && user.league) && (
+                                    <Typography type="caption" align="center" className={classes.pendingVerification}>
+                                        *Pending verification by Scout Zoo.
+                                    </Typography>
+                                )}
 
+
+                            </div>
                         </div>
                     </Paper>
                     <Hidden only={['xs', 'sm']}>
@@ -835,7 +859,7 @@ class PlayerProfile extends Component {
                         {this.state.tab === 1 && (
                             <div className={classes.tabContent}>
                                 <div className={classes.info}>
-                                    {user.height && (user.height[0] > 0 || user.height[1] > 0 ) && (
+                                    {user.height && (user.height[0] > 0 || user.height[1] > 0) && (
                                         <div className={classes.infoRow}>
                                             <Typography type="caption"
                                                         className={classes.infoCaption}>Height</Typography>
