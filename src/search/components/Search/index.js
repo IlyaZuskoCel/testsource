@@ -126,12 +126,13 @@ const styleSheet = createStyleSheet('Search', theme => ({
         color: '#ffffff',
     },
     '@keyframes fadeIn': {
-        from: {opacity: 0},
+        from: {opacity: 0.1},
         to: {opacity: 1}
     },
     filterTopHeight: {
         height: 118,
-
+        position: 'relative',
+        zIndex: 1,
         animation: 'fadeIn .7s'
 
     },
@@ -185,22 +186,21 @@ const styleSheet = createStyleSheet('Search', theme => ({
         position: 'fixed',
         top: 0,
         left: 0,
-        zIndex:9,
+        zIndex: 9,
     },
     headerMobNavFix: {
         position: 'fixed',
         top: 60,
         left: 0,
-        zIndex:9999,
+        zIndex: 9999,
     },
     filterTogglerConntainerFix: {
         position: 'fixed',
         top: 115,
         left: 0,
-        zIndex:9999,
+        zIndex: 9999,
     }
 }));
-
 
 
 class Search extends Component {
@@ -245,7 +245,7 @@ class Search extends Component {
 
     handleScroll(event) {
         const {width} = this.props;
-        const smallWidth = width === 'sm'|| width === 'xs';
+        const smallWidth = width === 'sm' || width === 'xs';
         if (!smallWidth || !this.state.mobileFilterOn || Math.abs(this.scrollY - window.scrollY) < 10) return;
 
         const direction = this.scrollY - window.scrollY > 0 ? 'top' : 'bottom';
@@ -401,7 +401,7 @@ class Search extends Component {
 
     render() {
         const {classes, width} = this.props;
-        const smallWidth = width === 'sm'|| width === 'xs';
+        const smallWidth = width === 'sm' || width === 'xs';
         return (<div className={classes.root}>
 
             <Hidden only={['xs', 'sm']}>
