@@ -94,6 +94,16 @@ class ScoutForm extends Component {
         if (this.state.id_team_current === '-1' && !this.state.team)
             return this.setState({errors: ['team']});
 
+        // Intercom Sign up scout
+        window.Intercom('boot', { app_id: 'coswd1k2', 
+          email: this.state.email, 
+          name: this.state.first_name+' '+this.state.last_name,
+          type: 'Scout',
+          country_name: this.state.id_country
+           });
+
+        Intercom('trackEvent', 'Sign up scout');
+
         this.props.register(this.state);
         return false;
     };

@@ -300,7 +300,11 @@ class PlayerForm extends Component {
             data.height = null;
 
 
+        window.Intercom('update', { app_id: 'coswd1k2',
+          name: data.first_name+' '+data.last_name
+        });
 
+        Intercom('trackEvent', 'Profile update');
 
         this.setState({isUpdate: false}, () => {
             this.props.save(data);
