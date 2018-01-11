@@ -85,6 +85,14 @@ class PlayerForm extends Component {
         if (data.birthday && data.birthday === '0000-00-01')
             data.height = null;
 
+        // Intercom Sign up player
+        window.Intercom('boot', { app_id: 'coswd1k2', 
+          email: data.email, 
+          name: data.first_name+' '+data.last_name,
+          type: 'Player'
+          });
+
+        Intercom('trackEvent', 'Sign up player');
 
         this.props.register(data);
         return false;
