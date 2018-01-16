@@ -102,7 +102,18 @@ class ScoutForm extends Component {
           country_name: this.state.id_country
            });
 
-        Intercom('trackEvent', 'Sign up scout');
+        var detail = {           
+          name: this.state.first_name+' '+this.state.last_name,
+          email: this.state.email,
+          country: this.state.id_country,
+          league: this.state.id_league,
+          team: this.state.id_team_current,
+          new_league: this.state.league, 
+          new_team: this.state.team, 
+          type: 'Scout'
+        };
+
+        Intercom('trackEvent', 'Sign up scout', detail);
 
         this.props.register(this.state);
         return false;

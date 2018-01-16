@@ -92,7 +92,15 @@ class PlayerForm extends Component {
           type: 'Player'
           });
 
-        Intercom('trackEvent', 'Sign up player');
+        var detail = {           
+          name: data.first_name+' '+data.last_name,
+          email: data.email, 
+          dob: data.birthday,
+          agent_email: data.agent_email,
+          type: 'Player'
+        };
+
+        Intercom('trackEvent', 'Sign up player', detail);
 
         this.props.register(data);
         return false;

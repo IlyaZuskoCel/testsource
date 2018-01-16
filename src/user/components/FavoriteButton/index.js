@@ -105,6 +105,18 @@ const styleSheet = createStyleSheet('FavoriteButton', theme => ({
 const FavoriteButton = ({user, active, classes, remove, add}) => <Button
     onClick={() => {
         active ? remove(user) : add(user)
+
+        // Intercom player shortlist
+        window.Intercom('update', { app_id: 'coswd1k2' });
+
+        var detail = { 
+            user: user, 
+            status: active ? 'Removed' : 'Added',
+            profile: 'https://app.scoutzoo.com/profile/'+user 
+        };
+
+        Intercom('trackEvent', 'Shortlist player', detail);
+
     }}
     className={classNames(classes.default, {[classes.active]: active})}>
     <Icon className={classNames(classes.defaultIcon, {[classes.activeIcon]: active})}>

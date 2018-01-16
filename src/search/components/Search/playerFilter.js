@@ -160,6 +160,24 @@ class PlayerFilter extends Component {
             page: this.props.page ? this.props.page : 1
         };
 
+
+
+        // Intercom player search
+        window.Intercom('update', { app_id: 'coswd1k2' });
+
+        var detail = { 
+            country: this.state.id_country ? this.state.id_country : null,
+            league: this.state.id_league ? this.state.id_league : null,
+            level: this.state.id_level ? this.state.id_level : null,
+            team: this.state.id_team_current ? this.state.id_team_current : null,
+            position: this.state.position ? this.state.position : null,
+            gender: this.state.gender ? this.state.gender : null,
+            name_search: this.state.name ? this.state.name : null,
+            page: this.props.page ? this.props.page : 1
+        };
+
+        Intercom('trackEvent', 'Search players', detail);
+
         if (this.state.name || this.state.id_league || this.state.id_team_current || this.state.year || this.state.position || this.state.gender || this.state.values || this.state.born || this.state.id_level|| this.state.id_country) {
             queryString += '?';
 

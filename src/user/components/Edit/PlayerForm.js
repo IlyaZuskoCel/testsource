@@ -299,12 +299,33 @@ class PlayerForm extends Component {
         if (data.birthday && data.birthday === '0000-00-01')
             data.height = null;
 
-
+        // Intercom profile update player
         window.Intercom('update', { app_id: 'coswd1k2',
           name: data.first_name+' '+data.last_name
         });
 
-        Intercom('trackEvent', 'Profile update');
+        var detail = {           
+          name: data.first_name+' '+data.last_name,
+          email: data.email,
+          dob: data.birthday,
+          gender: GENDER_LIST[data.gender],
+          nationality: data.nationality,
+          about: data.biography,
+          position: POS_LIST[data.position],
+          shot: SHOT_LIST[data.shot],
+          jersey: data.player_num,
+          weight: data.weight+' LBS',
+          height: data.height[0]+'`'+data.height[1]+'"',
+          country: data.country,
+          league: data.league_id,
+          team: data.id_team_current,
+          new_league: data.league, 
+          new_team: data.team,
+          team_website: data.team_website, 
+          type: 'Player'
+        };
+
+        Intercom('trackEvent', 'Profile update', detail);
 
         this.setState({isUpdate: false}, () => {
             this.props.save(data);

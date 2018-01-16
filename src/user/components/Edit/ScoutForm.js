@@ -227,6 +227,28 @@ class ScoutForm extends Component {
         event.preventDefault();
         this.setState({isUpdate: false}, () => {
             this.props.save(this.state);
+
+
+        // Intercom profile update scout
+        window.Intercom('update', { app_id: 'coswd1k2',
+          name: this.state.first_name+' '+this.state.last_name
+        });
+
+        var detail = {           
+          name: this.state.first_name+' '+this.state.last_name,
+          email: this.state.email,
+          job_title: this.state.job_title,
+          about: this.state.biography,
+          country: this.state.country,
+          league: this.state.league_id,
+          team: this.state.id_team_current,
+          new_league: this.state.league, 
+          new_team: this.state.team,
+          type: 'Scout'
+        };
+
+        Intercom('trackEvent', 'Profile update', detail);
+
         });
         return false;
     };

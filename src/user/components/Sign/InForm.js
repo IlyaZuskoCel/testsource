@@ -65,7 +65,8 @@ class InForm extends Component {
             email: this.state.username 
         });
 
-        Intercom('trackEvent', 'Log in');
+        var detail = { email: this.state.username };
+        Intercom('trackEvent', 'Log in', detail);
 
         this.props.logIn(this.state.username, this.state.password);
         return false;
