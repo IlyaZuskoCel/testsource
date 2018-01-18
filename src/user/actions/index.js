@@ -111,7 +111,7 @@ export const registerScout = user => dispatch => {
 
             dispatch({
                 type: SUCCESS_ALERT,
-                payload: {message: 'An activation link has been sent to your email address.', autoHideDuration: null}
+                payload: {message: 'An activation link has been sent to your email address.', autoHideDuration: 6000}
             });
 
             dispatch(push('/sign/result'))
@@ -134,7 +134,7 @@ export const registerPlayer = user => dispatch => {
 
             dispatch({
                 type: SUCCESS_ALERT,
-                payload: {message: 'An activation link has been sent to your email address.', autoHideDuration: null}
+                payload: {message: 'An activation link has been sent to your email address.', autoHideDuration: 6000}
             });
 
             dispatch(push('/sign/result'))
