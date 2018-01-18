@@ -119,12 +119,9 @@ const getImage = (image, x, y, r, lineWidth, width, height) => {
 
 
     context2.beginPath();
-    //x, y, radius, startAngle, endAngle, anticlockwise
     context2.arc(r, r, r, 0, Math.PI * 2, true);
     context2.closePath();
-    context2.fill();//рисуем закрашенную фигуру.
-    /*теперь задаем наложение для картинки. При таком наложении,отображается только та часть новой фигуры, которая накладыва-
-    ется на старую. Остальные части новой и старой фигур не выводятся;*/
+    context2.fill();
     context2.globalCompositeOperation = 'source-in';
     context2.drawImage(image, -1 * x, -1 * y);
 
@@ -136,8 +133,15 @@ const getImage = (image, x, y, r, lineWidth, width, height) => {
     const context = canvas.getContext('2d');
     canvas.width = width;
     canvas.height = height;
-    context.filter = 'brightness(30%)';
     context.drawImage(image, 0, 0);
+    context.save();
+    context.globalCompositeOperation = "multiply";
+
+    context.fillStyle = "black";
+    context.globalAlpha = 0.6;
+    context.fillRect(0, 0, width, height);
+    context.restore();
+
 
     const data = circle.data;
 
@@ -348,6 +352,7 @@ class Trim extends Component {
         const r = Math.round(parseInt(circle.style.width) / 2 * Math.max(width / image.width, height/image.height) + border / 2);
 
         const uri = getImage(image, x, y, r, border, this.props.video.width, this.props.video.height);
+
         this.props.updateField('overlay_x', x);
         this.props.updateField('overlay_y', y);
         this.props.updateField('overlayUri', uri);
@@ -378,7 +383,6 @@ class Trim extends Component {
                     </div>
                 </div>
             </Paper>
-
 
             <div className={classes.buttons}>
                 <Button onClick={this.props.onPrev} raised>
