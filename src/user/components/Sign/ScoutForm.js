@@ -94,6 +94,27 @@ class ScoutForm extends Component {
         if (this.state.id_team_current === '-1' && !this.state.team)
             return this.setState({errors: ['team']});
 
+        // Intercom Sign up scout
+        window.Intercom('boot', { app_id: 'coswd1k2', 
+          email: this.state.email, 
+          name: this.state.first_name+' '+this.state.last_name,
+          type: 'Scout',
+          country_name: this.state.id_country
+           });
+
+        var detail = {           
+          name: this.state.first_name+' '+this.state.last_name,
+          email: this.state.email,
+          country: this.state.id_country,
+          league: this.state.id_league,
+          team: this.state.id_team_current,
+          new_league: this.state.league, 
+          new_team: this.state.team, 
+          type: 'Scout'
+        };
+
+        Intercom('trackEvent', 'Sign up scout', detail);
+
         this.props.register(this.state);
         return false;
     };

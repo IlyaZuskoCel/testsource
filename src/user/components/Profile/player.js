@@ -579,6 +579,27 @@ class PlayerProfile extends Component {
         const smallWidth = width === 'sm' || width === 'xs';
         let userPhotoSrc = defaultPhoto;
 
+        // Intercom player view
+        window.Intercom('update', { app_id: 'coswd1k2' });
+
+        var detail = {           
+          name: user.first_name+' '+user.last_name,
+          dob: user.birthday,
+          gender: user.gender,
+          jersey: user.jersey_number,
+          team: user.team,
+          league: user.league,
+          height: user.height,
+          weight: user.weight,
+          nationality: user.nationality,
+          shot: SHOT_LIST[user.shot],
+          position: POS_LIST[user.position],
+          type: 'Player'
+        };
+
+        Intercom('trackEvent', 'View player', detail);
+
+
         if (user.profile_picture) {
             userPhotoSrc = user.profile_picture;
         }
