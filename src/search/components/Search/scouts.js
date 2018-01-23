@@ -136,7 +136,7 @@ const styleSheet = createStyleSheet('Scout', theme => ({
     },
 
     nameFontFirst: {
-        marginTop: 15,
+        marginTop: 13,
 
         [theme.breakpoints.down('md')]: {
             marginTop: 10,
@@ -144,8 +144,10 @@ const styleSheet = createStyleSheet('Scout', theme => ({
 
     },
     scoutRole: {
-        margin: [1, 0, 2, 0],
+        margin: [0, 0, 2, 0],
         lineHeight: 1.33,
+        overflow: 'hidden',
+        height: 22,
 
         [theme.breakpoints.down('md')]: {
             fontSize: 16,
