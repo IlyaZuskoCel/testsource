@@ -199,6 +199,18 @@ const styleSheet = createStyleSheet('Search', theme => ({
         top: 115,
         left: 0,
         zIndex: 9999,
+    },
+    link: {
+        color: '#eb3941',
+        cursor: 'pointer',
+        textDecoration: 'underline',
+        [theme.breakpoints.down('md')]: {
+            marginTop: 8,
+            marginLeft: 24,
+        },
+    },
+    clearLink: {
+        paddingBottom: 24
     }
 }));
 
@@ -431,6 +443,7 @@ class Search extends Component {
                                                                      activePage={this.state.activePage}
                                                                      query={this.state.query}
                                                                      clearFilters={this.state.clearFilters}
+                                                                     clearField={this.state.clearField}
                                                                      stopClearing={this.stopClearing}
                                                                      page={this.state.pageCurrentPosition ? this.state.pageCurrentPosition : 1}
 
@@ -451,12 +464,18 @@ class Search extends Component {
                                                                        activePage={this.state.activePage}
                                                                        query={this.state.query}
                                                                        clearFilters={this.state.clearFilters}
+                                                                       clearField={this.state.clearField}
                                                                        stopClearing={this.stopClearing}
                                                                        page={this.state.pageCurrentPosition ? this.state.pageCurrentPosition : 1}
 
                                                                        filters={this.props.filters && this.props.filters.player ? this.props.filters.player : {}}
                                                                        setFilters={this.props.setFilters}
                         />}
+                        <Typography className={classNames(classes.link, classes.clearLink)}
+                                    type="body1"
+                                    onClick={this.onClearFilters}>
+                            Clear All
+                        </Typography>
                     </div>
                 </header>
             </Hidden>
@@ -552,7 +571,6 @@ class Search extends Component {
                     />}
                 </div>
             </Hidden>}
-
 
             {this.state.mobileFilterOn && <div className={classes.containerWrapper}>
                 {this.props.type === 'player' &&
