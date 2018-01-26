@@ -203,6 +203,7 @@ const styleSheet = createStyleSheet('Search', theme => ({
     link: {
         color: '#eb3941',
         cursor: 'pointer',
+        fontSize: 14,
         textDecoration: 'underline',
         [theme.breakpoints.down('md')]: {
             marginTop: 8,
