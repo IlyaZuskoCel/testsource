@@ -297,7 +297,7 @@ class Scouts extends Component {
                     <Grid container gutter={40} justify="center">
 
                         {this.state.scouts && this.state.scouts.map(scout => {
-                            return <Grid item xs={12} md={6} lg={4} key={scout.id}>
+                            return <Grid item xs={12} md={6} key={scout.id}>
                                 <Link to={`/profile/${scout.id}`} disabledUnderline>
                                     <Paper classes={{root: classes.resultCard}} elevation={1}>
                                         <div className={classes.leftStripe}></div>
