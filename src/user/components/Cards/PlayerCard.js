@@ -30,7 +30,6 @@ import Dialog, {
 } from 'material-ui/Dialog';
 
 
-
 import moment from 'moment';
 
 
@@ -107,7 +106,6 @@ const styleSheet = createStyleSheet('Search', theme => ({
         alignItems: 'flex-start',
         height: 126,
         marginLeft: 20,
-
 
 
         [theme.breakpoints.down('md')]: {
@@ -221,6 +219,8 @@ const styleSheet = createStyleSheet('Search', theme => ({
     videosIcon: {
         marginRight: 4,
         marginTop: -4,
+        width: 16,
+        height: 16
     }
 
 }));
@@ -382,7 +382,7 @@ class PlayerCard extends Component {
                             {player.birthday && !!player.count_video && <div className={classes.playerBottomDivider}/>}
                             {!!player.count_video && <img src={videosIcon} className={classes.videosIcon}/>}
                             {!!player.count_video && <Typography type='body1'
-                                                                className={classes.bottomPlayerText}>{player.count_video}</Typography>}
+                                                                 className={classes.bottomPlayerText}>{player.count_video}</Typography>}
 
 
                             {role && role !== 'Player' &&
