@@ -186,7 +186,7 @@ class Shortlist extends Component {
                     <div className={classes.resultContainer}>
                         <Grid container gutter={40}>
                             {this.props.results && this.props.results.map(player => {
-                                return <Grid item xs={12} md={4} sm={6} key={player.id}>
+                                return <Grid item xs={12} md={6} key={player.id}>
                                     <PlayerCard player={player} role={this.props.currentUser ? this.props.currentUser.role : ''}
                                                 removeFavorite={this.props.removeFavorite}/>
                                 </Grid>
