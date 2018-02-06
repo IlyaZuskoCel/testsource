@@ -17,6 +17,7 @@ import {Link, Icon} from '../../../common/components';
 
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import defaultPhoto from './assets/images/default-photo.png';
+import videosIcon from './assets/images/videos.svg';
 import IconButton from 'material-ui/IconButton';
 import Button from 'material-ui/Button';
 
@@ -145,7 +146,7 @@ const styleSheet = createStyleSheet('Search', theme => ({
 
     playerBottomDivider: {
         width: 1,
-        height: 18,
+        height: 24,
         borderLeft: 'solid 1px #cbcbcb',
         margin: [0, 8],
     },
@@ -217,6 +218,10 @@ const styleSheet = createStyleSheet('Search', theme => ({
             width: 96,
         }
     },
+    videosIcon: {
+        marginRight: 4,
+        marginTop: -4,
+    }
 
 }));
 
@@ -275,7 +280,7 @@ class PlayerCard extends Component {
     render() {
         const {classes, player, role, width, ...props} = this.props;
 
-        const smallWidth = width === 'sm'|| width === 'xs';
+        const smallWidth = width === 'sm' || width === 'xs';
 
         let userPhotoSrc = defaultPhoto;
 
@@ -359,23 +364,30 @@ class PlayerCard extends Component {
                             {player.position_short !== 'n/a' && <Typography type='body1'
                                                                             className={classes.bottomPlayerText}>{player.position_short}</Typography>}
                             {player.position_short !== 'n/a' &&
-                            <div className={classes.playerBottomDivider}></div>}
+                            <div className={classes.playerBottomDivider}/>}
 
                             {player.height && player.height[0] > 0 && <Typography type='body1'
                                                                                   className={classes.bottomPlayerText}>{player.height[0] + "'" + player.height[1] + '"'}</Typography>}
                             {player.height && player.height[0] > 0 &&
-                            <div className={classes.playerBottomDivider}></div>}
+                            <div className={classes.playerBottomDivider}/>}
 
                             {player.weight && <Typography type='body1'
                                                           className={classes.bottomPlayerText}>{parseInt(player.weight) + ' lbs'}</Typography>}
-                            {player.weight && <div className={classes.playerBottomDivider}></div>}
+                            {player.weight && <div className={classes.playerBottomDivider}/>}
 
                             {player.birthday && <Typography type='body1'
                                                             className={classes.bottomPlayerText}>{moment(player.birthday).format("MMM. YYYY")}</Typography>}
 
+
+                            {player.birthday && !!player.count_video && <div className={classes.playerBottomDivider}/>}
+                            {!!player.count_video && <img src={videosIcon} className={classes.videosIcon}/>}
+                            {!!player.count_video && <Typography type='body1'
+                                                                className={classes.bottomPlayerText}>{player.count_video}</Typography>}
+
+
                             {role && role !== 'Player' &&
                             <div className={classes.lastItemInRow}>
-                                <div className={classes.playerBottomDivider}></div>
+                                <div className={classes.playerBottomDivider}/>
                                 {
                                     player.is_tagged ? <IconButton onClick={(event) => {
                                             this.unSubscribe(event, player)

@@ -232,7 +232,7 @@ class Players extends Component {
 
                     <Grid container gutter={40} justify="center">
                         {this.state.players && this.state.players.map(player => {
-                            return <Grid item xs={12} md={6} lg={4} key={player.id}>
+                            return <Grid item xs={12} md={6} key={player.id}>
                                 <PlayerCard player={player}
                                             role={this.props.role}
                                             addFavorite={this.props.addFavorite}
