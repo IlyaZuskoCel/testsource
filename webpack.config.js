@@ -1,10 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const DefinePlugin = require('webpack/lib/DefinePlugin');
-
-const ENV = process.env.APP_ENV;
-const INTERCOM_ID = process.env.INTERCOM_ID;
 
 module.exports = {
     entry: {
@@ -36,24 +32,9 @@ module.exports = {
         ]
     },
     plugins: [
-
-        /**
-         * Plugin: DefinePlugin
-         * Description: Define free variables.
-         * Useful for having development builds with debug logging or adding global constants.
-         *
-         * Environment helpers
-         *
-         * See: https://webpack.github.io/docs/list-of-plugins.html#defineplugin
-         */
-        // NOTE: when adding more properties, make sure you include them in custom-typings.d.ts
-        new DefinePlugin({
-            'ENV': JSON.stringify(ENV),
-            'INTERCOM_ID': JSON.stringify(INTERCOM_ID),
-            'process.env': {
-                'ENV': JSON.stringify(ENV),
-                'INTERCOM_ID': JSON.stringify(INTERCOM_ID),
-            }
+        new webpack.DefinePlugin({
+            'process.env.ENV': JSON.stringify(process.env.APP_ENV || 'development'),
+            'process.env.INTERCOM_ID': JSON.stringify(process.env.INTERCOM_ID || 'ibte1lnf'),
         }),
         new webpack.ProvidePlugin({
             'Promise': 'es6-promise', // Thanks Aaron (https://gist.github.com/Couto/b29676dd1ab8714a818f#gistcomment-1584602)
