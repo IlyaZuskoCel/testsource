@@ -400,7 +400,7 @@ class ScoutProfile extends Component {
 
 
         // Intercom scout view
-        window.Intercom('update', { app_id: 'coswd1k2' });
+        window.Intercom('update', { app_id: INTERCOM_ID });
 
         var detail = {           
           name: user.first_name+' '+user.last_name,
