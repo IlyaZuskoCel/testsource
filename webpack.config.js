@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const DefinePlugin = require('webpack/lib/DefinePlugin');
 
 const ENV = process.env.APP_ENV;
 const INTERCOM_ID = process.env.INTERCOM_ID;
