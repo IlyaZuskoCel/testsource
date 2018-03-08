@@ -32,10 +32,6 @@ module.exports = {
         ]
     },
     plugins: [
-        new webpack.DefinePlugin({
-            'process.env.ENV': JSON.stringify(process.env.APP_ENV || 'development'),
-            'process.env.INTERCOM_ID': JSON.stringify(process.env.INTERCOM_ID || 'ibte1lnf'),
-        }),
         new webpack.ProvidePlugin({
             'Promise': 'es6-promise', // Thanks Aaron (https://gist.github.com/Couto/b29676dd1ab8714a818f#gistcomment-1584602)
             fetch: 'imports-loader?this=>global!exports-loader?global.fetch!whatwg-fetch'

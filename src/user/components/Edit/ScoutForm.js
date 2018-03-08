@@ -230,7 +230,7 @@ class ScoutForm extends Component {
 
 
         // Intercom profile update scout
-        window.Intercom('update', { app_id: INTERCOM_ID,
+        window.Intercom('update', { app_id: window.INTERCOM_ID,
           name: this.state.first_name+' '+this.state.last_name
         });
 

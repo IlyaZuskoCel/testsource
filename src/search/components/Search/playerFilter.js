@@ -163,7 +163,7 @@ class PlayerFilter extends Component {
 
 
         // Intercom player search
-        window.Intercom('update', { app_id: INTERCOM_ID });
+        window.Intercom('update', { app_id: window.INTERCOM_ID });
 
         var detail = { 
             country: this.state.id_country ? this.state.id_country : null,

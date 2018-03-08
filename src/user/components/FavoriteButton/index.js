@@ -107,7 +107,7 @@ const FavoriteButton = ({user, active, classes, remove, add}) => <Button
         active ? remove(user) : add(user)
 
         // Intercom player shortlist
-        window.Intercom('update', { app_id: INTERCOM_ID });
+        window.Intercom('update', { app_id: window.INTERCOM_ID });
 
         var detail = { 
             user: user, 

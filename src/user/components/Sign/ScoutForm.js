@@ -95,7 +95,7 @@ class ScoutForm extends Component {
             return this.setState({errors: ['team']});
 
         // Intercom Sign up scout
-        window.Intercom('boot', { app_id: INTERCOM_ID, 
+        window.Intercom('boot', { app_id: window.INTERCOM_ID, 
           email: this.state.email, 
           name: this.state.first_name+' '+this.state.last_name,
           type: 'Scout',

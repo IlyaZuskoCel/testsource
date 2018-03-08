@@ -300,7 +300,7 @@ class PlayerForm extends Component {
             data.height = null;
 
         // Intercom profile update player
-        window.Intercom('update', { app_id: INTERCOM_ID,
+        window.Intercom('update', { app_id: window.INTERCOM_ID,
           name: data.first_name+' '+data.last_name
         });
 
