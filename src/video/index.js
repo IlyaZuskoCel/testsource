@@ -10,10 +10,12 @@ import PrivateRoute from '../common/containers/PrivateRoute';
 
 import Add from './containers/Add';
 import Edit from './containers/Edit';
+import VideoItem from './containers/VideoItem';
 
 const routes = [
     <PrivateRoute key="VideoAdd" path="/video/add" component={Add} hideBackgroundTopMobileHeader/>,
     <PrivateRoute key="VideoEdit" path="/video/edit/:id?" component={Edit} hideBackgroundTopMobileHeader/>,
+    <PrivateRoute key="VideoItem" path="/profile/:id/video/:videoId" component={VideoItem} hideBackgroundTopMobileHeader/>,
 ];
 
 export default routes;
