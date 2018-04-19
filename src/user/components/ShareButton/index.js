@@ -122,8 +122,7 @@ class ShareButton extends Component {
     hideMessage = () => this.setState({message: null});
 
     render() {
-        const {classes, url, title, children, style} = this.props;
-        console.log(style);
+        const {classes, url, title, dialogTitle, children, style} = this.props;
 
         return <div className={style && classes.display}>
             <Link to="/" onClick={this.handleOpen} invert disabledUnderline className={classNames(classes.root, style)}>
@@ -133,7 +132,7 @@ class ShareButton extends Component {
                     onRequestClose={this.handleCancel()}>
                 <DialogTitle disableTypography>
                     <Typography type="subheading">
-                        Share your profile
+                        {dialogTitle}
                     </Typography>
                 </DialogTitle>
                 <DialogContent>

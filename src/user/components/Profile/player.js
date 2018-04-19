@@ -623,7 +623,8 @@ class PlayerProfile extends Component {
                 {isCurrent ? (
                     <div className={classes.topNavigate}>
                         <ShareButton url={absUrl(`/profile/${user.id}`)}
-                                     title={`My profile on Scout Zoo`}>
+                                     title={`My profile on Scout Zoo`}
+                                     dialogTitle={'Share your profile'}>
                             <Icon>share</Icon>
                             <span className={classes.shareTitle}>Share</span>
                         </ShareButton>

@@ -61,7 +61,7 @@ const styleSheet = createStyleSheet('VideoItem', theme => ({
 
         height: 688,
         [theme.breakpoints.down('md')]: {
-            height: 722,
+            height: 767,
 
         },
         [theme.breakpoints.down('sm')]: {
@@ -105,7 +105,7 @@ const styleSheet = createStyleSheet('VideoItem', theme => ({
             right: 728,
         },
         [theme.breakpoints.down('md')]: {
-            height: 722,
+            height: 767,
             right: 620,
         },
 
@@ -140,7 +140,7 @@ const styleSheet = createStyleSheet('VideoItem', theme => ({
 
         [theme.breakpoints.down('md')]: {
             right: -24,
-            height: 722,
+            height: 767,
         },
 
         [theme.breakpoints.down('sm')]: {
@@ -232,6 +232,7 @@ const styleSheet = createStyleSheet('VideoItem', theme => ({
     bottom: {
         [theme.breakpoints.down('md')]: {
             paddingLeft: 8,
+            marginTop: 20,
         },
         [theme.breakpoints.up('md')]: {
             padding: 8,
@@ -239,6 +240,7 @@ const styleSheet = createStyleSheet('VideoItem', theme => ({
         },
     },
     moreButton: {
+        width: 20,
         height: 24,
         fontSize: 18,
         justifyContent: 'flex-end'
@@ -250,7 +252,11 @@ const styleSheet = createStyleSheet('VideoItem', theme => ({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
-
+        [theme.breakpoints.down('md')]: {
+           '& >h1':{
+               marginTop: 35,
+           },
+        },
     },
     link: {
         color: '#4a4a4a',
@@ -356,7 +362,6 @@ class VideoItem extends Component {
     render() {
         const {classes, video, currentUser, user, tagOptions} = this.props;
         if (!video || !user) return null;
-        console.log(this.props)
         const tags = video.tags ? video.tags.map(v => '' + v) : [];
         return <div className={classes.root}>
             <div className={classes.backgroundImgWrap}>
@@ -403,10 +408,11 @@ class VideoItem extends Component {
 
                                 <Hidden only={['xs', 'sm']}>
                                     <div>
-                                        <ShareButton url={absUrl(`/profile/${user.id}`)}
-                                                     title={`My profile on Scout Zoo`}
+                                        <ShareButton url={absUrl(`/profile/${user.id}/video/${video.id}`)}
+                                                     title={`Watch ${user.first_name} ${user.last_name}'s Scout Zoo upload: ${video.title}`}
+                                                     dialogTitle={'Share video'}
                                                      style={classes.share}>
-                                            <Icon>share</Icon>
+                                            <ScoutZooIcon>share</ScoutZooIcon>
                                         </ShareButton>
                                         <Link to={`/video/edit/${video.id}`} disabledUnderline className={classes.link}
                                               onClick={this.handleEdit}>
@@ -420,10 +426,10 @@ class VideoItem extends Component {
                                 </Hidden>
                                 <Hidden only={['md', 'lg', 'xl']}>
                                     <div>
-                                        <ShareButton url={absUrl(`/profile/${user.id}`)}
-                                                     title={`My profile on Scout Zoo`}
+                                        <ShareButton url={absUrl(`/profile/${user.id}/video/${video.id}`)}
+                                                     title={`Watch ${user.first_name} ${user.last_name}'s Scout Zoo upload: ${video.title}`}
                                                      style={classes.share}>
-                                            <Icon>share</Icon>
+                                            <ScoutZooIcon>share</ScoutZooIcon>
                                         </ShareButton>
                                         <IconButton
                                             className={classes.moreButton}
