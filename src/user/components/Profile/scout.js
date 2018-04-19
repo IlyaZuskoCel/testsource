@@ -364,7 +364,10 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
         [theme.breakpoints.down('md')]: {
             marginTop: 8,
         }
-    }
+    },
+    shareTitle: {
+        marginLeft: 16
+    },
 }));
 
 
@@ -435,7 +438,11 @@ class ScoutProfile extends Component {
                 {isCurrent ? (
                     <div className={classes.topNavigate}>
                         <ShareButton url={absUrl(`/profile/${user.id}`)}
-                                     title={`My profile on Scout Zoo`}/>
+                                     title={`My profile on Scout Zoo`}
+                                     dialogTitle={'Share your profile'}>
+                            <Icon>share</Icon>
+                            <span className={classes.shareTitle}>Share</span>
+                        </ShareButton>
                         <div className={classes.rightNavigate}>
                             <Link to="/profile/edit" disabledUnderline>
                                 <Button className={classes.editButton}>

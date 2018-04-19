@@ -40,9 +40,6 @@ const styleSheet = createStyleSheet('ShareButton', theme => ({
         },
 
     },
-    title: {
-        marginLeft: 16
-    },
     buttonsWrap: {
         display: 'flex',
         flexDirection: 'row',
@@ -100,6 +97,9 @@ const styleSheet = createStyleSheet('ShareButton', theme => ({
     alertIcon: {
         marginRight: 24
     },
+    display:{
+        display: 'inline-block',
+    }
 }));
 
 
@@ -122,18 +122,17 @@ class ShareButton extends Component {
     hideMessage = () => this.setState({message: null});
 
     render() {
-        const {classes, url, title} = this.props;
+        const {classes, url, title, dialogTitle, children, style} = this.props;
 
-        return <div>
-            <Link to="/" onClick={this.handleOpen} invert disabledUnderline className={classes.root}>
-                <Icon>share</Icon>
-                <span className={classes.title}>Share</span>
+        return <div className={style && classes.display}>
+            <Link to="/" onClick={this.handleOpen} invert disabledUnderline className={classNames(classes.root, style)}>
+                {children}
             </Link>
             <Dialog open={this.state.isOpen}
                     onRequestClose={this.handleCancel()}>
                 <DialogTitle disableTypography>
                     <Typography type="subheading">
-                        Share your profile
+                        {dialogTitle}
                     </Typography>
                 </DialogTitle>
                 <DialogContent>

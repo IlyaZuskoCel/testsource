@@ -162,110 +162,115 @@ class Video extends Component {
 
     render() {
         const {classes, video, currentUser} = this.props;
-        return <div className={classes.root}>
-            <Paper className={classes.videoWrap}>
-                {this.state.isShow ? (
-                    <video src={video.overlay_video_path || video.trim_video_file_path || video.video_path}
-                           id={`video-${video.id}`}
-                           className={classes.video}
-                           controls
-                           controlsList="nodownload"/>
-                ) : [
-                    <img key="overlay" src={video.overlay || video.thumb_lg} onClick={this.handleShow}
-                         className={classes.image}/>,
-                    <Icon key="playControl" className={classes.playControl} onClick={this.handleShow}>play_arrow</Icon>,
-                    <Typography key="duration" type="caption"
-                                className={classes.duration}>{getTime(video.time_start, video.time_end)}</Typography>
-                ]}
+        return (
+            <div className={classes.root}>
+                <Link to={`/profile/${video.id_user}/video/${video.id}`} disabledUnderline>
+                    <Paper className={classes.videoWrap}>
+                        {this.state.isShow ? (
+                            <video src={video.overlay_video_path || video.trim_video_file_path || video.video_path}
+                                   id={`video-${video.id}`}
+                                   className={classes.video}
+                                   controls
+                                   controlsList="nodownload"/>
+                        ) : [
+                            <img key="overlay" src={video.overlay || video.thumb_lg} onClick={this.handleShow}
+                                 className={classes.image}/>,
+                            <Icon key="playControl" className={classes.playControl}
+                                  onClick={this.handleShow}>play_arrow</Icon>,
+                            <Typography key="duration" type="caption"
+                                        className={classes.duration}>{getTime(video.time_start, video.time_end)}</Typography>
+                        ]}
 
-            </Paper>
-            <div className={classes.bottom}>
-                <div className={classes.titleWrap}>
-                    <Typography type="subheading">
-                        {video.title}
-                    </Typography>
-                    {currentUser && currentUser.id === video.id_user && (
-                        <div>
+                    </Paper>
+                </Link>
+                <div className={classes.bottom}>
+                    <div className={classes.titleWrap}>
+                        <Link to={`/profile/${video.id_user}/video/${video.id}`} disabledUnderline>
+                            <Typography type="subheading">
+                                {video.title}
+                            </Typography>
+                        </Link>
+                        {currentUser && currentUser.id === video.id_user && (
+                            <div>
 
-                            <Hidden only={['xs', 'sm']}>
-                                <div>
-                                    <Link to={`/video/edit/${video.id}`} disabledUnderline className={classes.link}
-                                          onClick={this.handleEdit}>
-                                        <ScoutZooIcon>pencil</ScoutZooIcon>
-                                    </Link>
-                                    <Link to={`/`} disabledUnderline className={classes.link}
-                                          onClick={this.handleDelete}>
-                                        <ScoutZooIcon>remove</ScoutZooIcon>
-                                    </Link>
-                                </div>
-                            </Hidden>
-                            <Hidden only={['md', 'lg', 'xl']}>
-                                <div>
-                                    <IconButton
-                                        className={classes.moreButton}
-                                        aria-label="More"
-                                        aria-owns={this.state.openVideoMenu ? `video-menu-${video.id}` : null}
-                                        aria-haspopup="true"
-                                        onClick={this.handleClick}>
-                                        <ScoutZooIcon>dots-three-vertical</ScoutZooIcon>
-                                    </IconButton>
-                                    <Menu id={`video-menu-${video.id}`}
-                                          anchorEl={this.state.anchorVideoMenuEl}
-                                          open={this.state.openVideoMenu}
-                                          onRequestClose={this.handleRequestClose}>
-                                        <MenuItem onClick={this.handleEdit}>Edit</MenuItem>
-                                        <MenuItem onClick={this.handleDelete}>Delete</MenuItem>
+                                <Hidden only={['xs', 'sm']}>
+                                    <div>
+                                        <Link to={`/video/edit/${video.id}`} disabledUnderline className={classes.link}
+                                              onClick={this.handleEdit}>
+                                            <ScoutZooIcon>pencil</ScoutZooIcon>
+                                        </Link>
+                                        <Link to={`/`} disabledUnderline className={classes.link}
+                                              onClick={this.handleDelete}>
+                                            <ScoutZooIcon>remove</ScoutZooIcon>
+                                        </Link>
+                                    </div>
+                                </Hidden>
+                                <Hidden only={['md', 'lg', 'xl']}>
+                                    <div>
+                                        <IconButton
+                                            className={classes.moreButton}
+                                            aria-label="More"
+                                            aria-owns={this.state.openVideoMenu ? `video-menu-${video.id}` : null}
+                                            aria-haspopup="true"
+                                            onClick={this.handleClick}>
+                                            <ScoutZooIcon>dots-three-vertical</ScoutZooIcon>
+                                        </IconButton>
+                                        <Menu id={`video-menu-${video.id}`}
+                                              anchorEl={this.state.anchorVideoMenuEl}
+                                              open={this.state.openVideoMenu}
+                                              onRequestClose={this.handleRequestClose}>
+                                            <MenuItem onClick={this.handleEdit}>Edit</MenuItem>
+                                            <MenuItem onClick={this.handleDelete}>Delete</MenuItem>
 
-                                    </Menu>
-                                </div>
-                            </Hidden>
+                                        </Menu>
+                                    </div>
+                                </Hidden>
 
-                        </div>
-                    )}
+                            </div>
+                        )}
+                    </div>
+                    <div>
+                        {video.date && (
+                            <Typography type="body1" className={classes.date}>
+                                {moment(video.date, '').format('YYYY')}
+                            </Typography>
+                        )}
+                        {video.description && (
+                            <Typography type="body1" className={classes.description}>
+                                {video.description}
+                            </Typography>
+                        )}
+                    </div>
+                    <div className={classes.tags}>
+                        {video.video_tags && video.video_tags.length > 0 && (
+                            <Typography type="caption">
+                                {video.video_tags.map(tag => tag.name).join(' | ')}
+                            </Typography>
+                        )}
+                    </div>
+
                 </div>
-                <div>
-                    {video.date && (
-                        <Typography type="body1" className={classes.date}>
-                            {moment(video.date, '').format('YYYY')}
-                        </Typography>
-                    )}
-                    {video.description && (
-                        <Typography type="body1" className={classes.description}>
-                            {video.description}
-                        </Typography>
-                    )}
-                </div>
-                <div className={classes.tags}>
-                    {video.video_tags && video.video_tags.length > 0 && (
-                        <Typography type="caption">
-                            {video.video_tags.map(tag => tag.name).join(' | ')}
-                        </Typography>
-                    )}
-                </div>
-
-            </div>
-            {currentUser && currentUser.id === video.id_user && (
-                <Dialog
-                    open={this.state.isDeleteOpen}
-                    ignoreBackdropClick
-                    ignoreEscapeKeyUp>
-                    <DialogTitle disableTypography>
-                        <Typography type="subheading">
-                            Do you want to delete the video "{video.title}"?
-                        </Typography>
-                    </DialogTitle>
-                    <DialogActions>
-                        <Button onClick={this.handleDialogCancel}>
-                            Cancel
-                        </Button>
-                        <Button onClick={this.handleDialogDelete} color="primary">
-                            Delete
-                        </Button>
-                    </DialogActions>
-                </Dialog>
-            )}
-
-        </div>;
+                {currentUser && currentUser.id === video.id_user && (
+                    <Dialog
+                        open={this.state.isDeleteOpen}
+                        ignoreBackdropClick
+                        ignoreEscapeKeyUp>
+                        <DialogTitle disableTypography>
+                            <Typography type="subheading">
+                                Do you want to delete the video "{video.title}"?
+                            </Typography>
+                        </DialogTitle>
+                        <DialogActions>
+                            <Button onClick={this.handleDialogCancel}>
+                                Cancel
+                            </Button>
+                            <Button onClick={this.handleDialogDelete} color="primary">
+                                Delete
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+                )}
+            </div>);
     }
 }
 
