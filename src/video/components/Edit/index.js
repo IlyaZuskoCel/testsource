@@ -21,6 +21,7 @@ import * as VIDEO_STATUS from '../../constants/video';
 import Trim from './Trim';
 import Form from './Form';
 import Spotlight from './Spotlight';
+import PlayerCard from './PlayerCard';
 
 const styleSheet = createStyleSheet('Edit', theme => ({
     root: {
@@ -198,6 +199,22 @@ class Edit extends Component {
                                  <Typography
                                      className={classNames(classes.tab, {[classes.activeTab]: this.state.tab >= 2})}
                                      type="body2">
+                                     Player Card
+                                 </Typography>
+                             </div>
+
+                         }/>
+
+                    <Tab className={classNames(classes.tabWrap, {[classes.activeTabWrap]: this.state.tab >= 3})}
+                         label={
+                             <div>
+                                 <Typography className={classes.tabNum} type="headline"
+                                             align="center">
+                                     4
+                                 </Typography>
+                                 <Typography
+                                     className={classNames(classes.tab, {[classes.activeTab]: this.state.tab >= 3})}
+                                     type="body2">
                                      Post
                                  </Typography>
                              </div>
@@ -247,6 +264,21 @@ class Edit extends Component {
 
                                      }/>
 
+                                <Tab className={classes.tabWrap}
+                                     label={
+                                         <div>
+                                             <Typography className={classes.tabNum} type="headline" align="center">
+                                                 3
+                                             </Typography>
+                                             <Typography
+                                                 className={classNames(classes.tab, {[classes.activeTab]: this.state.tab >= 2})}
+                                                 type="body2">
+                                                 Player Card
+                                             </Typography>
+                                         </div>
+
+                                     }/>
+
                             </Tabs>
                         </Hidden>
 
@@ -259,7 +291,12 @@ class Edit extends Component {
                                                             onPrev={this.handlePrev}
                                                             onNext={this.handleNext}/>}
 
-                        {this.state.tab === 2 && <Form video={video}
+                        {this.state.tab === 2 && <PlayerCard video={video}
+                                                             onNext={this.handleNext}
+                                                             updateField={this.props.updateField}
+                                                             onPrev={this.handlePrev}/>}
+
+                        {this.state.tab === 3 && <Form video={video}
                                                        tags={this.props.tags}
                                                        updateField={this.props.updateField}
                                                        tagOptions={this.props.tagOptions}

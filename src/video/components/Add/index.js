@@ -23,6 +23,7 @@ import Upload from './Upload';
 import Trim from './Trim';
 import Form from './Form';
 import Spotlight from './Spotlight';
+import PlayerCard from './PlayerCard';
 
 const styleSheet = createStyleSheet('Add', theme => ({
     root: {
@@ -51,7 +52,7 @@ const styleSheet = createStyleSheet('Add', theme => ({
 
         [theme.breakpoints.up('md')]: {
             borderBottom: 'solid 1px #cbcbcb60',
-            maxWidth: 320,
+            maxWidth: 430,
         },
 
         [theme.breakpoints.down('md')]: {
@@ -226,6 +227,22 @@ class Add extends Component {
                                  <Typography
                                      className={classNames(classes.tab, {[classes.activeTab]: this.state.tab >= 3})}
                                      type="body2">
+                                     Player Card
+                                 </Typography>
+                             </div>
+
+                         }/>
+
+                    <Tab className={classNames(classes.tabWrap, {[classes.activeTabWrap]: this.state.tab >= 4})}
+                         label={
+                             <div>
+                                 <Typography className={classes.tabNum} type="headline"
+                                             align="center">
+                                     5
+                                 </Typography>
+                                 <Typography
+                                     className={classNames(classes.tab, {[classes.activeTab]: this.state.tab >= 4})}
+                                     type="body2">
                                      Post
                                  </Typography>
                              </div>
@@ -289,6 +306,21 @@ class Add extends Component {
                                          </div>
 
                                      }/>
+                                <Tab className={classes.tabWrap}
+                                     label={
+                                         <div>
+                                             <Typography className={classes.tabNum} type="headline" align="center">
+                                                 4
+                                             </Typography>
+                                             <Typography
+                                                 className={classNames(classes.tab, {[classes.activeTab]: this.state.tab >= 3})}
+                                                 type="body2">
+                                                 Player Card
+                                             </Typography>
+                                         </div>
+
+                                     }/>
+
 
                             </Tabs>
                         </Hidden>
@@ -306,7 +338,12 @@ class Add extends Component {
                                                             onPrev={this.handlePrev}
                                                             onNext={this.handleNext}/>}
 
-                        {this.state.tab === 3 && <Form video={video}
+                        {this.state.tab === 3 && <PlayerCard video={video}
+                                                       onNext={this.handleNext}
+                                                       updateField={this.props.updateField}
+                                                       onPrev={this.handlePrev}/>}
+
+                        {this.state.tab === 4 && <Form video={video}
                                                        tags={this.props.tags}
                                                        updateField={this.props.updateField}
                                                        tagOptions={this.props.tagOptions}
