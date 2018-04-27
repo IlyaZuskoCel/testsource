@@ -86,7 +86,7 @@ class PlayerForm extends Component {
             data.height = null;
 
         // Intercom Sign up player
-        window.Intercom('boot', { app_id: 'coswd1k2', 
+        window.Intercom('boot', { app_id: window.INTERCOM_ID, 
           email: data.email, 
           name: data.first_name+' '+data.last_name,
           type: 'Player'

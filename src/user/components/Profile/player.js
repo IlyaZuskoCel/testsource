@@ -583,7 +583,7 @@ class PlayerProfile extends Component {
         let userPhotoSrc = defaultPhoto;
 
         // Intercom player view
-        window.Intercom('update', { app_id: 'coswd1k2' });
+        window.Intercom('update', { app_id: window.INTERCOM_ID });
 
         var detail = {           
           name: user.first_name+' '+user.last_name,
