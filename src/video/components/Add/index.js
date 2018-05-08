@@ -111,7 +111,7 @@ class Add extends Component {
     };
 
     componentDidMount() {
-        this.props.fetchData();
+        this.props.fetchData(this.props.id);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -120,6 +120,8 @@ class Add extends Component {
                 this.changeTab(2);
             })
         }
+        if (nextProps.id !== this.props.id)
+            this.props.fetchData(nextProps.id);
     }
 
 
@@ -341,7 +343,8 @@ class Add extends Component {
                         {this.state.tab === 3 && <PlayerCard video={video}
                                                        onNext={this.handleNext}
                                                        updateField={this.props.updateField}
-                                                       onPrev={this.handlePrev}/>}
+                                                       onPrev={this.handlePrev}
+                                                       user={this.props.user}/>}
 
                         {this.state.tab === 4 && <Form video={video}
                                                        tags={this.props.tags}
