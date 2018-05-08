@@ -63,6 +63,15 @@ const styleSheet = createStyleSheet('PlayerCard', theme => ({
         flexDirection: 'row',
         //backgroundColor: '#000',
         minHeight: 270,
+        [theme.breakpoints.down('md')]: {
+            width: 512,
+            margin: '0 auto'
+        },
+        [theme.breakpoints.down('sm')]: {
+            width: 306,
+            minHeight:171,
+            margin: '0 auto'
+        },
     },
     video: {
         width: '100%',
@@ -93,10 +102,11 @@ const styleSheet = createStyleSheet('PlayerCard', theme => ({
         position: 'relative',
 
         [theme.breakpoints.down('sm')]: {
-            minHeight: 324,
-            width: 218,
+            minHeight: 138,
+            width: 100,
+            marginLeft: 10,
+            marginRight: 10,
         },
-
 
     },
     infoCardDataBottom: {
@@ -113,12 +123,9 @@ const styleSheet = createStyleSheet('PlayerCard', theme => ({
         justifyContent: 'center',
         alignItems: 'center',
         padding: [24, 8, 8],
-        // [theme.breakpoints.down('sm')]: {
-        //     paddingTop: 8,
-        //     minHeight: 132,
-        //     backgroundImage: 'none',
-        //     backgroundColor: '#ffffff'
-        // },
+        [theme.breakpoints.down('sm')]: {
+            padding: [5, 0, 0],
+        },
     },
     infoCardNumber: {
         position: 'absolute',
@@ -146,8 +153,8 @@ const styleSheet = createStyleSheet('PlayerCard', theme => ({
         margin: 'auto',
 
         [theme.breakpoints.down('sm')]: {
-            height: 192,
-            width: 218,
+            height: 80,
+            width: 100,
         },
 
 
@@ -163,10 +170,17 @@ const styleSheet = createStyleSheet('PlayerCard', theme => ({
         transform: 'translateX(-50%) translateY(-50%)',
         position: 'absolute',
         margin: 'auto',
+        [theme.breakpoints.down('sm')]: {
+            minWidth: '50%',
+            minHeight: '50%',
+        },
 
     },
     infoCardPhotoDefault: {
-        width: 176
+        width: 176,
+        [theme.breakpoints.down('sm')]: {
+            width:100
+        },
     },
     infoCardLeagueLine: {
         height: 3,
@@ -186,12 +200,10 @@ const styleSheet = createStyleSheet('PlayerCard', theme => ({
         textFillColor: 'transparent',
         color: 'transparent',
         [theme.breakpoints.down('sm')]: {
-            fontSize: 42,
-            top: -21,
-            marginLeft: -19,
-            width: 38,
-            height: 42,
-            lineHeight: '42px',
+            top: -8,
+            left: '60%',
+            fontSize: 17,
+            marginLeft: '-18px'
         },
     },
     infoCardLeague: {
@@ -206,20 +218,24 @@ const styleSheet = createStyleSheet('PlayerCard', theme => ({
         verticalAlign: 'middle',
         lineHeight: '48px',
         [theme.breakpoints.down('sm')]: {
-            top: -21,
-            marginLeft: -19,
-            width: 38,
-            height: 42,
-            lineHeight: '42px',
+            top: -22,
+            fontSize:11,
         },
+
 
     },
     infoCardTeam: {
         fontSize:20,
+        [theme.breakpoints.down('sm')]: {
+            fontSize:15,
+        },
 
     },
     infoCardLocation:{
         fontSize:13,
+        [theme.breakpoints.down('sm')]: {
+            fontSize:10,
+        },
     },
     infoCardName: {
         marginTop: 8,
@@ -231,45 +247,42 @@ const styleSheet = createStyleSheet('PlayerCard', theme => ({
         width: 300,
         marginLeft: 20,
         marginRight: 20,
-        marginTop:-90
+        marginTop:-30,
+        [theme.breakpoints.down('sm')]: {
+            marginLeft: 10,
+            marginRight: 10,
+            marginTop:0,
+        },
     },
     infoRightColumn: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
-        [theme.breakpoints.down('md')]: {
-            marginLeft: 24,
-            marginRight: 24,
-            justifyContent: 'space-around',
-        },
-        [theme.breakpoints.down('xs')]: {
-            marginLeft: 0,
-            marginRight: 0,
-        },
     },
     infoRightName: {
         fontSize:34,
         textTransform: 'uppercase',
-        //letterSpacing: '2.8px'
+        [theme.breakpoints.down('sm')]: {
+            fontSize:20,
+            lineHeight:'20px'
+        },
     },
     infoRightCaption: {
         fontSize:10,
         paddingBottom: 4,
-        [theme.breakpoints.down('md')]: {
-            textAlign: 'center',
-            paddingBottom: 8,
-        },
-        [theme.breakpoints.up('md')]: {
-            color: '#000',
-
+        [theme.breakpoints.down('sm')]: {
+            fontSize:8,
+            paddingBottom: 2,
+            lineHeight:0,
+            marginTop:5,
         },
     },
     infoRightValue: {
         fontSize:20,
         lineHeight:'16px',
-        [theme.breakpoints.down('md')]: {
-            textAlign: 'center'
+        [theme.breakpoints.down('sm')]: {
+            fontSize:11,
         },
 
     },
@@ -278,28 +291,24 @@ const styleSheet = createStyleSheet('PlayerCard', theme => ({
         lineHeight: 1.5,
         wordWrap: "break-word",
 
-        [theme.breakpoints.down('md')]: {
-            paddingBottom: 16,
-            fontSize: 14,
-            lineHeight: 1.71,
-        }
-
     },
     pendingVerification: {
         marginTop: 16,
-        [theme.breakpoints.down('md')]: {
-            marginTop: 8,
-        }
     },
     info: {
 
             display: 'flex',
             flexDirection: 'row',
-            justifyContent: 'space-around',
+            justifyContent: 'space-between',
             alignItems: 'center',
             marginLeft: 0,
             marginRight: 0,
             paddingBottom: 24,
+            marginTop: 24,
+            [theme.breakpoints.down('sm')]: {
+                marginTop: 10,
+            },
+
 
 
     },
@@ -307,12 +316,21 @@ const styleSheet = createStyleSheet('PlayerCard', theme => ({
 
     },
     infoCaption: {
-        //color: '#000'
+        fontSize:10,
+        paddingBottom: 4,
+        lineHeight:0,
+        [theme.breakpoints.down('sm')]: {
+            fontSize:8,
+            paddingBottom: 2,
+        },
     },
     infoValue: {
         textTransform: 'uppercase',
-        color: '#000',
-        fontSize: 14
+        color: '#d7001e',
+        fontSize: 14,
+        [theme.breakpoints.down('sm')]: {
+            fontSize:11,
+        },
     },
 
 }));
