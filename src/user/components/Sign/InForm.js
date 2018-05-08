@@ -61,7 +61,7 @@ class InForm extends Component {
 
         // Intercom login
         window.Intercom('boot', { 
-            app_id: 'coswd1k2', 
+            app_id: window.INTERCOM_ID, 
             email: this.state.username 
         });
 
