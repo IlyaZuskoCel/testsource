@@ -32,9 +32,11 @@ const styleSheet = createStyleSheet('Search', theme => ({
     root: {},
     content: {
         maxWidth: 1168,
-        marginTop: 56,
         width: '100%',
         margin: 'auto',
+        '& h3': {
+            textAlign:'center'
+        }
     },
     header: {
         backgroundColor: '#f5f5f5',
@@ -212,7 +214,25 @@ const styleSheet = createStyleSheet('Search', theme => ({
     },
     clearLink: {
         paddingBottom: 24
-    }
+    },
+    buttons: {
+        display:'flex',
+        justifyContent:'center',
+        marginTop:36,
+        marginBottom:68,
+        '& button:first-child': {
+            marginRight:30,
+            [theme.breakpoints.down('md')]: {
+                marginRight:0,
+            }
+        },
+        [theme.breakpoints.down('md')]: {
+            justifyContent:'space-between',
+            '& button': {
+                minWidth:140
+            }
+        }
+    },
 }));
 
 
@@ -413,8 +433,9 @@ class Search extends Component {
     }
 
     render() {
-        const {classes, width} = this.props;
+        const {classes, width,user} = this.props;
         const smallWidth = width === 'sm' || width === 'xs';
+        console.log(this.props);
         return (<div className={classes.root}>
 
             <Hidden only={['xs', 'sm']}>
@@ -594,7 +615,28 @@ class Search extends Component {
                             total={this.props.headers ? parseInt(this.props.headers.count) : 0} perPage={18}
                             onChange={this.changePagination}/>
             </footer>}
-
+            {!user ?
+            <Grid container gutter={8} className={classes.content}>
+                <Grid item xs={12}>
+                    <Typography type="subheading" className={classes.subTitle}>Sign up to get full access to our database of certified
+                        {this.props.type === 'player' &&
+                            ' players'
+                        }
+                        {this.props.type === 'scout' &&
+                            ' scouts'
+                        }
+                    </Typography>
+                    <div className={classes.buttons}>
+                        <Link to="/sign/up" disabledUnderline>
+                            <Button raised color="primary" className={classes.buttonCancel}>Sign Up</Button>
+                        </Link>
+                        <Link to="/sign/in" disabledUnderline>
+                            <Button raised>Log In</Button>
+                        </Link>
+                    </div>
+                </Grid>
+            </Grid>
+                : null}
         </div>)
     }
 }

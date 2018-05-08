@@ -12,6 +12,8 @@ import {withStyles, createStyleSheet} from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import Snackbar from 'material-ui/Snackbar';
 import Typography from 'material-ui/Typography';
+import {Link} from '../';
+import Button from 'material-ui/Button';
 
 import Header from '../../containers/Header'
 import Footer from '../../containers/Footer'
@@ -93,11 +95,39 @@ const styleSheet = createStyleSheet('DefaultRoute', theme => ({
         to: {
             transform: 'rotate(360deg)',
         }
-    }
+    },
+    snackbar: {
+        width:600,
+        margin:'0 auto',
+        [theme.breakpoints.down('sm')]: {
+            width:'auto',
+        }
+    },
+    buttonsMessage: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        padding:'41px 45px 38px 54px',
+        '& span:before': {
+            display:'none',
+
+        }
+    },
+    buttons: {
+        marginTop:50,
+        display:'flex',
+        justifyContent:'space-between',
+        width:'100%',
+        '& button': {
+            color:theme.palette.text.disabled,
+        }
+    },
 }));
 
 const DefaultRoute = ({component: Component, isAuthenticated, loader ,alert, hideAlert, classes, hideBackgroundTopHeader, hideBackgroundTopMobileHeader, hideBackgroundTopMobileHeaderScroll, hideBoxShadowScroll ,  hideHeader, ...rest}) => (
-    <Route {...rest} render={props => (
+    <Route {...rest} render={props =>
+        (
         <div>
             <Grid
                 className={classNames(classes.root, {[classes.hideBackgroundTopHeader]: hideBackgroundTopHeader || hideBackgroundTopMobileHeader})}>
@@ -117,10 +147,20 @@ const DefaultRoute = ({component: Component, isAuthenticated, loader ,alert, hid
                 autoHideDuration={typeof alert.autoHideDuration  === "undefined" ? 5000 : alert.autoHideDuration}
                 onRequestClose={(e,reason)=>reason === 'timeout' ? hideAlert() : null}
                 open={alert.open}
-                message={<div className={classes.message} >
+                className={alert.page==='search' ? classes.snackbar:null}
+                message={<div className={classNames(classes.message,alert.page==='search' ? classes.buttonsMessage:classes.message)}>
                     <ScoutIcon className={classes.alertIcon}
                                color={alert.type}>{alert.type === 'error' ? 'cross' : 'checkmark'}</ScoutIcon>
-                    <Typography type="body2"> {alert.message}</Typography>
+                    <Typography type={alert.page==='search' ?"subheading":"body2"} > {alert.message}</Typography>
+                    {alert.page==='search' &&
+                    <div className={classes.buttons}>
+                        <Button className={classes.buttonCancel}>cancel</Button>
+
+                        <Link to="/sign/in" disabledUnderline>
+                            <Button>Log In</Button>
+                        </Link>
+                    </div>
+                    }
 
                 </div>}
             />
