@@ -618,7 +618,7 @@ class Search extends Component {
                 }
             </div>}
 
-            {this.state.mobileFilterOn && this.props.headers && parseInt(this.props.headers.pageCount) > 1 &&
+            {currentUser && this.state.mobileFilterOn && this.props.headers && parseInt(this.props.headers.pageCount) > 1 &&
             <footer className={classes.footer}>
                 <Pagination currentPage={this.state.pageCurrentPosition ? parseInt(this.state.pageCurrentPosition) : 1}
                             total={this.props.headers ? parseInt(this.props.headers.count) : 0} perPage={18}
