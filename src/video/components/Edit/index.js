@@ -148,11 +148,9 @@ class Edit extends Component {
     };
 
     render() {
-        const {classes, video} = this.props;
+        const {classes, video, user} = this.props;
         if (!video) return null;
-        if (this.props.user != null){
-            user = this.props.user;
-        }
+        if (!user) return null;
 
         return <div className={classes.root}>
             <Hidden only={['md', 'lg', 'xl']}>
