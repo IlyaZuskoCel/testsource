@@ -12,6 +12,7 @@ import {withStyles, createStyleSheet} from 'material-ui/styles';
 import withWidth from 'material-ui/utils/withWidth';
 import classNames from 'classnames';
 import Button from 'material-ui/Button';
+import Snackbar from 'material-ui/Snackbar';
 import Typography from 'material-ui/Typography';
 import Hidden from 'material-ui/Hidden';
 import DropdownOptions from '../DropdownOptions';
@@ -89,6 +90,39 @@ const styleSheet = createStyleSheet('ScoutFilter', theme => ({
             padding: 20,
         }
     },
+    snackbar: {
+        width:600,
+        margin:'0 auto',
+        [theme.breakpoints.down('sm')]: {
+            width:'auto',
+        }
+    },
+    buttonsMessage: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        padding:'41px 45px 38px 54px',
+        '& span:before': {
+            display:'none',
+
+        }
+    },
+    buttonsPopup: {
+        marginTop:50,
+        display:'flex',
+        justifyContent:'space-between',
+        width:'100%',
+        '& button': {
+            color:theme.palette.text.disabled,
+        }
+    },
+    message: {
+        display:'flex',
+        justifyContent:'center',
+        flexDirection:'column',
+        padding:40
+    },
 }));
 
 class PlayerFilter extends Component {
@@ -105,6 +139,7 @@ class PlayerFilter extends Component {
             position: '',
             leagues: [],
             born: [PLAYER_MIN_AGE, PLAYER_MAX_AGE],
+            showPopup:false
         };
 
         this.born = [PLAYER_MIN_AGE, PLAYER_MAX_AGE];
@@ -144,9 +179,16 @@ class PlayerFilter extends Component {
         this.setState({born: value})
     };
 
+    handleClosePopup = () => {
+        this.setState({showPopup:false})
+    };
+
     makeFilterRequest() {
         let queryString = '';
         let filters = {};
+
+        if(!this.props.currentUser)
+           return this.setState({showPopup:true});
 
 
         let options = {
@@ -196,6 +238,7 @@ class PlayerFilter extends Component {
         }
 
         this.props.setFilters(filters);
+
         this.props.filterPlayers(queryString.slice(0, -1));
     }
 
@@ -312,7 +355,6 @@ class PlayerFilter extends Component {
 
     render() {
         const {classes} = this.props;
-
         return (<div className={classNames(classes.row, classes.headerMedia)}>
             <Grid container gutter={40}>
                 <Grid item xs={12} md={4}>
@@ -408,6 +450,25 @@ class PlayerFilter extends Component {
                 </Hidden>
 
             </Grid>
+            <Snackbar
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center'
+                }}
+                open={this.state.showPopup}
+                className={classes.snackbar}
+                message={<div className={classes.message}>
+                    <Typography type="subheading"> {this.props.alert.message==="Unauthorized"&& "You must be logged in to use the filter feature."}</Typography>
+                    <div className={classes.buttonsPopup}>
+                        <Button className={classes.buttonCancel} onClick={this.handleClosePopup}>cancel</Button>
+
+                        <Link to="/sign/in" disabledUnderline>
+                            <Button>Log In</Button>
+                        </Link>
+                    </div>
+
+                </div>}
+            />
         </div>);
     }
 }

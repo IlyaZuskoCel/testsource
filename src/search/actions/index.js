@@ -43,7 +43,7 @@ export const uploadPlayers = (params) => dispatch => {
             dispatch(stopLoading());
         })
         .catch((message) => {
-            dispatch({type: ERROR_ALERT, payload: {message, page:'search'}});
+            dispatch({type: ERROR_ALERT, payload: {message}});
             dispatch(stopLoading());
         });
 };
@@ -67,7 +67,7 @@ export const uploadScouts = (params) => dispatch => {
 
         })
         .catch((message) => {
-            dispatch({type: ERROR_ALERT , payload: {message, page:'search'}});
+            dispatch({type: ERROR_ALERT , payload: {message}});
             dispatch(stopLoading());
         });
 };
@@ -100,7 +100,7 @@ export const filterScouts = (params) => dispatch => {
             dispatch(stopLoading());
         })
         .catch(message => {
-            dispatch({type: ERROR_ALERT, payload: {message, page:'search'}});
+            dispatch({type: ERROR_ALERT, payload: {message}});
             dispatch(stopLoading());
         });
 };
@@ -126,7 +126,7 @@ export const filterPlayers = (params) => dispatch => {
 
         })
         .catch(message => {
-            dispatch({type: ERROR_ALERT, payload: {message, page:'search'}});
+            dispatch({type: ERROR_ALERT, payload: {message}});
             dispatch(stopLoading());
         })
 };

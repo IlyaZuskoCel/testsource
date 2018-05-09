@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import {Route} from 'react-router-dom';
+import {Route, Redirect} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import classNames from 'classnames';
@@ -146,21 +146,11 @@ const DefaultRoute = ({component: Component, isAuthenticated, loader ,alert, hid
                 onClick={hideAlert}
                 autoHideDuration={typeof alert.autoHideDuration  === "undefined" ? 5000 : alert.autoHideDuration}
                 onRequestClose={(e,reason)=>reason === 'timeout' ? hideAlert() : null}
-                open={alert.open}
-                className={alert.page==='search' ? classes.snackbar:null}
-                message={<div className={classNames(classes.message,alert.page==='search' ? classes.buttonsMessage:classes.message)}>
+                open={alert.message !== 'Unauthorized' ? alert.open : false}
+                message={<div className={classes.message}>
                     <ScoutIcon className={classes.alertIcon}
                                color={alert.type}>{alert.type === 'error' ? 'cross' : 'checkmark'}</ScoutIcon>
-                    <Typography type={alert.page==='search' ?"subheading":"body2"} > {alert.message}</Typography>
-                    {alert.page==='search' &&
-                    <div className={classes.buttons}>
-                        <Button className={classes.buttonCancel}>cancel</Button>
-
-                        <Link to="/sign/in" disabledUnderline>
-                            <Button>Log In</Button>
-                        </Link>
-                    </div>
-                    }
+                    <Typography type="body2"> {alert.message}</Typography>
 
                 </div>}
             />

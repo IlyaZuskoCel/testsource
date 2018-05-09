@@ -114,7 +114,7 @@ export const getPage = (url, options) => {
     })
         .then(response => {
             if (response.status === 401) {
-                throw 'You must be logged in to use the filter feature.';
+                throw  response.message || 'Unauthorized';
             }
             if (response.status !== 200) {
                 throw response.message || 'error';

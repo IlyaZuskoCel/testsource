@@ -19,7 +19,7 @@ const PrivateRoute = ({component: Component, isAuthenticated, hideBackgroundTopH
                            {...props}/>
         ) : (
             <Redirect to={{
-                pathname: '/search',
+                pathname: '/sign/in',
                 state: {from: props.location}
             }}/>
         )

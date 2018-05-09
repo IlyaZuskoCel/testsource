@@ -14,6 +14,7 @@ import withWidth from 'material-ui/utils/withWidth';
 import {Link, Pagination, Autosuggest} from '../../../common/components';
 import Hidden from 'material-ui/Hidden';
 import Button from 'material-ui/Button';
+import Snackbar from 'material-ui/Snackbar';
 
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import defaultPhoto from './assets/images/default-photo.png';
@@ -233,6 +234,7 @@ const styleSheet = createStyleSheet('Search', theme => ({
             }
         }
     },
+
 }));
 
 
@@ -433,9 +435,8 @@ class Search extends Component {
     }
 
     render() {
-        const {classes, width,user} = this.props;
+        const {classes, width,currentUser} = this.props;
         const smallWidth = width === 'sm' || width === 'xs';
-        console.log(this.props);
         return (<div className={classes.root}>
 
             <Hidden only={['xs', 'sm']}>
@@ -468,7 +469,9 @@ class Search extends Component {
                                                                      clearField={this.state.clearField}
                                                                      stopClearing={this.stopClearing}
                                                                      page={this.state.pageCurrentPosition ? this.state.pageCurrentPosition : 1}
-
+                                                                     hideAlert={this.props.hideAlert}
+                                                                     alert={this.props.alert}
+                                                                     currentUser={this.props.currentUser}
 
                                                                      filters={this.props.filters && this.props.filters.scout ? this.props.filters.scout : {}}
                                                                      setFilters={this.props.setFilters}
@@ -489,9 +492,12 @@ class Search extends Component {
                                                                        clearField={this.state.clearField}
                                                                        stopClearing={this.stopClearing}
                                                                        page={this.state.pageCurrentPosition ? this.state.pageCurrentPosition : 1}
-
+                                                                       hideAlert={this.props.hideAlert}
+                                                                       alert={this.props.alert}
+                                                                       currentUser={this.props.currentUser}
                                                                        filters={this.props.filters && this.props.filters.player ? this.props.filters.player : {}}
                                                                        setFilters={this.props.setFilters}
+
                         />}
                         <Typography className={classNames(classes.link, classes.clearLink)}
                                     type="body1"
@@ -564,7 +570,9 @@ class Search extends Component {
                                                                  clearField={this.state.clearField}
                                                                  stopClearing={this.stopClearing}
                                                                  page={this.state.pageCurrentPosition ? this.state.pageCurrentPosition : 1}
-
+                                                                 hideAlert={this.props.hideAlert}
+                                                                 alert={this.props.alert}
+                                                                 currentUser={this.props.currentUser}
                                                                  filters={this.props.filters && this.props.filters.scout ? this.props.filters.scout : {}}
                                                                  setFilters={this.props.setFilters}
                     />
@@ -586,8 +594,9 @@ class Search extends Component {
                                                                    clearField={this.state.clearField}
                                                                    stopClearing={this.stopClearing}
                                                                    page={this.state.pageCurrentPosition ? this.state.pageCurrentPosition : 1}
-
-
+                                                                   hideAlert={this.props.hideAlert}
+                                                                   alert={this.props.alert}
+                                                                   currentUser={this.props.currentUser}
                                                                    filters={this.props.filters && this.props.filters.player ? this.props.filters.player : {}}
                                                                    setFilters={this.props.setFilters}
                     />}
@@ -615,7 +624,7 @@ class Search extends Component {
                             total={this.props.headers ? parseInt(this.props.headers.count) : 0} perPage={18}
                             onChange={this.changePagination}/>
             </footer>}
-            {!user ?
+            {!currentUser ?
             <Grid container gutter={8} className={classes.content}>
                 <Grid item xs={12}>
                     <Typography type="subheading" className={classes.subTitle}>Sign up to get full access to our database of certified
@@ -637,6 +646,9 @@ class Search extends Component {
                 </Grid>
             </Grid>
                 : null}
+
+
+
         </div>)
     }
 }
