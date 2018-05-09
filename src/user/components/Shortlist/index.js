@@ -144,9 +144,9 @@ class Shortlist extends Component {
         super(props);
     }
 
-    componentDidMount() {
-        this.props.getFollowedList();
-    }
+    // componentDidMount() {
+    //     this.props.getFollowedList();
+    // }
 
     render() {
         const {classes} = this.props;

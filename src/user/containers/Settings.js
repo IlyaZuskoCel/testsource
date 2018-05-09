@@ -3,7 +3,8 @@
  * moonion.com
  */
 
-
+import React, {Component} from 'react';
+import {withWrapper} from "create-react-server/wrapper";
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux';
 
@@ -24,4 +25,21 @@ const mapDispatchToProps = (dispatch) => ({
     getVerifiedScout: () => dispatch(goBack()),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Settings))
+class Wrap extends Component {
+    static async getInitialProps({location, query, params, store}) {
+        await store.dispatch(getCurrent());
+    };
+
+    componentDidMount() {
+        this.props.getUser();
+    }
+
+    render() {
+
+        return <Settings {...this.props} />
+    }
+}
+
+Wrap = connect(mapStateToProps, mapDispatchToProps)(Wrap);
+
+export default withWrapper(Wrap);

@@ -17,9 +17,9 @@ const styleSheet = createStyleSheet('Profile', theme => ({}));
 
 
 class Profile extends Component {
-    componentDidMount() {
-        this.props.fetchData(this.props.id);
-    }
+    // componentDidMount() {
+    //     this.props.fetchData(this.props.id);
+    // }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.id !== this.props.id)

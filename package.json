@@ -10,6 +10,7 @@
   "dependencies": {
     "autosuggest-highlight": "^3.1.0",
     "classnames": "^2.2.5",
+    "create-react-server": "moonion/create-react-server",
     "history": "^4.6.3",
     "jss": "^8.1.0",
     "jss-preset-default": "^3.0.0",

@@ -3,7 +3,8 @@
  * moonion.com
  */
 
-
+import React, {Component} from 'react';
+import {withWrapper} from "create-react-server/wrapper";
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux';
 
@@ -36,4 +37,25 @@ const mapDispatchToProps = (dispatch) => ({
     },
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignScoutForm))
+class Wrap extends Component {
+    static async getInitialProps({location, query, params, store}) {
+        await store.dispatch(getCountries());
+        await store.dispatch(getLevels());
+        await store.dispatch(getLeagues());
+        await store.dispatch(getTeams());
+    };
+
+    componentDidMount() {
+        if (!this.props.leagues.length || !this.props.leagueOptions.length || !this.props.teams.length || !this.props.teamOptions.length)
+            this.props.fetchData();
+    }
+
+    render() {
+
+        return <SignScoutForm {...this.props} />
+    }
+}
+
+Wrap = connect(mapStateToProps, mapDispatchToProps)(Wrap);
+
+export default withWrapper(Wrap);

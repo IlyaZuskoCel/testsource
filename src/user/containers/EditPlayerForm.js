@@ -3,7 +3,8 @@
  * moonion.com
  */
 
-
+import React, {Component} from 'react';
+import {withWrapper} from "create-react-server/wrapper";
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom'
 
@@ -41,5 +42,24 @@ const mapDispatchToProps = (dispatch) => ({
     save: (data) => dispatch(update(data)),
 });
 
+class Wrap extends Component {
+    static async getInitialProps({location, query, params, store}) {
+        await store.dispatch(getCountries());
+        await store.dispatch(getLevels());
+        await store.dispatch(getLeagues());
+        await store.dispatch(getTeams());
+    };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PlayerForm))
+    componentDidMount() {
+        this.props.fetchData();
+    }
+
+    render() {
+
+        return <PlayerForm {...this.props} />
+    }
+}
+
+Wrap = connect(mapStateToProps, mapDispatchToProps)(Wrap);
+
+export default withWrapper(Wrap);

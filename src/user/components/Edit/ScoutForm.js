@@ -188,9 +188,9 @@ class ScoutForm extends Component {
         };
     }
 
-    componentDidMount() {
-        this.props.fetchData();
-    }
+    // componentDidMount() {
+    //     this.props.fetchData();
+    // }
 
     componentWillReceiveProps(nextProps) {
         if (!this.props.user)

@@ -16,9 +16,9 @@ class Edit extends Component {
         this.state = {};
     }
 
-    componentDidMount() {
-        this.props.getUser();
-    }
+    // componentDidMount() {
+    //     this.props.getUser();
+    // }
 
     render() {
         if (this.props.user.role === PLAYER_ROLE)

@@ -3,7 +3,8 @@
  * moonion.com
  */
 
-
+import React, {Component} from 'react';
+import {withWrapper} from "create-react-server/wrapper";
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux';
 
@@ -26,4 +27,23 @@ const mapDispatchToProps = (dispatch) => ({
     goBack: () => dispatch(goBack()),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Profile))
+class Wrap extends Component {
+    static async getInitialProps({location, query, params, store}) {
+        console.log(params, "params");
+        console.log(store, "Store");
+        await store.dispatch(getUser(id)); //$$  под вопросом
+    };
+
+    componentDidMount() {
+        this.props.fetchData(this.props.id);
+    }
+
+    render() {
+
+        return <Profile {...this.props} />
+    }
+}
+
+Wrap = connect(mapStateToProps, mapDispatchToProps)(Wrap);
+
+export default withWrapper(Wrap);
