@@ -19,15 +19,16 @@ const mapStateToProps = (state, props) => ({
     video: state.video.video,
     tags: map(state.video.tags),
     tagOptions: mapOptions(state.video.tags),
-    id: props.match.params.id || state.user.current.id,
+    userId: state.user.current.id,
     user: state.user.user,
+
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    fetchData: id => {
+    fetchData: (userId) => {
         dispatch(clear());
         dispatch(fetchTags());
-        dispatch(getUser(id));
+        dispatch(getUser(userId));
     },
     upload: file => dispatch(upload(file)),
     trim: (id, start, end) => dispatch(trim(id, start, end)),

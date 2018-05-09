@@ -111,7 +111,7 @@ class Add extends Component {
     };
 
     componentDidMount() {
-        this.props.fetchData(this.props.id);
+        this.props.fetchData(this.props.userId);
     }
 
     componentWillReceiveProps(nextProps) {

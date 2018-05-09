@@ -61,7 +61,6 @@ const styleSheet = createStyleSheet('PlayerCard', theme => ({
         width: '100%',
         display: 'flex',
         flexDirection: 'row',
-        //backgroundColor: '#000',
         minHeight: 270,
         [theme.breakpoints.down('md')]: {
             width: 512,

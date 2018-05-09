@@ -10,14 +10,17 @@ import {connect} from 'react-redux';
 import Edit from '../components/Edit';
 
 import {fetchVideo, update, trim, fetchTags, updateVideoField} from '../actions';
+import {getUser} from '../../user/actions'
 
 import {map, mapOptions} from '../selectors';
 
 const mapStateToProps = (state, props) => ({
     video: state.video.video,
     id: props.match.params.id || state.user.current.id,
+    userId: state.user.current.id,
     tags: map(state.video.tags),
-    tagOptions: mapOptions(state.video.tags)
+    tagOptions: mapOptions(state.video.tags),
+    user: state.user.user,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -25,6 +28,7 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(fetchVideo(id));
         dispatch(fetchTags());
     },
+    getUser: userId => dispatch(getUser(userId)),
     update: data => dispatch(update(data)),
     trim: (id, start, end) => dispatch(trim(id, start, end)),
     updateField: (name, value) => dispatch(updateVideoField(name, value)),
