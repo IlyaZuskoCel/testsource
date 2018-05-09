@@ -25,7 +25,6 @@ const routes = [
     <DefaultLayout key="Confirm" path="/confirm/:token" component={Confirm}/>,
     <PrivateRoute key="ChangePassword" path="/settings/password" component={ChangePassword}
                   hideBackgroundTopMobileHeader/>,
-    <PrivateRoute key="MyProfile" path="/profile" exact component={Profile} hideBackgroundTopHeader/>,
     <PrivateRoute key="Settings" path="/settings" component={Settings} hideBackgroundTopMobileHeader/>,
     <PrivateRoute key="Edit" path="/profile/edit" component={Edit} hideBackgroundTopMobileHeader/>,
     <PrivateRoute key="Shortlist" path="/profile/shortlist" component={Shortlist} hideBackgroundTopMobileHeader/>,

@@ -375,7 +375,7 @@ class ScoutFilter extends Component {
                 open={this.state.showPopup}
                 className={classes.snackbar}
                 message={<div className={classes.message}>
-                    <Typography type="subheading"> {this.props.alert.message==="Unauthorized"&& "You must be logged in to use the filter feature."|| "You must be logged in to use the filter feature."}</Typography>
+                    <Typography type="subheading">You must be logged in to use the filter feature.</Typography>
                     <div className={classes.buttonsPopup}>
                         <Button className={classes.buttonCancel} onClick={this.handleClosePopup}>cancel</Button>
 

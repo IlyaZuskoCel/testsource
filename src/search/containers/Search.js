@@ -20,7 +20,6 @@ import {
     hideHeaderBackground,
     showFooter,
     hideFooter,
-    removeAlert
 } from '../../common/actions';
 
 import {mapOptions, map} from '../selectors';
@@ -43,7 +42,6 @@ const mapStateToProps = (state, props) => ({
     filters: state.search.filters,
     levelOptions: state.search.levels && state.search.levels.length > 0 ? mapOptions(state.search.levels) : [],
     levels: state.search.levels ? map(state.search.levels) : null,
-    alert: state.common.alert,
 });
 
 
@@ -71,7 +69,6 @@ const mapDispatchToProps = (dispatch, props) => ({
     hideHeaderBackground: () => dispatch(hideHeaderBackground()),
     showFooter: () => dispatch(showFooter()),
     hideFooter: () => dispatch(hideFooter()),
-    hideAlert: () => dispatch(removeAlert()),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Search))
