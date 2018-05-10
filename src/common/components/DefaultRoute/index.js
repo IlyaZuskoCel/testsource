@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import {Route} from 'react-router-dom';
+import {Route, Redirect} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import classNames from 'classnames';
@@ -41,7 +41,7 @@ const styleSheet = createStyleSheet('DefaultRoute', theme => ({
     message: {
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-around',
+        justifyContent: 'flex-start',
         alignItems: 'center'
     },
     alertIcon: {
@@ -93,11 +93,13 @@ const styleSheet = createStyleSheet('DefaultRoute', theme => ({
         to: {
             transform: 'rotate(360deg)',
         }
-    }
+    },
 }));
 
+
 const DefaultRoute = ({component: Component, isAuthenticated, loader ,alert, hideAlert, classes, hideBackgroundTopHeader, hideBackgroundTopMobileHeader, hideBackgroundTopMobileHeaderScroll, hideBoxShadowScroll ,  hideHeader, ...rest}) => (
-    <Route {...rest} render={props => (
+    <Route {...rest} render={props =>
+        (
         <div>
             <Grid
                 className={classNames(classes.root, {[classes.hideBackgroundTopHeader]: hideBackgroundTopHeader || hideBackgroundTopMobileHeader})}>
@@ -117,7 +119,7 @@ const DefaultRoute = ({component: Component, isAuthenticated, loader ,alert, hid
                 autoHideDuration={typeof alert.autoHideDuration  === "undefined" ? 5000 : alert.autoHideDuration}
                 onRequestClose={(e,reason)=>reason === 'timeout' ? hideAlert() : null}
                 open={alert.open}
-                message={<div className={classes.message} >
+                message={<div className={classes.message}>
                     <ScoutIcon className={classes.alertIcon}
                                color={alert.type}>{alert.type === 'error' ? 'cross' : 'checkmark'}</ScoutIcon>
                     <Typography type="body2"> {alert.message}</Typography>

@@ -114,7 +114,7 @@ export const getPage = (url, options) => {
     })
         .then(response => {
             if (response.status === 401) {
-                throw 'Unauthorized';
+                throw  'Unauthorized';
             }
             if (response.status !== 200) {
                 throw response.message || 'error';

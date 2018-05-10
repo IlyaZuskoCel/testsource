@@ -19,7 +19,7 @@ import {
     showHeaderBackground,
     hideHeaderBackground,
     showFooter,
-    hideFooter
+    hideFooter,
 } from '../../common/actions';
 
 import {mapOptions, map} from '../selectors';
