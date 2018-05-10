@@ -100,6 +100,7 @@ const styleSheet = createStyleSheet('Edit', theme => ({
 
 }));
 
+let user = {};
 
 class Edit extends Component {
     state = {
@@ -109,6 +110,7 @@ class Edit extends Component {
 
     componentDidMount() {
         this.props.fetchData(this.props.id);
+        this.props.getUser(this.props.userId);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -146,12 +148,11 @@ class Edit extends Component {
     };
 
     render() {
-        const {classes, video} = this.props;
-
+        const {classes, video, user} = this.props;
         if (!video) return null;
+        if (!user) return null;
 
         return <div className={classes.root}>
-
             <Hidden only={['md', 'lg', 'xl']}>
                 <Tabs index={this.state.tab}
                       centered
@@ -294,7 +295,8 @@ class Edit extends Component {
                         {this.state.tab === 2 && <PlayerCard video={video}
                                                              onNext={this.handleNext}
                                                              updateField={this.props.updateField}
-                                                             onPrev={this.handlePrev}/>}
+                                                             onPrev={this.handlePrev}
+                                                             user={user}/>}
 
                         {this.state.tab === 3 && <Form video={video}
                                                        tags={this.props.tags}

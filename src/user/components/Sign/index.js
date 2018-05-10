@@ -69,6 +69,9 @@ const styleSheet = createStyleSheet('Sign', theme => ({
     logoLink: {
         textDecoration: 'none',
         height: 70,
+        '&:hover': {
+            textDecoration: 'none',
+        },
         [theme.breakpoints.up('md')]: {
             margin: 60
         },
@@ -205,10 +208,9 @@ class Sign extends Component {
                     <div className={classes.rightBg}/>
                     <Grid container gutter={8} className={classes.rootHeader}>
                         <Grid item xs={4}>
-                            <a href="https://scoutzoo.com"
-                               className={classNames(classes.logoLink)}>
+                            <Link to="/" className={classNames(classes.logoLink)}>
                                 <Icon className={classes.logo}>scoutzoo-symbol</Icon>
-                            </a>
+                            </Link>
                         </Grid>
                     </Grid>
                 </div>
@@ -218,9 +220,9 @@ class Sign extends Component {
 
                 <Hidden only={['md', 'lg', 'xl']}>
                     <div className={classes.headerTab}>
-                        <a href="https://scoutzoo.com" className={classNames(classes.logoLink)}>
+                        <Link to="/" className={classNames(classes.logoLink)}>
                             <Icon className={classes.logo}>scoutzoo-symbol</Icon>
-                        </a>
+                        </Link>
 
                         <Tabs index={type === 'in' ? 0 : 1}
                               centered fullWidth

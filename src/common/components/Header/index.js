@@ -274,7 +274,18 @@ const styleSheet = createStyleSheet('Header', theme => ({
             transform: 'none',
             backgroundImage: 'none'
         }
-    }
+    },
+    raised: {
+        minWidth: 160,
+        '&:hover': {
+            boxShadow: '0 0 7px 0 rgba(0, 0, 0, 0.3)',
+            backgroundColor:'#fff'
+        },
+        [theme.breakpoints.down('md')]: {
+            color:'#fff',
+            minWidth:60
+        },
+    },
 }));
 
 
@@ -422,7 +433,20 @@ class Header extends Component {
                                 {DropMenu}
                             </div>
                         ) : (
-                            <div className={classNames(classes.menu)}/>
+                            <div className={classNames(classes.menu)}>
+                                <Link to="/sign/in" disabledUnderline
+                                      className={classNames(classes.menuItem)}>
+                                    <Button className={classNames(classes.raised)}>
+                                        sign in
+                                    </Button>
+                                </Link>
+                                <Link to="/sign/up" disabledUnderline
+                                      className={classNames(classes.menuItem)}>
+                                    <Button className={classNames(classes.raised)}>
+                                        sign up
+                                    </Button>
+                                </Link>
+                            </div>
                         )}
                     </Grid>
                 </Grid>

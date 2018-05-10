@@ -14,6 +14,7 @@ import {filterOnReg} from "../../helpers/helpers";
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import Hidden from 'material-ui/Hidden';
+import Snackbar from 'material-ui/Snackbar';
 
 import InputText from '../InputText';
 import DropdownOptions from '../DropdownOptions';
@@ -67,7 +68,40 @@ const styleSheet = createStyleSheet('ScoutFilter', theme => ({
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%',
-    }
+    },
+    snackbar: {
+        width:600,
+        margin:'0 auto',
+        [theme.breakpoints.down('sm')]: {
+            width:'auto',
+        }
+    },
+    buttonsMessage: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        padding:'41px 45px 38px 54px',
+        '& span:before': {
+            display:'none',
+
+        }
+    },
+    buttonsPopup: {
+        marginTop:50,
+        display:'flex',
+        justifyContent:'space-between',
+        width:'100%',
+        '& button': {
+            color:theme.palette.text.disabled,
+        }
+    },
+    message: {
+        display:'flex',
+        justifyContent:'center',
+        flexDirection:'column',
+        padding:40
+    },
 
 }));
 
@@ -81,6 +115,7 @@ class ScoutFilter extends Component {
             leagues: [],
             team: '',
             name: '',
+            showPopup:false
         };
 
         this.changeName = this.changeName.bind(this);
@@ -167,10 +202,16 @@ class ScoutFilter extends Component {
         this.setState({clearSubFields : false});
     };
 
+    handleClosePopup = () => {
+        this.setState({showPopup:false})
+    };
+
     makeFilterRequest() {
         let queryString = '';
         let filters = {};
 
+        if(!this.props.currentUser)
+            return this.setState({showPopup:true});
 
         let options = {
             id_country: this.state.id_country ? this.state.id_country : null,
@@ -326,6 +367,25 @@ class ScoutFilter extends Component {
                 </Hidden>
 
             </Grid>
+            <Snackbar
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center'
+                }}
+                open={this.state.showPopup}
+                className={classes.snackbar}
+                message={<div className={classes.message}>
+                    <Typography type="subheading">You must be logged in to use the filter feature.</Typography>
+                    <div className={classes.buttonsPopup}>
+                        <Button className={classes.buttonCancel} onClick={this.handleClosePopup}>cancel</Button>
+
+                        <Link to="/sign/in" disabledUnderline>
+                            <Button>Log In</Button>
+                        </Link>
+                    </div>
+
+                </div>}
+            />
         </div>)
 
     }

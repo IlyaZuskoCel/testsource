@@ -477,8 +477,8 @@ const theme = (outerTheme) => {
             },
             MuiSnackbarContent: {
                 root: {
-                    height: 70,
-
+                    minHeight: 70,
+                    height:'auto',
                     backgroundColor: '#fff',
                     [outerTheme.breakpoints.down('sm')]: {
                         width: 'auto'
@@ -492,6 +492,9 @@ const theme = (outerTheme) => {
                         top: 50,
                         maxWidth: 344,
                     }
+                },
+                message: {
+                    width:'100%'
                 }
             },
             MuiTabIndicator: {
