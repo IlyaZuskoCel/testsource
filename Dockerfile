@@ -6,6 +6,9 @@ WORKDIR /usr/src
 
 RUN yarn install
 
+ENV NODE_ENV=production
+ENV NODE_ENV=development
+
 RUN yarn run build
 
 WORKDIR /
@@ -18,5 +21,7 @@ RUN chmod +x run.sh
 
 
 VOLUME ["/var/www/app", "/etc/nginx/conf.d/app"]
+EXPOSE 80
 
-CMD ["./run.sh"]
+#CMD ["./run.sh"]
+CMD ["yarn", "run", "start:server"]

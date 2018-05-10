@@ -1,5 +1,37 @@
 {
-  "presets":[
-    "es2015", "stage-2", "react"
+  "presets": [
+    "env",
+    "react-app"
+  ],
+  "plugins": [
+    "transform-ensure-ignore",
+    [
+      "transform-assets",
+      {
+        "extensions": [
+          "png",
+          "jpg",
+          "gif",
+          "svg"
+        ],
+        "name": "/img/[name].[ext]?[sha512:hash:base64:7]"
+      }
+    ],
+    [
+      "babel-plugin-transform-require-ignore",
+      {
+        "extensions": [
+          ".css",
+          ".less",
+          ".sass"
+        ]
+      }
+    ],
+    ["module-resolver", {
+      "root": ["./src"],
+      "alias": {
+        "parse": "parse/node"
+      }
+    }]
   ]
 }
