@@ -4,18 +4,15 @@
  */
 
 import React from 'react';
-import {Switch, Route, Redirect } from 'react-router'
+import { Redirect } from 'react-router'
 
 import DefaultRoute from '../common/containers/DefaultRoute'
 
 import Search from './containers/Search';
 
 const routes = [
-    <Switch key="Search">
-        <Redirect exact from="/" to="/search"/>
-        <DefaultRoute path="/search/:type?" component={Search} hideBackgroundTopMobileHeaderScroll/>
-    </Switch>
-
+        <Redirect exact from="/" to="/search" key="Search"/>,
+        <DefaultRoute path="/search/:type?" component={Search} hideBackgroundTopMobileHeaderScroll key="Search"/>
 ];
 
 export default routes;
