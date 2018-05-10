@@ -469,8 +469,6 @@ class Search extends Component {
                                                                      clearField={this.state.clearField}
                                                                      stopClearing={this.stopClearing}
                                                                      page={this.state.pageCurrentPosition ? this.state.pageCurrentPosition : 1}
-                                                                     hideAlert={this.props.hideAlert}
-                                                                     alert={this.props.alert}
                                                                      currentUser={this.props.currentUser}
 
                                                                      filters={this.props.filters && this.props.filters.scout ? this.props.filters.scout : {}}
@@ -492,8 +490,6 @@ class Search extends Component {
                                                                        clearField={this.state.clearField}
                                                                        stopClearing={this.stopClearing}
                                                                        page={this.state.pageCurrentPosition ? this.state.pageCurrentPosition : 1}
-                                                                       hideAlert={this.props.hideAlert}
-                                                                       alert={this.props.alert}
                                                                        currentUser={this.props.currentUser}
                                                                        filters={this.props.filters && this.props.filters.player ? this.props.filters.player : {}}
                                                                        setFilters={this.props.setFilters}
@@ -570,8 +566,6 @@ class Search extends Component {
                                                                  clearField={this.state.clearField}
                                                                  stopClearing={this.stopClearing}
                                                                  page={this.state.pageCurrentPosition ? this.state.pageCurrentPosition : 1}
-                                                                 hideAlert={this.props.hideAlert}
-                                                                 alert={this.props.alert}
                                                                  currentUser={this.props.currentUser}
                                                                  filters={this.props.filters && this.props.filters.scout ? this.props.filters.scout : {}}
                                                                  setFilters={this.props.setFilters}
@@ -594,8 +588,6 @@ class Search extends Component {
                                                                    clearField={this.state.clearField}
                                                                    stopClearing={this.stopClearing}
                                                                    page={this.state.pageCurrentPosition ? this.state.pageCurrentPosition : 1}
-                                                                   hideAlert={this.props.hideAlert}
-                                                                   alert={this.props.alert}
                                                                    currentUser={this.props.currentUser}
                                                                    filters={this.props.filters && this.props.filters.player ? this.props.filters.player : {}}
                                                                    setFilters={this.props.setFilters}
