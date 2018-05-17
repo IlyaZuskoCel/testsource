@@ -343,6 +343,9 @@ class PlayerCard extends Component {
         };
     }
 
+    handlePlayerCard = (event, checked) => {
+        return this.props.updateField('player_card', checked ? 1 : 0);
+    };
     render() {
         const {classes, video, user} = this.props;
         let userPhotoSrc = defaultPhoto;
@@ -474,7 +477,7 @@ class PlayerCard extends Component {
             </Paper>
             <div className={classes.enablePlayerCard}>
                 <Typography type="caption">Enable your player card to appear on video playback.</Typography>
-                <Switch/>
+                <Switch checked={!!video.player_card} onChange={this.handlePlayerCard}/>
             </div>
 
             <div className={classes.buttons}>

@@ -15,7 +15,7 @@ import Paper from 'material-ui/Paper';
 import Hidden from 'material-ui/Hidden';
 
 
-const styleSheet = createStyleSheet('Trim', theme => ({
+const styleSheet = createStyleSheet('Spotlight', theme => ({
     root: {
         [theme.breakpoints.down('md')]: {
             paddingLeft: 16,
@@ -97,7 +97,7 @@ const styleSheet = createStyleSheet('Trim', theme => ({
     },
     circle: {
         borderRadius: '50%',
-        border: 'solid 2px #ccad51',
+        border: 'solid 4px #ccad51',
         height: 0,
         width: 0,
         overflow: 'hidden',
@@ -233,7 +233,7 @@ class Trim extends Component {
 
         const top = Math.max(y * image.height / height - 2, 0);
 
-        const radius = Math.max(Math.round(width / 20) * image.width / width, Math.round(height / 20) * image.height / height);
+        const radius = Math.max(Math.round(width / 16) * image.width / width, Math.round(height / 16) * image.height / height);
 
         circle.style['margin-left'] = left + 'px';
         circle.style['margin-top'] = top + 'px';
@@ -346,7 +346,7 @@ class Trim extends Component {
         const circle = document.getElementById("circle");
         const image = document.getElementById("imageSrc");
 
-        const border = 2 * this.props.video.width / image.width;
+        const border = 4 * this.props.video.width / image.width;
         const x = Math.round(parseInt(circle.style['margin-left']) * width / image.width + border);
         const y = Math.round(parseInt(circle.style['margin-top']) * height / image.height + border);
         const r = Math.round(parseInt(circle.style.width) / 2 * Math.max(width / image.width, height/image.height) + border / 2);
