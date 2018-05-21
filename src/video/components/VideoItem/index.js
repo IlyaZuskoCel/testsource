@@ -207,6 +207,7 @@ const styleSheet = createStyleSheet('VideoItem', theme => ({
         width: '100%',
         cursor: 'pointer',
         maxHeight: 600,
+        fitObject: 'contain',
         [theme.breakpoints.down('md')]: {
             maxHeight: 450,
         },
