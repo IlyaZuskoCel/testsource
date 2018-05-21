@@ -15,6 +15,8 @@ import Button from 'material-ui/Button';
 import Tabs, {Tab} from 'material-ui/Tabs';
 import Icon from 'material-ui/Icon';
 
+import Helmet from 'react-helmet';
+
 import {absUrl} from '../../../common/helpers';
 import ShareButton from '../../../user/components/ShareButton';
 
@@ -381,149 +383,196 @@ class VideoItem extends Component {
         const {classes, video, currentUser, user, tagOptions} = this.props;
         if (!video || !user) return null;
         const tags = video.tags ? video.tags.map(v => '' + v) : [];
-        return <div className={classes.root}>
-            <div className={classes.backgroundImgWrap}>
-                <img className={classes.backgroundImg} src={playerBg}/>
-            </div>
-            <div className={classes.backgroundRight}/>
-            <div className={classes.backgroundLeft}/>
-            <div className={classes.content}>
+        return <div>
+            <Helmet>
+                <meta property="og:title" content={video.title}/>
+                <meta property='og:video:url' content={absUrl(`/profile/${user.id}/video/${video.id}`)}/>
+                <meta property='og:video:secure_url' content={absUrl(`/profile/${user.id}/video/${video.id}`)}/>
+                <meta property='og:video:type' content='video/mp4'/>
+                <meta property='og:video:width' content='360'/>
+                <meta property='og:video:height' content='200'/>
 
-                <div className={classes.topNavigate}>
-                    <Link to={`/profile/${video.id_user}`} invert disabledUnderline className={classes.backLink}>
-                        <ScoutZooIcon>previous</ScoutZooIcon>
-                        <Hidden only={['xs', 'sm']}>
-                            <span className={classes.backTitle}>Back to profile</span>
-                        </Hidden>
-                    </Link>
+                <meta name="twitter:card" content='player'/>
+                <meta name="twitter:title" content={video.title}/>
+                <meta name="twitter:description" content=''/>
+                <meta name="twitter:player" content={absUrl(`/profile/${user.id}/video/${video.id}`)}/>
+                <meta name="twitter:player:width" content='360'/>
+                <meta name="twitter:player:height" content='200'/>
+                <meta name="twitter:image" content={video.thumb_lg}/>
+
+                <link rel="canonical" href={absUrl(`/profile/${user.id}/video/${video.id}`)}/>
+            </Helmet>
+
+            <div className={classes.root}>
+
+                <div className={classes.backgroundImgWrap}>
+                    <img className={classes.backgroundImg} src={playerBg}/>
                 </div>
+                <div className={classes.backgroundRight}/>
+                <div className={classes.backgroundLeft}/>
+                <div className={classes.content}>
+
+                    <div className={classes.topNavigate}>
+                        <Link to={`/profile/${video.id_user}`} invert disabledUnderline className={classes.backLink}>
+                            <ScoutZooIcon>previous</ScoutZooIcon>
+                            <Hidden only={['xs', 'sm']}>
+                                <span className={classes.backTitle}>Back to profile</span>
+                            </Hidden>
+                        </Link>
+                    </div>
 
 
-                <Paper className={classes.videoWrap}>
-                    {this.state.isShow ? (
-                        <video src={video.overlay_video_path || video.trim_video_file_path || video.video_path}
-                               id={`video-${video.id}`}
-                               className={classes.video}
-                               controls
-                               controlsList="nodownload"/>
-                    ) : [
-                        <img key="overlay" src={video.overlay || video.thumb_lg} onClick={this.handleShow}
-                             className={classes.image}/>,
-                        <Icon key="playControl" className={classes.playControl}
-                              onClick={this.handleShow}>play_arrow</Icon>,
-                        <Typography key="duration" type="caption"
-                                    className={classes.duration}>{getTime(video.time_start, video.time_end)}</Typography>
-                    ]}
+                    <Paper className={classes.videoWrap}>
+                        {this.state.isShow ? (
+                            <video src={video.overlay_video_path || video.trim_video_file_path || video.video_path}
+                                   id={`video-${video.id}`}
+                                   className={classes.video}
+                                   controls
+                                   controlsList="nodownload"/>
+                        ) : [
+                            <img key="overlay" src={video.overlay || video.thumb_lg} onClick={this.handleShow}
+                                 className={classes.image}/>,
+                            <Icon key="playControl" className={classes.playControl}
+                                  onClick={this.handleShow}>play_arrow</Icon>,
+                            <Typography key="duration" type="caption"
+                                        className={classes.duration}>{getTime(video.time_start, video.time_end)}</Typography>
+                        ]}
 
-                </Paper>
-                <div className={classes.bottom}>
-                    <div className={classes.titleWrap}>
-                        <Typography type="headline">
-                            {video.title}
-                        </Typography>
-                        {currentUser && currentUser.id === video.id_user && (
-                            <div>
-
-                                <Hidden only={['xs', 'sm']}>
-                                    <div>
-                                        <div className={classes.download} onClick={this.handleDownload}>
-                                            <ScoutZooIcon>left</ScoutZooIcon>
+                    </Paper>
+                    <div className={classes.bottom}>
+                        <div className={classes.titleWrap}>
+                            <Typography type="headline">
+                                {video.title}
+                            </Typography>
+                            {currentUser && currentUser.id === video.id_user ? (
+                                <div>
+                                    <Hidden only={['xs', 'sm']}>
+                                        <div>
+                                            <div className={classes.download} onClick={this.handleDownload}>
+                                                <ScoutZooIcon>left</ScoutZooIcon>
+                                            </div>
+                                            <ShareButton url={absUrl(`/profile/${user.id}/video/${video.id}`)}
+                                                         title={`Watch ${user.first_name} ${user.last_name}'s Scout Zoo upload: ${video.title}`}
+                                                         dialogTitle={'Share video'}
+                                                         style={classes.share}
+                                                         sharedCount={this.handleSharedCount}>
+                                                <ScoutZooIcon>share</ScoutZooIcon>
+                                            </ShareButton>
+                                            <Link to={`/video/edit/${video.id}`} disabledUnderline
+                                                  className={classes.link}
+                                                  onClick={this.handleEdit}>
+                                                <ScoutZooIcon>pencil</ScoutZooIcon>
+                                            </Link>
+                                            <Link to={`/`} disabledUnderline className={classes.link}
+                                                  onClick={this.handleDelete}>
+                                                <ScoutZooIcon>remove</ScoutZooIcon>
+                                            </Link>
                                         </div>
-                                        <ShareButton url={absUrl(`/profile/${user.id}/video/${video.id}`)}
-                                                     title={`Watch ${user.first_name} ${user.last_name}'s Scout Zoo upload: ${video.title}`}
-                                                     dialogTitle={'Share video'}
-                                                     style={classes.share}
-                                                     sharedCount={this.handleSharedCount}>
-                                            <ScoutZooIcon>share</ScoutZooIcon>
-                                        </ShareButton>
-                                        <Link to={`/video/edit/${video.id}`} disabledUnderline className={classes.link}
-                                              onClick={this.handleEdit}>
-                                            <ScoutZooIcon>pencil</ScoutZooIcon>
-                                        </Link>
-                                        <Link to={`/`} disabledUnderline className={classes.link}
-                                              onClick={this.handleDelete}>
-                                            <ScoutZooIcon>remove</ScoutZooIcon>
-                                        </Link>
-                                    </div>
-                                </Hidden>
-                                <Hidden only={['md', 'lg', 'xl']}>
-                                    <div>
-                                        <ShareButton url={absUrl(`/profile/${user.id}/video/${video.id}`)}
-                                                     title={`Watch ${user.first_name} ${user.last_name}'s Scout Zoo upload: ${video.title}`}
-                                                     style={classes.share}
-                                                     sharedCount={this.handleSharedCount}>
-                                            <ScoutZooIcon>share</ScoutZooIcon>
-                                        </ShareButton>
-                                        <IconButton
-                                            className={classes.moreButton}
-                                            aria-label="More"
-                                            aria-owns={this.state.openVideoMenu ? `video-menu-${video.id}` : null}
-                                            aria-haspopup="true"
-                                            onClick={this.handleClick}>
-                                            <ScoutZooIcon>dots-three-vertical</ScoutZooIcon>
-                                        </IconButton>
-                                        <Menu id={`video-menu-${video.id}`}
-                                              anchorEl={this.state.anchorVideoMenuEl}
-                                              open={this.state.openVideoMenu}
-                                              onRequestClose={this.handleRequestClose}>
-                                            <MenuItem onClick={this.handleEdit}>Edit</MenuItem>
-                                            <MenuItem onClick={this.handleDelete}>Delete</MenuItem>
-                                            <MenuItem onClick={this.handleDownload}>Download</MenuItem>
-                                        </Menu>
-                                    </div>
-                                </Hidden>
+                                    </Hidden>
+                                    <Hidden only={['md', 'lg', 'xl']}>
+                                        <div>
+                                            <ShareButton url={absUrl(`/profile/${user.id}/video/${video.id}`)}
+                                                         title={`Watch ${user.first_name} ${user.last_name}'s Scout Zoo upload: ${video.title}`}
+                                                         style={classes.share}
+                                                         sharedCount={this.handleSharedCount}>
+                                                <ScoutZooIcon>share</ScoutZooIcon>
+                                            </ShareButton>
+                                            <IconButton
+                                                className={classes.moreButton}
+                                                aria-label="More"
+                                                aria-owns={this.state.openVideoMenu ? `video-menu-${video.id}` : null}
+                                                aria-haspopup="true"
+                                                onClick={this.handleClick}>
+                                                <ScoutZooIcon>dots-three-vertical</ScoutZooIcon>
+                                            </IconButton>
+                                            <Menu id={`video-menu-${video.id}`}
+                                                  anchorEl={this.state.anchorVideoMenuEl}
+                                                  open={this.state.openVideoMenu}
+                                                  onRequestClose={this.handleRequestClose}>
+                                                <MenuItem onClick={this.handleEdit}>Edit</MenuItem>
+                                                <MenuItem onClick={this.handleDelete}>Delete</MenuItem>
+                                                <MenuItem onClick={this.handleDownload}>Download</MenuItem>
+                                            </Menu>
+                                        </div>
+                                    </Hidden>
 
-                            </div>
-                        )}
-                    </div>
-                    <div>
-                        {video.date && (
-                            <Typography type="body1" className={classes.date}>
-                                {moment(video.date, '').format('YYYY')}
-                            </Typography>
-                        )}
-                        {video.description && (
-                            <Typography type="body1" className={classes.description}>
-                                {video.description}
-                            </Typography>
-                        )}
-                    </div>
-                    <div className={classes.tagsWrap}>
-                        {tagOptions && video.tags && video.tags.length > 0 && (
+                                </div>
+                            ) : (
+                                <div>
+                                    <Hidden only={['xs', 'sm']}>
+                                        <div>
+                                            <ShareButton url={absUrl(`/profile/${user.id}/video/${video.id}`)}
+                                                         title={`Watch ${user.first_name} ${user.last_name}'s Scout Zoo upload: ${video.title}`}
+                                                         dialogTitle={'Share video'}
+                                                         style={classes.share}
+                                                         sharedCount={this.handleSharedCount}>
+                                                <ScoutZooIcon>share</ScoutZooIcon>
+                                            </ShareButton>
+                                        </div>
+                                    </Hidden>
+                                    <Hidden only={['md', 'lg', 'xl']}>
+                                        <div>
+                                            <ShareButton url={absUrl(`/profile/${user.id}/video/${video.id}`)}
+                                                         title={`Watch ${user.first_name} ${user.last_name}'s Scout Zoo upload: ${video.title}`}
+                                                         style={classes.share}
+                                                         sharedCount={this.handleSharedCount}>
+                                                <ScoutZooIcon>share</ScoutZooIcon>
+                                            </ShareButton>
+                                        </div>
+                                    </Hidden>
+                                </div>
+                            )}
+                        </div>
+                        <div>
+                            {video.date && (
+                                <Typography type="body1" className={classes.date}>
+                                    {moment(video.date, '').format('YYYY')}
+                                </Typography>
+                            )}
+                            {video.description && (
+                                <Typography type="body1" className={classes.description}>
+                                    {video.description}
+                                </Typography>
+                            )}
+                        </div>
+                        <div className={classes.tagsWrap}>
+                            {tagOptions && video.tags && video.tags.length > 0 && (
+                                <Typography type="caption">
+                                    {tagOptions.filter(item => tags.indexOf(item.value) > -1).map(item => item.label).join(' | ')}
+                                </Typography>
+                            )}
+                        </div>
+                        <div>
                             <Typography type="caption">
-                                {tagOptions.filter(item => tags.indexOf(item.value) > -1).map(item => item.label).join(' | ')}
+                                Uploaded by <Link to={`/profile/${user.id}`}
+                                                  className={classes.uploadUser}>{user.first_name} {user.last_name}</Link>
                             </Typography>
-                        )}
+                        </div>
                     </div>
-                    <div>
-                        <Typography type="caption">
-                            Uploadede by <Link to={`/profile/${user.id}`} className={classes.uploadUser}>{user.first_name} {user.last_name}</Link>
-                        </Typography>
-                    </div>
+                    {currentUser && currentUser.id === video.id_user && (
+                        <Dialog
+                            open={this.state.isDeleteOpen}
+                            ignoreBackdropClick
+                            ignoreEscapeKeyUp>
+                            <DialogTitle disableTypography>
+                                <Typography type="subheading">
+                                    Do you want to delete the video "{video.title}"?
+                                </Typography>
+                            </DialogTitle>
+                            <DialogActions>
+                                <Button onClick={this.handleDialogCancel}>
+                                    Cancel
+                                </Button>
+                                <Button onClick={this.handleDialogDelete} color="primary">
+                                    Delete
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
+                    )}
+
                 </div>
-                {currentUser && currentUser.id === video.id_user && (
-                    <Dialog
-                        open={this.state.isDeleteOpen}
-                        ignoreBackdropClick
-                        ignoreEscapeKeyUp>
-                        <DialogTitle disableTypography>
-                            <Typography type="subheading">
-                                Do you want to delete the video "{video.title}"?
-                            </Typography>
-                        </DialogTitle>
-                        <DialogActions>
-                            <Button onClick={this.handleDialogCancel}>
-                                Cancel
-                            </Button>
-                            <Button onClick={this.handleDialogDelete} color="primary">
-                                Delete
-                            </Button>
-                        </DialogActions>
-                    </Dialog>
-                )}
 
             </div>
-
         </div>
 
     }
