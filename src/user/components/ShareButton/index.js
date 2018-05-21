@@ -121,6 +121,10 @@ class ShareButton extends Component {
     };
     hideMessage = () => this.setState({message: null});
 
+    handleShare = () => {
+        this.props.sharedCount();
+    };
+
     render() {
         const {classes, url, title, dialogTitle, children, style} = this.props;
 
@@ -137,13 +141,13 @@ class ShareButton extends Component {
                 </DialogTitle>
                 <DialogContent>
                     <div className={classes.buttonsWrap}>
-                        <FacebookShareButton url={url} beforeOnClick={this.handleCancel('facebook')}>
+                        <FacebookShareButton url={url} beforeOnClick={this.handleCancel('facebook')} onClick={this.handleShare}>
                             <Typography type="body2" className={classNames(classes.button, classes.facebookButton)}>
                                 <Icon className={classes.icon}>social-facebook</Icon>
                                 Share on Facebook
                             </Typography>
                         </FacebookShareButton>
-                        <TwitterShareButton url={url} title={title} beforeOnClick={this.handleCancel('twitter')}>
+                        <TwitterShareButton url={url} title={title} beforeOnClick={this.handleCancel('twitter')} onClick={this.handleShare}>
                             <Typography type="body2" className={classNames(classes.button, classes.twitterButton)}>
                                 <Icon className={classes.icon}>twitter-outline</Icon>
                                 Share on Twitter

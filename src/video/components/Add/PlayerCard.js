@@ -1,26 +1,11 @@
-/**
- * Created by Vitaly on 04/21/2017.
- * moonion.com
- */
-
-
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import moment from 'moment';
 
 import {withStyles, createStyleSheet} from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
-import Paper from 'material-ui/Paper';
-import Hidden from 'material-ui/Hidden';
+import {Typography, Button, Hidden, Switch} from 'material-ui';
 import {Link, Icon} from '../../../common/components';
-import Switch from 'material-ui/Switch';
-import defaultPhoto from '../../../user/components/Profile/assets/images/default-photo.png';
-import {RangeSlider} from '../../../common/components';
-import {
-    SHOT_LIST
-} from '../../../user/constants';
+
+import {Card} from "./Card";
 
 const styleSheet = createStyleSheet('PlayerCard', theme => ({
     root: {
@@ -67,8 +52,9 @@ const styleSheet = createStyleSheet('PlayerCard', theme => ({
             margin: '0 auto'
         },
         [theme.breakpoints.down('sm')]: {
-            width: 306,
+            width: '100%',
             minHeight:171,
+            height: 200,
             margin: '0 auto'
         },
     },
@@ -242,15 +228,37 @@ const styleSheet = createStyleSheet('PlayerCard', theme => ({
         lineHeight: 0.97,
         letterSpacing: '0.2px'
     },
+    infoLeft: {
+        display: 'inline-block',
+        position: 'relative',
+        minHeight: 270,
+        width: '40%',
+        boxSizing: 'border-box',
+        overflow: 'hidden',
+        [theme.breakpoints.down('sm')]: {
+            height: 200,
+            minHeight: 'auto',
+        },
+    },
+    infoLeftPhoto: {
+        display: 'block',
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        left: 0,
+        bottom: 0,
+        maxHeight: '100%',
+        minHeight: '100%',
+        width: '100%',
+        objectFit: 'cover',
+    },
     infoRight: {
         width: 300,
-        marginLeft: 20,
-        marginRight: 20,
-        marginTop:-30,
+        boxSizing: 'border-box',
+        padding: '20px 10px 30px 25px',
         [theme.breakpoints.down('sm')]: {
-            marginLeft: 10,
-            marginRight: 10,
-            marginTop:0,
+            padding: '20px 0 30px 10px',
+            width: '60%',
         },
     },
     infoRightColumn: {
@@ -258,32 +266,45 @@ const styleSheet = createStyleSheet('PlayerCard', theme => ({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
+        marginBottom: 20,
     },
     infoRightName: {
         fontSize:34,
-        textTransform: 'uppercase',
         [theme.breakpoints.down('sm')]: {
             fontSize:20,
             lineHeight:'20px'
         },
     },
+    infoRightNameInfo: {
+        fontSize: 12,
+        marginTop: -12,
+        marginBottom: 20,
+        [theme.breakpoints.down('md')]: {
+            marginTop: -5,
+        },
+        [theme.breakpoints.down('sm')]: {
+            fontSize: 10,
+            marginTop: 0,
+        },
+    },
     infoRightCaption: {
-        fontSize:10,
+        fontSize: 10,
         paddingBottom: 4,
         [theme.breakpoints.down('sm')]: {
-            fontSize:8,
+            fontSize: 8,
+            marginBottom: 5,
             paddingBottom: 2,
-            lineHeight:0,
-            marginTop:5,
+            lineHeight: 0,
         },
     },
     infoRightValue: {
-        fontSize:20,
-        lineHeight:'16px',
+        fontFamily: 'UnitedSerifCond-Bold',
+        fontSize: 20,
+        lineHeight: '16px',
         [theme.breakpoints.down('sm')]: {
-            fontSize:11,
+            fontSize: 16,
+            marginTop: 5,
         },
-
     },
     infoRightAbout: {
         fontSize: 16,
@@ -294,25 +315,12 @@ const styleSheet = createStyleSheet('PlayerCard', theme => ({
     pendingVerification: {
         marginTop: 16,
     },
-    info: {
-
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginLeft: 0,
-            marginRight: 0,
-            paddingBottom: 24,
-            marginTop: 24,
-            [theme.breakpoints.down('sm')]: {
-                marginTop: 10,
-            },
-
-
-
-    },
     infoRow: {
-
+        display: 'inline-block',
+        marginRight: 40,
+        [theme.breakpoints.down('lg', 'sm')]: {
+            marginRight: 30,
+        },
     },
     infoCaption: {
         fontSize:10,
@@ -343,138 +351,28 @@ class PlayerCard extends Component {
         };
     }
 
+    handlePlayerCard = (event, checked) => {
+        return this.props.updateField('player_card', checked ? 1 : 0);
+    };
     render() {
-        const {classes, video, user} = this.props;
-        let userPhotoSrc = defaultPhoto;
-        if (user.profile_picture) {
-            userPhotoSrc = user.profile_picture;
-        }
+        const {classes, video} = this.props;
         return <div className={classes.root}>
             <Typography className={classes.title} type="subheading" align="center">
                 Customize your player card
             </Typography>
             <Typography className={classes.desc} type="body1">
-                The player card and bio is taken from your profile. It will appear before your uploaded video as shown below. In order to update the information shown, please {' '}
+                The player card and bio is taken from your profile. It will appear before your uploaded video as shown
+                below. In order to update the information shown, please {' '}
                 <Link to="/profile/edit" disabledUnderline>
                     <span className={classes.editProfileLink}>edit your profile.</span>
                 </Link>
             </Typography>
 
+            <Card {...this.props} />
 
-            <Paper className={classNames(classes.uploadWrap, classes.videoWrap)}>
-                <Paper className={classes.infoCard} square>
-                    {user.jersey_number && (
-                        <Typography className={classes.infoCardNumber}
-                                    type="headline">{user.jersey_number}</Typography>)}
-
-
-                    <div
-                        className={classNames(classes.infoCardPhotoWrap, {[classes.infoCardPhotoDefaultWrap]: !user.profile_picture})}>
-                        <img
-                            className={classNames(classes.infoCardPhoto, {[classes.infoCardPhotoDefault]: !user.profile_picture})}
-                            src={userPhotoSrc}/>
-
-                    </div>
-                    <div className={classes.infoCardDataBottom}>
-                        <div className={classes.infoCardLeagueLine}>
-                            <Icon className={classes.infoCardLeagueShield}>shield</Icon>
-                            <Typography type="body2" align="center"
-                                        className={classes.infoCardLeague}>{user.position_short || '/'}</Typography>
-
-                        </div>
-                        <div className={classes.infoCardData}>
-                                {/*<Typography type="headline" align="center"*/}
-                                            {/*className={classes.infoCardName}>{user.first_name} {user.last_name}</Typography>*/}
-                            <Typography type="subheading" align="center" className={classes.infoCardTeam}>
-                                {user.team || 'Team Unknown'}
-                                {user.league_short ? ' - ' + user.league_short : (!user.league_status ? user.league : '')}
-                                {(!user.team_status && user.team || !user.league_status && user.league) && "*"}
-                            </Typography>
-                            <Typography type="body1" align="center" className={classes.infoCardLocation}>
-                                {user.country || (user.team_location !== 'n/a' && user.team_location) || user.team_country || 'Location Unknown'}
-                            </Typography>
-                            {(!user.team_status && user.team || !user.league_status && user.league) && (
-                                <Typography type="caption" align="center" className={classes.pendingVerification}>
-                                    *Pending verification by Scout Zoo.
-                                </Typography>
-                            )}
-
-
-                        </div>
-                    </div>
-                </Paper>
-                <div className={classes.infoRight}>
-                    <Typography type="headline"
-                                className={classes.infoRightName}>{user.first_name} {user.last_name}</Typography>
-                    <div className={classes.infoRightColumn}>
-                        <div>
-                            <Typography type="caption" className={classes.infoRightCaption}>
-                                Birth Date
-                            </Typography>
-                            <Typography type="subheading" className={classes.infoRightValue}>
-                                {user.birthday ? moment(user.birthday).format('MMM. YYYY') : 'Unknown'}
-                            </Typography>
-                        </div>
-                        <div>
-                            <Typography type="caption" className={classes.infoRightCaption}>
-                                Position
-                            </Typography>
-                            <Typography type="subheading" className={classes.infoRightValue}>
-                                {user.position_full || 'Unknown'}
-                            </Typography>
-                        </div>
-                        <div>
-                            <Typography type="caption" className={classes.infoRightCaption}>
-                                Nationality
-                            </Typography>
-                            <Typography type="subheading" className={classes.infoRightValue}>
-                                {user.nationality_code || 'Unknown'}
-                            </Typography>
-                        </div>
-                    </div>
-                    <div className={classes.info}>
-                        {user.height && (user.height[0] > 0 || user.height[1] > 0) && (
-                            <div className={classes.infoRow}>
-                                <Typography type="caption" className={classes.infoCaption}>Height</Typography>
-                                <Typography type="body2" className={classes.infoValue}>
-                                    {`${user.height[0]}'${user.height[1]}''`}
-                                </Typography>
-
-                            </div>
-                        )}
-                        {user.weight && (
-                            <div className={classes.infoRow}>
-                                <Typography type="caption" className={classes.infoCaption}>Weight</Typography>
-                                <Typography type="body2" className={classes.infoValue}>
-                                    {parseFloat(user.weight)} lbs
-                                </Typography>
-
-                            </div>
-                        )}
-                        {user.gender_full && (
-                            <div className={classes.infoRow}>
-                                <Typography type="caption" className={classes.infoCaption}>Gender</Typography>
-                                <Typography type="body2" className={classes.infoValue}>
-                                    {user.gender_full}
-                                </Typography>
-
-                            </div>
-                        )}
-                        {user.shot && (
-                            <div className={classes.infoRow}>
-                                <Typography type="caption" className={classes.infoCaption}>Shot</Typography>
-                                <Typography type="body2" className={classes.infoValue}>
-                                    {SHOT_LIST[user.shot]}
-                                </Typography>
-
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </Paper>
             <div className={classes.enablePlayerCard}>
                 <Typography type="caption">Enable your player card to appear on video playback.</Typography>
-                <Switch/>
+                <Switch checked={!!video.player_card} onChange={this.handlePlayerCard}/>
             </div>
 
             <div className={classes.buttons}>

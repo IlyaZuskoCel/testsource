@@ -5,8 +5,8 @@ import {withWrapper} from "create-react-server/wrapper";
 import VideoItem from '../components/VideoItem';
 import {matchPath} from 'react-router';
 import {goBack, go} from '../../common/actions';
-import {fetchVideo, fetchTags,deleteVideo} from "../actions/index";
-import {getUser, getCurrent} from "../../user/actions";
+import {fetchVideo, fetchTags, deleteVideo, downloadVideo, sharedCount} from "../actions/index";
+import {getUser, getCurrent} from "../../user/actions/index";
 
 import {mapOptions} from '../../user/selectors';
 
@@ -23,6 +23,9 @@ const mapDispatchToProps = (dispatch) => ({
     delete: (id,token) => dispatch(deleteVideo(id, token)),
     edit: id => dispatch(go('/video/edit/' + id)),
     goBack: () => dispatch(goBack()),
+    go: (userId) => dispatch(go(`/profile/${userId}`)),
+    downloadVideo: (video) => dispatch(downloadVideo(video)),
+    sharedCount: (videoId) => dispatch(sharedCount(videoId)),
 });
 
 

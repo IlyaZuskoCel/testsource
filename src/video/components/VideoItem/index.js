@@ -207,6 +207,7 @@ const styleSheet = createStyleSheet('VideoItem', theme => ({
         width: '100%',
         cursor: 'pointer',
         maxHeight: 600,
+        objectFit: 'contain',
         [theme.breakpoints.down('md')]: {
             maxHeight: 450,
         },
@@ -288,6 +289,15 @@ const styleSheet = createStyleSheet('VideoItem', theme => ({
         opacity: 1,
         margin: 8,
     },
+    download: {
+        color: '#4a4a4a',
+        opacity: 1,
+        margin: 8,
+        cursor: 'pointer',
+        display: 'inline-block',
+        transform: 'rotate(-90deg)',
+        fontSize: 20,
+    }
 
 }));
 
@@ -334,6 +344,7 @@ class VideoItem extends Component {
 
         this.props.delete(this.props.video.id);
         this.setState({isDeleteOpen: false});
+        this.props.go(this.props.currentUser.id);
         return false
     };
 
@@ -354,6 +365,13 @@ class VideoItem extends Component {
         this.setState({openVideoMenu: false});
     };
 
+    handleDownload = () => {
+        this.props.downloadVideo(this.props.video);
+    };
+
+    handleSharedCount = () => {
+        this.props.sharedCount(this.props.video.id);
+    };
 
     render() {
         const {classes, video, currentUser, user, tagOptions} = this.props;
@@ -404,10 +422,14 @@ class VideoItem extends Component {
 
                                 <Hidden only={['xs', 'sm']}>
                                     <div>
+                                        <div className={classes.download} onClick={this.handleDownload}>
+                                            <ScoutZooIcon>left</ScoutZooIcon>
+                                        </div>
                                         <ShareButton url={absUrl(`/profile/${user.id}/video/${video.id}`)}
                                                      title={`Watch ${user.first_name} ${user.last_name}'s Scout Zoo upload: ${video.title}`}
                                                      dialogTitle={'Share video'}
-                                                     style={classes.share}>
+                                                     style={classes.share}
+                                                     sharedCount={this.handleSharedCount}>
                                             <ScoutZooIcon>share</ScoutZooIcon>
                                         </ShareButton>
                                         <Link to={`/video/edit/${video.id}`} disabledUnderline className={classes.link}
@@ -424,7 +446,8 @@ class VideoItem extends Component {
                                     <div>
                                         <ShareButton url={absUrl(`/profile/${user.id}/video/${video.id}`)}
                                                      title={`Watch ${user.first_name} ${user.last_name}'s Scout Zoo upload: ${video.title}`}
-                                                     style={classes.share}>
+                                                     style={classes.share}
+                                                     sharedCount={this.handleSharedCount}>
                                             <ScoutZooIcon>share</ScoutZooIcon>
                                         </ShareButton>
                                         <IconButton
@@ -441,7 +464,7 @@ class VideoItem extends Component {
                                               onRequestClose={this.handleRequestClose}>
                                             <MenuItem onClick={this.handleEdit}>Edit</MenuItem>
                                             <MenuItem onClick={this.handleDelete}>Delete</MenuItem>
-
+                                            <MenuItem onClick={this.handleDownload}>Download</MenuItem>
                                         </Menu>
                                     </div>
                                 </Hidden>
