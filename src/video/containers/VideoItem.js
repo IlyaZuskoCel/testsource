@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import VideoItem from '../components/VideoItem';
 
 import {goBack, go} from '../../common/actions';
-import {fetchVideo, fetchTags,deleteVideo} from "../actions/index";
+import {fetchVideo, fetchTags, deleteVideo, downloadVideo, sharedCount} from "../actions/index";
 import {getUser} from "../../user/actions/index";
 
 import {mapOptions} from '../../user/selectors';
@@ -26,6 +26,9 @@ const mapDispatchToProps = (dispatch) => ({
     delete: id => dispatch(deleteVideo(id)),
     edit: id => dispatch(go('/video/edit/' + id)),
     goBack: () => dispatch(goBack()),
+    go: (userId) => dispatch(go(`/profile/${userId}`)),
+    downloadVideo: (video) => dispatch(downloadVideo(video)),
+    sharedCount: (videoId) => dispatch(sharedCount(videoId)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(VideoItem))

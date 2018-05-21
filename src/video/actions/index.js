@@ -269,3 +269,15 @@ export const fetchTags = () => dispatch => {
             dispatch(stopLoading());
         })
 };
+
+export const downloadVideo = (video) => dispatch => {
+    let element = document.createElement('a');
+    element.setAttribute('href', video.video_path);
+    element.setAttribute('download', video.video_file_name);
+    element.click();
+    return fetch(`api/v2/activity/download-video/${video.id}`);
+};
+
+export const sharedCount = (videoId) => dispatch => {
+    return fetch(`api/v2/activity/share-video/${videoId}`);
+};
