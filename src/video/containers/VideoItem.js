@@ -24,8 +24,8 @@ const mapDispatchToProps = (dispatch) => ({
     edit: id => dispatch(go('/video/edit/' + id)),
     goBack: () => dispatch(goBack()),
     go: (userId) => dispatch(go(`/profile/${userId}`)),
-    downloadVideo: (video) => dispatch(downloadVideo(video)),
-    sharedCount: (videoId) => dispatch(sharedCount(videoId)),
+    downloadVideo: (video, token) => dispatch(downloadVideo(video, token)),
+    sharedCount: (videoId, token) => dispatch(sharedCount(videoId, token)),
 });
 
 
@@ -34,6 +34,8 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => ({
     ...dispatchProps,
     ...ownProps,
    delete: id => dispatchProps.delete(id, stateProps.token),
+   downloadVideo: (video) =>  dispatchProps.downloadVideo(video, stateProps.token),
+   sharedCount: (videoId) => dispatchProps.sharedCount(videoId, stateProps.token),
 });
 
 

@@ -270,14 +270,14 @@ export const fetchTags = token => dispatch => {
         })
 };
 
-export const downloadVideo = (video) => dispatch => {
+export const downloadVideo = (video, token) => dispatch => {
     let element = document.createElement('a');
     element.setAttribute('href', video.video_path);
     element.setAttribute('download', video.video_file_name);
     element.click();
-    return fetch(`api/v2/activity/download-video/${video.id}`);
+    return get(`api/v2/activity/download-video/${video.id}`, {}, token);
 };
 
-export const sharedCount = (videoId) => dispatch => {
-    return fetch(`api/v2/activity/share-video/${videoId}`);
+export const sharedCount = (videoId, token) => dispatch => {
+    return get(`api/v2/activity/share-video/${videoId}`, {}, token);
 };
