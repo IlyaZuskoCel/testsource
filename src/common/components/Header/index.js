@@ -18,7 +18,7 @@ import Button from 'material-ui/Button';
 import Menu, {MenuItem} from 'material-ui/Menu';
 import Drawer from 'material-ui/Drawer';
 import Avatar from 'material-ui/Avatar';
-import Hidden from 'material-ui/Hidden';
+import Hidden from '../Hidden';
 
 
 import ScoutIcon from '../Icon';
@@ -335,11 +335,11 @@ class Header extends Component {
     }
 
     render() {
-        const {user, classes, width} = this.props;
+        const {user, classes, } = this.props;
         let DropMenu = null;
-
+        let desktopDropMenu, mobileDropMenu;
+        const width = 'md';
         const smallWidth = width === 'sm'|| width === 'xs';
-
         if (user) {
             let items = [
                 <MenuItem key="profile"
@@ -359,27 +359,27 @@ class Header extends Component {
                                         className={classes.MenuItem}
                                         onClick={this.handleMenuRequestClose('/profile/shortlist')}>ShortList</MenuItem>);
 
+            mobileDropMenu = <Hidden only={['md','lg','xl']} >
+                    <Drawer
+                        id="simple-menu"
+                        anchor="top"
+                        open={this.state.open}
+                        className={classes.containerMenu}
+                        onRequestClose={this.handleMenuRequestClose()}>
+                        {items}
+                    </Drawer>
+                </Hidden>
 
-            if (smallWidth) {
-                DropMenu = <Drawer
-                    id="simple-menu"
-                    anchor="top"
-                    anchorEl={this.state.anchorEl}
-                    open={this.state.open}
-                    className={classes.containerMenu}
-                    onRequestClose={this.handleMenuRequestClose()}>
-                    {items}
-                </Drawer>;
-            } else {
-                DropMenu = <Menu
-                    id="simple-menu"
-                    anchorEl={this.state.anchorEl}
-                    open={this.state.open}
-                    className={classes.containerMenu}
-                    onRequestClose={this.handleMenuRequestClose()}>
-                    {items}
-                </Menu>;
-            }
+            desktopDropMenu = <Hidden only={['xs', 'sm']}>
+                    <Menu
+                        id="simple-menu"
+                        anchorEl={this.state.anchorEl}
+                        open={this.state.open}
+                        className={classes.containerMenu}
+                        onRequestClose={this.handleMenuRequestClose()}>
+                        {items}
+                    </Menu>
+                </Hidden>
         }
         const hideBackground = (this.props.hideBackground
             || this.props.hideBackgroundTopHeader && !this.state.scroll)
@@ -410,7 +410,7 @@ class Header extends Component {
 
                     </Grid>
                     <Grid item xs={8} className={classes.right}>
-                        {DropMenu ? (
+                        {user ? (
                             <div className={classNames(classes.menu)}>
                                 <Link to="/search" disabledUnderline
                                       className={classNames(classes.menuItem)}>
@@ -427,10 +427,11 @@ class Header extends Component {
                                     aria-haspopup="true" onClick={this.handleMenuClick}>
                                     <Avatar alt={user.full_name} className={classes.avatar}
                                             src={user.profile_picture || DefaultAvatarImg}/>
-                                    <Hidden xsDown><span
+                                    <Hidden smDown><span
                                         className={classes.username}>{user.first_name} {user.last_name}</span></Hidden>
                                 </Button>
-                                {DropMenu}
+                                {desktopDropMenu}
+                                {mobileDropMenu}
                             </div>
                         ) : (
                             <div className={classNames(classes.menu)}>
@@ -459,7 +460,6 @@ class Header extends Component {
 Header.propTypes = {
     children: PropTypes.node,
     classes: PropTypes.object.isRequired,
-    width: PropTypes.string,
 };
 
-export default compose(withStyles(styleSheet), withWidth())(Header);
+export default withStyles(styleSheet)(Header);

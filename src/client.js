@@ -6,13 +6,14 @@ import {Provider} from 'react-redux';
 
 import createApp from "./app";
 import configureStore from "./store";
+import theme from "./theme";
 
 const state = window.__INITIAL__STATE__;
 const props = window.__INITIAL__PROPS__;
 const history = createBrowserHistory();
 const store = configureStore(state, {}, history);
 
-
+const Theme = theme(new Map());
 
 class App extends Component {
     componentDidMount() {
@@ -25,10 +26,12 @@ class App extends Component {
     render() {
         return <Provider store={store}>
             <ConnectedRouter history={history}>
+                <Theme>
                     {createApp({
                         state,
                         props
                     })}
+                </Theme>
             </ConnectedRouter>
         </Provider>
     }

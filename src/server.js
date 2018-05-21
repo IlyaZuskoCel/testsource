@@ -22,40 +22,61 @@ import template from "./template";
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
+
+import {get} from "./common/helpers/api";
+
 const options = {
     render: (req, res, initialProps, context) => {
-        const sheetsRegistry = new SheetsRegistry();
-        const jss = create(preset());
-        jss.options.createGenerateClassName = createGenerateClassName;
-        const Theme = theme(new Map());
-
         Cookie.setRawCookie(req.headers.cookie);
-        const state = context.store ? context.store.getState() : {};
-        const store = configureStore(state);
-        const html = renderToString(React.createElement(
-            JssProvider,
-            {registry: sheetsRegistry, jss: jss},
-            React.createElement(
-                Provider,
-                {store: store},
-                React.createElement(
-                    StaticRouter,
-                    {location: req.url, context: context},
+        const token = Cookie.load('token');
+        return get('/api/v2/profile/get', {}, token)
+            .then(user=>{
+                const sheetsRegistry = new SheetsRegistry();
+                const jss = create(preset());
+                jss.options.createGenerateClassName = createGenerateClassName;
+                const Theme = theme(new Map());
+
+                const state = context.store ? context.store.getState() : {};
+
+                if(token){
+                    state.common = state.common || {};
+                    state.common.cookies = state.common.cookies || {};
+                    state.common.cookies.token = token;
+                }
+
+                if(user){
+                    state.user = state.user || {};
+                    state.user.current =  state.user.current || user;
+                }
+
+                const store = configureStore(state);
+                const html = renderToString(React.createElement(
+                    JssProvider,
+                    {registry: sheetsRegistry, jss: jss},
                     React.createElement(
-                        Theme,
-                        {},
-                        options.app({
-                            props: initialProps,
-                            req: req,
-                            res: res,
-                            state: state
-                        })
+                        Provider,
+                        {store: store},
+                        React.createElement(
+                            StaticRouter,
+                            {location: req.url, context: context},
+                            React.createElement(
+                                Theme,
+                                {},
+                                options.app({
+                                    props: initialProps,
+                                    req: req,
+                                    res: res,
+                                    state: state
+                                })
+                            )
+                        )
                     )
-                )
-            )
-        ));
-        const css = sheetsRegistry.toString();
-        return {html, css}
+                ));
+                const css = sheetsRegistry.toString();
+
+                return {html, css}
+            })
+
     },
     app,
     template,

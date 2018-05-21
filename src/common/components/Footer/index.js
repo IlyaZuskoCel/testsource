@@ -129,9 +129,7 @@ class Footer extends Component {
     render() {
         const {user, classes} = this.props;
 
-
         if (!this.props.hide) return null;
-
         return (
             <footer className={classes.root}>
                 <Grid container gutter={8} className={classes.footer}>
@@ -197,7 +195,6 @@ class Footer extends Component {
 Footer.propTypes = {
     children: PropTypes.node,
     classes: PropTypes.object.isRequired,
-    width: PropTypes.string,
 };
 
-export default compose(withStyles(styleSheet), withWidth())(Footer);
+export default withStyles(styleSheet)(Footer);

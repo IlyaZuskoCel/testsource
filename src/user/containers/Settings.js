@@ -15,9 +15,9 @@ import {goBack} from '../../common/actions';
 
 const mapStateToProps = (state, props) => ({
     user: state.user.current,
+    token: state.common.cookies.token
 });
 const mapDispatchToProps = (dispatch) => ({
-    getUser: id => dispatch(getCurrent()),
     cancel: () => dispatch(goBack()),
     save: () => dispatch(goBack()),
     goChangePassword: () => dispatch(goBack()),
@@ -27,12 +27,9 @@ const mapDispatchToProps = (dispatch) => ({
 
 class Wrap extends Component {
     static async getInitialProps({location, query, params, store}) {
-        await store.dispatch(getCurrent());
+        const state = store.getState();
+        await store.dispatch(getCurrent(state.common.cookies.token));
     };
-
-    componentDidMount() {
-        this.props.getUser();
-    }
 
     render() {
 

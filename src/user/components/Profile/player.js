@@ -11,7 +11,7 @@ import Typography from 'material-ui/Typography';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import withWidth from 'material-ui/utils/withWidth';
 import compose from 'recompose/compose';
-import Hidden from 'material-ui/Hidden';
+import Hidden from '../../../common/components/Hidden';
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import IconButton from 'material-ui/IconButton';
@@ -577,13 +577,15 @@ class PlayerProfile extends Component {
     };
 
     render() {
-
-        const {classes, user, currentUser, isCurrent, width} = this.props;
+        const width = 'md';
+        const {classes, user, currentUser, isCurrent} = this.props;
         const smallWidth = width === 'sm' || width === 'xs';
         let userPhotoSrc = defaultPhoto;
-
         // Intercom player view
-        window.Intercom('update', { app_id: window.INTERCOM_ID });
+        if(typeof window !== "undefined") {
+            window.Intercom('update', {app_id: window.INTERCOM_ID});
+            Intercom('trackEvent', 'View player', detail);
+        }
 
         var detail = {           
           name: user.first_name+' '+user.last_name,
@@ -600,7 +602,7 @@ class PlayerProfile extends Component {
           type: 'Player'
         };
 
-        Intercom('trackEvent', 'View player', detail);
+
 
 
         if (user.profile_picture) {
@@ -635,7 +637,7 @@ class PlayerProfile extends Component {
                                     <span>Edit</span>
                                 </Button>
                             </Link>
-                            <Hidden only={['xs', 'sm']}>
+                            <Hidden mdDown>
                                 <Link to="/video/add" disabledUnderline>
                                     <Button color="primary" raised className={classes.addVideoButton}>
                                         Add a Video
@@ -675,7 +677,8 @@ class PlayerProfile extends Component {
                 ) : null)}
 
                 <div className={classes.infoContainer}>
-                    <Hidden only={['xs', 'sm']}>
+                    <Hidden mdDown>
+                        <div>
                         <div className={classes.info}>
                             {user.height && (user.height[0] > 0 || user.height[1] > 0) && (
                                 <div className={classes.infoRow}>
@@ -713,6 +716,7 @@ class PlayerProfile extends Component {
 
                                 </div>
                             )}
+                        </div>
                         </div>
                     </Hidden>
                     <Paper className={classes.infoCard} square>
@@ -758,7 +762,7 @@ class PlayerProfile extends Component {
                             </div>
                         </div>
                     </Paper>
-                    <Hidden only={['xs', 'sm']}>
+                    <Hidden mdDown>
                         <div className={classes.infoRight}>
                             <Typography type="headline"
                                         className={classes.infoRightName}>{user.first_name} {user.last_name}</Typography>
@@ -797,6 +801,7 @@ class PlayerProfile extends Component {
                 </div>
 
                 <Hidden only={['md', 'lg', 'xl']}>
+                    <div>
                     <div className={classes.infoRightColumn}>
                         <div>
                             <Typography type="caption" className={classes.infoRightCaption}>
@@ -823,6 +828,7 @@ class PlayerProfile extends Component {
                             </Typography>
                         </div>
 
+                    </div>
                     </div>
                 </Hidden>
                 <Hidden only={['md', 'lg', 'xl']}>
@@ -1030,4 +1036,4 @@ PlayerProfile.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default compose(withStyles(styleSheet), withWidth())(PlayerProfile);
+export default withStyles(styleSheet)(PlayerProfile);

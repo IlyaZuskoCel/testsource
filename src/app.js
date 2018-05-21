@@ -11,40 +11,6 @@ import VideoRouters from './video';
 import SearchRouters from './search';
 import {getCurrent as getCurrentUser} from './user/actions'
 
-import Theme from './theme';
-
-class App extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    componentWillMount() {
-        this.props.getCurrentUser();
-    }
-
-    render() {
-        if (!this.props.load)
-            return null;
-
-        return (
-            <Theme>
-                <WrapperProvider initialProps={this.props}>
-                    <ScrollToTop>
-                        <Switch>
-                            {VideoRouters}
-                            {UserRouters}
-                            {SearchRouters}
-                            {CommonRouters}
-                        </Switch>
-                    </ScrollToTop>
-                </WrapperProvider>
-            </Theme>
-        );
-    }
-
-}
-
-
 const mapStateToProps = (state) => ({
     load: state.common.load
 });
@@ -53,10 +19,47 @@ const mapDispatchToProps = (dispatch) => ({
     getCurrentUser: () => dispatch(getCurrentUser()),
 });
 
-const Wrap = withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+class Layout extends Component {
+    static async getInitialProps({location, query, params, store}) {
+        await store.dispatch(getCurrentUser());
+    };
+
+    render() {
+        return  <ScrollToTop>
+            <Switch>
+                {VideoRouters}
+                {UserRouters}
+                {SearchRouters}
+                {CommonRouters}
+
+            </Switch>
+        </ScrollToTop>
+    }
+}
+
+const LayoutRedux = withRouter(connect(mapStateToProps, mapDispatchToProps)(withWrapper(Layout)));
+
+
+class App extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        // if (!this.props.load)
+        //     return null;
+
+        return (
+                <WrapperProvider initialProps={this.props}>
+                    <LayoutRedux/>
+                </WrapperProvider>
+        );
+    }
+
+}
+
 
 export default ({state, props}) => {
-
-    return <Wrap {...props}/>
+    return <App {...props}/>
 
 };

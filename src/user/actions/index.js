@@ -25,13 +25,13 @@ import {
 } from '../constants/actions';
 
 
-import {LOAD} from '../../common/constants/actions';
+import {LOAD, SET_COOKIE} from '../../common/constants/actions';
 
 import {SCOUT_ROLE, PLAYER_ROLE} from '../constants'
 
-export const logIn = (email, password) => dispatch => {
+export const logIn = (email, password, token) => dispatch => {
     dispatch(startLoading());
-    return post('/api/v2/profile/login', {email, password})
+    return post('/api/v2/profile/login', {email, password}, {}, token)
         .then(user => {
             dispatch(stopLoading());
 
@@ -41,7 +41,7 @@ export const logIn = (email, password) => dispatch => {
 
             const url = auth(user.access_token);
             dispatch({type: LOGIN, payload: user});
-
+            dispatch({type: SET_COOKIE, payload: {token:user.access_token}});
             if (url)
                 return dispatch(push(url));
             if (user.role === SCOUT_ROLE)
@@ -87,10 +87,10 @@ export const confirm = token => dispatch => {
         })
 };
 
-export const registerScout = user => dispatch => {
+export const registerScout = (user, token) => dispatch => {
     dispatch(startLoading());
 
-    return post('/api/v2/profile/signup-scout', user)
+    return post('/api/v2/profile/signup-scout', user, {}, token)
         .then(user => {
             dispatch(stopLoading());
 
@@ -110,10 +110,10 @@ export const registerScout = user => dispatch => {
         })
 };
 
-export const registerPlayer = user => dispatch => {
+export const registerPlayer = (user, token) => dispatch => {
     dispatch(startLoading());
 
-    return post('/api/v2/profile/signup-player', user)
+    return post('/api/v2/profile/signup-player', user, {}, token)
         .then(user => {
             dispatch(stopLoading());
 
@@ -133,17 +133,14 @@ export const registerPlayer = user => dispatch => {
         })
 };
 
-export const logOut = () => dispatch => {
+export const logOut = (token) => dispatch => {
     dispatch(startLoading());
-
-    // Intercom log out
-    //Intercom('trackEvent', 'Log out');
     Intercom('shutdown');
 
-    return get('/api/v2/profile/logout')
+    return get('/api/v2/profile/logout', {}, token)
         .then(() => {
             dispatch(stopLoading());
-
+            //dispatch({type: SET_COOKIE, payload: {token:null}});
             auth('');
             dispatch({type: LOGOUT});
             dispatch(push('/sign/in'));
@@ -154,10 +151,9 @@ export const logOut = () => dispatch => {
         })
 };
 
-export const getCurrent = () => dispatch => {
+export const getCurrent = (token) => dispatch => {
     dispatch(startLoading());
-
-    return get('/api/v2/profile/get')
+    return get('/api/v2/profile/get', {}, token)
         .then(user => {
             dispatch(stopLoading());
 
@@ -165,7 +161,7 @@ export const getCurrent = () => dispatch => {
                 return dispatch({type: ERROR_ALERT, payload: {message: user.error.message}});
             }
 
-            if (user.length === 0 && getAuth()) {
+            if (user.length === 0 && token) {
                 dispatch(logOut());
             }
 
@@ -179,11 +175,10 @@ export const getCurrent = () => dispatch => {
         })
 };
 
-export const getUser = (id) => dispatch => {
+export const getUser = (id, token) => dispatch => {
     dispatch(startLoading());
-
-    dispatch({type: SET_USER, payload: null});
-    return get(`/api/v2/user/get/${id}`)
+    //dispatch({type: SET_USER, payload: null});
+    return get(`/api/v2/user/get/${id}`, {},token)
         .then(user => {
             dispatch(stopLoading());
 
@@ -207,10 +202,10 @@ export const getUser = (id) => dispatch => {
         })
 };
 
-export const update = (data) => dispatch => {
+export const update = (data, token) => dispatch => {
     dispatch(startLoading());
 
-    return post(`/api/v2/profile/update`, data)
+    return post(`/api/v2/profile/update`, data, {}, token)
         .then(user => {
             dispatch(stopLoading());
 
@@ -231,10 +226,10 @@ export const update = (data) => dispatch => {
         })
 };
 
-export const deleteProfile = (password, why) => dispatch => {
+export const deleteProfile = (password, why, token) => dispatch => {
     dispatch(startLoading());
 
-    return post(`/api/v2/profile/delete-profile`, {password, why})
+    return post(`/api/v2/profile/delete-profile`, {password, why}, {}, token)
         .then(result => {
             dispatch(stopLoading());
 
@@ -254,14 +249,14 @@ export const deleteProfile = (password, why) => dispatch => {
 };
 
 
-export const uploadPhoto = (file) => dispatch => {
+export const uploadPhoto = (file, token) => dispatch => {
     dispatch(startLoading());
 
     let form = new FormData();
     if (file)
         form.append('UploadForm', file);
 
-    return postForm(`/api/v2/profile/image/profile`, form)
+    return postForm(`/api/v2/profile/image/profile`, form, {}, token)
         .then(result => {
             dispatch(stopLoading());
 
@@ -289,10 +284,10 @@ export const uploadPhoto = (file) => dispatch => {
         })
 };
 
-export const addFavorite = (id) => dispatch => {
+export const addFavorite = (id, token) => dispatch => {
     dispatch(startLoading());
 
-    return post(`/api/v2/activity/follow`, {id_user_player: id})
+    return post(`/api/v2/activity/follow`, {id_user_player: id}, {}, token)
         .then(result => {
             dispatch(stopLoading());
 
@@ -314,10 +309,10 @@ export const addFavorite = (id) => dispatch => {
         })
 };
 
-export const removeFavorite = (id) => dispatch => {
+export const removeFavorite = (id, token) => dispatch => {
     dispatch(startLoading());
 
-    return post(`/api/v2/activity/unfollow`, {id_user_player: id})
+    return post(`/api/v2/activity/unfollow`, {id_user_player: id}, {}, token)
         .then(result => {
             dispatch(stopLoading());
 
@@ -339,10 +334,10 @@ export const removeFavorite = (id) => dispatch => {
         })
 };
 
-export const sendEmail = (id, subject, text) => dispatch => {
+export const sendEmail = (id, subject, text, token) => dispatch => {
     dispatch(startLoading());
 
-    return post(`/api/v2/message/send-email`, {recipient: id, subject, text})
+    return post(`/api/v2/message/send-email`, {recipient: id, subject, text}, {}, token)
         .then(result => {
             dispatch(stopLoading());
 
@@ -362,10 +357,10 @@ export const sendEmail = (id, subject, text) => dispatch => {
         })
 };
 
-export const verifyScout = (phone, name) => dispatch => {
+export const verifyScout = (phone, name, token) => dispatch => {
     dispatch(startLoading());
 
-    return post(`/api/v2/message/verify-message`, {phone, coach: name})
+    return post(`/api/v2/message/verify-message`, {phone, coach: name}, {}, token)
         .then(result => {
             dispatch(stopLoading());
 
@@ -385,10 +380,10 @@ export const verifyScout = (phone, name) => dispatch => {
         })
 };
 
-export const changePassword = (password_old, password_new) => dispatch => {
+export const changePassword = (password_old, password_new, token) => dispatch => {
     dispatch(startLoading());
 
-    return post(`/api/v2/profile/change-password`, {password_old, password_new})
+    return post(`/api/v2/profile/change-password`, {password_old, password_new}, {}, token)
         .then(result => {
             dispatch(stopLoading());
 
@@ -409,10 +404,10 @@ export const changePassword = (password_old, password_new) => dispatch => {
 };
 
 
-export const report = (id_violator, type, message) => dispatch => {
+export const report = (id_violator, type, message, token) => dispatch => {
     dispatch(startLoading());
 
-    return post(`/api/v2/activity/report`, {id_violator, type, message})
+    return post(`/api/v2/activity/report`, {id_violator, type, message}, {}, token)
         .then(result => {
             dispatch(stopLoading());
 
@@ -433,10 +428,10 @@ export const report = (id_violator, type, message) => dispatch => {
         })
 };
 
-export const forgotPassword = email => dispatch => {
+export const forgotPassword = (email, token) => dispatch => {
     dispatch(startLoading());
 
-    return post(`/api/v2/profile/reset-password-request`, {email})
+    return post(`/api/v2/profile/reset-password-request`, {email}, {}, token)
         .then(result => {
             dispatch(stopLoading());
 
@@ -457,10 +452,10 @@ export const forgotPassword = email => dispatch => {
         })
 };
 
-export const forgotPasswordToken = (token, password, password_repeat) => dispatch => {
+export const forgotPasswordToken = (token, password, password_repeat, authorizationToken) => dispatch => {
     dispatch(startLoading());
 
-    return post(`/api/v2/profile/reset-password/${token}`, {password, password_repeat})
+    return post(`/api/v2/profile/reset-password/${token}`, {password, password_repeat}, {}, authorizationToken)
         .then(result => {
             dispatch(stopLoading());
 
@@ -477,10 +472,10 @@ export const forgotPasswordToken = (token, password, password_repeat) => dispatc
         })
 };
 
-export const resetPassword = () => dispatch => {
+export const resetPassword = (token) => dispatch => {
     dispatch(startLoading());
 
-    return get(`/api/v2/profile/temp-password`)
+    return get(`/api/v2/profile/temp-password`, {}, token)
         .then(result => {
             dispatch(stopLoading());
 
@@ -498,11 +493,11 @@ export const resetPassword = () => dispatch => {
         })
 };
 
-export const getFollowedList = () => dispatch => {
+export const getFollowedList = (token) => dispatch => {
     dispatch({type: CLEAR_SHORTLIST});
     dispatch(startLoading());
 
-    return get('/api/v2/activity/following')
+    return get('/api/v2/activity/following', {}, token)
         .then(result => {
             dispatch(stopLoading());
             dispatch({type: SET_SHORTLIST, payload: result.activities})

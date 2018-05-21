@@ -12,10 +12,17 @@ import Delete from '../components/Delete';
 import {deleteProfile} from '../actions';
 import {goBack} from '../../common/actions';
 
-const mapStateToProps = (state, props) => ({});
+const mapStateToProps = (state, props) => ({
+    token: state.common.cookies.token,
+});
 const mapDispatchToProps = (dispatch) => ({
     cancel: () => dispatch(goBack()),
-    save: (password, why) => dispatch(deleteProfile(password, why)),
+    save: (password, why, token) => dispatch(deleteProfile(password, why, token)),
 });
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Delete))
+const mergeProps = (stateProps, dispatchProps, ownProps) => ({
+    ...stateProps,
+    ...dispatchProps,
+    ...ownProps,
+    save: (password, why) => dispatchProps.save(password, why, stateProps.token),
+});
+export default withRouter(connect(mapStateToProps, mapDispatchToProps, mergeProps)(Delete))

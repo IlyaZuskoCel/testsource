@@ -16,15 +16,17 @@ class Edit extends Component {
         this.state = {};
     }
 
-    // componentDidMount() {
-    //     this.props.getUser();
-    // }
-
     render() {
-        if (this.props.user.role === PLAYER_ROLE)
+
+
+
+        if (this.props.user && this.props.user.role === PLAYER_ROLE)
             return <PlayerForm/>;
-        if (this.props.user.role === SCOUT_ROLE)
+
+        if (this.props.user &&  this.props.user.role === SCOUT_ROLE)
             return <ScoutForm/>;
+
+        return null;
     }
 }
 

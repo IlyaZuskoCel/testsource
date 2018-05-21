@@ -14,8 +14,8 @@ import Typography from './components/Typography';
 import Form from './components/Form';
 
 const routes = [
-    <DefaultLayout key="typography" path="/typography" component={Typography}/>,
-    <DefaultLayout key="form" path="/form" component={Form}/>,
+    //<DefaultLayout key="typography" path="/typography" component={Typography}/>,
+    //<DefaultLayout key="form" path="/form" component={Form}/>,
     <PrivateRoute key="NoMatch" component={NoMatch}/>,
 
 ];

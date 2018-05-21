@@ -14,20 +14,18 @@ import {getCurrent} from '../actions';
 
 const mapStateToProps = (state, props) => ({
     user: state.user.current,
+    token: state.common.cookies.token,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    getUser: id => dispatch(getCurrent()),
+
 });
 
 class Wrap extends Component {
     static async getInitialProps({location, query, params, store}) {
-        await store.dispatch(getCurrent());
+        const state = store.getState();
+        await store.dispatch(getCurrent(state.common.cookies.token));
     };
-
-    componentDidMount() {
-        this.props.getUser();
-    }
 
     render() {
 

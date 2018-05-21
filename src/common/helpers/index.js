@@ -5,4 +5,4 @@
 
 
 
-export const absUrl = url => `https://${window.location.hostname}${url}`;
+export const absUrl = url => typeof window === "undefined" ? `https://localhost/${url}` : `https://${window.location.hostname}${url}`;

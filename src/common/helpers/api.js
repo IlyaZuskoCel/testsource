@@ -2,37 +2,26 @@
  * Created by aleksandr on 7/19/17.
  * moonion.com
  */
+import cookie from 'react-cookies';
 
-
-const getHeaders = () => {
-    let headers = new Headers();
-
-    headers.append('Content-Type', 'application/json');
-
-    const token = getAuth();
+const fetch = typeof window === 'undefined' ? require('node-fetch') : window.fetch;
+const DOMAIN_URL = typeof window === 'undefined' ? "http://nginx" : "";
+const getHeaders = (token) => {
+    let headers = {'Content-Type': 'application/json'};
     if (token)
-        headers.append('Authorization', `Bearer ${token}`);
-
+        headers['Authorization'] = `Bearer ${token}`;
     return headers;
 };
 
-const getFormHeaders = () => {
-    let headers = new Headers();
 
-    const token = localStorage.getItem('token');
-    if (token)
-        headers.append('Authorization', `Bearer ${token}`);
-
-    return headers;
-};
-
-export const get = (url, options) => {
-    return fetch(url, {
-        headers: getHeaders(),
+export const get = (url, options, token) => {
+    return fetch(`${DOMAIN_URL}${url}`, {
+        headers: getHeaders(token),
         ...options,
 
     })
         .then(response => {
+
             if (response.status === 401) {
                 throw 'Unauthorized';
             }
@@ -41,14 +30,17 @@ export const get = (url, options) => {
             }
             return response.json();
         })
+        .then(resp=>{
+            return resp;
+        })
 };
 
-export const post = (url, data, options = {}) => {
+export const post = (url, data, options = {}, token) => {
 
     return fetch(url, {
         method: 'post',
         body: JSON.stringify(data),
-        headers: getHeaders(),
+        headers: getHeaders(token),
         ...options,
 
     })
@@ -64,12 +56,12 @@ export const post = (url, data, options = {}) => {
 };
 
 
-export const postForm = (url, form, options = {}) => {
+export const postForm = (url, form, options = {}, token) => {
 
     return fetch(url, {
         method: 'post',
         body: form,
-        headers: getFormHeaders(),
+        headers: getHeaders(token),
         ...options,
 
     })
@@ -84,11 +76,9 @@ export const postForm = (url, form, options = {}) => {
         })
 };
 
-export const uploadForm = (url, form, onProgress) => {
+export const uploadForm = (url, form, token,  onProgress) => {
     return new Promise((resolve, reject) => {
         let request = new XMLHttpRequest();
-
-        const token = localStorage.getItem('token');
         request.open('POST', url, true);
 
         if (token)
@@ -106,9 +96,9 @@ export const uploadForm = (url, form, onProgress) => {
 };
 
 
-export const getPage = (url, options) => {
+export const getPage = (url, options, token) => {
     return fetch(url, {
-        headers: getHeaders(),
+        headers: getHeaders(token),
         ...options,
 
     })
@@ -133,20 +123,20 @@ export const getPage = (url, options) => {
 
 export const auth = (token, url) => {
     if (token)
-        localStorage.setItem('token', token);
+        cookie.save('token', token, {path:'/'});
     else
-        localStorage.removeItem('token');
+        cookie.remove('token', {path:'/'});
 
-    const lastUrl = localStorage.getItem('lastUrl');
+    const lastUrl = cookie.load('lastUrl');
     if (url)
-        localStorage.setItem('lastUrl', url);
+        cookie.save('lastUrl', url, {path:'/'});
     else
-        localStorage.removeItem('lastUrl');
+        cookie.remove('lastUrl', {path:'/'});
     return lastUrl;
 
 };
 
 
 export const getAuth = () => {
-    return localStorage.getItem('token');
+    return typeof window === 'undefined' ? false : cookie.load('token');
 };

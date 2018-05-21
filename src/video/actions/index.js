@@ -26,11 +26,11 @@ import {
 import * as VIDEO_STATUS from '../constants/video';
 
 
-export const fetchVideo = id => dispatch => {
+export const fetchVideo = (id, token) => dispatch => {
     dispatch(startLoading());
     dispatch({type: SET_VIDEO, payload: {}});
 
-    return get(`/api/v2/video/get/${id}`)
+    return get(`/api/v2/video/get/${id}`, {}, token)
         .then(video => {
             dispatch(stopLoading());
             if ('error' in video)
@@ -68,14 +68,14 @@ const getStatusVideo = (id, status, type) => dispatch => {
     }, 1000);
 };
 
-export const upload = file => dispatch => {
+export const upload = (file, token) => dispatch => {
 
     let form = new FormData();
     if (file)
         form.append('UploadForm', file);
 
 
-    return uploadForm(`/api/v2/video/upload`, form, (progress) => dispatch({
+    return uploadForm(`/api/v2/video/upload`, form, token,  (progress) => dispatch({
         type: SET_VIDEO_PROGRESS,
         payload: progress
     }))
@@ -97,11 +97,11 @@ export const upload = file => dispatch => {
 };
 
 
-export const postVideo = (data) => dispatch => {
+export const postVideo = (data, token) => dispatch => {
     dispatch(startLoading());
 
     const overlayUri = data.overlayUri;
-    return post(`/api/v2/video/update-video`, {...data, overlayUri: null, is_published: overlayUri ? 0 : 1})
+    return post(`/api/v2/video/update-video`, {...data, overlayUri: null, is_published: overlayUri ? 0 : 1}, {}, token)
         .then(result => {
             dispatch(stopLoading());
 
@@ -145,11 +145,11 @@ export const postVideo = (data) => dispatch => {
         })
 };
 
-export const update = (data) => dispatch => {
+export const update = (data, token) => dispatch => {
     const overlayUri = data.overlayUri;
     dispatch(startLoading());
 
-    return post(`/api/v2/video/update-video`, {...data, overlayUri: null})
+    return post(`/api/v2/video/update-video`, {...data, overlayUri: null}, {}, token)
         .then(result => {
             dispatch(stopLoading());
 
@@ -195,9 +195,9 @@ export const update = (data) => dispatch => {
         })
 };
 
-export const trim = (id_video, time_start, time_end) => dispatch => {
+export const trim = (id_video, time_start, time_end, token) => dispatch => {
     dispatch(startLoading());
-    return post(`/api/v2/video/trim`, {id_video, time_start, time_end})
+    return post(`/api/v2/video/trim`, {id_video, time_start, time_end}, {}, token)
         .then(result => {
             if ('error' in result)
                 return dispatch({type: ERROR_ALERT, payload: {message: result.error.message}});
@@ -219,10 +219,10 @@ export const trim = (id_video, time_start, time_end) => dispatch => {
 };
 
 
-export const deleteVideo = id_video => dispatch => {
+export const deleteVideo = (id_video, token) => dispatch => {
     dispatch(startLoading());
 
-    return post(`/api/v2/video/remove`, {id_video})
+    return post(`/api/v2/video/remove`, {id_video}, {}, token)
         .then(result => {
             dispatch(stopLoading());
 
@@ -249,10 +249,10 @@ export const clear = () => dispatch => {
     dispatch({type: SET_VIDEO, payload: {}});
 };
 
-export const fetchTags = () => dispatch => {
+export const fetchTags = token => dispatch => {
     dispatch(startLoading());
 
-    return get(`/api/v2/video/get-tags`)
+    return get(`/api/v2/video/get-tags`, {}, token)
         .then(data => {
             dispatch(stopLoading());
 

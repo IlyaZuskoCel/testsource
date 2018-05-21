@@ -14,13 +14,20 @@ import {go} from '../actions';
 const mapStateToProps = (state) => ({
     isAuthenticated: state.user.current !== null,
     user: state.user.current,
-    hide: state.common.footer
+    hide: state.common.footer,
+    token: state.common.cookies.token,
 });
 
-
 const mapDispatchToProps = (dispatch) => ({
-    logOut: (username, password) => dispatch(logOut()),
+    logOut: (token) => dispatch(logOut(token)),
     go: page => dispatch(go(page)),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Footer))
+const mergeProps = (stateProps, dispatchProps, ownProps) => ({
+    ...stateProps,
+    ...dispatchProps,
+    ...ownProps,
+    logOut: () => dispatchProps.logOut(stateProps.token),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(Footer)

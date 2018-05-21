@@ -1,3 +1,5 @@
+import React, {Component} from 'react';
+import {withWrapper} from "create-react-server/wrapper";
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux';
 
@@ -42,27 +44,22 @@ const mapStateToProps = (state, props) => ({
     filters: state.search.filters,
     levelOptions: state.search.levels && state.search.levels.length > 0 ? mapOptions(state.search.levels) : [],
     levels: state.search.levels ? map(state.search.levels) : null,
+    token: state.common.cookies.token
 });
 
 
 const mapDispatchToProps = (dispatch, props) => ({
-    upload: (page, params) => page && page === 'scout' ? dispatch(uploadScouts(params)) : dispatch(uploadPlayers(params)),
+    upload: (page, params, token) => page && page === 'scout' ? dispatch(uploadScouts(params, token)) : dispatch(uploadPlayers(params, token)),
     uploadPlayers: (params) => dispatch(uploadPlayers(params)),
     uploadScouts: (params) => dispatch(uploadScouts(params)),
-    fetchData: () => {
-        dispatch(getCountries());
-        dispatch(getLeagues());
-        dispatch(getTeams());
-        dispatch(fetchLevels());
-    },
     go: (url) => dispatch(go(url)),
     getLeagues: () => {
         dispatch(getLeagues())
     },
-    filterScouts: (params) => dispatch(filterScouts(params)),
-    filterPlayers: (params) => dispatch(filterPlayers(params)),
-    addFavorite: (playerId) => dispatch(addFavorite(playerId)),
-    removeFavorite: (playerId) => dispatch(removeFavorite(playerId)),
+    filterScouts: (params, token) => dispatch(filterScouts(params, token)),
+    filterPlayers: (params, token) => dispatch(filterPlayers(params, token)),
+    addFavorite: (playerId, token) => dispatch(addFavorite(playerId, token)),
+    removeFavorite: (playerId, token) => dispatch(removeFavorite(playerId, token)),
     setFilters: (filters, type) => dispatch(setFilters(filters, type)),
     clearFilters: () => dispatch(clearFilters()),
     showHeaderBackground: () => dispatch(showHeaderBackground()),
@@ -71,5 +68,35 @@ const mapDispatchToProps = (dispatch, props) => ({
     hideFooter: () => dispatch(hideFooter()),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Search))
+const mergeProps = (stateProps, dispatchProps, ownProps) => ({
+    ...stateProps,
+    ...dispatchProps,
+    ...ownProps,
+    upload: (page, params) => dispatchProps.upload(page, params, stateProps.token),
+    filterScouts: (params) =>  dispatchProps.filterScouts(params, stateProps.token),
+    filterPlayers: (params) => dispatchProps.filterPlayers(params, stateProps.token),
+    addFavorite: (playerId) => dispatchProps.addFavorite(playerId, stateProps.token),
+    removeFavorite: (playerId) => dispatchProps.removeFavorite(playerId, stateProps.token),
+});
 
+class Wrap extends Component {
+    static async getInitialProps({location, query, params, store, routeProps}) {
+        const state = store.getState();
+        return await Promise.all([
+                store.dispatch(uploadPlayers({page: 1, 'per-page': 18}, state.common.cookies.token)),
+                store.dispatch(getCountries(state.common.cookies.token)),
+                store.dispatch(getLeagues(state.common.cookies.token)),
+                store.dispatch(getTeams(state.common.cookies.token)),
+                store.dispatch(fetchLevels(state.common.cookies.token)),
+        ])
+    };
+
+    render() {
+
+        return <Search {...this.props} />
+    }
+}
+
+Wrap = connect(mapStateToProps, mapDispatchToProps, mergeProps)(Wrap);
+
+export default withWrapper(Wrap);

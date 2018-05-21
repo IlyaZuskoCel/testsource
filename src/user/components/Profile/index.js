@@ -17,9 +17,6 @@ const styleSheet = createStyleSheet('Profile', theme => ({}));
 
 
 class Profile extends Component {
-    // componentDidMount() {
-    //     this.props.fetchData(this.props.id);
-    // }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.id !== this.props.id)
@@ -33,7 +30,8 @@ class Profile extends Component {
         if (this.props.user.role === SCOUT_ROLE)
             return <ScoutProfile {...this.props} />;
         else
-            return <PlayerProfile {...this.props}/>;
+            return <PlayerProfile {...this.props}/>
+
     }
 }
 

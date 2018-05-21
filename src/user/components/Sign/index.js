@@ -8,7 +8,7 @@ import withWidth from 'material-ui/utils/withWidth';
 import Tabs, {Tab} from 'material-ui/Tabs';
 import Typography from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
-import Hidden from 'material-ui/Hidden';
+import Hidden from '../../../common/components/Hidden';
 import {FormGroup, FormControlLabel} from 'material-ui/Form';
 import Radio, {RadioGroup} from 'material-ui/Radio';
 
@@ -141,7 +141,9 @@ const styleSheet = createStyleSheet('Sign', theme => ({
     hockeyMen: {
         position: 'absolute',
         height: 842,
-        maxHeight: window.innerHeight - 60,
+        // maxHeight: typeof window !== "undefined" && (window.innerHeight - 60),
+        maxHeight: "calc( 100vh - 60px)",
+
     },
     hockeyMenWrap: {
         position: 'relative',
@@ -199,20 +201,21 @@ class Sign extends Component {
 
     render() {
         const {classes, type, user} = this.props;
-
         return (<div>
 
             <Hidden only={['xs', 'sm']}>
-                <div className={classNames(classes.header)}>
-                    <div className={classes.leftBg}/>
-                    <div className={classes.rightBg}/>
-                    <Grid container gutter={8} className={classes.rootHeader}>
-                        <Grid item xs={4}>
-                            <Link to="/" className={classNames(classes.logoLink)}>
-                                <Icon className={classes.logo}>scoutzoo-symbol</Icon>
-                            </Link>
+                <div>
+                    <div className={classNames(classes.header)}>
+                        <div className={classes.leftBg}/>
+                        <div className={classes.rightBg}/>
+                        <Grid container gutter={8} className={classes.rootHeader}>
+                            <Grid item xs={4}>
+                                <Link to="/" className={classNames(classes.logoLink)}>
+                                    <Icon className={classes.logo}>scoutzoo-symbol</Icon>
+                                </Link>
+                            </Grid>
                         </Grid>
-                    </Grid>
+                    </div>
                 </div>
             </Hidden>
 
@@ -329,4 +332,4 @@ Sign.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default compose(withStyles(styleSheet), withWidth())(Sign);
+export default withStyles(styleSheet)(Sign);

@@ -19,11 +19,20 @@ import {map, mapOptions} from '../selectors';
 const mapStateToProps = (state, props) => ({
     tags: map(state.video.tags),
     currentUser: state.user.current,
+    token: state.common.cookies.token
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    delete: id => dispatch(deleteVideo(id)),
+    delete: (id, token) => dispatch(deleteVideo(id, token)),
     edit: id => dispatch(go('/video/edit/' + id)),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Video))
+const mergeProps = (stateProps, dispatchProps, ownProps) => ({
+    ...stateProps,
+    ...dispatchProps,
+    ...ownProps,
+    delete: id => dispatchProps.delete(id, stateProps.token),
+});
+
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps, mergeProps)(Video))
