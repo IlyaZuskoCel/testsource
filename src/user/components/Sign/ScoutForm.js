@@ -66,11 +66,6 @@ class ScoutForm extends Component {
 
     }
 
-    componentDidMount() {
-        if (!this.props.leagues.length || !this.props.leagueOptions.length || !this.props.teams.length || !this.props.teamOptions.length)
-            this.props.fetchData();
-    }
-
 
     handleChange = (name) => event => {
         return this.setState({[name]: event.target.value, errors: []});

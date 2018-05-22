@@ -12,10 +12,17 @@ import {addFavorite, removeFavorite} from '../actions';
 
 const mapStateToProps = (state) => ({
     currentUser: state.user.current,
+    token: state.common.cookies.token,
 });
 const mapDispatchToProps = (dispatch) => ({
-    add: id => dispatch(addFavorite(id)),
-    remove: id => dispatch(removeFavorite(id)),
+    add: (id, token) => dispatch(addFavorite(id, token)),
+    remove: (id, token) => dispatch(removeFavorite(id, token)),
 });
-
-export default connect(mapStateToProps, mapDispatchToProps)(FavoriteButton)
+const mergeProps = (stateProps, dispatchProps, ownProps) => ({
+    ...stateProps,
+    ...dispatchProps,
+    ...ownProps,
+    add: id =>  dispatchProps.add(id, stateProps.token),
+    remove: id => dispatchProps.remove(id, stateProps.token),
+});
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(FavoriteButton)

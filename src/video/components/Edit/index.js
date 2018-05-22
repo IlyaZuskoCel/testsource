@@ -108,11 +108,6 @@ class Edit extends Component {
         nextTrim: false,
     };
 
-    componentDidMount() {
-        this.props.fetchData(this.props.id);
-        this.props.getUser(this.props.userId);
-    }
-
     componentWillReceiveProps(nextProps) {
         if (this.state.nextTrim && nextProps.video.status === VIDEO_STATUS.STATUS_TRIMMED) {
             this.setState({nextTrim: false}, () => {

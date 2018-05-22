@@ -14,6 +14,7 @@ import countries from './countries';
 import loader from './loader';
 import header from './header';
 import footer from './footer';
+import cookies from './cookies';
 
 export default combineReducers({
     load,
@@ -25,4 +26,5 @@ export default combineReducers({
     loader,
     header,
     footer,
+    cookies,
 });

@@ -13,16 +13,6 @@ import jssPresetDefault from 'jss-preset-default';
 
 import {MuiThemeProvider, createMuiTheme} from 'material-ui/styles';
 
-import 'normalize.css';
-import './assets/css/main.css';
-import './assets/css/font/UnitedSansReg-Heavy/styles.css';
-import './assets/css/font/UnitedSansReg-Medium/styles.css';
-import './assets/css/font/UnitedSerifCond-Black/styles.css';
-import './assets/css/font/UnitedSerifCond-Bold/styles.css';
-import './assets/css/font/UnitedSansReg-Bold/styles.css';
-import './assets/css/font/UnitedSerifCond-Heavy/styles.css';
-import './assets/css/font/UnitedSerifCond-Medium/styles.css';
-import './assets/css/font/UnitedSansSemiCond-Heavy/styles.css';
 
 
 const theme = (outerTheme) => {
@@ -528,7 +518,7 @@ const theme = (outerTheme) => {
 const outerTheme = createMuiTheme();
 
 
-const jss = createJss(jssPresetDefault());
+//const jss = createJss(jssPresetDefault());
 // jss.use(vendorPrefixer());
 
 
@@ -541,8 +531,8 @@ const jss = createJss(jssPresetDefault());
 //         </MuiThemeProvider>
 //     </JssProvider>
 // );
-const ScoutTheme = ({children, ...props}) => (
-    <MuiThemeProvider theme={outerTheme}>
+const ScoutTheme = (sheetsManager) => ({children, ...props}) => (
+    <MuiThemeProvider theme={outerTheme} sheetsManager={sheetsManager}>
         <MuiThemeProvider theme={theme} {...props}>
             {children}
         </MuiThemeProvider>

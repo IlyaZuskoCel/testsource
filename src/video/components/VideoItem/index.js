@@ -6,7 +6,7 @@ import Typography from 'material-ui/Typography';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import withWidth from 'material-ui/utils/withWidth';
 import compose from 'recompose/compose';
-import Hidden from 'material-ui/Hidden';
+import Hidden from '../../../common/components/Hidden';
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import IconButton from 'material-ui/IconButton';
@@ -317,10 +317,6 @@ class VideoItem extends Component {
         };
     }
 
-    componentDidMount() {
-        this.props.fetchData(this.props.id, this.props.videoId);
-    }
-
     componentWillReceiveProps(nextProps) {
         if (nextProps.videoId !== this.props.videoId || nextProps.id !== this.props.id)
             this.props.fetchData(nextProps.id, nextProps.videoId);
@@ -583,4 +579,4 @@ VideoItem.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default compose(withStyles(styleSheet), withWidth())(VideoItem);
+export default compose(withStyles(styleSheet))(VideoItem);

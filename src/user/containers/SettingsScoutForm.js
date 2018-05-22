@@ -14,13 +14,20 @@ import {update, verifyScout} from '../actions';
 
 const mapStateToProps = (state, props) => ({
     user: state.user.current,
+    token: state.common.cookies.token,
 });
 
 const mapDispatchToProps = (dispatch) => ({
     cancel: () => dispatch(goBack()),
-    save: (data) => dispatch(update(data)),
-    getVerifiedScout: (phone, name) => dispatch(verifyScout(phone, name)),
+    save: (data, token) => dispatch(update(data, token)),
+    getVerifiedScout: (phone, name, token) => dispatch(verifyScout(phone, name, token)),
 });
 
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ScoutForm))
+const mergeProps = (stateProps, dispatchProps, ownProps) => ({
+    ...stateProps,
+    ...dispatchProps,
+    ...ownProps,
+    save: (data) => dispatchProps.save(data, stateProps.token),
+    getVerifiedScout: (phone, name) => dispatchProps.getVerifiedScout(phone, name, stateProps.token),
+});
+export default withRouter(connect(mapStateToProps, mapDispatchToProps, mergeProps)(ScoutForm))

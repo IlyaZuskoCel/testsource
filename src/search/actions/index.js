@@ -25,13 +25,13 @@ import queryString from 'query-string';
 const playerSearch = '/api/v2/user/player-search';
 const scoutSearch =  '/api/v2/user/scout-search';
 
-export const uploadPlayers = (params) => dispatch => {
+export const uploadPlayers = (params, token) => dispatch => {
     dispatch({type: CLEAR_LIST});
     dispatch(startLoading());
 
     let request = typeof params === 'object' ? addRequestParams(playerSearch , params) : playerSearch + params;
 
-    return getPage(request)
+    return getPage(request, {}, token)
         .then(players => {
             dispatch({type: SET_PLAYERS , payload: players.items});
             dispatch({type: SET_HEADERS , payload: {count: players.count , page: players.page , pageCount: players.pageCount , perPage: players.perPage}});
@@ -48,14 +48,14 @@ export const uploadPlayers = (params) => dispatch => {
         });
 };
 
-export const uploadScouts = (params) => dispatch => {
+export const uploadScouts = (params, token) => dispatch => {
     dispatch({type: CLEAR_LIST});
     dispatch(startLoading());
 
 
     let request = typeof params === 'object' ? addRequestParams(scoutSearch , params) : scoutSearch + params;
 
-    return getPage(request)
+    return getPage(request, {}, token)
         .then(scouts => {
             dispatch({type: SET_SCOUTS , payload: scouts.items});
             dispatch({type: SET_HEADERS , payload: {count: scouts.count , page: scouts.page , pageCount: scouts.pageCount , perPage: scouts.perPage}});
@@ -81,7 +81,7 @@ export const clearFilters = () => dispatch => {
     dispatch({type: CLEAR_FILTERS});
 };
 
-export const filterScouts = (params) => dispatch => {
+export const filterScouts = (params, token) => dispatch => {
     dispatch({type: CLEAR_LIST});
     dispatch(startLoading());
 
@@ -92,7 +92,7 @@ export const filterScouts = (params) => dispatch => {
 
     let request = typeof params === 'object' ? addRequestParams(playerSearch , params) : playerSearch + params;
 
-    getPage('/api/v2/user/scout-search' + params )
+    getPage('/api/v2/user/scout-search' + params, {}, token )
         .then(scouts => {
             dispatch({type: SET_SCOUTS , payload: scouts.items.length >= 1 ? scouts.items : []});
             dispatch({type: SET_HEADERS , payload: {count: scouts.count , page: scouts.page , pageCount: scouts.pageCount , perPage: scouts.perPage}});
@@ -105,7 +105,7 @@ export const filterScouts = (params) => dispatch => {
         });
 };
 
-export const filterPlayers = (params) => dispatch => {
+export const filterPlayers = (params, token) => dispatch => {
     dispatch({type: CLEAR_LIST});
     dispatch(startLoading());
 
@@ -116,7 +116,7 @@ export const filterPlayers = (params) => dispatch => {
     let request = typeof params === 'object' ? addRequestParams(playerSearch , params) : playerSearch + params;
 
 
-    getPage(request)
+    getPage(request, {}, token)
         .then(players => {
 
             dispatch({type: SET_PLAYERS , payload: players.items.length >= 1 ? players.items : [] });
@@ -132,9 +132,9 @@ export const filterPlayers = (params) => dispatch => {
 };
 
 
-export const fetchLevels = () => dispatch => {
+export const fetchLevels = (token) => dispatch => {
     dispatch(startLoading());
-    get('/api/v2/level/get-list')
+    get('/api/v2/level/get-list', {}, token)
         .then(list => {
             dispatch({type: SET_LEVELS , payload: list})
             dispatch(stopLoading());

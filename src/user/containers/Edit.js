@@ -3,7 +3,8 @@
  * moonion.com
  */
 
-
+import React, {Component} from 'react';
+import {withWrapper} from "create-react-server/wrapper";
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux';
 
@@ -13,10 +14,25 @@ import {getCurrent} from '../actions';
 
 const mapStateToProps = (state, props) => ({
     user: state.user.current,
+    token: state.common.cookies.token,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    getUser: id => dispatch(getCurrent()),
+
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Edit))
+class Wrap extends Component {
+    static async getInitialProps({location, query, params, store}) {
+        const state = store.getState();
+        await store.dispatch(getCurrent(state.common.cookies.token));
+    };
+
+    render() {
+
+        return <Edit {...this.props} />
+    }
+}
+
+Wrap = connect(mapStateToProps, mapDispatchToProps)(Wrap);
+
+export default withWrapper(Wrap);

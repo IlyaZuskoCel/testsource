@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import {Route, Redirect} from 'react-router-dom';
+import {Route} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import classNames from 'classnames';
@@ -16,7 +16,7 @@ import Typography from 'material-ui/Typography';
 import Header from '../../containers/Header'
 import Footer from '../../containers/Footer'
 
- import gifImage from './assets/images/spinner.gif';
+import gifImage from './assets/images/spinner.gif';
 
 import ScoutIcon from '../Icon';
 
@@ -30,10 +30,10 @@ const styleSheet = createStyleSheet('DefaultRoute', theme => ({
         overflowX: 'hidden',
         paddingTop: 70,
         [theme.breakpoints.up('md')]: {
-            minHeight: window.innerHeight - 70,
+            minHeight: "calc( 100vh - 70px)",
         },
         [theme.breakpoints.down('md')]: {
-            minHeight: window.innerHeight - 60,
+            minHeight: "calc( 100vh - 60px)",
             paddingTop: 60,
         }
     },
@@ -98,39 +98,45 @@ const styleSheet = createStyleSheet('DefaultRoute', theme => ({
 
 
 const DefaultRoute = ({component: Component, isAuthenticated, loader ,alert, hideAlert, classes, hideBackgroundTopHeader, hideBackgroundTopMobileHeader, hideBackgroundTopMobileHeaderScroll, hideBoxShadowScroll ,  hideHeader, ...rest}) => (
-    <Route {...rest} render={props =>
-        (
-        <div>
-            <Grid
-                className={classNames(classes.root, {[classes.hideBackgroundTopHeader]: hideBackgroundTopHeader || hideBackgroundTopMobileHeader})}>
-                {!hideHeader && <Header hideBackgroundTopHeader={hideBackgroundTopHeader}
-                                        hideBackgroundTopMobileHeaderScroll={hideBackgroundTopMobileHeaderScroll}
-                                        hideBackgroundTopMobileHeader={hideBackgroundTopMobileHeader}
-                                        hideBoxShadowScroll={hideBoxShadowScroll}/>}
-                <Component {...props} />
-                <Footer/>
-            </Grid>
-            <Snackbar
-                anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'center'
-                }}
-                onClick={hideAlert}
-                autoHideDuration={typeof alert.autoHideDuration  === "undefined" ? 5000 : alert.autoHideDuration}
-                onRequestClose={(e,reason)=>reason === 'timeout' ? hideAlert() : null}
-                open={alert.open}
-                message={<div className={classes.message}>
-                    <ScoutIcon className={classes.alertIcon}
-                               color={alert.type}>{alert.type === 'error' ? 'cross' : 'checkmark'}</ScoutIcon>
-                    <Typography type="body2"> {alert.message}</Typography>
+    <Route {...rest} render={props => {
 
-                </div>}
-            />
-            <div className={classNames(classes.preloader , loader > 0 ? classes.showPreloader : classes.hidePreloader)}>
-                <div className={classes.spinner}/>
+        if (props.staticContext)
+            props.staticContext.routeProps = rest;
+
+        return (
+            <div>
+                <Grid
+                    className={classNames(classes.root, {[classes.hideBackgroundTopHeader]: hideBackgroundTopHeader || hideBackgroundTopMobileHeader})}>
+                    {!hideHeader && <Header hideBackgroundTopHeader={hideBackgroundTopHeader}
+                                            hideBackgroundTopMobileHeaderScroll={hideBackgroundTopMobileHeaderScroll}
+                                            hideBackgroundTopMobileHeader={hideBackgroundTopMobileHeader}
+                                            hideBoxShadowScroll={hideBoxShadowScroll}/>}
+                    <Component {...rest} {...props} />
+                    <Footer/>
+                </Grid>
+                {typeof alert.message === "string" && (
+                    <Snackbar
+                        anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'center'
+                        }}
+                        onClick={hideAlert}
+                        autoHideDuration={typeof alert.autoHideDuration  === "undefined" ? 5000 : alert.autoHideDuration}
+                        onRequestClose={(e,reason)=>reason === 'timeout' ? hideAlert() : null}
+                        open={alert.open}
+                        message={<div className={classes.message} >
+                            <ScoutIcon className={classes.alertIcon}
+                                       color={alert.type}>{alert.type === 'error' ? 'cross' : 'checkmark'}</ScoutIcon>
+                            <Typography type="body2">{alert.message}</Typography>
+
+                        </div>}
+                    />
+                )}
+                <div className={classNames(classes.preloader , loader > 0 ? classes.showPreloader : classes.hidePreloader)}>
+                    <div className={classes.spinner}/>
+                </div>
             </div>
-        </div>
-    )}/>
+        )}}/>
 );
 
 DefaultRoute.propTypes = {

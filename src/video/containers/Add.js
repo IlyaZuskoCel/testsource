@@ -2,16 +2,14 @@
  * Created by aleksandr on 8/30/17.
  * moonion.com
  */
-
-
-import {withRouter} from 'react-router-dom'
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
-
+import {withWrapper} from "create-react-server/wrapper";
 import Add from '../components/Add';
-
+import {matchPath} from 'react-router';
 import {upload, trim, clear, postVideo, fetchTags, updateVideoField} from '../actions';
 
-import {getUser} from '../../user/actions'
+import {getUser, getCurrent} from '../../user/actions';
 
 import {map, mapOptions} from '../selectors';
 
@@ -19,21 +17,52 @@ const mapStateToProps = (state, props) => ({
     video: state.video.video,
     tags: map(state.video.tags),
     tagOptions: mapOptions(state.video.tags),
-    userId: state.user.current.id,
+    userId: state.user.current && state.user.current.id,
     user: state.user.user,
-
+    token: state.common.cookies.token
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    fetchData: (userId) => {
-        dispatch(clear());
-        dispatch(fetchTags());
-        dispatch(getUser(userId));
-    },
-    upload: file => dispatch(upload(file)),
-    trim: (id, start, end) => dispatch(trim(id, start, end)),
-    update: data => dispatch(postVideo(data)),
+    upload: (file, token) => dispatch(upload(file, token)),
+    trim: (id, start, end, token) => dispatch(trim(id, start, end, token)),
+    update: (data, token) => dispatch(postVideo(data, token)),
     updateField: (name, value) => dispatch(updateVideoField(name, value)),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Add))
+
+const mergeProps = (stateProps, dispatchProps, ownProps) => ({
+    ...stateProps,
+    ...dispatchProps,
+    ...ownProps,
+    update: data => dispatchProps.update(data, stateProps.token),
+    trim: (id, start, end) => dispatchProps.trim(id, start, end, stateProps.token),
+    upload: file => dispatchProps.upload(file, stateProps.token),
+});
+
+
+
+class Wrap extends Component {
+    static async getInitialProps({location, query, params, store}) {
+        const match = matchPath(location.pathname, {
+            path: '/profile/:id/',
+        });
+
+        const state = store.getState();
+        return await Promise.all([
+            store.dispatch(clear()),
+            store.dispatch(fetchTags(state.common.cookies.token)),
+            store.dispatch(getUser(match.params.id, state.common.cookies.token)),
+            store.dispatch(getCurrent(state.common.cookies.token)),
+        ])
+
+    };
+
+    render() {
+
+        return <Add {...this.props} />
+    }
+}
+
+Wrap = connect(mapStateToProps, mapDispatchToProps, mergeProps)(Wrap);
+
+export default withWrapper(Wrap);

@@ -39,9 +39,9 @@ export const addSuccessAlert = (title, options) => dispatch => {
 
 
 
-export const getLevels = () => dispatch => {
+export const getLevels = (token) => dispatch => {
     dispatch(startLoading());
-    get('/api/v2/level/get-list')
+    get('/api/v2/level/get-list', {}, token)
         .then(levels => {
             dispatch(stopLoading());
             if ('error' in levels)
@@ -58,9 +58,9 @@ export const getLevels = () => dispatch => {
 };
 
 
-export const getLeagues = () => dispatch => {
+export const getLeagues = (token) => dispatch => {
     dispatch(startLoading());
-    return get(`/api/v2/league/get-list`)
+    return get(`/api/v2/league/get-list`, {}, token)
         .then(leagues => {
             dispatch(stopLoading());
 
@@ -77,9 +77,9 @@ export const getLeagues = () => dispatch => {
         })
 };
 // /v2/team/get-list[?fields=id,name]
-export const getTeams = () => dispatch => {
+export const getTeams = (token) => dispatch => {
     dispatch(startLoading());
-    return get(`/api/v2/team/get-list?fields=id,id_league,id_country,name`)
+    return get(`/api/v2/team/get-list?fields=id,id_league,id_country,name`, {}, token)
         .then(teams => {
             dispatch(stopLoading());
 
@@ -96,10 +96,10 @@ export const getTeams = () => dispatch => {
         })
 };
 
-export const getCountries = () => dispatch => {
+export const getCountries = (token) => dispatch => {
     dispatch(startLoading());
 
-    return get(`/api/v2/country/get-list`)
+    return get(`/api/v2/country/get-list`, {}, token)
         .then(data => {
             dispatch(stopLoading());
 

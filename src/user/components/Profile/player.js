@@ -6,7 +6,7 @@ import Typography from 'material-ui/Typography';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import withWidth from 'material-ui/utils/withWidth';
 import compose from 'recompose/compose';
-import Hidden from 'material-ui/Hidden';
+import Hidden from '../../../common/components/Hidden';
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import IconButton from 'material-ui/IconButton';
@@ -572,13 +572,15 @@ class PlayerProfile extends Component {
     };
 
     render() {
-
-        const {classes, user, currentUser, isCurrent, isAuth, width} = this.props;
+        const width = 'md';
+        const {classes, user, currentUser, isCurrent} = this.props;
         const smallWidth = width === 'sm' || width === 'xs';
         let userPhotoSrc = defaultPhoto;
-
         // Intercom player view
-        window.Intercom('update', { app_id: window.INTERCOM_ID });
+        if(typeof window !== "undefined") {
+            window.Intercom('update', {app_id: window.INTERCOM_ID});
+            Intercom('trackEvent', 'View player', detail);
+        }
 
         let detail = {
           name: user.first_name+' '+user.last_name,
@@ -595,7 +597,7 @@ class PlayerProfile extends Component {
           type: 'Player'
         };
 
-        Intercom('trackEvent', 'View player', detail);
+
 
 
         if (user.profile_picture) {
@@ -646,7 +648,7 @@ class PlayerProfile extends Component {
                                     <span>Edit</span>
                                 </Button>
                             </Link>
-                            <Hidden only={['xs', 'sm']}>
+                            <Hidden mdDown>
                                 <Link to="/video/add" disabledUnderline>
                                     <Button color="primary" raised className={classes.addVideoButton}>
                                         Add a Video
@@ -691,15 +693,16 @@ class PlayerProfile extends Component {
                     </ShareButton>}
 
 
-                    <div className={classes.infoContainer}>
-                        <Hidden only={['xs', 'sm']}>
-                            <div className={classes.info}>
-                                {user.height && (user.height[0] > 0 || user.height[1] > 0) && (
-                                    <div className={classes.infoRow}>
-                                        <Typography type="caption" className={classes.infoCaption}>Height</Typography>
-                                        <Typography type="body2" className={classes.infoValue}>
-                                            {`${user.height[0]}'${user.height[1]}''`}
-                                        </Typography>
+                <div className={classes.infoContainer}>
+                    <Hidden mdDown>
+                        <div>
+                        <div className={classes.info}>
+                            {user.height && (user.height[0] > 0 || user.height[1] > 0) && (
+                                <div className={classes.infoRow}>
+                                    <Typography type="caption" className={classes.infoCaption}>Height</Typography>
+                                    <Typography type="body2" className={classes.infoValue}>
+                                        {`${user.height[0]}'${user.height[1]}''`}
+                                    </Typography>
 
                                     </div>
                                 )}
@@ -728,14 +731,15 @@ class PlayerProfile extends Component {
                                             {SHOT_LIST[user.shot]}
                                         </Typography>
 
-                                    </div>
-                                )}
-                            </div>
-                        </Hidden>
-                        <Paper className={classes.infoCard} square>
-                            {user.jersey_number && (
-                                <Typography className={classes.infoCardNumber}
-                                            type="headline">{user.jersey_number}</Typography>)}
+                                </div>
+                            )}
+                        </div>
+                        </div>
+                    </Hidden>
+                    <Paper className={classes.infoCard} square>
+                        {user.jersey_number && (
+                            <Typography className={classes.infoCardNumber}
+                                        type="headline">{user.jersey_number}</Typography>)}
 
 
                             <div
@@ -773,96 +777,98 @@ class PlayerProfile extends Component {
                                     )}
 
 
+                            </div>
+                        </div>
+                    </Paper>
+                    <Hidden mdDown>
+                        <div className={classes.infoRight}>
+                            <Typography type="headline"
+                                        className={classes.infoRightName}>{user.first_name} {user.last_name}</Typography>
+                            <div className={classes.infoRightColumn}>
+                                <div>
+                                    <Typography type="caption" className={classes.infoRightCaption}>
+                                        Birth Date
+                                    </Typography>
+                                    <Typography type="subheading" className={classes.infoRightValue}>
+                                        {user.birthday ? moment(user.birthday).format('MMM. YYYY') : 'Unknown'}
+                                    </Typography>
+                                </div>
+                                <div>
+                                    <Typography type="caption" className={classes.infoRightCaption}>
+                                        Position
+                                    </Typography>
+                                    <Typography type="subheading" className={classes.infoRightValue}>
+                                        {user.position_full || 'Unknown'}
+                                    </Typography>
+                                </div>
+                                <div>
+                                    <Typography type="caption" className={classes.infoRightCaption}>
+                                        Nationality
+                                    </Typography>
+                                    <Typography type="subheading" className={classes.infoRightValue}>
+                                        {user.nationality_code || 'Unknown'}
+                                    </Typography>
                                 </div>
                             </div>
-                        </Paper>
-                        <Hidden only={['xs', 'sm']}>
-                            <div className={classes.infoRight}>
-                                <Typography type="headline"
-                                            className={classes.infoRightName}>{user.first_name} {user.last_name}</Typography>
-                                <div className={classes.infoRightColumn}>
-                                    <div>
-                                        <Typography type="caption" className={classes.infoRightCaption}>
-                                            Birth Date
-                                        </Typography>
-                                        <Typography type="subheading" className={classes.infoRightValue}>
-                                            {user.birthday ? moment(user.birthday).format('MMM. YYYY') : 'Unknown'}
-                                        </Typography>
-                                    </div>
-                                    <div>
-                                        <Typography type="caption" className={classes.infoRightCaption}>
-                                            Position
-                                        </Typography>
-                                        <Typography type="subheading" className={classes.infoRightValue}>
-                                            {user.position_full || 'Unknown'}
-                                        </Typography>
-                                    </div>
-                                    <div>
-                                        <Typography type="caption" className={classes.infoRightCaption}>
-                                            Nationality
-                                        </Typography>
-                                        <Typography type="subheading" className={classes.infoRightValue}>
-                                            {user.nationality_code || 'Unknown'}
-                                        </Typography>
-                                    </div>
-                                </div>
-                                {user.biography && (
-                                    <Typography type="body1"
-                                                className={classes.infoRightAbout}>{user.biography}</Typography>
-                                )}
-                            </div>
-                        </Hidden>
-                    </div>
-
-                    <Hidden only={['md', 'lg', 'xl']}>
-                        <div className={classes.infoRightColumn}>
-                            <div>
-                                <Typography type="caption" className={classes.infoRightCaption}>
-                                    Birth Date
-                                </Typography>
-                                <Typography type="subheading" className={classes.infoRightValue}>
-                                    {user.birthday ? moment(user.birthday).format('MMM. YYYY') : 'Unknown'}
-                                </Typography>
-                            </div>
-                            <div>
-                                <Typography type="caption" className={classes.infoRightCaption}>
-                                    Nationality
-                                </Typography>
-                                <Typography type="subheading" className={classes.infoRightValue}>
-                                    {user.nationality_code || 'Unknown'}
-                                </Typography>
-                            </div>
-                            <div>
-                                <Typography type="caption" className={classes.infoRightCaption}>
-                                    Position
-                                </Typography>
-                                <Typography type="subheading" className={classes.infoRightValue}>
-                                    {user.position_full || 'Unknown'}
-                                </Typography>
-                            </div>
-
+                            {user.biography && (
+                                <Typography type="body1"
+                                            className={classes.infoRightAbout}>{user.biography}</Typography>
+                            )}
                         </div>
                     </Hidden>
-                    <Hidden only={['md', 'lg', 'xl']}>
-                        <Paper square className={classes.mobileContent}>
-                            {!isCurrent && currentUser && currentUser.role === SCOUT_ROLE ? (
-                                <Tabs index={this.state.tab}
-                                      onChange={this.handleChangeTab}
-                                      className={classes.tabs}
-                                      centered fullWidth>
-                                    <Tab label="Videos"/>
-                                    <Tab label="Profile"/>
-                                    <Tab label="Contact"/>
-                                </Tabs>
-                            ) : (
-                                <Tabs index={this.state.tab}
-                                      onChange={this.handleChangeTab}
-                                      className={classes.tabs}
-                                      centered fullWidth>
-                                    <Tab label="Videos"/>
-                                    <Tab label="Profile"/>
-                                </Tabs>
-                            )}
+                </div>
+
+                <Hidden only={['md', 'lg', 'xl']}>
+                    <div>
+                    <div className={classes.infoRightColumn}>
+                        <div>
+                            <Typography type="caption" className={classes.infoRightCaption}>
+                                Birth Date
+                            </Typography>
+                            <Typography type="subheading" className={classes.infoRightValue}>
+                                {user.birthday ? moment(user.birthday).format('MMM. YYYY') : 'Unknown'}
+                            </Typography>
+                        </div>
+                        <div>
+                            <Typography type="caption" className={classes.infoRightCaption}>
+                                Nationality
+                            </Typography>
+                            <Typography type="subheading" className={classes.infoRightValue}>
+                                {user.nationality_code || 'Unknown'}
+                            </Typography>
+                        </div>
+                        <div>
+                            <Typography type="caption" className={classes.infoRightCaption}>
+                                Position
+                            </Typography>
+                            <Typography type="subheading" className={classes.infoRightValue}>
+                                {user.position_full || 'Unknown'}
+                            </Typography>
+                        </div>
+
+                    </div>
+                    </div>
+                </Hidden>
+                <Hidden only={['md', 'lg', 'xl']}>
+                    <Paper square className={classes.mobileContent}>
+                        {!isCurrent && currentUser && currentUser.role === SCOUT_ROLE ? (
+                            <Tabs index={this.state.tab}
+                                  onChange={this.handleChangeTab}
+                                  className={classes.tabs}
+                                  centered fullWidth>
+                                <Tab label="Videos"/>
+                                <Tab label="Profile"/>
+                                <Tab label="Contact"/>
+                            </Tabs>
+                        ) : (
+                            <Tabs index={this.state.tab}
+                                  onChange={this.handleChangeTab}
+                                  className={classes.tabs}
+                                  centered fullWidth>
+                                <Tab label="Videos"/>
+                                <Tab label="Profile"/>
+                            </Tabs>
+                        )}
 
 
                             {this.state.tab === 0 && user.videos.length > 0 && (
@@ -1050,4 +1056,4 @@ PlayerProfile.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default compose(withStyles(styleSheet), withWidth())(PlayerProfile);
+export default withStyles(styleSheet)(PlayerProfile);

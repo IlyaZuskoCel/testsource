@@ -137,7 +137,7 @@ const styleSheet = createStyleSheet('Forgot', theme => ({
     hockeyMen: {
         position: 'absolute',
         height: 842,
-        maxHeight: window.innerHeight - 60,
+        maxHeight: "calc(100vh - 60px)",
     },
     hockeyMenWrap: {
         position: 'relative',

@@ -110,10 +110,6 @@ class Add extends Component {
         isUpdate: true,
     };
 
-    componentDidMount() {
-        this.props.fetchData(this.props.userId);
-    }
-
     componentWillReceiveProps(nextProps) {
         if (this.state.nextTrim && nextProps.video.status === VIDEO_STATUS.STATUS_TRIMMED) {
             this.setState({nextTrim: false}, () => {

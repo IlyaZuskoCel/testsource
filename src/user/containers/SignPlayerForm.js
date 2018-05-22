@@ -12,9 +12,17 @@ import SignPlayerForm from '../components/Sign/PlayerForm';
 import {registerPlayer} from '../actions';
 
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+    token: state.common.cookies.token,
+});
 const mapDispatchToProps = (dispatch) => ({
-    register: (user) => dispatch(registerPlayer(user)),
+    register: (user, token) => dispatch(registerPlayer(user, token)),
+});
+const mergeProps = (stateProps, dispatchProps, ownProps) => ({
+    ...stateProps,
+    ...dispatchProps,
+    ...ownProps,
+    register: (user) => dispatchProps.register(user, stateProps.token),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignPlayerForm))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps, mergeProps)(SignPlayerForm))
