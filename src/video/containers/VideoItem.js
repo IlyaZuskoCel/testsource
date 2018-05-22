@@ -45,9 +45,10 @@ class Wrap extends Component {
             path: '/profile/:id/video/:videoId',
         });
         const state = store.getState();
-        return await Promise.all([
-            store.dispatch(getUser(match.params.id, state.common.cookies.token)),
+
+        await Promise.all([
             store.dispatch(fetchVideo(match.params.videoId, state.common.cookies.token)),
+            store.dispatch(getUser(match.params.id, state.common.cookies.token)),
             store.dispatch(fetchTags(state.common.cookies.token)),
             store.dispatch(getCurrent(state.common.cookies.token)),
         ])

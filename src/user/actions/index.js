@@ -135,7 +135,7 @@ export const registerPlayer = (user, token) => dispatch => {
 
 export const logOut = (token) => dispatch => {
     dispatch(startLoading());
-    if(window.Intercom) {
+    if(typeof window !== 'undefined' && window.Intercom) {
         Intercom('shutdown')
     }
 

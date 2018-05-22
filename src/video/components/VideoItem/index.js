@@ -385,7 +385,7 @@ class VideoItem extends Component {
                 <meta property="og:type" content="video.movie" />
                 <meta property="og:url" content={absUrl(`/profile/${user.id}/video/${video.id}`)} />
                 <meta property="og:title" content={video.title}/>
-                <meta property="og:description" content={video.title}/>
+                <meta property="og:description" content={video.description}/>
                 <meta property="og:video" content={absUrl(video.overlay_video_path || video.trim_video_file_path || video.video_path)}/>
                 <meta property="og:video:url" content={absUrl(video.overlay_video_path || video.trim_video_file_path || video.video_path)}/>
                 <meta property="og:video:secure_url" content={absUrl(video.overlay_video_path || video.trim_video_file_path || video.video_path)}/>
