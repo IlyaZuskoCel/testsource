@@ -381,6 +381,7 @@ class VideoItem extends Component {
         const tags = video.tags ? video.tags.map(v => '' + v) : [];
         return <div>
             <Helmet>
+                <meta property="og:type" content="video" />
                 <meta property="og:title" content={video.title}/>
                 <meta property="og:video" content={absUrl(video.overlay_video_path || video.trim_video_file_path || video.video_path)}/>
                 <meta property="og:video:url" content={absUrl(video.overlay_video_path || video.trim_video_file_path || video.video_path)}/>
