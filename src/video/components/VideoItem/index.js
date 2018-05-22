@@ -389,12 +389,12 @@ class VideoItem extends Component {
                 {video.description && <meta name="twitter:description" content={video.description} />}
                 <meta name="twitter:image" content={absUrl(video.overlay || video.thumb_lg)}/>
                 <meta name="twitter:player" content={absUrl(`/profile/${user.id}/video/${video.id}/player`)}/>
-                <meta name="twitter:player:width" content="360"/>
-                <meta name="twitter:player:height" content="200"/>
+                <meta name="twitter:player:width" content={video.width}/>
+                <meta name="twitter:player:height" content={video.height}/>
 
 
 
-                <meta property="og:type" content="video.movie" />
+                <meta property="og:type" content="video.other" />
                 <meta property="og:url" content={absUrl(`/profile/${user.id}/video/${video.id}`)} />
                 <meta property="og:title" content={video.title}/>
                 {video.description && <meta property="og:description" content={video.description}/>}
@@ -402,8 +402,8 @@ class VideoItem extends Component {
                 <meta property="og:video:url" content={absUrl(video.overlay_video_path || video.trim_video_file_path || video.video_path)}/>
                 <meta property="og:video:secure_url" content={absUrl(video.overlay_video_path || video.trim_video_file_path || video.video_path)}/>
                 <meta property="og:video:type" content="video/mp4"/>
-                <meta property="og:video:width" content="360"/>
-                <meta property="og:video:height" content="200"/>
+                <meta property="og:video:width" content={video.width}/>
+                <meta property="og:video:height" content={video.height}/>
                 <meta property="og:image" content={absUrl(video.overlay || video.thumb_lg)} />
 
 

@@ -15,8 +15,6 @@ const getHeaders = (token) => {
 
 
 export const get = (url, options, token) => {
-    console.log(url);
-
     return fetch(`${DOMAIN_URL}${url}`, {
         headers: getHeaders(token),
         ...options,
