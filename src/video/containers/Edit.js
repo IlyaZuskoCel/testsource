@@ -18,7 +18,6 @@ import {map, mapOptions} from '../selectors';
 const mapStateToProps = (state, props) => ({
     video: state.video.video,
     id: props.match.params.id,
-    userId: state.user.current && state.user.current.id,
     tags: map(state.video.tags),
     tagOptions: mapOptions(state.video.tags),
     user: state.user.current,
