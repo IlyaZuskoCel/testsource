@@ -382,26 +382,32 @@ class VideoItem extends Component {
         console.log('video', video);
         return <div>
             <Helmet>
+
+
+                <meta name="twitter:card" content='player'/>
+                <meta name="twitter:title" content={video.title}/>
+                {video.description && <meta name="twitter:description" content={video.description} />}
+                <meta name="twitter:image" content={absUrl(video.overlay || video.thumb_lg)}/>
+                <meta name="twitter:player" content={absUrl(`/profile/${user.id}/video/${video.id}/player`)}/>
+                <meta name="twitter:player:width" content="360"/>
+                <meta name="twitter:player:height" content="200"/>
+
+
+
                 <meta property="og:type" content="video.movie" />
                 <meta property="og:url" content={absUrl(`/profile/${user.id}/video/${video.id}`)} />
                 <meta property="og:title" content={video.title}/>
-                <meta property="og:description" content={video.description}/>
+                {video.description && <meta property="og:description" content={video.description}/>}
                 <meta property="og:video" content={absUrl(video.overlay_video_path || video.trim_video_file_path || video.video_path)}/>
                 <meta property="og:video:url" content={absUrl(video.overlay_video_path || video.trim_video_file_path || video.video_path)}/>
                 <meta property="og:video:secure_url" content={absUrl(video.overlay_video_path || video.trim_video_file_path || video.video_path)}/>
                 <meta property="og:video:type" content="video/mp4"/>
                 <meta property="og:video:width" content="360"/>
                 <meta property="og:video:height" content="200"/>
-                <meta property="og:image"        content={absUrl(video.overlay || video.thumb_lg)} />
+                <meta property="og:image" content={absUrl(video.overlay || video.thumb_lg)} />
 
 
-                <meta name="twitter:card" content='player'/>
-                <meta name="twitter:title" content={video.title}/>
-                <meta name="twitter:description" content=''/>
-                <meta name="twitter:player" content={absUrl(video.overlay_video_path || video.trim_video_file_path || video.video_path)}/>
-                <meta name="twitter:player:width" content='360'/>
-                <meta name="twitter:player:height" content='200'/>
-                <meta name="twitter:image" content={absUrl(video.overlay || video.thumb_lg)}/>
+
 
                 <link rel="canonical" href={absUrl(`/profile/${user.id}/video/${video.id}`)}/>
             </Helmet>
