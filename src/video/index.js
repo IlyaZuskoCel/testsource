@@ -15,7 +15,7 @@ import VideoItem from './containers/VideoItem';
 const routes = [
     <PrivateRoute key="VideoAdd" path="/video/add" component={Add} hideBackgroundTopMobileHeader/>,
     <PrivateRoute key="VideoEdit" path="/video/edit/:id?" component={Edit} hideBackgroundTopMobileHeader/>,
-    <PrivateRoute key="VideoItem" path="/profile/:id/video/:videoId" component={VideoItem} hideBackgroundTopHeader/>,
+    <DefaultLayout key="VideoItem" path="/profile/:id/video/:videoId" component={VideoItem} hideBackgroundTopHeader/>,
 ];
 
 export default routes;
