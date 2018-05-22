@@ -379,14 +379,13 @@ class VideoItem extends Component {
         const {classes, video, currentUser, user, tagOptions} = this.props;
         if (!video || !user) return null;
         const tags = video.tags ? video.tags.map(v => '' + v) : [];
-        console.log('video', video);
         return <div>
             <Helmet>
 
 
                 <meta name="twitter:card" content='player'/>
                 <meta name="twitter:title" content={video.title}/>
-                {video.description && <meta name="twitter:description" content={video.description} />}
+                <meta name="twitter:description" content={video.description || 'ScoutZoo'} />
                 <meta name="twitter:image" content={absUrl(video.overlay || video.thumb_lg)}/>
                 <meta name="twitter:player" content={absUrl(`/profile/${user.id}/video/${video.id}/player`)}/>
                 <meta name="twitter:player:width" content={video.width}/>
@@ -394,10 +393,11 @@ class VideoItem extends Component {
 
 
 
+                <meta property="fb:app_id" content="87741124305" />
                 <meta property="og:type" content="video.other" />
                 <meta property="og:url" content={absUrl(`/profile/${user.id}/video/${video.id}`)} />
                 <meta property="og:title" content={video.title}/>
-                {video.description && <meta property="og:description" content={video.description}/>}
+                <meta property="og:description" content={video.description || 'ScoutZoo'}/>
                 <meta property="og:video:url" content={absUrl(`/profile/${user.id}/video/${video.id}/player`)}/>
                 <meta property="og:video:secure_url" content={absUrl(`/profile/${user.id}/video/${video.id}/player`)}/>
                 <meta property="og:video:type" content="text/html"/>
