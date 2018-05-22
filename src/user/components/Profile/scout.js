@@ -402,10 +402,6 @@ class ScoutProfile extends Component {
         const smallWidth = width === 'sm' || width === 'xs';
         let userPhotoSrc = defaultPhoto;
 
-
-        // Intercom scout view
-        window.Intercom('update', { app_id: window.INTERCOM_ID });
-
         let detail = {
           name: user.first_name+' '+user.last_name,
           job_title: user.job_title,
@@ -415,7 +411,11 @@ class ScoutProfile extends Component {
           type: 'Scout'
         };
 
-        Intercom('trackEvent', 'View scout', detail);
+        // Intercom scout view
+        if(typeof window !== "undefined" && window.Intercom) {
+            window.Intercom('update', {app_id: window.INTERCOM_ID});
+            Intercom('trackEvent', 'View scout', detail);
+        }
 
         if (user.profile_picture) {
             userPhotoSrc = user.profile_picture;

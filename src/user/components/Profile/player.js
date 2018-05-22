@@ -576,11 +576,6 @@ class PlayerProfile extends Component {
         const {classes, user, currentUser, isCurrent} = this.props;
         const smallWidth = width === 'sm' || width === 'xs';
         let userPhotoSrc = defaultPhoto;
-        // Intercom player view
-        if(typeof window !== "undefined") {
-            window.Intercom('update', {app_id: window.INTERCOM_ID});
-            Intercom('trackEvent', 'View player', detail);
-        }
 
         let detail = {
           name: user.first_name+' '+user.last_name,
@@ -597,8 +592,11 @@ class PlayerProfile extends Component {
           type: 'Player'
         };
 
-
-
+        // Intercom player view
+        if(typeof window !== "undefined" && window.Intercom) {
+            window.Intercom('update', {app_id: window.INTERCOM_ID});
+            Intercom('trackEvent', 'View player', detail);
+        }
 
         if (user.profile_picture) {
             userPhotoSrc = user.profile_picture;
