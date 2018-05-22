@@ -44,7 +44,7 @@ const options = {
                     state.common.cookies.token = token;
                 }
 
-                if (user) {
+                if (user && Object.keys(user).length !== 0) {
                     state.user = state.user || {};
                     state.user.current = state.user.current || user;
                 }

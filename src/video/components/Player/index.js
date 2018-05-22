@@ -12,12 +12,16 @@ const styleSheet = createStyleSheet('Player', theme => ({
 }));
 
 
-const Player = ({classes, video, user}) => (
-    <video src={absUrl(video.overlay_video_path || video.trim_video_file_path || video.video_path)}
-           className={classes.video}
-           controls
-           controlsList="nodownload"/>
-)
+const Player = ({classes, video, user}) => {
+    if (!video)
+        return null;
+    return (
+        <video src={absUrl(video.overlay_video_path || video.trim_video_file_path || video.video_path)}
+               className={classes.video}
+               controls
+               controlsList="nodownload"/>
+    )
+};
 
 
 export default compose(withStyles(styleSheet))(Player);

@@ -2,7 +2,7 @@ import Helmet from "react-helmet";
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
-const BACKEND_URL = process.env.BACKEND_URL;
+const SITE_URL = process.env.SITE_URL;
 const GOOGLE_UA = process.env.GOOGLE_UA;
 const INTERCOM_ID = process.env.INTERCOM_ID;
 
@@ -49,14 +49,11 @@ export default ({template, html, css, error, initialProps, store, options}) => {
         );
     return template
         .replace(
-            `%BACKEND_URL%`,
-            BACKEND_URL
-        )
-        .replace(
             `<div id="app"></div>`,
             `<div id="app"></div>
-             <script type="text/javascript">window[${options.initialStateKey}] = ${JSON.stringify(store ? store.getState() : {})};</script>
-             <script type="text/javascript">window[${options.initialPropsKey}] = ${JSON.stringify(initialProps || {})};</script>`)
+             <script>window['${options.initialStateKey}'] = ${JSON.stringify(store ? store.getState() : {})};</script>
+             <script>window['${options.initialPropsKey}'] = ${JSON.stringify(initialProps || {})};</script>
+             <script>window['SITE_URL'] = '${SITE_URL}';</script>`)
         .replace(
             `<div id="app"></div>`,
             `${errorHtml}<div id="app">${html}</div>`
