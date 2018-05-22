@@ -334,7 +334,6 @@ class Header extends Component {
     handleMenuRequestClose(page) {
         return () => {
             this.setState({open: false});
-
             if (page)
                 this.props.go(page);
         };

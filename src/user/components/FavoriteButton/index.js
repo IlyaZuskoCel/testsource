@@ -106,16 +106,17 @@ const FavoriteButton = ({user, active, classes, remove, add}) => <Button
     onClick={() => {
         active ? remove(user) : add(user)
 
-        // Intercom player shortlist
-        window.Intercom('update', { app_id: window.INTERCOM_ID });
-
         var detail = { 
             user: user, 
             status: active ? 'Removed' : 'Added',
             profile: 'https://app.scoutzoo.com/profile/'+user 
         };
 
-        Intercom('trackEvent', 'Shortlist player', detail);
+        // Intercom player shortlist
+        if(typeof window !== "undefined" && window.Intercom) {
+            window.Intercom('update', {app_id: window.INTERCOM_ID});
+            Intercom('trackEvent', 'Shortlist player', detail);
+        }
 
     }}
     className={classNames(classes.default, {[classes.active]: active})}>

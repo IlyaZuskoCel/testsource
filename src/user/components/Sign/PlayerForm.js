@@ -85,12 +85,6 @@ class PlayerForm extends Component {
         if (data.birthday && data.birthday === '0000-00-01')
             data.height = null;
 
-        // Intercom Sign up player
-        window.Intercom('boot', { app_id: window.INTERCOM_ID, 
-          email: data.email, 
-          name: data.first_name+' '+data.last_name,
-          type: 'Player'
-          });
 
         var detail = {           
           name: data.first_name+' '+data.last_name,
@@ -100,7 +94,15 @@ class PlayerForm extends Component {
           type: 'Player'
         };
 
-        Intercom('trackEvent', 'Sign up player', detail);
+        // Intercom Sign up player
+        if(typeof window !== "undefined" && window.Intercom) {
+            window.Intercom('boot', { app_id: window.INTERCOM_ID,
+                email: data.email,
+                name: data.first_name+' '+data.last_name,
+                type: 'Player'
+            });
+            Intercom('trackEvent', 'Sign up player', detail);
+        }
 
         this.props.register(data);
         return false;

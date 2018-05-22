@@ -295,10 +295,6 @@ class PlayerForm extends Component {
         if (data.birthday && data.birthday === '0000-00-01')
             data.height = null;
 
-        // Intercom profile update player
-        window.Intercom('update', { app_id: window.INTERCOM_ID,
-          name: data.first_name+' '+data.last_name
-        });
 
         var detail = {           
           name: data.first_name+' '+data.last_name,
@@ -321,7 +317,13 @@ class PlayerForm extends Component {
           type: 'Player'
         };
 
-        Intercom('trackEvent', 'Profile update', detail);
+        // Intercom profile update player
+        if(typeof window !== "undefined" && window.Intercom) {
+            window.Intercom('update', { app_id: window.INTERCOM_ID,
+                name: data.first_name+' '+data.last_name
+            });
+            Intercom('trackEvent', 'Profile update', detail);
+        }
 
         this.setState({isUpdate: false}, () => {
             this.props.save(data);
