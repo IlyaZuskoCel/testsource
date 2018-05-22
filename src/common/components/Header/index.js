@@ -296,10 +296,12 @@ class Header extends Component {
         this.state = {
             scroll: false,
             anchorEl: undefined,
-            open: false
+            open: false,
+            openMobile: false
         };
 
         this.handleMenuClick = this.handleMenuClick.bind(this);
+        this.handleMobileMenuClick = this.handleMobileMenuClick.bind(this);
         this.handleMenuRequestClose = this.handleMenuRequestClose.bind(this);
         this.onScroll = this.onScroll.bind(this);
     }
@@ -325,17 +327,20 @@ class Header extends Component {
         this.setState({open: !this.state.open, anchorEl: event.currentTarget});
     }
 
+    handleMobileMenuClick(event){
+        this.setState({openMobile: !this.state.openMobile});
+    }
+
     handleMenuRequestClose(page) {
         return () => {
             this.setState({open: false});
-
             if (page)
                 this.props.go(page);
         };
     }
 
     render() {
-        const {user, classes, } = this.props;
+        const {user, classes} = this.props;
         let DropMenu = null;
         let desktopDropMenu, mobileDropMenu;
         const width = 'md';
@@ -359,18 +364,44 @@ class Header extends Component {
                                         className={classes.MenuItem}
                                         onClick={this.handleMenuRequestClose('/profile/shortlist')}>ShortList</MenuItem>);
 
-            mobileDropMenu = <Hidden only={['md','lg','xl']} >
+            mobileDropMenu =
+                <Hidden only={['md','lg','xl']} >
+                <div>
+                <Button
+                    className={classNames(classes.menuItem, classes.profileButton)}
+                    aria-owns="simple-menu"
+                    aria-haspopup="true" onClick={this.handleMobileMenuClick}>
+                    <Avatar alt={user.full_name} className={classes.avatar}
+                            src={user.profile_picture || DefaultAvatarImg}/>
+                    <Hidden smDown><span
+                        className={classes.username}>{user.first_name} {user.last_name}</span></Hidden>
+                </Button>
+                    <Hidden only={['md','lg','xl']} >
                     <Drawer
                         id="simple-menu"
                         anchor="top"
-                        open={this.state.open}
+                        open={this.state.openMobile}
                         className={classes.containerMenu}
                         onRequestClose={this.handleMenuRequestClose()}>
                         {items}
                     </Drawer>
+                    </Hidden>
+                </div>
                 </Hidden>
 
-            desktopDropMenu = <Hidden only={['xs', 'sm']}>
+            desktopDropMenu =
+                <Hidden only={['xs', 'sm']}>
+                <div>
+                <Button
+                    className={classNames(classes.menuItem, classes.profileButton)}
+                    aria-owns="simple-menu"
+                    aria-haspopup="true" onClick={this.handleMenuClick}>
+                    <Avatar alt={user.full_name} className={classes.avatar}
+                            src={user.profile_picture || DefaultAvatarImg}/>
+                    <Hidden smDown><span
+                        className={classes.username}>{user.first_name} {user.last_name}</span></Hidden>
+                </Button>
+                    <Hidden only={['xs', 'sm']}>
                     <Menu
                         id="simple-menu"
                         anchorEl={this.state.anchorEl}
@@ -379,6 +410,8 @@ class Header extends Component {
                         onRequestClose={this.handleMenuRequestClose()}>
                         {items}
                     </Menu>
+                    </Hidden>
+                </div>
                 </Hidden>
         }
         const hideBackground = (this.props.hideBackground
@@ -420,18 +453,8 @@ class Header extends Component {
                                         <span>Discover</span>
                                     </Button>
                                 </Link>
-
-                                <Button
-                                    className={classNames(classes.menuItem, classes.profileButton)}
-                                    aria-owns="simple-menu"
-                                    aria-haspopup="true" onClick={this.handleMenuClick}>
-                                    <Avatar alt={user.full_name} className={classes.avatar}
-                                            src={user.profile_picture || DefaultAvatarImg}/>
-                                    <Hidden smDown><span
-                                        className={classes.username}>{user.first_name} {user.last_name}</span></Hidden>
-                                </Button>
-                                {desktopDropMenu}
                                 {mobileDropMenu}
+                                {desktopDropMenu}
                             </div>
                         ) : (
                             <div className={classNames(classes.menu)}>
