@@ -61,7 +61,7 @@ export const postForm = (url, form, options = {}, token) => {
     return fetch(url, {
         method: 'post',
         body: form,
-        headers: getHeaders(token),
+        headers: {'Authorization': `Bearer ${token}`},
         ...options,
 
     })
