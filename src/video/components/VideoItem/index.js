@@ -379,10 +379,13 @@ class VideoItem extends Component {
         const {classes, video, currentUser, user, tagOptions} = this.props;
         if (!video || !user) return null;
         const tags = video.tags ? video.tags.map(v => '' + v) : [];
+        console.log('video', video);
         return <div>
             <Helmet>
-                <meta property="og:type" content="video" />
+                <meta property="og:type" content="video.movie" />
+                <meta property="og:url" content={absUrl(`/profile/${user.id}/video/${video.id}`)} />
                 <meta property="og:title" content={video.title}/>
+                <meta property="og:description" content={video.title}/>
                 <meta property="og:video" content={absUrl(video.overlay_video_path || video.trim_video_file_path || video.video_path)}/>
                 <meta property="og:video:url" content={absUrl(video.overlay_video_path || video.trim_video_file_path || video.video_path)}/>
                 <meta property="og:video:secure_url" content={absUrl(video.overlay_video_path || video.trim_video_file_path || video.video_path)}/>
