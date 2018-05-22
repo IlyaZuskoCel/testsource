@@ -59,14 +59,16 @@ class InForm extends Component {
         if (!this.state.password)
             return this.setState({errors: ['password']});
 
-        // Intercom login
-        window.Intercom('boot', { 
-            app_id: window.INTERCOM_ID, 
-            email: this.state.username 
-        });
-
         var detail = { email: this.state.username };
-        Intercom('trackEvent', 'Log in', detail);
+
+        // Intercom login
+        if(typeof window !== "undefined" && window.Intercom) {
+            window.Intercom('boot', {
+                app_id: window.INTERCOM_ID,
+                email: this.state.username
+            });
+            Intercom('trackEvent', 'Log in', detail);
+        }
 
         this.props.logIn(this.state.username, this.state.password);
         return false;

@@ -222,9 +222,6 @@ class ScoutFilter extends Component {
             page: this.props.page ? this.props.page : 1,
         };
 
-        // Intercom scout search
-        window.Intercom('update', { app_id: window.INTERCOM_ID });
-
         var detail = { 
             country: this.state.id_country ? this.state.id_country : null,
             league: this.state.id_league ? this.state.id_league : null,
@@ -234,7 +231,11 @@ class ScoutFilter extends Component {
             page: this.props.page ? this.props.page : 1
         };
 
-        Intercom('trackEvent', 'Search scouts', detail);
+        // Intercom scout search
+        if(typeof window !== "undefined" && window.Intercom) {
+            window.Intercom('update', { app_id: window.INTERCOM_ID });
+            Intercom('trackEvent', 'Search scouts', detail);
+        }
 
         if (this.state.name || this.state.id_league || this.state.id_team_current || this.state.id_level || this.state.id_country) {
             queryString += '?';
