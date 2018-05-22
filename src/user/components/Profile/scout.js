@@ -452,48 +452,61 @@ class ScoutProfile extends Component {
 
                 <div className={classes.content}>
 
-                    {isCurrent ? (
-                        <div className={classes.topNavigate}>
-                            <ShareButton url={absUrl(`/profile/${user.id}`)}
-                                         title={`My profile on Scout Zoo`}
-                                         dialogTitle={'Share your profile'}>
-                                <Icon>share</Icon>
-                                <span className={classes.shareTitle}>Share</span>
-                            </ShareButton>
-                            <div className={classes.rightNavigate}>
-                                <Link to="/profile/edit" disabledUnderline>
-                                    <Button className={classes.editButton}>
-                                        <Icon className={classes.editIcon}>pencil</Icon>
-                                        <span>Edit</span>
+                    {currentUser && isCurrent && <div className={classes.topNavigate}>
+                        <ShareButton url={absUrl(`/profile/${user.id}`)}
+                                     title={`My profile on Scout Zoo`}
+                                     dialogTitle={'Share your profile'}>
+                            <Icon>share</Icon>
+                            <span className={classes.shareTitle}>Share</span>
+                        </ShareButton>
+                        <div className={classes.rightNavigate}>
+                            <Link to="/profile/edit" disabledUnderline>
+                                <Button className={classes.editButton}>
+                                    <Icon className={classes.editIcon}>pencil</Icon>
+                                    <span>Edit</span>
+                                </Button>
+                            </Link>
+                            <Hidden only={['xs', 'sm']}>
+                                <Link to="/video/add" disabledUnderline>
+                                    <Button color="primary" raised className={classes.addVideoButton}>
+                                        Add a Video
                                     </Button>
                                 </Link>
-                            </div>
+                            </Hidden>
                         </div>
+                    </div>}
 
-                    ) : (currentUser ? (
-                        <div className={classes.topNavigate}>
-                            <Link to="/" onClick={this.goBack} invert disabledUnderline className={classes.backLink}>
-                                <Icon>previous</Icon>
-                                <Hidden xsDown><span className={classes.backTitle}>Back to search</span></Hidden></Link>
-                            <div>
-                                <IconButton
-                                    aria-label="More"
-                                    aria-owns={this.state.openUserMenu ? 'user-menu' : null}
-                                    aria-haspopup="true"
-                                    onClick={this.toggleUserMenu}>
-                                    <Icon>dots-three-vertical</Icon>
-                                </IconButton>
-                                <Menu
-                                    id="user-menu"
-                                    anchorEl={this.state.anchorUserMenuEl}
-                                    open={this.state.openUserMenu}
-                                    onRequestClose={this.toggleUserMenu}>
-                                    <ReportButton onClose={this.toggleUserMenu} user={user.id}
-                                                  username={`${user.first_name} ${user.last_name}`}>Report</ReportButton>
-                                </Menu>
-                            </div>
+                    {currentUser && !isCurrent && <div className={classes.topNavigate}>
+                        <Link to="/" onClick={this.goBack} invert disabledUnderline className={classes.backLink}>
+                            <Icon>previous</Icon>
+                            <Hidden only={['xs', 'sm']}><span
+                                className={classes.backTitle}>Back to search</span></Hidden></Link>
+                        <div>
+
+                            <IconButton
+                                aria-label="More"
+                                aria-owns={this.state.openUserMenu ? 'user-menu' : null}
+                                aria-haspopup="true"
+                                onClick={this.toggleUserMenu}>
+                                <Icon>dots-three-vertical</Icon>
+                            </IconButton>
+                            <Menu
+                                id="user-menu"
+                                anchorEl={this.state.anchorUserMenuEl}
+                                open={this.state.openUserMenu}
+                                onRequestClose={this.toggleUserMenu}>
+                                <ReportButton onClose={this.toggleUserMenu} user={user.id}
+                                              username={`${user.first_name} ${user.last_name}`}>Report</ReportButton>
+                            </Menu>
                         </div>
-                    ) : null)}
+                    </div>}
+
+                    {currentUser && !isCurrent && <ShareButton url={absUrl(`/profile/${user.id}`)}
+                                                               title={`My profile on Scout Zoo`}
+                                                               dialogTitle={'Share your profile'}>
+                        <Icon>share</Icon>
+                        <span className={classes.shareTitle}>Share</span>
+                    </ShareButton>}
 
                     <div className={classes.infoContainer}>
                         <Paper className={classes.infoCard} square>
