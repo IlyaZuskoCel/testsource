@@ -13,7 +13,7 @@ export default ({template, html, css, error, initialProps, store, options}) => {
     const errorHtml = error && NODE_ENV === 'development'
         ? `<div id="server-error"><h1>Server Error</h1><pre>${error.stack || error}</pre></div>`
         : '';
-    if(GOOGLE_UA)
+    if (GOOGLE_UA)
         template = template.replace(
             /<!-- Google Analytics -->/g,
             `<!-- Google Analytics -->
@@ -33,15 +33,26 @@ export default ({template, html, css, error, initialProps, store, options}) => {
                 ga('send', 'pageview');
             </script>`
         );
-    if(INTERCOM_ID)
+    if (INTERCOM_ID)
         template = template.replace(
             /<!-- Intercom OFF -->/g,
             `<!-- Intercom OFF -->
                 <script>
-                  window.INTERCOM_ID = '${INTERCOM_ID}';
+                    var posIntercom = 'left';
+                    var width = window.innerWidth
+                                || document.documentElement.clientWidth
+                                || document.body.clientWidth;
+
+                    // Desktop config
+                    if(width > 960) { posIntercom = 'right'; } 
+
+
                   window.intercomSettings = {
-                    app_id: window.INTERCOM_ID,
-                    hide_default_launcher: true
+                    app_id: '${INTERCOM_ID}',
+                    hide_default_launcher: false,
+                    alignment: posIntercom,
+                    horizontal_padding: 20,
+                    vertical_padding: 20
                   };
                 </script>
                 <script>(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/'+window.INTERCOM_ID;var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()</script>
@@ -68,9 +79,8 @@ export default ({template, html, css, error, initialProps, store, options}) => {
         )
         .replace(
             /<\/head>/g,
-            head.meta.toString()+'\n</head>'
+            head.meta.toString() + '\n</head>'
         );
-
 
 
 };

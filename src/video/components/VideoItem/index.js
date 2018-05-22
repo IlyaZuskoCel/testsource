@@ -383,6 +383,8 @@ class VideoItem extends Component {
             <Helmet>
 
 
+                <meta property="og:image" content={absUrl(video.overlay || video.thumb_lg)} />
+
                 <meta name="twitter:card" content='player'/>
                 <meta name="twitter:title" content={video.title}/>
                 <meta name="twitter:description" content={video.description || 'ScoutZoo'} />
@@ -403,9 +405,6 @@ class VideoItem extends Component {
                 <meta property="og:video:type" content="text/html"/>
                 <meta property="og:video:width" content={video.width}/>
                 <meta property="og:video:height" content={video.height}/>
-                <meta property="og:image" content={absUrl(video.overlay || video.thumb_lg)} />
-
-
 
 
                 <link rel="canonical" href={absUrl(`/profile/${user.id}/video/${video.id}`)}/>
