@@ -10,6 +10,9 @@ const INTERCOM_ID = process.env.INTERCOM_ID;
 export default ({template, html, css, error, initialProps, store, options}) => {
     const head = Helmet.renderStatic();
 
+    if(error)
+        console.log(error);
+
     const errorHtml = error && NODE_ENV === 'development'
         ? `<div id="server-error"><h1>Server Error</h1><pre>${error.stack || error}</pre></div>`
         : '';
