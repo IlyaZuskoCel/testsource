@@ -5,7 +5,7 @@
 import cookie from 'react-cookies';
 
 const fetch = typeof window === 'undefined' ? require('node-fetch') : window.fetch;
-const DOMAIN_URL = typeof window === 'undefined' ? "http://nginx" : "";
+const DOMAIN_URL = typeof window === 'undefined' ? process.env.SITE_URL : "";
 const getHeaders = (token) => {
     let headers = {'Content-Type': 'application/json'};
     if (token)
