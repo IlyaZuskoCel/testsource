@@ -15,6 +15,7 @@ import Paper from 'material-ui/Paper';
 import IconButton from 'material-ui/IconButton';
 import Menu, {MenuItem} from 'material-ui/Menu';
 import Button from 'material-ui/Button';
+import Helmet from 'react-helmet';
 
 import {Link, Icon} from '../../../common/components';
 
@@ -401,11 +402,7 @@ class ScoutProfile extends Component {
         const smallWidth = width === 'sm' || width === 'xs';
         let userPhotoSrc = defaultPhoto;
 
-
-        // Intercom scout view
-        window.Intercom('update', { app_id: window.INTERCOM_ID });
-
-        var detail = {           
+        let detail = {
           name: user.first_name+' '+user.last_name,
           job_title: user.job_title,
           country: user.country,
@@ -414,7 +411,11 @@ class ScoutProfile extends Component {
           type: 'Scout'
         };
 
-        Intercom('trackEvent', 'View scout', detail);
+        // Intercom scout view
+        if(typeof window !== "undefined" && window.Intercom) {
+            window.Intercom('update', {app_id: window.INTERCOM_ID});
+            Intercom('trackEvent', 'View scout', detail);
+        }
 
         if (user.profile_picture) {
             userPhotoSrc = user.profile_picture;
@@ -426,17 +427,32 @@ class ScoutProfile extends Component {
             userPhotoSrc = user.profile_picture_desktop;
         }
 
-        return <div className={classes.root}>
-            <div className={classes.backgroundImgWrap}>
-                <img className={classes.backgroundImg} src={scoutBg}/>
-            </div>
-            <div className={classes.backgroundRight}/>
-            <div className={classes.backgroundLeft}/>
+        return <div>
+            <Helmet>
+                <meta property="og:url" content={absUrl(`/profile/${user.id}`)} />
+                <meta property="og:title" content={detail.name} />
+                <meta property="og:type" content="article" />
+                <meta property="og:image" content={user.profile_picture} />
+                <meta property="og:description" content={detail.league} />
 
-            <div className={classes.content}>
+                <meta name="twitter:card" content='player' />
+                <meta name="twitter:title" content={detail.name} />
+                <meta name="twitter:description" content={detail.league} />
+                <meta name="twitter:image" content={user.profile_picture} />
 
-                {isCurrent ? (
-                    <div className={classes.topNavigate}>
+                <link rel="canonical" href={absUrl(`/profile/${user.id}`)} />
+            </Helmet>
+
+            <div className={classes.root}>
+                <div className={classes.backgroundImgWrap}>
+                    <img className={classes.backgroundImg} src={scoutBg}/>
+                </div>
+                <div className={classes.backgroundRight}/>
+                <div className={classes.backgroundLeft}/>
+
+                <div className={classes.content}>
+
+                    {currentUser && isCurrent && <div className={classes.topNavigate}>
                         <ShareButton url={absUrl(`/profile/${user.id}`)}
                                      title={`My profile on Scout Zoo`}
                                      dialogTitle={'Share your profile'}>
@@ -450,15 +466,23 @@ class ScoutProfile extends Component {
                                     <span>Edit</span>
                                 </Button>
                             </Link>
+                            <Hidden only={['xs', 'sm']}>
+                                <Link to="/video/add" disabledUnderline>
+                                    <Button color="primary" raised className={classes.addVideoButton}>
+                                        Add a Video
+                                    </Button>
+                                </Link>
+                            </Hidden>
                         </div>
-                    </div>
+                    </div>}
 
-                ) : (currentUser ? (
-                    <div className={classes.topNavigate}>
+                    {currentUser && !isCurrent && <div className={classes.topNavigate}>
                         <Link to="/" onClick={this.goBack} invert disabledUnderline className={classes.backLink}>
                             <Icon>previous</Icon>
-                            <Hidden xsDown><span className={classes.backTitle}>Back to search</span></Hidden></Link>
+                            <Hidden only={['xs', 'sm']}><span
+                                className={classes.backTitle}>Back to search</span></Hidden></Link>
                         <div>
+
                             <IconButton
                                 aria-label="More"
                                 aria-owns={this.state.openUserMenu ? 'user-menu' : null}
@@ -475,137 +499,144 @@ class ScoutProfile extends Component {
                                               username={`${user.first_name} ${user.last_name}`}>Report</ReportButton>
                             </Menu>
                         </div>
-                    </div>
-                ) : null)}
+                    </div>}
 
-                <div className={classes.infoContainer}>
-                    <Paper className={classes.infoCard} square>
+                    {currentUser && !isCurrent && <ShareButton url={absUrl(`/profile/${user.id}`)}
+                                                               title={`My profile on Scout Zoo`}
+                                                               dialogTitle={'Share your profile'}>
+                        <Icon>share</Icon>
+                        <span className={classes.shareTitle}>Share</span>
+                    </ShareButton>}
 
-                        <div
-                            className={classNames(classes.infoCardPhotoWrap, {[classes.infoCardPhotoDefaultWrap]: !user.profile_picture})}>
-                            <img
-                                className={classNames(classes.infoCardPhoto, {[classes.infoCardPhotoDefault]: !user.profile_picture})}
-                                src={userPhotoSrc}/>
+                    <div className={classes.infoContainer}>
+                        <Paper className={classes.infoCard} square>
 
-                        </div>
-                        <div className={classes.infoCardDataBottom}>
-                            <div className={classes.infoCardLeagueLine}/>
-
-                            <div className={classes.infoCardData}>
-                                <Hidden only={['md', 'lg', 'xl']}>
-                                    <div>
-                                        <Typography type="title" align="center"
-                                                    className={classes.infoCardName}>{user.first_name} {user.last_name}
-                                            {!!user.is_verify &&
-                                            <img src={verifiedImage} className={classes.verifiedImage}/>}
-                                        </Typography>
-                                        {user.job_title && (
-                                            <Typography type="body1" align="center">{user.job_title}</Typography>)}
-                                        <div className={classes.infoCardDataSeparator}/>
-                                    </div>
-                                </Hidden>
-                                <Typography type="subheading" align="center" className={classes.infoCardTeam}>
-                                    {user.team || 'Team Unknown'}
-                                    {user.league_short ? ' - ' + user.league_short : (!user.league_status ? user.league : '')}
-                                    {(!user.team_status && user.team || !user.league_status && user.league) && "*"}
-                                </Typography>
-                                <Typography type="body1" align="center">
-                                    {(user.team_location !== 'n/a' && user.team_location) || user.team_country || 'Location Unknown'}
-                                </Typography>
-                                {(!user.team_status && user.team || !user.league_status && user.league) && (
-                                    <Typography type="caption" align="center" className={classes.pendingVerification}>
-                                        *Pending verification by Scout Zoo.
-                                    </Typography>
-                                )}
+                            <div
+                                className={classNames(classes.infoCardPhotoWrap, {[classes.infoCardPhotoDefaultWrap]: !user.profile_picture})}>
+                                <img
+                                    className={classNames(classes.infoCardPhoto, {[classes.infoCardPhotoDefault]: !user.profile_picture})}
+                                    src={userPhotoSrc}/>
 
                             </div>
-                        </div>
-                    </Paper>
-                    <Hidden only={['xs', 'sm']}>
-                        <div className={classes.infoRight}>
-                            <Typography type="headline"
-                                        className={classes.infoRightName}>{user.first_name} {user.last_name}
-                                {!!user.is_verify && <img src={verifiedImage} className={classes.verifiedImage}/>}
-                            </Typography>
+                            <div className={classes.infoCardDataBottom}>
+                                <div className={classes.infoCardLeagueLine}/>
 
-                            <Typography type="body2">{user.job_title || 'Title Unknown'}</Typography>
-
-                            {user.biography && (
-                                <Typography type="body1"
-                                            className={classes.infoRightAbout}>{user.biography}</Typography>
-                            )}
-
-                            {isCurrent && (!user.biography || !user.profile_picture) && (
-                                <div className={classes.profileIncomplete}>
-                                    <Typography type="subheading">Your profile is incomplete!</Typography>
-
-                                    <Typography type="body1" className={classes.point}>
-                                        <Link to="/profile/edit" disabledUnderline>
-                                            <Button className={classes.editButton}>
-                                                <Icon className={classes.editIcon}>pencil</Icon>
-                                                <span>Edit</span>
-                                            </Button>
-                                        </Link> your profile information
+                                <div className={classes.infoCardData}>
+                                    <Hidden only={['md', 'lg', 'xl']}>
+                                        <div>
+                                            <Typography type="title" align="center"
+                                                        className={classes.infoCardName}>{user.first_name} {user.last_name}
+                                                {!!user.is_verify &&
+                                                <img src={verifiedImage} className={classes.verifiedImage}/>}
+                                            </Typography>
+                                            {user.job_title && (
+                                                <Typography type="body1" align="center">{user.job_title}</Typography>)}
+                                            <div className={classes.infoCardDataSeparator}/>
+                                        </div>
+                                    </Hidden>
+                                    <Typography type="subheading" align="center" className={classes.infoCardTeam}>
+                                        {user.team || 'Team Unknown'}
+                                        {user.league_short ? ' - ' + user.league_short : (!user.league_status ? user.league : '')}
+                                        {(!user.team_status && user.team || !user.league_status && user.league) && "*"}
                                     </Typography>
+                                    <Typography type="body1" align="center">
+                                        {(user.team_location !== 'n/a' && user.team_location) || user.team_country || 'Location Unknown'}
+                                    </Typography>
+                                    {(!user.team_status && user.team || !user.league_status && user.league) && (
+                                        <Typography type="caption" align="center"
+                                                    className={classes.pendingVerification}>
+                                            *Pending verification by Scout Zoo.
+                                        </Typography>
+                                    )}
+
                                 </div>
-                            )}
+                            </div>
+                        </Paper>
+                        <Hidden only={['xs', 'sm']}>
+                            <div className={classes.infoRight}>
+                                <Typography type="headline"
+                                            className={classes.infoRightName}>{user.first_name} {user.last_name}
+                                    {!!user.is_verify && <img src={verifiedImage} className={classes.verifiedImage}/>}
+                                </Typography>
 
-                        </div>
-                    </Hidden>
-                </div>
+                                <Typography type="body2">{user.job_title || 'Title Unknown'}</Typography>
 
-
-                {(isCurrent || user.biography) && (
-                    <Hidden only={['md', 'lg', 'xl']}>
-                        <Paper square className={classes.mobileContent}>
-                            <div className={classes.tabContent}>
-
-                                {isCurrent && (!user.biography || !user.profile_picture || !currentUser.is_verify) && (
-                                    <Typography type="subheading" align="center" className={classes.descTitle}>
-                                        Your profile is incomplete!
-                                    </Typography>
+                                {user.biography && (
+                                    <Typography type="body1"
+                                                className={classes.infoRightAbout}>{user.biography}</Typography>
                                 )}
 
                                 {isCurrent && (!user.biography || !user.profile_picture) && (
+                                    <div className={classes.profileIncomplete}>
+                                        <Typography type="subheading">Your profile is incomplete!</Typography>
 
-                                    <Typography type="body1" className={classes.point}>
-                                        <Link to="/profile/edit" disabledUnderline>
-                                            <Button className={classes.editButton}>
-                                                <Icon className={classes.editIcon}>pencil</Icon>
-                                                <span>Edit</span>
-                                            </Button>
-                                        </Link> your profile information
-                                    </Typography>
-                                )}
-
-
-                                {isCurrent && !currentUser.is_verify && (
-                                    <div>
-                                        <Typography type="body1" align="center" className={classes.desc}>
-                                            You must be a verified scout before contacting players.
-                                        </Typography>
-                                        <Typography type="caption" align="center"
-                                                    className={classNames(classes.desc, classes.descBottom)}>
-                                            Please go to your <Link to="/setting">Settings</Link> to request to get
-                                            verified.
+                                        <Typography type="body1" className={classes.point}>
+                                            <Link to="/profile/edit" disabledUnderline>
+                                                <Button className={classes.editButton}>
+                                                    <Icon className={classes.editIcon}>pencil</Icon>
+                                                    <span>Edit</span>
+                                                </Button>
+                                            </Link> your profile information
                                         </Typography>
                                     </div>
                                 )}
 
-
-                                {user.biography && (
-                                    <Typography type="body1" className={classes.infoRightAbout}>
-                                        {user.biography}
-                                    </Typography>
-                                )}
-
                             </div>
-                        </Paper>
-                    </Hidden>
-                )}
+                        </Hidden>
+                    </div>
 
+
+                    {(isCurrent || user.biography) && (
+                        <Hidden only={['md', 'lg', 'xl']}>
+                            <Paper square className={classes.mobileContent}>
+                                <div className={classes.tabContent}>
+
+                                    {isCurrent && (!user.biography || !user.profile_picture || !currentUser.is_verify) && (
+                                        <Typography type="subheading" align="center" className={classes.descTitle}>
+                                            Your profile is incomplete!
+                                        </Typography>
+                                    )}
+
+                                    {isCurrent && (!user.biography || !user.profile_picture) && (
+
+                                        <Typography type="body1" className={classes.point}>
+                                            <Link to="/profile/edit" disabledUnderline>
+                                                <Button className={classes.editButton}>
+                                                    <Icon className={classes.editIcon}>pencil</Icon>
+                                                    <span>Edit</span>
+                                                </Button>
+                                            </Link> your profile information
+                                        </Typography>
+                                    )}
+
+
+                                    {isCurrent && !currentUser.is_verify && (
+                                        <div>
+                                            <Typography type="body1" align="center" className={classes.desc}>
+                                                You must be a verified scout before contacting players.
+                                            </Typography>
+                                            <Typography type="caption" align="center"
+                                                        className={classNames(classes.desc, classes.descBottom)}>
+                                                Please go to your <Link to="/setting">Settings</Link> to request to get
+                                                verified.
+                                            </Typography>
+                                        </div>
+                                    )}
+
+
+                                    {user.biography && (
+                                        <Typography type="body1" className={classes.infoRightAbout}>
+                                            {user.biography}
+                                        </Typography>
+                                    )}
+
+                                </div>
+                            </Paper>
+                        </Hidden>
+                    )}
+
+                </div>
             </div>
-
         </div>
 
     }
