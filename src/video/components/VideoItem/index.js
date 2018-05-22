@@ -392,7 +392,7 @@ class VideoItem extends Component {
                 <meta property="og:video:type" content="video/mp4"/>
                 <meta property="og:video:width" content="360"/>
                 <meta property="og:video:height" content="200"/>
-                <meta property="og:image"        content={video.overlay || video.thumb_lg} />
+                <meta property="og:image"        content={absUrl(video.overlay || video.thumb_lg)} />
 
 
                 <meta name="twitter:card" content='player'/>
@@ -401,7 +401,7 @@ class VideoItem extends Component {
                 <meta name="twitter:player" content={absUrl(video.overlay_video_path || video.trim_video_file_path || video.video_path)}/>
                 <meta name="twitter:player:width" content='360'/>
                 <meta name="twitter:player:height" content='200'/>
-                <meta name="twitter:image" content={video.overlay || video.thumb_lg}/>
+                <meta name="twitter:image" content={absUrl(video.overlay || video.thumb_lg)}/>
 
                 <link rel="canonical" href={absUrl(`/profile/${user.id}/video/${video.id}`)}/>
             </Helmet>
