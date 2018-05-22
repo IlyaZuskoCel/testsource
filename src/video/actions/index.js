@@ -47,9 +47,9 @@ export const fetchVideo = (id, token) => dispatch => {
 };
 
 
-const getStatusVideo = (id, status, type) => dispatch => {
+const getStatusVideo = (id, status, type, token) => dispatch => {
     setTimeout(() => {
-        get(`/api/v2/video/get/${id}`)
+        get(`/api/v2/video/get/${id}`, {}, token)
             .then(video => {
                 console.log(id, status, type, video.status === status);
 
@@ -63,7 +63,7 @@ const getStatusVideo = (id, status, type) => dispatch => {
                     dispatch(stopLoading());
                     return dispatch({type, payload: video});
                 }
-                return dispatch(getStatusVideo(id, status, type))
+                return dispatch(getStatusVideo(id, status, type, token))
             })
     }, 1000);
 };
@@ -85,7 +85,7 @@ export const upload = (file, token) => dispatch => {
             dispatch({type: UPLOAD_VIDEO, payload: result});
 
 
-            dispatch(getStatusVideo(result.id, VIDEO_STATUS.STATUS_CONVERT, UPLOAD_VIDEO));
+            dispatch(getStatusVideo(result.id, VIDEO_STATUS.STATUS_CONVERT, UPLOAD_VIDEO, token));
 
         })
         .catch((message) => {
@@ -118,7 +118,7 @@ export const postVideo = (data, token) => dispatch => {
                         let form = new FormData();
                         form.append('UploadForm', blob);
                         form.append('video_id', data.id);
-                        return postForm(`/api/v2/video/overlay`, form)
+                        return postForm(`/api/v2/video/overlay`, form, {}, token)
                     })
                     .then(() => {
                         dispatch(stopLoading());
@@ -166,7 +166,7 @@ export const update = (data, token) => dispatch => {
                         let form = new FormData();
                         form.append('UploadForm', blob);
                         form.append('video_id', data.id);
-                        return postForm(`/api/v2/video/overlay`, form)
+                        return postForm(`/api/v2/video/overlay`, form, {}, token)
                     })
                     .then(() => {
                         dispatch(stopLoading());
