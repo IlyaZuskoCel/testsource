@@ -38,14 +38,20 @@
 <script>
 window.INTERCOM_ID = '%INTERCOM_ID%';
 // returns width of browser viewport
-var hideIntercom = true;
 
-if( $(window).width() > 1000) { hideIntercom = false; } 
+var posIntercom = 'left';
+var width = window.innerWidth
+|| document.documentElement.clientWidth
+|| document.body.clientWidth;
 
+// Desktop config
+if(width > 960) { posIntercom = 'right'; } 
+
+// Default mobile config
   window.intercomSettings = {
     app_id: window.INTERCOM_ID,
-    hide_default_launcher: hideIntercom,
-    alignment: 'left',
+    hide_default_launcher: false,
+    alignment: posIntercom,
     horizontal_padding: 20,
     vertical_padding: 20
   };
