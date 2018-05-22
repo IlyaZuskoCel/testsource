@@ -207,7 +207,7 @@ export const trim = (id_video, time_start, time_end, token) => dispatch => {
                 return dispatch(stopLoading());
             }
 
-            dispatch(getStatusVideo(result.id, VIDEO_STATUS.STATUS_TRIMMED, TRIM_VIDEO));
+            dispatch(getStatusVideo(result.id, VIDEO_STATUS.STATUS_TRIMMED, TRIM_VIDEO, token));
 
         })
         .catch((message) => {
