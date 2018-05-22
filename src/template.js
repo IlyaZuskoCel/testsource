@@ -7,7 +7,7 @@ const GOOGLE_UA = process.env.GOOGLE_UA;
 const INTERCOM_ID = process.env.INTERCOM_ID;
 
 
-export default ({template, html, css, error}) => {
+export default ({template, html, css, error, initialProps, store, options}) => {
     const head = Helmet.renderStatic();
 
     const errorHtml = error && NODE_ENV === 'development'
@@ -52,6 +52,11 @@ export default ({template, html, css, error}) => {
             `%BACKEND_URL%`,
             BACKEND_URL
         )
+        .replace(
+            `<div id="app"></div>`,
+            `<div id="app"></div>
+             <script type="text/javascript">window[${options.initialStateKey}] = ${JSON.stringify(store ? store.getState() : {})};</script>
+             <script type="text/javascript">window[${options.initialPropsKey}] = ${JSON.stringify(initialProps || {})};</script>`)
         .replace(
             `<div id="app"></div>`,
             `${errorHtml}<div id="app">${html}</div>`
