@@ -18,7 +18,7 @@ const mapStateToProps = (state, props) => ({
     tags: map(state.video.tags),
     tagOptions: mapOptions(state.video.tags),
     userId: state.user.current && state.user.current.id,
-    user: state.user.user,
+    user: state.user.current,
     token: state.common.cookies.token
 });
 
