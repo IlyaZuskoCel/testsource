@@ -7,6 +7,7 @@ import React from 'react';
 
 
 import PrivateRoute from '../common/containers/PrivateRoute';
+import DefaultLayout from '../common/containers/DefaultRoute'
 
 import Add from './containers/Add';
 import Edit from './containers/Edit';
