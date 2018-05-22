@@ -135,7 +135,9 @@ export const registerPlayer = (user, token) => dispatch => {
 
 export const logOut = (token) => dispatch => {
     dispatch(startLoading());
-    Intercom('shutdown');
+    if(window.Intercom) {
+        Intercom('shutdown')
+    }
 
     return get('/api/v2/profile/logout', {}, token)
         .then(() => {
