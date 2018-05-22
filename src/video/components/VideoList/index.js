@@ -103,11 +103,6 @@ class VideoList extends Component {
         tags: []
     };
 
-    componentDidMount() {
-        if (!this.props.tags.length)
-            this.props.fetchData();
-    }
-
     toggleTag = id => e => {
 
         if (this.state.tags.indexOf(id) < 0)

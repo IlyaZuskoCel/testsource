@@ -25,3 +25,4 @@ export const HEADER_BACKGROUND_HIDE = 'header:hideBackground';
 
 export const FOOTER_SHOW = 'footer:show';
 export const FOOTER_HIDE = 'footer:hide';
+export const SET_COOKIE =  'cookie:set';

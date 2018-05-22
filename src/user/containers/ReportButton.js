@@ -10,9 +10,16 @@ import ReportButton from '../components/ReportButton';
 
 import {report} from '../actions';
 
-const mapStateToProps = (state, props) => ({});
-const mapDispatchToProps = (dispatch) => ({
-    report: (id, type, message) => dispatch(report(id, type, message)),
+const mapStateToProps = (state, props) => ({
+    token: state.common.cookies.token,
 });
-
-export default connect(mapStateToProps, mapDispatchToProps)(ReportButton)
+const mapDispatchToProps = (dispatch) => ({
+    report: (id, type, message, token) => dispatch(report(id, type, message, token)),
+});
+const mergeProps = (stateProps, dispatchProps, ownProps) => ({
+    ...stateProps,
+    ...dispatchProps,
+    ...ownProps,
+    report: (id, type, message) => dispatchProps.report(id, type, message, stateProps.token),
+});
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(ReportButton)

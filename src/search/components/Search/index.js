@@ -12,7 +12,7 @@ import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import withWidth from 'material-ui/utils/withWidth';
 import {Link, Pagination, Autosuggest} from '../../../common/components';
-import Hidden from 'material-ui/Hidden';
+import Hidden from '../../../common/components/Hidden';
 import Button from 'material-ui/Button';
 import Snackbar from 'material-ui/Snackbar';
 
@@ -24,10 +24,7 @@ import Scouts from './scouts';
 import ScoutFilter from './scoutFilter';
 import PlayerFilter from './playerFilter';
 import Icon from 'material-ui/Icon';
-
 import queryString from 'query-string';
-import './assets/style.css';
-import * as ReactDOM from "react-dom";
 
 const styleSheet = createStyleSheet('Search', theme => ({
     root: {},
@@ -304,10 +301,10 @@ class Search extends Component {
         window.addEventListener("scroll", this.handleScroll);
         let query = {...this.state.query}
 
-        setTimeout(() => {
-            this.props.upload(this.props.type, {page: 1, 'per-page': 18, ...query})
-        }, 400);
-        this.props.fetchData();
+        // setTimeout(() => {
+        //     this.props.upload(this.props.type, {page: 1, 'per-page': 18, ...query})
+        // }, 400);
+        // this.props.fetchData();
     }
 
     componentWillUnmount() {
@@ -435,8 +432,8 @@ class Search extends Component {
     }
 
     render() {
-        const {classes, width,currentUser} = this.props;
-        const smallWidth = width === 'sm' || width === 'xs';
+        const {classes,currentUser} = this.props;
+
         return (<div className={classes.root}>
 
             <Hidden only={['xs', 'sm']}>
@@ -548,7 +545,7 @@ class Search extends Component {
                 </div>
             </Hidden>
 
-            {(!this.state.mobileFilterOn && smallWidth) && <Hidden only={['md', 'lg', 'xl']}>
+            {!this.state.mobileFilterOn  && <Hidden only={['md', 'lg', 'xl']}>
                 <div>
                     {this.props.type === 'scout' && <ScoutFilter countries={this.props.countries}
                                                                  countryOptions={this.props.countryOptions}
@@ -648,7 +645,6 @@ class Search extends Component {
 Search.propTypes = {
     children: PropTypes.node,
     classes: PropTypes.object.isRequired,
-    width: PropTypes.string,
 };
 
-export default compose(withStyles(styleSheet), withWidth())(Search);
+export default withStyles(styleSheet)(Search);

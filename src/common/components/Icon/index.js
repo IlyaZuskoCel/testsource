@@ -9,7 +9,6 @@ import classNames from 'classnames';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import {capitalizeFirstLetter} from 'material-ui/utils/helpers';
 
-import './assets/style.css';
 
 
 export const styleSheet = createStyleSheet('MuiIcon', theme => ({
