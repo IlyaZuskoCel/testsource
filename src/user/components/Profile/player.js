@@ -632,7 +632,7 @@ class PlayerProfile extends Component {
                 <div className={classes.backgroundLeft}/>
                 <div className={classes.content}>
 
-                    {isAuth && isCurrent && <div className={classes.topNavigate}>
+                    {currentUser && isCurrent && <div className={classes.topNavigate}>
                         <ShareButton url={absUrl(`/profile/${user.id}`)}
                                      title={`My profile on Scout Zoo`}
                                      dialogTitle={'Share your profile'}>
@@ -656,7 +656,7 @@ class PlayerProfile extends Component {
                         </div>
                     </div>}
 
-                    {isAuth && !isCurrent && <div className={classes.topNavigate}>
+                    {currentUser && !isCurrent && <div className={classes.topNavigate}>
                         <Link to="/" onClick={this.goBack} invert disabledUnderline className={classes.backLink}>
                             <Icon>previous</Icon>
                             <Hidden only={['xs', 'sm']}><span
@@ -683,7 +683,7 @@ class PlayerProfile extends Component {
                         </div>
                     </div>}
 
-                    {isAuth && !isCurrent && <ShareButton url={absUrl(`/profile/${user.id}`)}
+                    {currentUser && !isCurrent && <ShareButton url={absUrl(`/profile/${user.id}`)}
                                                           title={`My profile on Scout Zoo`}
                                                           dialogTitle={'Share your profile'}>
                         <Icon>share</Icon>
