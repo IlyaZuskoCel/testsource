@@ -19,7 +19,6 @@
     "jss-vendor-prefixer": "^6.0.0",
     "material-ui": "next",
     "moment": "^2.18.1",
-    "normalize.css": "^7.0.0",
     "prop-types": "^15.5.10",
     "query-string": "^5.0.0",
     "rc-slider": "^8.3.1",

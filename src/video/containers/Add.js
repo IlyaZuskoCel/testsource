@@ -17,7 +17,6 @@ const mapStateToProps = (state, props) => ({
     video: state.video.video,
     tags: map(state.video.tags),
     tagOptions: mapOptions(state.video.tags),
-    userId: state.user.current && state.user.current.id,
     user: state.user.current,
     token: state.common.cookies.token
 });
@@ -43,15 +42,10 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => ({
 
 class Wrap extends Component {
     static async getInitialProps({location, query, params, store}) {
-        const match = matchPath(location.pathname, {
-            path: '/profile/:id/',
-        });
-
         const state = store.getState();
         return await Promise.all([
             store.dispatch(clear()),
             store.dispatch(fetchTags(state.common.cookies.token)),
-            store.dispatch(getUser(match.params.id, state.common.cookies.token)),
             store.dispatch(getCurrent(state.common.cookies.token)),
         ])
 
