@@ -1,8 +1,3 @@
-/**
- * Created by aleksandr on 8/11/17.
- * moonion.com
- */
-
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
@@ -19,7 +14,7 @@ import Menu, {MenuItem} from 'material-ui/Menu';
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
 import Tabs, {Tab} from 'material-ui/Tabs';
-
+import Helmet from 'react-helmet';
 
 import {absUrl} from '../../../common/helpers';
 
@@ -581,13 +576,8 @@ class PlayerProfile extends Component {
         const {classes, user, currentUser, isCurrent} = this.props;
         const smallWidth = width === 'sm' || width === 'xs';
         let userPhotoSrc = defaultPhoto;
-        // Intercom player view
-        if(typeof window !== "undefined") {
-            window.Intercom('update', {app_id: window.INTERCOM_ID});
-            Intercom('trackEvent', 'View player', detail);
-        }
 
-        var detail = {           
+        let detail = {
           name: user.first_name+' '+user.last_name,
           dob: user.birthday,
           gender: user.gender,
@@ -602,8 +592,11 @@ class PlayerProfile extends Component {
           type: 'Player'
         };
 
-
-
+        // Intercom player view
+        if(typeof window !== "undefined" && window.Intercom) {
+            window.Intercom('update', {app_id: window.INTERCOM_ID});
+            Intercom('trackEvent', 'View player', detail);
+        }
 
         if (user.profile_picture) {
             userPhotoSrc = user.profile_picture;
@@ -614,16 +607,32 @@ class PlayerProfile extends Component {
         } else if (user.profile_picture_desktop) {
             userPhotoSrc = user.profile_picture_desktop;
         }
-        return <div className={classes.root}>
-            <div className={classes.backgroundImgWrap}>
-                <img className={classes.backgroundImg} src={playerBg}/>
-            </div>
-            <div className={classes.backgroundRight}/>
-            <div className={classes.backgroundLeft}/>
-            <div className={classes.content}>
 
-                {isCurrent ? (
-                    <div className={classes.topNavigate}>
+        return <div>
+            <Helmet>
+                <meta property="og:url" content={absUrl(`/profile/${user.id}`)}/>
+                <meta property="og:title" content={detail.name}/>
+                <meta property="og:type" content="article"/>
+                <meta property="og:image" content={user.profile_picture}/>
+                <meta property="og:description" content={detail.league}/>
+
+                <meta name="twitter:card" content='player'/>
+                <meta name="twitter:title" content={detail.name}/>
+                <meta name="twitter:description" content={detail.league}/>
+                <meta name="twitter:image" content={user.profile_picture}/>
+
+                <link rel="canonical" href={absUrl(`/profile/${user.id}`)}/>
+            </Helmet>
+
+            <div className={classes.root}>
+                <div className={classes.backgroundImgWrap}>
+                    <img className={classes.backgroundImg} src={playerBg}/>
+                </div>
+                <div className={classes.backgroundRight}/>
+                <div className={classes.backgroundLeft}/>
+                <div className={classes.content}>
+
+                    {currentUser && isCurrent && <div className={classes.topNavigate}>
                         <ShareButton url={absUrl(`/profile/${user.id}`)}
                                      title={`My profile on Scout Zoo`}
                                      dialogTitle={'Share your profile'}>
@@ -645,10 +654,9 @@ class PlayerProfile extends Component {
                                 </Link>
                             </Hidden>
                         </div>
-                    </div>
+                    </div>}
 
-                ) : (currentUser ? (
-                    <div className={classes.topNavigate}>
+                    {currentUser && !isCurrent && <div className={classes.topNavigate}>
                         <Link to="/" onClick={this.goBack} invert disabledUnderline className={classes.backLink}>
                             <Icon>previous</Icon>
                             <Hidden only={['xs', 'sm']}><span
@@ -673,8 +681,15 @@ class PlayerProfile extends Component {
                                               username={`${user.first_name} ${user.last_name}`}>Report</ReportButton>
                             </Menu>
                         </div>
-                    </div>
-                ) : null)}
+                    </div>}
+
+                    {currentUser && !isCurrent && <ShareButton url={absUrl(`/profile/${user.id}`)}
+                                                          title={`My profile on Scout Zoo`}
+                                                          dialogTitle={'Share your profile'}>
+                        <Icon>share</Icon>
+                        <span className={classes.shareTitle}>Share</span>
+                    </ShareButton>}
+
 
                 <div className={classes.infoContainer}>
                     <Hidden mdDown>
@@ -687,32 +702,32 @@ class PlayerProfile extends Component {
                                         {`${user.height[0]}'${user.height[1]}''`}
                                     </Typography>
 
-                                </div>
-                            )}
-                            {user.weight && (
-                                <div className={classes.infoRow}>
-                                    <Typography type="caption" className={classes.infoCaption}>Weight</Typography>
-                                    <Typography type="body2" className={classes.infoValue}>
-                                        {parseFloat(user.weight)} lbs
-                                    </Typography>
+                                    </div>
+                                )}
+                                {user.weight && (
+                                    <div className={classes.infoRow}>
+                                        <Typography type="caption" className={classes.infoCaption}>Weight</Typography>
+                                        <Typography type="body2" className={classes.infoValue}>
+                                            {parseFloat(user.weight)} lbs
+                                        </Typography>
 
-                                </div>
-                            )}
-                            {user.gender_full && (
-                                <div className={classes.infoRow}>
-                                    <Typography type="caption" className={classes.infoCaption}>Gender</Typography>
-                                    <Typography type="body2" className={classes.infoValue}>
-                                        {user.gender_full}
-                                    </Typography>
+                                    </div>
+                                )}
+                                {user.gender_full && (
+                                    <div className={classes.infoRow}>
+                                        <Typography type="caption" className={classes.infoCaption}>Gender</Typography>
+                                        <Typography type="body2" className={classes.infoValue}>
+                                            {user.gender_full}
+                                        </Typography>
 
-                                </div>
-                            )}
-                            {user.shot && (
-                                <div className={classes.infoRow}>
-                                    <Typography type="caption" className={classes.infoCaption}>Shot</Typography>
-                                    <Typography type="body2" className={classes.infoValue}>
-                                        {SHOT_LIST[user.shot]}
-                                    </Typography>
+                                    </div>
+                                )}
+                                {user.shot && (
+                                    <div className={classes.infoRow}>
+                                        <Typography type="caption" className={classes.infoCaption}>Shot</Typography>
+                                        <Typography type="body2" className={classes.infoValue}>
+                                            {SHOT_LIST[user.shot]}
+                                        </Typography>
 
                                 </div>
                             )}
@@ -725,38 +740,39 @@ class PlayerProfile extends Component {
                                         type="headline">{user.jersey_number}</Typography>)}
 
 
-                        <div
-                            className={classNames(classes.infoCardPhotoWrap, {[classes.infoCardPhotoDefaultWrap]: !user.profile_picture})}>
-                            <img
-                                className={classNames(classes.infoCardPhoto, {[classes.infoCardPhotoDefault]: !user.profile_picture})}
-                                src={userPhotoSrc}/>
-
-                        </div>
-                        <div className={classes.infoCardDataBottom}>
-                            <div className={classes.infoCardLeagueLine}>
-                                <Icon className={classes.infoCardLeagueShield}>shield</Icon>
-                                <Typography type="body2" align="center"
-                                            className={classes.infoCardLeague}>{user.position_short || '/'}</Typography>
+                            <div
+                                className={classNames(classes.infoCardPhotoWrap, {[classes.infoCardPhotoDefaultWrap]: !user.profile_picture})}>
+                                <img
+                                    className={classNames(classes.infoCardPhoto, {[classes.infoCardPhotoDefault]: !user.profile_picture})}
+                                    src={userPhotoSrc}/>
 
                             </div>
-                            <div className={classes.infoCardData}>
-                                <Hidden only={['md', 'lg', 'xl']}>
-                                    <Typography type="headline" align="center"
-                                                className={classes.infoCardName}>{user.first_name} {user.last_name}</Typography>
-                                </Hidden>
-                                <Typography type="subheading" align="center" className={classes.infoCardTeam}>
-                                    {user.team || 'Team Unknown'}
-                                    {user.league_short ? ' - ' + user.league_short : (!user.league_status ? user.league : '')}
-                                    {(!user.team_status && user.team || !user.league_status && user.league) && "*"}
-                                </Typography>
-                                <Typography type="body1" align="center">
-                                    {user.country || (user.team_location !== 'n/a' && user.team_location) || user.team_country || 'Location Unknown'}
-                                </Typography>
-                                {(!user.team_status && user.team || !user.league_status && user.league) && (
-                                    <Typography type="caption" align="center" className={classes.pendingVerification}>
-                                        *Pending verification by Scout Zoo.
+                            <div className={classes.infoCardDataBottom}>
+                                <div className={classes.infoCardLeagueLine}>
+                                    <Icon className={classes.infoCardLeagueShield}>shield</Icon>
+                                    <Typography type="body2" align="center"
+                                                className={classes.infoCardLeague}>{user.position_short || '/'}</Typography>
+
+                                </div>
+                                <div className={classes.infoCardData}>
+                                    <Hidden only={['md', 'lg', 'xl']}>
+                                        <Typography type="headline" align="center"
+                                                    className={classes.infoCardName}>{user.first_name} {user.last_name}</Typography>
+                                    </Hidden>
+                                    <Typography type="subheading" align="center" className={classes.infoCardTeam}>
+                                        {user.team || 'Team Unknown'}
+                                        {user.league_short ? ' - ' + user.league_short : (!user.league_status ? user.league : '')}
+                                        {(!user.team_status && user.team || !user.league_status && user.league) && "*"}
                                     </Typography>
-                                )}
+                                    <Typography type="body1" align="center">
+                                        {user.country || (user.team_location !== 'n/a' && user.team_location) || user.team_country || 'Location Unknown'}
+                                    </Typography>
+                                    {(!user.team_status && user.team || !user.league_status && user.league) && (
+                                        <Typography type="caption" align="center"
+                                                    className={classes.pendingVerification}>
+                                            *Pending verification by Scout Zoo.
+                                        </Typography>
+                                    )}
 
 
                             </div>
@@ -853,178 +869,180 @@ class PlayerProfile extends Component {
                         )}
 
 
-                        {this.state.tab === 0 && user.videos.length > 0 && (
-                            <div className={classes.tabContent}>
-                                <VideoList className={classes.videoListWrap} videos={user.videos}
-                                           tagCounts={user.tags_isset}/>
-                            </div>
-                        )}
-
-                        {this.state.tab === 0 && user.videos.length <= 0 && !isCurrent && (
-                            <div className={classes.tabContent}>
-                                <Typography type="subheading" align="center">
-                                    This player hasn't uploaded any video yet.
-                                </Typography>
-                            </div>
-                        )}
-
-                        {this.state.tab === 0 && user.videos.length <= 0 && isCurrent && (
-                            <div className={classes.tabContent}>
-                                <Typography type="subheading" align="center" className={classes.descTitle}>Your profile
-                                    is
-                                    incomplete!</Typography>
-                                <Typography type="body1" align="center" className={classes.desc}>
-                                    Scouts are actively looking for talents like you. Here is what
-                                    they look for:
-                                </Typography>
-                                <Typography type="body1" align="center" className={classes.point}> Tap
-                                    <Link to="/video/add" disabledUnderline>
-                                        <Button fab color="primary" raised
-                                                className={classNames(classes.addVideoFloat, classes.addVideoFloatDesc)}>
-                                            <Icon>plus</Icon>
-                                        </Button>
-                                    </Link>
-                                    to upload a video
-                                </Typography>
-                            </div>
-                        )}
-
-
-                        {this.state.tab === 1 && (
-                            <div className={classes.tabContent}>
-                                <div className={classes.info}>
-                                    {user.height && (user.height[0] > 0 || user.height[1] > 0) && (
-                                        <div className={classes.infoRow}>
-                                            <Typography type="caption"
-                                                        className={classes.infoCaption}>Height</Typography>
-                                            <Typography type="body2" className={classes.infoValue}>
-                                                {`${user.height[0]}'${user.height[1]}''`}
-                                            </Typography>
-
-                                        </div>
-                                    )}
-                                    {user.weight && (
-                                        <div className={classes.infoRow}>
-                                            <Typography type="caption"
-                                                        className={classes.infoCaption}>Weight</Typography>
-                                            <Typography type="body2" className={classes.infoValue}>
-                                                {user.weight} lbs
-                                            </Typography>
-
-                                        </div>
-                                    )}
-                                    {user.gender_full && (
-                                        <div className={classes.infoRow}>
-                                            <Typography type="caption"
-                                                        className={classes.infoCaption}>Gender</Typography>
-                                            <Typography type="body2" className={classes.infoValue}>
-                                                {user.gender_full}
-                                            </Typography>
-
-                                        </div>
-                                    )}
-                                    {user.shot && (
-                                        <div className={classes.infoRow}>
-                                            <Typography type="caption" className={classes.infoCaption}>Shot</Typography>
-                                            <Typography type="body2" className={classes.infoValue}>
-                                                {SHOT_LIST[user.shot]}
-                                            </Typography>
-
-                                        </div>
-                                    )}
+                            {this.state.tab === 0 && user.videos.length > 0 && (
+                                <div className={classes.tabContent}>
+                                    <VideoList className={classes.videoListWrap} videos={user.videos}
+                                               tagCounts={user.tags_isset}/>
                                 </div>
-                                {user.biography && (
-                                    <Typography type="body1"
-                                                className={classes.infoRightAbout}>{user.biography}</Typography>
-                                )}
+                            )}
 
-                            </div>
-                        )}
+                            {this.state.tab === 0 && user.videos.length <= 0 && !isCurrent && (
+                                <div className={classes.tabContent}>
+                                    <Typography type="subheading" align="center">
+                                        This player hasn't uploaded any video yet.
+                                    </Typography>
+                                </div>
+                            )}
 
-                        {this.state.tab === 2 && !isCurrent && (currentUser && currentUser.role === SCOUT_ROLE) && (
-                            <div className={classes.tabContent}>
-                                <ContactForm user={user}/>
-                            </div>
-                        )}
-
-                        {isCurrent && (
-                            <Link to="/video/add" disabledUnderline>
-                                <Button fab color="primary" raised className={classes.addVideoFloat}>
-                                    <Icon>plus</Icon>
-                                </Button>
-                            </Link>
-                        )}
-
-                    </Paper>
-
-
-                </Hidden>
-
-                <Hidden only={['xs', 'sm']}>
-                    <div>
-                        <Paper className={classes.videoList} square>
-
-
-                            {user.videos.length > 0 ? (
-                                <VideoList className={classes.videoListWrap} videos={user.videos}
-                                           tagCounts={user.tags_isset}/>
-                            ) : (
-
-                                !isCurrent ? (
-                                    <div className={classes.videoListWrap}>
-                                        <Typography type="subheading" align="center">
-                                            This player hasn't uploaded any video yet.
-                                        </Typography>
-                                    </div>
-
-                                ) : (
-                                    <div className={classes.videoListWrap}>
-                                        <Typography type="subheading">Your profile is
-                                            incomplete!</Typography>
-                                        <Typography type="body1" className={classes.desc}>
-                                            Scouts are actively looking for talents like you. Here is what
-                                            they look for:
-                                        </Typography>
-                                        <Typography type="body1" className={classes.point}>1.
-                                            <Link to="/video/add" disabledUnderline>
-                                                <Button color="primary" raised
-                                                        className={classNames(classes.addVideoButton, classes.addVideoButtonDesc)}>
-                                                    Add a Video
-                                                </Button>
-                                            </Link> to highlight your skills
-                                        </Typography>
-                                        <Typography type="body1" className={classes.point}>2.
-                                            <Link to="/profile/edit" disabledUnderline>
-                                                <Button className={classes.editButton}>
-                                                    <Icon className={classes.editIcon}>pencil</Icon>
-                                                    <span>Edit</span>
-                                                </Button>
-                                            </Link> your profile information
-                                        </Typography>
-                                    </div>
-                                )
-
+                            {this.state.tab === 0 && user.videos.length <= 0 && isCurrent && (
+                                <div className={classes.tabContent}>
+                                    <Typography type="subheading" align="center" className={classes.descTitle}>Your
+                                        profile
+                                        is
+                                        incomplete!</Typography>
+                                    <Typography type="body1" align="center" className={classes.desc}>
+                                        Scouts are actively looking for talents like you. Here is what
+                                        they look for:
+                                    </Typography>
+                                    <Typography type="body1" align="center" className={classes.point}> Tap
+                                        <Link to="/video/add" disabledUnderline>
+                                            <Button fab color="primary" raised
+                                                    className={classNames(classes.addVideoFloat, classes.addVideoFloatDesc)}>
+                                                <Icon>plus</Icon>
+                                            </Button>
+                                        </Link>
+                                        to upload a video
+                                    </Typography>
+                                </div>
                             )}
 
 
+                            {this.state.tab === 1 && (
+                                <div className={classes.tabContent}>
+                                    <div className={classes.info}>
+                                        {user.height && (user.height[0] > 0 || user.height[1] > 0) && (
+                                            <div className={classes.infoRow}>
+                                                <Typography type="caption"
+                                                            className={classes.infoCaption}>Height</Typography>
+                                                <Typography type="body2" className={classes.infoValue}>
+                                                    {`${user.height[0]}'${user.height[1]}''`}
+                                                </Typography>
+
+                                            </div>
+                                        )}
+                                        {user.weight && (
+                                            <div className={classes.infoRow}>
+                                                <Typography type="caption"
+                                                            className={classes.infoCaption}>Weight</Typography>
+                                                <Typography type="body2" className={classes.infoValue}>
+                                                    {user.weight} lbs
+                                                </Typography>
+
+                                            </div>
+                                        )}
+                                        {user.gender_full && (
+                                            <div className={classes.infoRow}>
+                                                <Typography type="caption"
+                                                            className={classes.infoCaption}>Gender</Typography>
+                                                <Typography type="body2" className={classes.infoValue}>
+                                                    {user.gender_full}
+                                                </Typography>
+
+                                            </div>
+                                        )}
+                                        {user.shot && (
+                                            <div className={classes.infoRow}>
+                                                <Typography type="caption"
+                                                            className={classes.infoCaption}>Shot</Typography>
+                                                <Typography type="body2" className={classes.infoValue}>
+                                                    {SHOT_LIST[user.shot]}
+                                                </Typography>
+
+                                            </div>
+                                        )}
+                                    </div>
+                                    {user.biography && (
+                                        <Typography type="body1"
+                                                    className={classes.infoRightAbout}>{user.biography}</Typography>
+                                    )}
+
+                                </div>
+                            )}
+
+                            {this.state.tab === 2 && !isCurrent && (currentUser && currentUser.role === SCOUT_ROLE) && (
+                                <div className={classes.tabContent}>
+                                    <ContactForm user={user}/>
+                                </div>
+                            )}
+
+                            {isCurrent && (
+                                <Link to="/video/add" disabledUnderline>
+                                    <Button fab color="primary" raised className={classes.addVideoFloat}>
+                                        <Icon>plus</Icon>
+                                    </Button>
+                                </Link>
+                            )}
+
                         </Paper>
 
-                        {!isCurrent && currentUser && currentUser.role === SCOUT_ROLE && (
 
-                            <div className={classes.contactContainer}>
-                                <Typography type="title" className={classes.contactTitle}>
-                                    Contact
-                                </Typography>
-                                <ContactForm user={user}/>
+                    </Hidden>
 
-                            </div>
-                        )}
-                    </div>
-                </Hidden>
+                    <Hidden only={['xs', 'sm']}>
+                        <div>
+                            <Paper className={classes.videoList} square>
 
 
+                                {user.videos.length > 0 ? (
+                                    <VideoList className={classes.videoListWrap} videos={user.videos}
+                                               tagCounts={user.tags_isset}/>
+                                ) : (
+
+                                    !isCurrent ? (
+                                        <div className={classes.videoListWrap}>
+                                            <Typography type="subheading" align="center">
+                                                This player hasn't uploaded any video yet.
+                                            </Typography>
+                                        </div>
+
+                                    ) : (
+                                        <div className={classes.videoListWrap}>
+                                            <Typography type="subheading">Your profile is
+                                                incomplete!</Typography>
+                                            <Typography type="body1" className={classes.desc}>
+                                                Scouts are actively looking for talents like you. Here is what
+                                                they look for:
+                                            </Typography>
+                                            <Typography type="body1" className={classes.point}>1.
+                                                <Link to="/video/add" disabledUnderline>
+                                                    <Button color="primary" raised
+                                                            className={classNames(classes.addVideoButton, classes.addVideoButtonDesc)}>
+                                                        Add a Video
+                                                    </Button>
+                                                </Link> to highlight your skills
+                                            </Typography>
+                                            <Typography type="body1" className={classes.point}>2.
+                                                <Link to="/profile/edit" disabledUnderline>
+                                                    <Button className={classes.editButton}>
+                                                        <Icon className={classes.editIcon}>pencil</Icon>
+                                                        <span>Edit</span>
+                                                    </Button>
+                                                </Link> your profile information
+                                            </Typography>
+                                        </div>
+                                    )
+
+                                )}
+
+
+                            </Paper>
+
+                            {!isCurrent && currentUser && currentUser.role === SCOUT_ROLE && (
+
+                                <div className={classes.contactContainer}>
+                                    <Typography type="title" className={classes.contactTitle}>
+                                        Contact
+                                    </Typography>
+                                    <ContactForm user={user}/>
+
+                                </div>
+                            )}
+                        </div>
+                    </Hidden>
+
+
+                </div>
             </div>
-
 
         </div>
 
