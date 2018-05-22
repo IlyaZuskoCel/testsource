@@ -382,8 +382,8 @@ class VideoItem extends Component {
         return <div>
             <Helmet>
                 <meta property="og:title" content={video.title}/>
-                <meta property='og:video:url' content={absUrl(`/profile/${user.id}/video/${video.id}`)}/>
-                <meta property='og:video:secure_url' content={absUrl(`/profile/${user.id}/video/${video.id}`)}/>
+                <meta property='og:video:url' content={absUrl(video.overlay_video_path || video.trim_video_file_path || video.video_path)}/>
+                <meta property='og:video:secure_url' content={absUrl(video.overlay_video_path || video.trim_video_file_path || video.video_path)}/>
                 <meta property='og:video:type' content='video/mp4'/>
                 <meta property='og:video:width' content='360'/>
                 <meta property='og:video:height' content='200'/>
@@ -391,7 +391,7 @@ class VideoItem extends Component {
                 <meta name="twitter:card" content='player'/>
                 <meta name="twitter:title" content={video.title}/>
                 <meta name="twitter:description" content=''/>
-                <meta name="twitter:player" content={absUrl(`/profile/${user.id}/video/${video.id}`)}/>
+                <meta name="twitter:player" content={absUrl(video.overlay_video_path || video.trim_video_file_path || video.video_path)}/>
                 <meta name="twitter:player:width" content='360'/>
                 <meta name="twitter:player:height" content='200'/>
                 <meta name="twitter:image" content={video.thumb_lg}/>
