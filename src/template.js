@@ -65,8 +65,8 @@ export default ({template, html, css, error}) => {
             head.title.toString()
         )
         .replace(
-            /<head>/g,
-            '<head>' + head.meta.toString()
+            /<\/head>/g,
+            head.meta.toString()+'\n</head>'
         );
 
 
