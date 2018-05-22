@@ -275,9 +275,9 @@ export const downloadVideo = (video, token) => dispatch => {
     element.setAttribute('href', video.video_path);
     element.setAttribute('download', video.video_file_name);
     element.click();
-    return get(`api/v2/activity/download-video/${video.id}`, {}, token);
+    return get(`/api/v2/activity/download-video/${video.id}`, {}, token);
 };
 
 export const sharedCount = (videoId, token) => dispatch => {
-    return get(`api/v2/activity/share-video/${videoId}`, {}, token);
+    return get(`/api/v2/activity/share-video/${videoId}`, {}, token);
 };
