@@ -90,39 +90,6 @@ const styleSheet = createStyleSheet('ScoutFilter', theme => ({
             padding: 20,
         }
     },
-    snackbar: {
-        width:600,
-        margin:'0 auto',
-        [theme.breakpoints.down('sm')]: {
-            width:'auto',
-        }
-    },
-    buttonsMessage: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        padding:'41px 45px 38px 54px',
-        '& span:before': {
-            display:'none',
-
-        }
-    },
-    buttonsPopup: {
-        marginTop:50,
-        display:'flex',
-        justifyContent:'space-between',
-        width:'100%',
-        '& button': {
-            color:theme.palette.text.disabled,
-        }
-    },
-    message: {
-        display:'flex',
-        justifyContent:'center',
-        flexDirection:'column',
-        padding:40
-    },
 }));
 
 class PlayerFilter extends Component {
@@ -139,7 +106,6 @@ class PlayerFilter extends Component {
             position: '',
             leagues: [],
             born: [PLAYER_MIN_AGE, PLAYER_MAX_AGE],
-            showPopup:false
         };
 
         this.born = [PLAYER_MIN_AGE, PLAYER_MAX_AGE];
@@ -179,17 +145,10 @@ class PlayerFilter extends Component {
         this.setState({born: value})
     };
 
-    handleClosePopup = () => {
-        this.setState({showPopup:false})
-    };
 
     makeFilterRequest() {
         let queryString = '';
         let filters = {};
-
-        if(!this.props.currentUser)
-           return this.setState({showPopup:true});
-
 
         let options = {
             id_country: this.state.id_country ? this.state.id_country : null,
@@ -218,6 +177,12 @@ class PlayerFilter extends Component {
         if(typeof window !== "undefined" && window.Intercom) {
             window.Intercom('update', { app_id: window.INTERCOM_ID });
             Intercom('trackEvent', 'Search players', detail);
+        }
+
+        // Intercom player view
+        if(typeof window !== "undefined" && window.Intercom) {
+            window.Intercom('update', {app_id: window.INTERCOM_ID});
+            Intercom('trackEvent', 'View player', detail);
         }
 
         if (this.state.name || this.state.id_league || this.state.id_team_current || this.state.year || this.state.position || this.state.gender || this.state.values || this.state.born || this.state.id_level|| this.state.id_country) {
@@ -450,25 +415,6 @@ class PlayerFilter extends Component {
                 </Hidden>
 
             </Grid>
-            <Snackbar
-                anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'center'
-                }}
-                open={this.state.showPopup}
-                className={classes.snackbar}
-                message={<div className={classes.message}>
-                    <Typography type="subheading">You must be logged in to use the filter feature.</Typography>
-                    <div className={classes.buttonsPopup}>
-                        <Button className={classes.buttonCancel} onClick={this.handleClosePopup}>cancel</Button>
-
-                        <Link to="/sign/in" disabledUnderline>
-                            <Button>Log In</Button>
-                        </Link>
-                    </div>
-
-                </div>}
-            />
         </div>);
     }
 }

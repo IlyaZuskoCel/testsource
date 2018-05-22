@@ -225,13 +225,45 @@ const styleSheet = createStyleSheet('Search', theme => ({
             }
         },
         [theme.breakpoints.down('md')]: {
-            justifyContent:'space-between',
+            justifyContent:'space-around',
             '& button': {
                 minWidth:140
             }
         }
     },
+    snackbar: {
+        width:600,
+        margin:'0 auto',
+        [theme.breakpoints.down('sm')]: {
+            width:'auto',
+        }
+    },
+    message: {
+        display:'flex',
+        justifyContent:'center',
+        flexDirection:'column',
+        padding:40
+    },
+    buttonsMessage: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        padding:'41px 45px 38px 54px',
+        '& span:before': {
+            display:'none',
 
+        }
+    },
+    buttonsPopup: {
+        marginTop:50,
+        display:'flex',
+        justifyContent:'space-between',
+        width:'100%',
+        '& button': {
+            color:theme.palette.text.disabled,
+        }
+    },
 }));
 
 
@@ -261,6 +293,7 @@ class Search extends Component {
             },
             clearFilters: '',
             dropdownLeagues: [],
+            showPopup: false,
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -414,6 +447,7 @@ class Search extends Component {
 
     toggleMobileFilter() {
 
+        if(!this.props.currentUser) return this.setState({showPopup: true});
 
         if (this.state.mobileFilterOn)
             this.props.hideFooter();
@@ -430,6 +464,10 @@ class Search extends Component {
     componentWillMount() {
         this.props.setFilters(this.state.query, this.props.type == 'scout' ? 'scout' : '');
     }
+
+    handleClosePopup = () => {
+        this.setState({showPopup:false})
+    };
 
     render() {
         const {classes,currentUser} = this.props;
@@ -636,7 +674,25 @@ class Search extends Component {
             </Grid>
                 : null}
 
+            <Snackbar
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center'
+                }}
+                open={this.state.showPopup}
+                className={classes.snackbar}
+                message={<div className={classes.message}>
+                    <Typography type="subheading">You must be logged in to use the filter feature.</Typography>
+                    <div className={classes.buttonsPopup}>
+                        <Button className={classes.buttonCancel} onClick={this.handleClosePopup}>cancel</Button>
 
+                        <Link to="/sign/in" disabledUnderline>
+                            <Button>Log In</Button>
+                        </Link>
+                    </div>
+
+                </div>}
+            />
 
         </div>)
     }
