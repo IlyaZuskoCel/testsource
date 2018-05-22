@@ -9,35 +9,8 @@ import CommonRouters from './common';
 import UserRouters from './user';
 import VideoRouters from './video';
 import SearchRouters from './search';
-import {getCurrent as getCurrentUser} from './user/actions'
 
-const mapStateToProps = (state) => ({
-    load: state.common.load
-});
 
-const mapDispatchToProps = (dispatch) => ({
-    getCurrentUser: () => dispatch(getCurrentUser()),
-});
-
-class Layout extends Component {
-    static async getInitialProps({location, query, params, store}) {
-        await store.dispatch(getCurrentUser());
-    };
-
-    render() {
-        return  <ScrollToTop>
-            <Switch>
-                {VideoRouters}
-                {UserRouters}
-                {SearchRouters}
-                {CommonRouters}
-
-            </Switch>
-        </ScrollToTop>
-    }
-}
-
-const LayoutRedux = withRouter(connect(mapStateToProps, mapDispatchToProps)(withWrapper(Layout)));
 
 
 class App extends Component {
@@ -51,7 +24,14 @@ class App extends Component {
 
         return (
                 <WrapperProvider initialProps={this.props}>
-                    <LayoutRedux/>
+                    <ScrollToTop>
+                        <Switch>
+                            {VideoRouters}
+                            {UserRouters}
+                            {SearchRouters}
+                            {CommonRouters}
+                        </Switch>
+                    </ScrollToTop>
                 </WrapperProvider>
         );
     }

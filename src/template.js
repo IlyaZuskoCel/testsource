@@ -3,6 +3,8 @@ import Helmet from "react-helmet";
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
 const BACKEND_URL = process.env.BACKEND_URL;
+const GOOGLE_UA = process.env.GOOGLE_UA;
+const INTERCOM_ID = process.env.INTERCOM_ID;
 
 
 export default ({template, html, css, error}) => {
@@ -16,6 +18,14 @@ export default ({template, html, css, error}) => {
         .replace(
             `%BACKEND_URL%`,
             BACKEND_URL
+        )
+        .replace(
+            `%GOOGLE_UA%`,
+            GOOGLE_UA
+        )
+        .replace(
+            `%INTERCOM_ID%`,
+            INTERCOM_ID
         )
         .replace(
             `<div id="app"></div>`,

@@ -16,12 +16,8 @@ WORKDIR /
 #nginx settings
 COPY ./nginx.conf /etc/nginx/conf.d/app/
 
-COPY ./run.sh /run.sh
-RUN chmod +x run.sh
-
 
 VOLUME ["/var/www/app", "/etc/nginx/conf.d/app"]
 EXPOSE 80
 
-#CMD ["./run.sh"]
 CMD ["yarn", "run", "start:server"]

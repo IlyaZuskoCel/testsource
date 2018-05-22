@@ -11,8 +11,7 @@ import PrivateRoute from '../components/PrivateRoute';
 
 
 const mapStateToProps = (state) => ({
-    // isAuthenticated: state.user.current !== null
-    isAuthenticated: !!state.common.cookies.token
+     isAuthenticated: state.user.current !== null
 });
 
 export default connect(mapStateToProps)(PrivateRoute)

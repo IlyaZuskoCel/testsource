@@ -10,7 +10,7 @@ import {connect} from 'react-redux';
 
 import SignScoutForm from '../components/Sign/ScoutForm';
 
-import {registerScout, getCurrent} from '../actions';
+import {registerScout} from '../actions';
 import {getLevels, getLeagues, getTeams, getCountries} from '../../common/actions';
 
 import {map, mapOptions,} from '../selectors'
@@ -47,14 +47,8 @@ class Wrap extends Component {
             store.dispatch(getLevels(state.common.cookies.token)),
             store.dispatch(getLeagues(state.common.cookies.token)),
             store.dispatch(getTeams(state.common.cookies.token)),
-            store.dispatch(getCurrent(state.common.cookies.token)),
         ])
     };
-    //
-    // componentDidMount() {
-    //     if (!this.props.leagues.length || !this.props.leagueOptions.length || !this.props.teams.length || !this.props.teamOptions.length)
-    //         this.props.fetchData();
-    // }
 
     render() {
 
