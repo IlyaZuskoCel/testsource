@@ -9,7 +9,8 @@ RUN yarn install
 ENV NODE_ENV=production
 ENV NODE_ENV=development
 
-RUN yarn run build
+RUN yarn run build:client
+RUN yarn run build:server
 
 WORKDIR /
 
