@@ -1,4 +1,4 @@
-FROM node:8-alpine
+FROM node:9-alpine
 
 COPY . /usr/src
 
@@ -12,7 +12,6 @@ ENV NODE_ENV=development
 RUN yarn run build:client
 RUN yarn run build:server
 
-WORKDIR /
 
 #nginx settings
 COPY ./nginx.conf /etc/nginx/conf.d/app/
