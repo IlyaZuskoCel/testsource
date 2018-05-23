@@ -12,6 +12,11 @@ export const Card = (props) => {
     if (user.profile_picture) {
         userPhotoSrc = user.profile_picture;
     }
+
+    let teamName = ( user.league && user.league_short ? `${user.team} - ${user.league_short.toUpperCase()}`: user.team) || 'Unknown';
+
+    let place = user.team_location ? `${user.team_location !== 'n/a' ? user.team_location + ',' : '' }${user.team_country}` : 'Location Unknown';
+
     return (
         <Paper className={classNames(classes.uploadWrap, classes.videoWrap)}>
 
@@ -25,7 +30,7 @@ export const Card = (props) => {
                 </Typography>
 
                 <Typography className={classes.infoRightNameInfo}>
-                    {user.team}, {user.team_location !== 'n/a' ? `${user.team_location}, ` : ''} {user.team_country}
+                    {place}
                 </Typography>
 
                 <div className={classes.infoRightColumn}>
@@ -34,7 +39,7 @@ export const Card = (props) => {
                             Team
                         </Typography>
                         <Typography type="subheading" className={classes.infoRightValue}>
-                            {user.team} - {user.league_short}
+                            {teamName}
                         </Typography>
                     </div>
                 </div>

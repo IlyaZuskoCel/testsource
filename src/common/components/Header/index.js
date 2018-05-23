@@ -461,7 +461,7 @@ class Header extends Component {
                                 <Link to="/sign/in" disabledUnderline
                                       className={classNames(classes.menuItem)}>
                                     <Button className={classNames(classes.raised)}>
-                                        sign in
+                                        log in
                                     </Button>
                                 </Link>
                                 <Link to="/sign/up" disabledUnderline
