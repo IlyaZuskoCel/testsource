@@ -5,6 +5,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
+import Helmet from 'react-helmet';
 
 import Grid from 'material-ui/Grid';
 import Button from 'material-ui/Button';
@@ -78,6 +79,9 @@ class InForm extends Component {
         const classes = this.props.classes;
         return (
             <div className={classes.root}>
+                <Helmet>
+                    <title>{`Log in page`}</title>
+                </Helmet>
                 <form onSubmit={this.handleSubmit}>
                     <Grid container>
                         <Grid item xs={12}>

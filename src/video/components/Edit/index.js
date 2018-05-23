@@ -14,7 +14,7 @@ import Paper from 'material-ui/Paper';
 import Tabs, {Tab} from 'material-ui/Tabs';
 import Typography from 'material-ui/Typography';
 import Hidden from 'material-ui/Hidden';
-
+import Helmet from 'react-helmet';
 
 import * as VIDEO_STATUS from '../../constants/video';
 
@@ -148,6 +148,9 @@ class Edit extends Component {
         if (!user) return null;
 
         return <div className={classes.root}>
+            <Helmet>
+                <title>{`Edit video ${video.title} ${ video.description}`}</title>
+            </Helmet>
             <Hidden only={['md', 'lg', 'xl']}>
                 <Tabs index={this.state.tab}
                       centered

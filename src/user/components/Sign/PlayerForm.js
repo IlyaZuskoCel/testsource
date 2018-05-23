@@ -6,6 +6,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
+import Helmet from 'react-helmet';
 
 import classNames from 'classnames';
 import Grid from 'material-ui/Grid';
@@ -115,6 +116,9 @@ class PlayerForm extends Component {
         const {classes} = this.props;
         return (
             <div className={classes.root}>
+                <Helmet>
+                    <title>{`Sign up player page`}</title>
+                </Helmet>
                 <form onSubmit={this.handleSubmit}>
                     <Grid container>
                         <Grid item xs={12}>
