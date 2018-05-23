@@ -369,6 +369,18 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
     shareTitle: {
         marginLeft: 16
     },
+    shareTitleRight: {
+        marginLeft: 16,
+        '&:hover': {
+            color: '#000',
+            backgroundColor: 'transparent',
+            opacity: 1,
+        },
+        opacity: 0.8,
+    },
+    shareIconRight: {
+        marginRight: 16,
+    }
 }));
 
 
@@ -453,7 +465,7 @@ class ScoutProfile extends Component {
 
                 <div className={classes.content}>
 
-                    {currentUser && isCurrent && <div className={classes.topNavigate}>
+                    {isCurrent && <div className={classes.topNavigate}>
                         <ShareButton url={absUrl(`/profile/${user.id}`)}
                                      title={`My profile on Scout Zoo`}
                                      dialogTitle={'Share your profile'}>
@@ -477,12 +489,21 @@ class ScoutProfile extends Component {
                         </div>
                     </div>}
 
-                    {currentUser && !isCurrent && <div className={classes.topNavigate}>
+                    {!isCurrent && <div className={classes.topNavigate}>
                         <Link to="/" onClick={this.goBack} invert disabledUnderline className={classes.backLink}>
                             <Icon>previous</Icon>
                             <Hidden only={['xs', 'sm']}><span
                                 className={classes.backTitle}>Back to search</span></Hidden></Link>
-                        <div>
+
+                        <div className={classes.topNavigate}>
+                            <ShareButton url={absUrl(`/profile/${user.id}`)}
+                                         title={`My profile on Scout Zoo`}
+                                         dialogTitle={'Share your profile'}>
+                                <Button className={classes.shareTitleRight}>
+                                    <Icon className={classes.shareIconRight}>share</Icon>
+                                    <span>Share</span>
+                                </Button>
+                            </ShareButton>
 
                             <IconButton
                                 aria-label="More"
@@ -501,13 +522,6 @@ class ScoutProfile extends Component {
                             </Menu>
                         </div>
                     </div>}
-
-                    {currentUser && !isCurrent && <ShareButton url={absUrl(`/profile/${user.id}`)}
-                                                               title={`My profile on Scout Zoo`}
-                                                               dialogTitle={'Share your profile'}>
-                        <Icon>share</Icon>
-                        <span className={classes.shareTitle}>Share</span>
-                    </ShareButton>}
 
                     <div className={classes.infoContainer}>
                         <Paper className={classes.infoCard} square>

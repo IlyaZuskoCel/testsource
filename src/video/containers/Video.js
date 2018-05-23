@@ -12,19 +12,22 @@ import Video from '../components/Video';
 
 import {go} from '../../common/actions'
 
-import {fetch, deleteVideo} from '../actions';
+import {fetch, deleteVideo, sharedCount, downloadVideo} from '../actions';
 
 import {map, mapOptions} from '../selectors';
 
 const mapStateToProps = (state, props) => ({
     tags: map(state.video.tags),
     currentUser: state.user.current,
-    token: state.common.cookies.token
+    token: state.common.cookies.token,
+    user: state.user.user,
 });
 
 const mapDispatchToProps = (dispatch) => ({
     delete: (id, token) => dispatch(deleteVideo(id, token)),
     edit: id => dispatch(go('/video/edit/' + id)),
+    downloadVideo: (video, token) => dispatch(downloadVideo(video, token)),
+    sharedCount: (videoId, token) => dispatch(sharedCount(videoId, token)),
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => ({

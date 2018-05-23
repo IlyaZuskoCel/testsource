@@ -12,6 +12,7 @@ import Profile from '../components/Profile';
 
 import {getUser, sendEmail, getCurrent} from '../actions';
 import {goBack} from '../../common/actions';
+import {sharedCount, downloadVideo} from "../../video/actions";
 
 const mapStateToProps = (state, props) => ({
     currentUser: state.user.current,
@@ -26,6 +27,8 @@ const mapDispatchToProps = (dispatch) => ({
     },
     sendEmail: (id, subject, text, token) => dispatch(sendEmail(id, subject, text, token)),
     goBack: () => dispatch(goBack()),
+    sharedCount: (videoId, token) => dispatch(sharedCount(videoId, token)),
+    downloadVideo: (video, token) => dispatch(downloadVideo(video, token)),
 });
 const mergeProps = (stateProps, dispatchProps, ownProps) => ({
     ...stateProps,
