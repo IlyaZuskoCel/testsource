@@ -15,7 +15,7 @@ import Paper from 'material-ui/Paper';
 import Tabs, {Tab} from 'material-ui/Tabs';
 import Typography from 'material-ui/Typography';
 import Hidden from 'material-ui/Hidden';
-
+import Helmet from 'react-helmet';
 
 import * as VIDEO_STATUS from '../../constants/video';
 
@@ -155,10 +155,13 @@ class Add extends Component {
     };
 
     render() {
-        const {classes, video} = this.props;
+        const {classes, video, user} = this.props;
 
 
         return <div className={classes.root}>
+            <Helmet>
+                <title>{`Add video by ${user.first_name} ${user.last_name}`}</title>
+            </Helmet>
             <Prompt
                 message="Your video hasn't been uploaded yet! All changes will be lost. Are you sure you want to leave?"
                 when={(!!this.props.video.id || 'progress' in this.props.video) && this.state.isUpdate}

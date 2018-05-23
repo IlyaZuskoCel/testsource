@@ -5,6 +5,7 @@
 
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import Helmet from 'react-helmet';
 
 import classNames from 'classnames';
 import withWidth from 'material-ui/utils/withWidth';
@@ -198,9 +199,12 @@ class PlayerForm extends Component {
     };
 
     render() {
-        const {classes} = this.props;
+        const {classes, user} = this.props;
 
         return <div className={classes.root}>
+            <Helmet>
+                <title>{`Settings for ${user.first_name} ${user.last_name} profile`}</title>
+            </Helmet>
             <Hidden only={['md', 'lg', 'xl']}>
                 <div className={classes.headerNavigation}>
                     <Link to="/" onClick={this.cancel} invert disabledUnderline className={classes.backLink}>

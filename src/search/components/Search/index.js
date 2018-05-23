@@ -15,6 +15,7 @@ import {Link, Pagination, Autosuggest} from '../../../common/components';
 import Hidden from '../../../common/components/Hidden';
 import Button from 'material-ui/Button';
 import Snackbar from 'material-ui/Snackbar';
+import Helmet from 'react-helmet';
 
 import {withStyles, createStyleSheet} from 'material-ui/styles';
 import defaultPhoto from './assets/images/default-photo.png';
@@ -470,10 +471,12 @@ class Search extends Component {
     };
 
     render() {
-        const {classes,currentUser} = this.props;
+        const {classes,currentUser, headers, location, type} = this.props;
 
         return (<div className={classes.root}>
-
+            <Helmet>
+                <title>{`Search ${headers ? headers.count : 0} ${type}s found, page-${headers ? headers.page: ''}`}</title>
+            </Helmet>
             <Hidden only={['xs', 'sm']}>
                 <header className={classes.header}>
                     <div className={classNames(classes.content, classes.noMargin)}>
