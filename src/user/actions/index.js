@@ -56,10 +56,10 @@ export const logIn = (email, password, token) => dispatch => {
         })
 };
 
-export const confirm = token => dispatch => {
+export const confirm = (token, authorizationToken) => dispatch => {
     dispatch(startLoading());
 
-    return get(`/api/v2/profile/confirm-email/${token}`)
+    return get(`/api/v2/profile/confirm-email/${token}`, {}, authorizationToken)
         .then(user => {
             dispatch(stopLoading());
 

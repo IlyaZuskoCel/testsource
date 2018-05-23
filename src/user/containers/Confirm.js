@@ -6,7 +6,7 @@ import {confirm} from '../actions';
 
 class Confirm extends Component {
     componentDidMount() {
-        this.props.confirm(this.props.token)
+        this.props.confirm(this.props.token, this.props.authorizationToken)
     }
 
     render() {
@@ -17,6 +17,7 @@ class Confirm extends Component {
 
 const mapStateToProps = (state, props) => ({
     token: props.match.params.token,
+    authorizationToken: state.common.cookies.token
 });
 const mapDispatchToProps = (dispatch) => ({
     confirm: token => dispatch(confirm(token))
