@@ -56,10 +56,10 @@ export const logIn = (email, password, token) => dispatch => {
         })
 };
 
-export const confirm = (token, authorizationToken) => dispatch => {
+export const confirm = token => dispatch => {
     dispatch(startLoading());
 
-    return get(`/api/v2/profile/confirm-email/${token}`, {}, authorizationToken)
+    return get(`/api/v2/profile/confirm-email/${token}`)
         .then(user => {
             dispatch(stopLoading());
 
@@ -68,6 +68,8 @@ export const confirm = (token, authorizationToken) => dispatch => {
             }
 
             auth(user.access_token);
+
+            dispatch({type: SET_COOKIE, payload: {token:user.access_token}});
 
             dispatch({
                 type: SUCCESS_ALERT,
