@@ -455,9 +455,6 @@ class VideoItem extends Component {
                                 <div>
                                     <Hidden only={['xs', 'sm']}>
                                         <div>
-                                            <div className={classes.download} onClick={this.handleDownload}>
-                                                <ScoutZooIcon>left</ScoutZooIcon>
-                                            </div>
                                             <ShareButton url={absUrl(`/profile/${user.id}/video/${video.id}`)}
                                                          title={`Watch ${user.first_name} ${user.last_name}'s Scout Zoo upload: ${video.title}`}
                                                          dialogTitle={'Share video'}
@@ -465,6 +462,9 @@ class VideoItem extends Component {
                                                          sharedCount={this.handleSharedCount}>
                                                 <ScoutZooIcon>share</ScoutZooIcon>
                                             </ShareButton>
+                                            <div className={classes.download} onClick={this.handleDownload}>
+                                                <ScoutZooIcon>left</ScoutZooIcon>
+                                            </div>
                                             <Link to={`/video/edit/${video.id}`} disabledUnderline
                                                   className={classes.link}
                                                   onClick={this.handleEdit}>
@@ -496,9 +496,9 @@ class VideoItem extends Component {
                                                   anchorEl={this.state.anchorVideoMenuEl}
                                                   open={this.state.openVideoMenu}
                                                   onRequestClose={this.handleRequestClose}>
+                                                <MenuItem onClick={this.handleDownload}>Download</MenuItem>
                                                 <MenuItem onClick={this.handleEdit}>Edit</MenuItem>
                                                 <MenuItem onClick={this.handleDelete}>Delete</MenuItem>
-                                                <MenuItem onClick={this.handleDownload}>Download</MenuItem>
                                             </Menu>
                                         </div>
                                     </Hidden>
@@ -508,9 +508,6 @@ class VideoItem extends Component {
                                 <div>
                                     <Hidden only={['xs', 'sm']}>
                                         <div>
-                                            <div className={classes.download} onClick={this.handleDownload}>
-                                                <ScoutZooIcon>left</ScoutZooIcon>
-                                            </div>
                                             <ShareButton url={absUrl(`/profile/${user.id}/video/${video.id}`)}
                                                          title={`Watch ${user.first_name} ${user.last_name}'s Scout Zoo upload: ${video.title}`}
                                                          dialogTitle={'Share video'}
@@ -518,19 +515,22 @@ class VideoItem extends Component {
                                                          sharedCount={this.handleSharedCount}>
                                                 <ScoutZooIcon>share</ScoutZooIcon>
                                             </ShareButton>
+                                            <div className={classes.download} onClick={this.handleDownload}>
+                                                <ScoutZooIcon>left</ScoutZooIcon>
+                                            </div>
                                         </div>
                                     </Hidden>
                                     <Hidden only={['md', 'lg', 'xl']}>
                                         <div>
-                                            <div className={classes.download} onClick={this.handleDownload}>
-                                                <ScoutZooIcon>left</ScoutZooIcon>
-                                            </div>
                                             <ShareButton url={absUrl(`/profile/${user.id}/video/${video.id}`)}
                                                          title={`Watch ${user.first_name} ${user.last_name}'s Scout Zoo upload: ${video.title}`}
                                                          style={classes.share}
                                                          sharedCount={this.handleSharedCount}>
                                                 <ScoutZooIcon>share</ScoutZooIcon>
                                             </ShareButton>
+                                            <div className={classes.download} onClick={this.handleDownload}>
+                                                <ScoutZooIcon>left</ScoutZooIcon>
+                                            </div>
                                         </div>
                                     </Hidden>
                                 </div>

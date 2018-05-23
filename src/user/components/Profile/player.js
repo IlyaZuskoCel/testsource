@@ -583,6 +583,15 @@ class PlayerProfile extends Component {
         return false;
     };
 
+    handleDownload = () => {
+        this.props.downloadVideo(this.props.video);
+    };
+
+    handleSharedCount = () => {
+        console.log(10001, this.props.video.id)
+        // this.props.sharedCount(this.props.video.id);
+    };
+
     render() {
         const width = 'md';
         const {classes, user, currentUser, isCurrent} = this.props;
