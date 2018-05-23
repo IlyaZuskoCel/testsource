@@ -508,6 +508,9 @@ class VideoItem extends Component {
                                 <div>
                                     <Hidden only={['xs', 'sm']}>
                                         <div>
+                                            <div className={classes.download} onClick={this.handleDownload}>
+                                                <ScoutZooIcon>left</ScoutZooIcon>
+                                            </div>
                                             <ShareButton url={absUrl(`/profile/${user.id}/video/${video.id}`)}
                                                          title={`Watch ${user.first_name} ${user.last_name}'s Scout Zoo upload: ${video.title}`}
                                                          dialogTitle={'Share video'}
@@ -519,6 +522,9 @@ class VideoItem extends Component {
                                     </Hidden>
                                     <Hidden only={['md', 'lg', 'xl']}>
                                         <div>
+                                            <div className={classes.download} onClick={this.handleDownload}>
+                                                <ScoutZooIcon>left</ScoutZooIcon>
+                                            </div>
                                             <ShareButton url={absUrl(`/profile/${user.id}/video/${video.id}`)}
                                                          title={`Watch ${user.first_name} ${user.last_name}'s Scout Zoo upload: ${video.title}`}
                                                          style={classes.share}
