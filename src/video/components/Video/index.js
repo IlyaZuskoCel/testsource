@@ -182,7 +182,7 @@ class Video extends Component {
     };
 
     handleSharedCount = () => {
-        this.props.sharedCount(this.props.video.id, this.props.token);
+        this.props.sharedCount(this.props.video.id);
     };
 
     render() {
