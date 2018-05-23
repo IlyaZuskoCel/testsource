@@ -18,11 +18,6 @@ const styleSheet = createStyleSheet('Profile', theme => ({}));
 
 class Profile extends Component {
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.id !== this.props.id)
-            this.props.fetchData(nextProps.id);
-    }
-
     render() {
         if (!this.props.user)
             return null;

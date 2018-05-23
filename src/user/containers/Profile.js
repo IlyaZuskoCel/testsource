@@ -21,8 +21,8 @@ const mapStateToProps = (state, props) => ({
     token: state.common.cookies.token
 });
 const mapDispatchToProps = (dispatch) => ({
-    fetchData: id => {
-        dispatch(getUser(id));
+    fetchData: (id, token) => {
+        dispatch(getUser(id, token));
     },
     sendEmail: (id, subject, text, token) => dispatch(sendEmail(id, subject, text, token)),
     goBack: () => dispatch(goBack()),
@@ -32,6 +32,7 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => ({
     ...dispatchProps,
     ...ownProps,
     sendEmail: (id, subject, text) => dispatchProps.sendEmail(id, subject, text, stateProps.token),
+    fetchData: id => dispatchProps.fetchData(id, stateProps.token)
 });
 
 class Wrap extends Component {
@@ -45,6 +46,11 @@ class Wrap extends Component {
             store.dispatch(getCurrent(state.common.cookies.token)),
         ])
     };
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.id !== this.props.id)
+            this.props.fetchData(nextProps.id);
+    }
 
     render() {
 
