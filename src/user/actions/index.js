@@ -69,6 +69,8 @@ export const confirm = token => dispatch => {
 
             auth(user.access_token);
 
+            dispatch({type: SET_COOKIE, payload: {token:user.access_token}});
+
             dispatch({
                 type: SUCCESS_ALERT,
                 payload: {message: 'Your account was confirmed successfully!'}
