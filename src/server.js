@@ -30,7 +30,7 @@ const options = {
         Cookie.setRawCookie(req.headers.cookie);
         const token = Cookie.load('token');
         return get('/api/v2/profile/get', {}, token)
-            .then(user=>{
+            .then(user => {
                 const sheetsRegistry = new SheetsRegistry();
                 const jss = create(preset());
                 jss.options.createGenerateClassName = createGenerateClassName;
@@ -38,15 +38,15 @@ const options = {
 
                 const state = context.store ? context.store.getState() : {};
 
-                if(token){
+                if (token) {
                     state.common = state.common || {};
                     state.common.cookies = state.common.cookies || {};
                     state.common.cookies.token = token;
                 }
 
-                if(user){
+                if (user && Object.keys(user).length !== 0) {
                     state.user = state.user || {};
-                    state.user.current =  state.user.current || user;
+                    state.user.current = state.user.current || user;
                 }
 
                 const store = configureStore(state);
@@ -80,6 +80,7 @@ const options = {
     },
     app,
     template,
+    isNotEmbed: true,
     templatePath: path.join(config.output.path, 'index.html'),
     outputPath: config.output.path,
     port: process.env.PORT || 80,

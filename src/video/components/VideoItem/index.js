@@ -381,24 +381,31 @@ class VideoItem extends Component {
         const tags = video.tags ? video.tags.map(v => '' + v) : [];
         return <div>
             <Helmet>
-                <meta property="og:type" content="video" />
-                <meta property="og:title" content={video.title}/>
-                <meta property="og:video" content={absUrl(video.overlay_video_path || video.trim_video_file_path || video.video_path)}/>
-                <meta property="og:video:url" content={absUrl(video.overlay_video_path || video.trim_video_file_path || video.video_path)}/>
-                <meta property="og:video:secure_url" content={absUrl(video.overlay_video_path || video.trim_video_file_path || video.video_path)}/>
-                <meta property="og:video:type" content="video/mp4"/>
-                <meta property="og:video:width" content="360"/>
-                <meta property="og:video:height" content="200"/>
-                <meta property="og:image"        content={video.overlay || video.thumb_lg} />
 
+
+                <meta property="og:image" content={absUrl(video.overlay || video.thumb_lg)} />
 
                 <meta name="twitter:card" content='player'/>
                 <meta name="twitter:title" content={video.title}/>
-                <meta name="twitter:description" content=''/>
-                <meta name="twitter:player" content={absUrl(video.overlay_video_path || video.trim_video_file_path || video.video_path)}/>
-                <meta name="twitter:player:width" content='360'/>
-                <meta name="twitter:player:height" content='200'/>
-                <meta name="twitter:image" content={video.overlay || video.thumb_lg}/>
+                <meta name="twitter:description" content={video.description || 'ScoutZoo'} />
+                <meta name="twitter:image" content={absUrl(video.overlay || video.thumb_lg)}/>
+                <meta name="twitter:player" content={absUrl(`/profile/${user.id}/video/${video.id}/player`)}/>
+                <meta name="twitter:player:width" content={video.width}/>
+                <meta name="twitter:player:height" content={video.height}/>
+
+
+
+                <meta property="fb:app_id" content="87741124305" />
+                <meta property="og:type" content="video.other" />
+                <meta property="og:url" content={absUrl(`/profile/${user.id}/video/${video.id}`)} />
+                <meta property="og:title" content={video.title}/>
+                <meta property="og:description" content={video.description || 'ScoutZoo'}/>
+                <meta property="og:video:url" content={absUrl(`/profile/${user.id}/video/${video.id}/player`)}/>
+                <meta property="og:video:secure_url" content={absUrl(`/profile/${user.id}/video/${video.id}/player`)}/>
+                <meta property="og:video:type" content="text/html"/>
+                <meta property="og:video:width" content={video.width}/>
+                <meta property="og:video:height" content={video.height}/>
+
 
                 <link rel="canonical" href={absUrl(`/profile/${user.id}/video/${video.id}`)}/>
             </Helmet>

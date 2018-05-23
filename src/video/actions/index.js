@@ -28,8 +28,6 @@ import * as VIDEO_STATUS from '../constants/video';
 
 export const fetchVideo = (id, token) => dispatch => {
     dispatch(startLoading());
-    dispatch({type: SET_VIDEO, payload: {}});
-
     return get(`/api/v2/video/get/${id}`, {}, token)
         .then(video => {
             dispatch(stopLoading());

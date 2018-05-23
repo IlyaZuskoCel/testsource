@@ -2,11 +2,10 @@ import {withRouter} from 'react-router-dom';
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {withWrapper} from "create-react-server/wrapper";
-import VideoItem from '../components/VideoItem';
+import Player from '../components/Player';
 import {matchPath} from 'react-router';
-import {goBack, go} from '../../common/actions';
-import {fetchVideo, fetchTags, deleteVideo, downloadVideo, sharedCount} from "../actions/index";
-import {getUser, getCurrent} from "../../user/actions/index";
+import {fetchVideo} from "../actions/index";
+import {getUser} from "../../user/actions/index";
 
 import {mapOptions} from '../../user/selectors';
 
@@ -19,14 +18,7 @@ const mapStateToProps = (state, props) => ({
     tagOptions: mapOptions(state.video.tags),
     token: state.common.cookies.token
 });
-const mapDispatchToProps = (dispatch) => ({
-    delete: (id,token) => dispatch(deleteVideo(id, token)),
-    edit: id => dispatch(go('/video/edit/' + id)),
-    goBack: () => dispatch(goBack()),
-    go: (userId) => dispatch(go(`/profile/${userId}`)),
-    downloadVideo: (video, token) => dispatch(downloadVideo(video, token)),
-    sharedCount: (videoId, token) => dispatch(sharedCount(videoId, token)),
-});
+const mapDispatchToProps = (dispatch) => ({});
 
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => ({
@@ -42,22 +34,20 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => ({
 class Wrap extends Component {
     static async getInitialProps({location, query, params, store}) {
         const match = matchPath(location.pathname, {
-            path: '/profile/:id/video/:videoId',
+            path: '/profile/:id/video/:videoId/player',
         });
         const state = store.getState();
 
         await Promise.all([
             store.dispatch(fetchVideo(match.params.videoId, state.common.cookies.token)),
             store.dispatch(getUser(match.params.id, state.common.cookies.token)),
-            store.dispatch(fetchTags(state.common.cookies.token)),
-            store.dispatch(getCurrent(state.common.cookies.token)),
         ])
 
     };
 
     render() {
 
-        return <VideoItem {...this.props} />
+        return <Player {...this.props} />
     }
 }
 

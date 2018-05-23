@@ -627,11 +627,12 @@ class PlayerProfile extends Component {
                 <meta property="og:type" content="article"/>
                 <meta property="og:image" content={user.profile_picture}/>
                 <meta property="og:description" content={detail.league}/>
+                <meta property="og:image" content={absUrl(user.profile_picture)} />
 
                 <meta name="twitter:card" content='player'/>
                 <meta name="twitter:title" content={detail.name}/>
                 <meta name="twitter:description" content={detail.league}/>
-                <meta name="twitter:image" content={user.profile_picture}/>
+                <meta name="twitter:image" content={absUrl(user.profile_picture)}/>
 
                 <link rel="canonical" href={absUrl(`/profile/${user.id}`)}/>
             </Helmet>
