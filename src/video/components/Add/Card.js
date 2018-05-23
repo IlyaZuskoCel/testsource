@@ -16,7 +16,7 @@ export const Card = (props) => {
         <Paper className={classNames(classes.uploadWrap, classes.videoWrap)}>
 
             <div className={classes.infoLeft}>
-                <img className={classes.infoLeftPhoto} src={userPhotoSrc} />
+                <img className={classes.infoLeftPhoto} style={{objectFit: user.profile_picture ? 'cover' : 'contain' }} src={userPhotoSrc} />
             </div>
 
             <div className={classes.infoRight}>

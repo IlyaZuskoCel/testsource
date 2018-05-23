@@ -247,7 +247,6 @@ const styleSheet = createStyleSheet('PlayerCard', theme => ({
         maxHeight: '100%',
         minHeight: '100%',
         width: '100%',
-        objectFit: 'cover',
     },
     infoRight: {
         width: 300,
