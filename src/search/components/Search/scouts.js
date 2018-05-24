@@ -273,6 +273,12 @@ class Scouts extends Component {
         return result ? result : role;
     }
 
+    handleClick = (scout, event) => {
+        if(!this.props.currentUser && scout.is_private)
+            event.preventDefault();
+            this.props.showPopUp('You must be logged in to view this profile');
+    }
+
 
     render() {
         const {classes, width} = this.props;
@@ -298,8 +304,8 @@ class Scouts extends Component {
 
                         {this.state.scouts && this.state.scouts.map(scout => {
                             return <Grid item xs={12} md={6} key={scout.id}>
-                                <Link to={`/profile/${scout.id}`} disabledUnderline>
-                                    <Paper classes={{root: classes.resultCard}} elevation={1}>
+                                <Link  onClick={(event)=>this.handleClick(scout, event)} to={`/profile/${scout.id}`} disabledUnderline>
+                                    <Paper classes={{root: classes.resultCard}} elevation={1} >
                                         <div className={classes.leftStripe}></div>
 
                                         <div className={classes.playerInfo}>
