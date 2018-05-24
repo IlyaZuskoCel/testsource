@@ -144,7 +144,7 @@ export const logOut = (token) => dispatch => {
     return get('/api/v2/profile/logout', {}, token)
         .then(() => {
             dispatch(stopLoading());
-            dispatch({type: SET_COOKIE, payload: {token:null}});
+            //dispatch({type: SET_COOKIE, payload: {token:null}});
             auth('');
             dispatch({type: LOGOUT});
             dispatch(push('/sign/in'));
