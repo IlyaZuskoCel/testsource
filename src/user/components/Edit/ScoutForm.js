@@ -5,6 +5,7 @@
 
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import Helmet from 'react-helmet';
 
 import {Prompt} from 'react-router';
 import classNames from 'classnames';
@@ -275,6 +276,9 @@ class ScoutForm extends Component {
             levels = this.props.levels.filter(l => parseInt(l.id_country) === parseInt(this.state.id_country)).map(l => l.id);
 
         return <div className={classes.root}>
+            <Helmet>
+                <title>{`Edit ${user.role} profile ${user.first_name} ${user.last_name}`}</title>
+            </Helmet>
             <Prompt
                 message="Your profile hasn't been saved! All changes will be lost. Are you sure you want to leave?"
                 when={this.state.isUpdate}

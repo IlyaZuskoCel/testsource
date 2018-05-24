@@ -453,6 +453,8 @@ class ScoutProfile extends Component {
                 <meta name="twitter:description" content={detail.league} />
                 <meta name="twitter:image" content={user.profile_picture} />
 
+                <title>{`Scout profile ${user.first_name} ${user.last_name}`}</title>
+
                 <link rel="canonical" href={absUrl(`/profile/${user.id}`)} />
             </Helmet>
 

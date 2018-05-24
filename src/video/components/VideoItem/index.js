@@ -406,6 +406,7 @@ class VideoItem extends Component {
                 <meta property="og:video:width" content={video.width}/>
                 <meta property="og:video:height" content={video.height}/>
 
+                <title>{`${video.title} ${ video.date? moment(video.date, '').format('YYYY') : ''} uploaded by ${user.first_name} ${user.last_name}`}</title>
 
                 <link rel="canonical" href={absUrl(`/profile/${user.id}/video/${video.id}`)}/>
             </Helmet>
