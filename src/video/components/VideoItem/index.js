@@ -246,7 +246,8 @@ const styleSheet = createStyleSheet('VideoItem', theme => ({
         width: 20,
         height: 24,
         fontSize: 18,
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
+        marginLeft: 10,
     },
     titleWrap: {
         marginTop: 8,
@@ -258,6 +259,11 @@ const styleSheet = createStyleSheet('VideoItem', theme => ({
         [theme.breakpoints.down('md')]: {
            '& >h1':{
                marginTop: 35,
+           },
+        },
+        [theme.breakpoints.down('sm')]: {
+           '& >h1':{
+               marginTop: 0,
            },
         },
     },
@@ -299,8 +305,10 @@ const styleSheet = createStyleSheet('VideoItem', theme => ({
         display: 'inline-block',
         transform: 'rotate(-90deg)',
         fontSize: 20,
+        [theme.breakpoints.down('sm')]: {
+            margin: '8px 8px 8px 15px',
+        },
     }
-
 }));
 
 

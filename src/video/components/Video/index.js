@@ -86,9 +86,11 @@ const styleSheet = createStyleSheet('Video', theme => ({
         },
     },
     moreButton: {
+        width: 20,
         height: 24,
         fontSize: 18,
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
+        marginLeft: 10,
     },
     titleWrap: {
         marginTop: 8,
@@ -97,7 +99,9 @@ const styleSheet = createStyleSheet('Video', theme => ({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
-
+        [theme.breakpoints.down('sm')]: {
+            alignItems: 'center',
+        },
     },
     link: {
         color: '#4a4a4a',
@@ -128,7 +132,11 @@ const styleSheet = createStyleSheet('Video', theme => ({
         display: 'inline-block',
         transform: 'rotate(-90deg)',
         fontSize: 20,
-    }
+        [theme.breakpoints.down('sm')]: {
+            margin: '8px 8px 8px 15px',
+        },
+    },
+
 }));
 
 
@@ -250,24 +258,29 @@ class Video extends Component {
                                                  sharedCount={this.handleSharedCount}>
                                         <ScoutZooIcon>share</ScoutZooIcon>
                                     </ShareButton>
-                                    <IconButton
-                                        className={classes.moreButton}
-                                        aria-label="More"
-                                        aria-owns={this.state.openVideoMenu ? `video-menu-${video.id}` : null}
-                                        aria-haspopup="true"
-                                        onClick={this.handleClick}>
-                                        <ScoutZooIcon>dots-three-vertical</ScoutZooIcon>
-                                    </IconButton>
-                                    <Menu id={`video-menu-${video.id}`}
-                                          anchorEl={this.state.anchorVideoMenuEl}
-                                          open={this.state.openVideoMenu}
-                                          onRequestClose={this.handleRequestClose}>
-                                        {currentUser && currentUser.id === video.id_user &&
-                                        <MenuItem onClick={this.handleEdit}>Edit</MenuItem>}
-                                        {currentUser && currentUser.id === video.id_user &&
-                                        <MenuItem onClick={this.handleDelete}>Delete</MenuItem>}
-                                        <MenuItem onClick={this.handleDownload}>Download</MenuItem>
-                                    </Menu>
+                                    {(currentUser && currentUser.id !== video.id_user) || currentUser === null ? <div className={classes.download} onClick={this.handleDownload}>
+                                        <ScoutZooIcon>left</ScoutZooIcon>
+                                    </div> : null}
+                                    {currentUser && currentUser.id === video.id_user &&
+                                    <span>
+                                        <IconButton
+                                            className={classes.moreButton}
+                                            aria-label="More"
+                                            aria-owns={this.state.openVideoMenu ? `video-menu-${video.id}` : null}
+                                            aria-haspopup="true"
+                                            onClick={this.handleClick}>
+                                            <ScoutZooIcon>dots-three-vertical</ScoutZooIcon>
+                                        </IconButton>
+                                        <Menu id={`video-menu-${video.id}`}
+                                              anchorEl={this.state.anchorVideoMenuEl}
+                                              open={this.state.openVideoMenu}
+                                              onRequestClose={this.handleRequestClose}>
+
+                                            <MenuItem onClick={this.handleEdit}>Edit</MenuItem>
+                                            <MenuItem onClick={this.handleDelete}>Delete</MenuItem>
+                                            <MenuItem onClick={this.handleDownload}>Download</MenuItem>
+                                        </Menu>
+                                    </span>}
                                 </div>
                             </Hidden>
 
