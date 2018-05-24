@@ -295,6 +295,7 @@ class Search extends Component {
             clearFilters: '',
             dropdownLeagues: [],
             showPopup: false,
+            popUpText: 'You must be logged in'
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -449,7 +450,7 @@ class Search extends Component {
 
     toggleMobileFilter() {
 
-        if(!this.props.currentUser) return this.setState({showPopup: true});
+        if(!this.props.currentUser) return this.setState({showPopup: true, popUpText: 'You must be logged in to use the filter feature.'});
 
         if (this.state.mobileFilterOn)
             this.props.hideFooter();
@@ -463,8 +464,8 @@ class Search extends Component {
         });
     }
 
-    showPopUp(){
-        this.setState({showPopup: true});
+    showPopUp(popUpText){
+        this.setState({showPopup: true, popUpText: popUpText});
     }
 
     componentWillMount() {
@@ -646,11 +647,16 @@ class Search extends Component {
                          role={this.props.currentUser ? this.props.currentUser.role : ''}
                          addFavorite={this.props.addFavorite}
                          removeFavorite={this.props.removeFavorite}
+                         currentUser={this.props.currentUser}
+                         showPopUp={this.showPopUp}
                 />
                 }
                 {this.props.type === 'scout' &&
                 <Scouts scouts={this.props.results}
-                        total={this.props.headers ? this.props.headers.count : 0}/>
+                        total={this.props.headers ? this.props.headers.count : 0}
+                        currentUser={this.props.currentUser}
+                        showPopUp={this.showPopUp}
+                />
                 }
             </div>}
 
@@ -691,7 +697,7 @@ class Search extends Component {
                 open={this.state.showPopup}
                 className={classes.snackbar}
                 message={<div className={classes.message}>
-                    <Typography type="subheading">You must be logged in to use the filter feature.</Typography>
+                    <Typography type="subheading">{this.state.popUpText}</Typography>
                     <div className={classes.buttonsPopup}>
                         <Button className={classes.buttonCancel} onClick={this.handleClosePopup}>cancel</Button>
 

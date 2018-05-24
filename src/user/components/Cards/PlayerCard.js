@@ -273,6 +273,12 @@ class PlayerCard extends Component {
         });
     };
 
+    handleClick = (event) => {
+        if(!this.props.currentUser && this.props.player.is_private)
+            event.preventDefault();
+            this.props.showPopUp('You must be logged in to view this profile');
+    }
+
     handleDialogConfirm = () => {
         this.setState({openConfirmAlert: false});
     };
@@ -334,7 +340,7 @@ class PlayerCard extends Component {
                     </DialogActions>
                 </Dialog>
 
-                <Link to={`/profile/${player.id}`} disabledUnderline>
+                <Link onClick={this.handleClick} to={`/profile/${player.id}`} disabledUnderline>
                     <Paper classes={{root: classes.resultCard}} elevation={1}>
                         <div className={classes.leftStripe}></div>
 
