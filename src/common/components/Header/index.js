@@ -436,9 +436,9 @@ class Header extends Component {
                                 <ScoutIcon className={classes.logo}>scoutzoo-symbol</ScoutIcon>
                             </Link>
                         ) : (
-                            <a href="/search/player" target="_blank" className={classes.logoLink}>
+                            <Link to="/search/player" target="_blank" className={classes.logoLink}>
                                 <ScoutIcon className={classes.logo}>scoutzoo-symbol</ScoutIcon>
-                            </a>
+                            </Link>
                         )}
 
                     </Grid>
