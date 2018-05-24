@@ -35,6 +35,8 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => ({
     ...dispatchProps,
     ...ownProps,
     delete: id => dispatchProps.delete(id, stateProps.token),
+    downloadVideo: (video) =>  dispatchProps.downloadVideo(video, stateProps.token),
+    sharedCount: (videoId) => dispatchProps.sharedCount(videoId, stateProps.token),
 });
 
 
