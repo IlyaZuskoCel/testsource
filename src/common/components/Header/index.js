@@ -285,6 +285,16 @@ const styleSheet = createStyleSheet('Header', theme => ({
             color:'#fff',
             minWidth:60
         },
+        [theme.breakpoints.down('sm')]: {
+            color:'#fff',
+            minWidth:60,
+            '&:hover, &:focus, &:active': {
+                boxShadow: '0 0 7px 0 rgba(0, 0, 0, 0.3)',
+                backgroundColor:'#fff',
+                color: '#d7001e',
+            },
+        },
+
     },
 }));
 
