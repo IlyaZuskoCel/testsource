@@ -236,7 +236,9 @@ class Players extends Component {
                                 <PlayerCard player={player}
                                             role={this.props.role}
                                             addFavorite={this.props.addFavorite}
-                                            removeFavorite={this.props.removeFavorite} />
+                                            removeFavorite={this.props.removeFavorite}
+                                            showPopUp={this.props.showPopUp}
+                                            currentUser={this.props.currentUser}/>
                             </Grid>
                         })}
                     </Grid>
