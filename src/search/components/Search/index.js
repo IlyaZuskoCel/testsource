@@ -654,7 +654,7 @@ class Search extends Component {
             {!currentUser ?
             <Grid container gutter={8} className={classes.content}>
                 <Grid item xs={12}>
-                    <Typography type="subheading" className={classes.subTitle}>Sign up to get full access to a talanted roster of players
+                    <Typography type="subheading" className={classes.subTitle}>Sign up to get full access to a talanted roster of
                         {this.props.type === 'player' &&
                             ' players'
                         }
