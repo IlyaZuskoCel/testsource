@@ -170,7 +170,7 @@ class ScoutFilter extends Component {
     makeFilterRequest() {
         let queryString = '';
         let filters = {};
-
+        if(!this.props.currentUser) return this.props.showPopUp();
         let options = {
             id_country: this.state.id_country ? this.state.id_country : null,
             id_league: this.state.id_league ? this.state.id_league : null,

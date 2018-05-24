@@ -303,6 +303,7 @@ class Search extends Component {
         this.onClearFilters = this.onClearFilters.bind(this);
         this.stopClearing = this.stopClearing.bind(this);
         this.handleScroll = this.handleScroll.bind(this);
+        this.showPopUp = this.showPopUp.bind(this);
 
         setTimeout(() => {
             this.setState({activeTab: this.props.type && this.props.type === 'scout' ? 1 : 0})
@@ -462,6 +463,10 @@ class Search extends Component {
         });
     }
 
+    showPopUp(){
+        this.setState({showPopup: true});
+    }
+
     componentWillMount() {
         this.props.setFilters(this.state.query, this.props.type == 'scout' ? 'scout' : '');
     }
@@ -508,7 +513,7 @@ class Search extends Component {
                                                                      stopClearing={this.stopClearing}
                                                                      page={this.state.pageCurrentPosition ? this.state.pageCurrentPosition : 1}
                                                                      currentUser={this.props.currentUser}
-
+                                                                     showPopUp={this.showPopUp}
                                                                      filters={this.props.filters && this.props.filters.scout ? this.props.filters.scout : {}}
                                                                      setFilters={this.props.setFilters}
                         />}
@@ -529,6 +534,7 @@ class Search extends Component {
                                                                        stopClearing={this.stopClearing}
                                                                        page={this.state.pageCurrentPosition ? this.state.pageCurrentPosition : 1}
                                                                        currentUser={this.props.currentUser}
+                                                                       showPopUp={this.showPopUp}
                                                                        filters={this.props.filters && this.props.filters.player ? this.props.filters.player : {}}
                                                                        setFilters={this.props.setFilters}
 
