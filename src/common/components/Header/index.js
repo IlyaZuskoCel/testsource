@@ -294,7 +294,6 @@ const styleSheet = createStyleSheet('Header', theme => ({
                 color: '#d7001e',
             },
         },
-
     },
 }));
 
