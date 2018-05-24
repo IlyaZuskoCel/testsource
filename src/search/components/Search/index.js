@@ -265,6 +265,9 @@ const styleSheet = createStyleSheet('Search', theme => ({
             color:theme.palette.text.disabled,
         }
     },
+    primaryButton:{
+        color: '#d7001e !important'
+    }
 }));
 
 
@@ -702,7 +705,7 @@ class Search extends Component {
                         <Button className={classes.buttonCancel} onClick={this.handleClosePopup}>cancel</Button>
 
                         <Link to="/sign/in" disabledUnderline>
-                            <Button>Log In</Button>
+                            <Button className={classes.primaryButton}>Log In</Button>
                         </Link>
                     </div>
 
