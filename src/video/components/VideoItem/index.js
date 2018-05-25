@@ -296,6 +296,7 @@ const styleSheet = createStyleSheet('VideoItem', theme => ({
         color: '#4a4a4a',
         opacity: 1,
         margin: 8,
+        outline:0
     },
     download: {
         color: '#4a4a4a',
