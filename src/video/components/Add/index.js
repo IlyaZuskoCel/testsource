@@ -63,9 +63,14 @@ const styleSheet = createStyleSheet('Add', theme => ({
             left: 0,
             right: 0,
             paddingTop: 60,
-            paddingLeft: 16,
-            paddingRight: 16,
+            paddingLeft: 30,
+            paddingRight: 20,
             backgroundImage: 'linear-gradient(287deg, #f55e58, #c9011b)'
+        },
+        [theme.breakpoints.down('sm')]: {
+            paddingLeft: 4,
+            paddingRight: 0,
+
         },
 
 
@@ -75,6 +80,9 @@ const styleSheet = createStyleSheet('Add', theme => ({
         height: 72,
         [theme.breakpoints.down('md')]: {
             height: 48,
+        },
+        [theme.breakpoints.down('sm')]: {
+            minWidth: 60,
         }
     },
     activeTabWrap: {
