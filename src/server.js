@@ -27,6 +27,8 @@ import {get} from "./common/helpers/api";
 
 const options = {
     render: (req, res, initialProps, context) => {
+        if(context.url)
+            return res.redirect(301,context.url);
         Cookie.setRawCookie(req.headers.cookie);
         const token = Cookie.load('token');
         return get('/api/v2/profile/get', {}, token)
