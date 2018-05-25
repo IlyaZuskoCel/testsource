@@ -86,7 +86,10 @@ const styleSheet = createStyleSheet('ShareButton', theme => ({
         marginTop: 16
     },
     buttons: {
-        justifyContent: 'flex-start'
+        justifyContent: 'flex-start',
+        '& button': {
+            color:theme.palette.text.disabled,
+        }
     },
     message: {
         display: 'flex',
