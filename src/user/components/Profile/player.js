@@ -788,7 +788,8 @@ class PlayerProfile extends Component {
                                     </Hidden>
                                     <Typography type="subheading" align="center" className={classes.infoCardTeam}>
                                         {user.team || 'Team Unknown'}
-                                        {user.league_short ? ' - ' + user.league_short : (!user.league_status ? user.league : '')}
+                                        {user.league && ' - '}
+                                        {user.league_short ? user.league_short : (!user.league_status ? user.league : '')}
                                         {(!user.team_status && user.team || !user.league_status && user.league) && "*"}
                                     </Typography>
                                     <Typography type="body1" align="center">
