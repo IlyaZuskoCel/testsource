@@ -476,7 +476,7 @@ class Search extends Component {
     }
 
     handleClosePopup = () => {
-        this.setState({showPopup:false})
+        this.setState({showPopup:false, clearField: this.props.type})
     };
 
     render() {
