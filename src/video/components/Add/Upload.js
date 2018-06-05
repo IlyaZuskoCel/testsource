@@ -142,7 +142,7 @@ class Upload extends Component {
                 </Paper>
             )}
 
-            {video.status !== 3 && video.progress >= 0 && ( <Paper className={classes.uploadWrap}>
+            {video.status !== 3 && video.status !== 5 && video.progress >= 0 && ( <Paper className={classes.uploadWrap}>
                 {video.progress < 100 ? (
                     <Typography type="headline"
                                 className={classes.progress}>{video.progress}%</Typography>
@@ -157,15 +157,15 @@ class Upload extends Component {
                             className={classes.progressTitle}>{video.progress < 100 ? 'Upload in Progress' : 'Conversion in Progress'}</Typography>
             </Paper>)}
 
-            {video.status === 3 && (<Paper className={classNames(classes.uploadWrap, classes.videoWrap)}>
+            {(video.status === 3 || video.status === 5) && (<Paper className={classNames(classes.uploadWrap, classes.videoWrap)}>
                     <video src={video.video_path} className={classes.video} controls controlsList="nodownload"/>
                 </Paper>
             )}
             {this.state.error && <Typography type="body2">{this.state.error}</Typography>}
 
             <div className={classes.buttons}>
-                <Button onClick={this.props.onNext} raised color={video.status !== 3 ? 'default' : 'primary'}
-                        disabled={video.status !== 3}>
+                <Button onClick={this.props.onNext} raised color={(video.status !== 3 && video.status !== 5) ? 'default' : 'primary'}
+                        disabled={video.status !== 3 && video.status !== 5}>
                     Next
                 </Button>
             </div>
