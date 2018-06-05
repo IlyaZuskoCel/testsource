@@ -140,6 +140,7 @@ class DateTextField extends Component {
         if (event.target.value.length > 4) return false;
 
         if (event.target.value.length > 0 && event.target.value[0] === '0') return false;
+        if (event.target.value.length > 1 && (event.target.value[1] === '.' || event.target.value[2] === '.' || event.target.value[3] === '.')) return false;
 
         let value = parseInt(event.target.value);
 
