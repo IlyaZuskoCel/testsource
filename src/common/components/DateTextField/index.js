@@ -107,7 +107,8 @@ class DateTextField extends Component {
         event.preventDefault();
         if (event.target.value.length > 2) return false;
         if (event.target.value.length > 0 && ['0', '1'].indexOf(event.target.value[0]) === -1) return false;
-        if (event.target.value.length > 1 && event.target.value[0] === '0' && event.target.value[1] === '0') return false;
+        if (event.target.value.length > 1 && event.target.value[0] === '0' && event.target.value[1] === '0' ) return false;
+        if (event.target.value.length > 1 && event.target.value[1] === '.') return false;
 
         let value = parseInt(event.target.value);
         if (value > 12 || value < 0)
