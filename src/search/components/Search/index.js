@@ -212,6 +212,7 @@ const styleSheet = createStyleSheet('Search', theme => ({
         },
     },
     clearLink: {
+        display: 'inline-block',
         paddingBottom: 24
     },
     buttons: {
