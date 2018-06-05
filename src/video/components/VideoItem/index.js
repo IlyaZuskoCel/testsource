@@ -430,7 +430,7 @@ class VideoItem extends Component {
                 <div className={classes.content}>
 
                     <div className={classes.topNavigate}>
-                        <Link to={`/profile/${video.id_user}`} invert disabledUnderline className={classes.backLink}>
+                        <Link to={`/profile/${video.id_user}`} onClick={this.goBack} invert disabledUnderline className={classes.backLink}>
                             <ScoutZooIcon>previous</ScoutZooIcon>
                             <Hidden only={['xs', 'sm']}>
                                 <span className={classes.backTitle}>Back to profile</span>
