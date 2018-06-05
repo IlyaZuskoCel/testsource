@@ -365,7 +365,7 @@ class Add extends Component {
                 </Grid>
                 <Grid item md={6} hidden={{smDown: true}}>
                     <Form video={video}
-                          hideButton={this.state.tab < 2}
+                          hideButton={this.state.tab < 3}
                           tags={this.props.tags}
                           updateField={this.props.updateField}
                           tagOptions={this.props.tagOptions}
