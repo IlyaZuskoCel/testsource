@@ -295,6 +295,10 @@ const styleSheet = createStyleSheet('Header', theme => ({
             },
         },
     },
+    raisedHideBackground: {
+        color: '#000',
+        opacity: 1,
+    },
 }));
 
 
@@ -469,13 +473,13 @@ class Header extends Component {
                             <div className={classNames(classes.menu)}>
                                 <Link to="/sign/in" disabledUnderline
                                       className={classNames(classes.menuItem)}>
-                                    <Button className={classNames(classes.raised)}>
+                                    <Button className={classNames(classes.raised, {[classes.raisedHideBackground]: hideBackground && !this.props.hideBackgroundTopMobileHeader && !this.props.hideBackgroundTopMobileHeaderScroll})}>
                                         log in
                                     </Button>
                                 </Link>
                                 <Link to="/sign/up" disabledUnderline
                                       className={classNames(classes.menuItem)}>
-                                    <Button className={classNames(classes.raised)}>
+                                    <Button className={classNames(classes.raised, {[classes.raisedHideBackground]: hideBackground && !this.props.hideBackgroundTopMobileHeader && !this.props.hideBackgroundTopMobileHeaderScroll})}>
                                         sign up
                                     </Button>
                                 </Link>
