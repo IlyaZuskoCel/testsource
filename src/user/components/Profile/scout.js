@@ -500,13 +500,14 @@ class ScoutProfile extends Component {
                                 </Button>
                             </ShareButton>
 
-                            <IconButton
+                            {currentUser && <IconButton
                                 aria-label="More"
                                 aria-owns={this.state.openUserMenu ? 'user-menu' : null}
                                 aria-haspopup="true"
                                 onClick={this.toggleUserMenu}>
                                 <Icon>dots-three-vertical</Icon>
                             </IconButton>
+                            }
                             <Menu
                                 id="user-menu"
                                 anchorEl={this.state.anchorUserMenuEl}
