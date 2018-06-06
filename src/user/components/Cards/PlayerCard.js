@@ -119,6 +119,8 @@ const styleSheet = createStyleSheet('Search', theme => ({
 
     },
     nameFont: {
+        width: 180,
+        overflow: 'hidden',
         fontSize: 40,
         marginTop: 20,
 
@@ -130,7 +132,9 @@ const styleSheet = createStyleSheet('Search', theme => ({
             marginTop: 0,
         }
     },
-    playerLeague: {},
+    playerLeague: {
+        width: 180,
+    },
 
     playerBottomInfo: {
         display: 'flex',
