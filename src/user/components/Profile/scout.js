@@ -481,13 +481,6 @@ class ScoutProfile extends Component {
                                     <span>Edit</span>
                                 </Button>
                             </Link>
-                            <Hidden only={['xs', 'sm']}>
-                                <Link to="/video/add" disabledUnderline>
-                                    <Button color="primary" raised className={classes.addVideoButton}>
-                                        Add a Video
-                                    </Button>
-                                </Link>
-                            </Hidden>
                         </div>
                     </div>}
 
