@@ -699,6 +699,7 @@ class PlayerProfile extends Component {
                             {currentUser && currentUser.role === SCOUT_ROLE &&
                             <FavoriteButton user={user.id} active={user.is_tagged}/>}
 
+                            {currentUser &&
                             <IconButton
                                 aria-label="More"
                                 aria-owns={this.state.openUserMenu ? 'user-menu' : null}
@@ -706,6 +707,7 @@ class PlayerProfile extends Component {
                                 onClick={this.toggleUserMenu}>
                                 <Icon>dots-three-vertical</Icon>
                             </IconButton>
+                            }
                             <Menu
                                 id="user-menu"
                                 anchorEl={this.state.anchorUserMenuEl}
