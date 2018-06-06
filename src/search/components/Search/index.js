@@ -485,7 +485,7 @@ class Search extends Component {
 
         return (<div className={classes.root}>
             <Helmet>
-                <title>{`Search ${headers ? headers.count : 0} ${type}s found, page-${headers ? headers.page: ''}`}</title>
+                <title>Scout Zoo Platform</title>
             </Helmet>
             <Hidden only={['xs', 'sm']}>
                 <header className={classes.header}>
