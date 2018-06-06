@@ -15,8 +15,7 @@ export const Card = (props) => {
 
     let teamName = ( user.league && user.league_short ? `${user.team} - ${user.league_short.toUpperCase()}`: user.team) || 'Unknown';
 
-    let place = user.team_location ? `${user.team_location !== 'n/a' ? user.team_location + ',' : '' }${user.team_country}` : 'Location Unknown';
-
+    let place = user.country || (user.team_location !== 'n/a' && user.team_location) || user.team_country || 'Location Unknown';
     return (
         <Paper className={classNames(classes.uploadWrap, classes.videoWrap)}>
 
