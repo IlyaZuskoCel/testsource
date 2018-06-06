@@ -269,10 +269,12 @@ export const fetchTags = token => dispatch => {
 };
 
 export const downloadVideo = (video, token) => dispatch => {
-    let element = document.createElement('a');
-    element.setAttribute('href', video.video_path);
-    element.setAttribute('download', video.video_file_name);
-    element.click();
+    let link = document.createElement("a");
+    link.download = video.video_file_name;
+    link.href = video.video_path;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
     return get(`/api/v2/activity/download-video/${video.id}`, {}, token);
 };
 
