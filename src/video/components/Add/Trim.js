@@ -94,7 +94,12 @@ class Trim extends Component {
             max: props.video.duration || null,
             time_start: props.video.time_start || 0,
             time_end: props.video.time_end || 0,
+            showRange: false,
         };
+    }
+
+    componentDidMount(){
+        this.setState({showRange: true})
     }
 
     componentWillReceiveProps(nextProps) {
@@ -146,11 +151,12 @@ class Trim extends Component {
                        id="video"
                        className={classes.video}
                        onTimeUpdate={this.handleTimeUpdate}
+                       onCanPlay={() => this.setState({showRange: true})}
                        controls
                        controlsList="nodownload"/>
             </Paper>
 
-            {!!video && !!this.state.max && (
+            {this.state.showRange === true && !!video && !!this.state.max && (
                 <div className={classes.range}>
                     <RangeSlider min={this.state.min}
                                  max={this.state.max}
