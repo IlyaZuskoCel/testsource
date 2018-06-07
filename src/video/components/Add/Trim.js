@@ -156,7 +156,7 @@ class Trim extends Component {
                        controlsList="nodownload"/>
             </Paper>
 
-            {this.state.showRange && !!video && !!this.state.max && (
+            {this.state.showRange === true && !!video && !!this.state.max && (
                 <div className={classes.range}>
                     <RangeSlider min={this.state.min}
                                  max={this.state.max}
