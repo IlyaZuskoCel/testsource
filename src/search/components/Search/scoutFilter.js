@@ -289,7 +289,7 @@ class ScoutFilter extends Component {
                                  onSuggestionSelected={this.onChangeAutosuggest('id_team_current')}/>
                 </Grid>
                 <Grid item xs={12} md={4}>
-
+                    {this.props.textField?
                     <Hidden only={['xs', 'sm']}>
                         <TextField
                             id="name"
@@ -298,7 +298,7 @@ class ScoutFilter extends Component {
                             className={ classes.textField }
                             onChange={this.onChangeName}
                         />
-                    </Hidden>
+                    </Hidden> : '' }
 
                     <Hidden only={['md', 'lg', 'xl']}>
                         <InputText options={[]}

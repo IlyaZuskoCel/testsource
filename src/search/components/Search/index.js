@@ -299,7 +299,8 @@ class Search extends Component {
             clearFilters: '',
             dropdownLeagues: [],
             showPopup: false,
-            popUpText: 'You must be logged in'
+            popUpText: 'You must be logged in',
+            textField: true
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -469,7 +470,7 @@ class Search extends Component {
     }
 
     showPopUp(popUpText){
-        this.setState({showPopup: true, popUpText: popUpText});
+        this.setState({showPopup: true, popUpText: popUpText, textField:false});
     }
 
     componentWillMount() {
@@ -477,7 +478,7 @@ class Search extends Component {
     }
 
     handleClosePopup = () => {
-        this.setState({showPopup:false, clearField: this.props.type})
+        this.setState({showPopup:false, clearField: this.props.type, textField:true})
     };
 
     render() {
@@ -521,6 +522,7 @@ class Search extends Component {
                                                                      showPopUp={this.showPopUp}
                                                                      filters={this.props.filters && this.props.filters.scout ? this.props.filters.scout : {}}
                                                                      setFilters={this.props.setFilters}
+                                                                     textField={this.state.textField}
                         />}
 
                         {this.props.type === 'player' && <PlayerFilter countries={this.props.countries}
@@ -542,6 +544,7 @@ class Search extends Component {
                                                                        showPopUp={this.showPopUp}
                                                                        filters={this.props.filters && this.props.filters.player ? this.props.filters.player : {}}
                                                                        setFilters={this.props.setFilters}
+                                                                       textField={this.state.textField}
 
                         />}
                         <Typography className={classNames(classes.link, classes.clearLink)}
@@ -640,6 +643,7 @@ class Search extends Component {
                                                                    currentUser={this.props.currentUser}
                                                                    filters={this.props.filters && this.props.filters.player ? this.props.filters.player : {}}
                                                                    setFilters={this.props.setFilters}
+                                                                   textField={this.state.textField}
                     />}
                 </div>
             </Hidden>}
