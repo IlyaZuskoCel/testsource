@@ -311,7 +311,9 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
         lineHeight: '48px'
 
     },
-    infoCardTeam: {},
+    infoCardTeam: {
+        maxWidth:254
+    },
     infoCardDataSeparator: {
         margin: '4px auto',
         width: 26,
