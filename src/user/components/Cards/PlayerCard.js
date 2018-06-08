@@ -119,7 +119,7 @@ const styleSheet = createStyleSheet('Search', theme => ({
 
     },
     nameFont: {
-        width: 180,
+        maxWidth: 180,
         fontSize: 40,
         marginTop: 20,
         overflow: 'hidden',
