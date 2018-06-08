@@ -34,7 +34,7 @@ const styleSheet = createStyleSheet('Search', theme => ({
         width: '100%',
         margin: 'auto',
         '& h3': {
-            textAlign:'center'
+            textAlign: 'center'
         }
     },
     header: {
@@ -216,57 +216,57 @@ const styleSheet = createStyleSheet('Search', theme => ({
         paddingBottom: 24
     },
     buttons: {
-        display:'flex',
-        justifyContent:'center',
-        marginTop:36,
-        marginBottom:68,
+        display: 'flex',
+        justifyContent: 'center',
+        marginTop: 36,
+        marginBottom: 68,
         '& button:first-child': {
-            marginRight:30,
+            marginRight: 30,
             [theme.breakpoints.down('md')]: {
-                marginRight:0,
+                marginRight: 0,
             }
         },
         [theme.breakpoints.down('md')]: {
-            justifyContent:'space-around',
+            justifyContent: 'space-around',
             '& button': {
-                minWidth:140
+                minWidth: 140
             }
         }
     },
     snackbar: {
-        width:600,
-        margin:'0 auto',
+        width: 600,
+        margin: '0 auto',
         [theme.breakpoints.down('sm')]: {
-            width:'auto',
+            width: 'auto',
         }
     },
     message: {
-        display:'flex',
-        justifyContent:'center',
-        flexDirection:'column',
-        padding:40
+        display: 'flex',
+        justifyContent: 'center',
+        flexDirection: 'column',
+        padding: 40
     },
     buttonsMessage: {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-around',
         alignItems: 'center',
-        padding:'41px 45px 38px 54px',
+        padding: '41px 45px 38px 54px',
         '& span:before': {
-            display:'none',
+            display: 'none',
 
         }
     },
     buttonsPopup: {
-        marginTop:50,
-        display:'flex',
-        justifyContent:'space-between',
-        width:'100%',
+        marginTop: 50,
+        display: 'flex',
+        justifyContent: 'space-between',
+        width: '100%',
         '& button': {
-            color:theme.palette.text.disabled,
+            color: theme.palette.text.disabled,
         }
     },
-    primaryButton:{
+    primaryButton: {
         color: '#d7001e !important'
     }
 }));
@@ -454,7 +454,10 @@ class Search extends Component {
 
     toggleMobileFilter() {
 
-        if(!this.props.currentUser) return this.setState({showPopup: true, popUpText: 'You must be logged in to use the filter feature.'});
+        if (!this.props.currentUser) return this.setState({
+            showPopup: true,
+            popUpText: 'You must be logged in to use the filter feature.'
+        });
 
         if (this.state.mobileFilterOn)
             this.props.hideFooter();
@@ -468,7 +471,7 @@ class Search extends Component {
         });
     }
 
-    showPopUp(popUpText){
+    showPopUp(popUpText) {
         this.setState({showPopup: true, popUpText: popUpText});
     }
 
@@ -477,11 +480,11 @@ class Search extends Component {
     }
 
     handleClosePopup = () => {
-        this.setState({showPopup:false, clearField: this.props.type})
+        this.setState({showPopup: false, clearField: this.props.type})
     };
 
     render() {
-        const {classes,currentUser, headers, location, type} = this.props;
+        const {classes, currentUser, headers, location, type} = this.props;
 
         return (<div className={classes.root}>
             <Helmet>
@@ -596,7 +599,7 @@ class Search extends Component {
                 </div>
             </Hidden>
 
-            {!this.state.mobileFilterOn  && <Hidden only={['md', 'lg', 'xl']}>
+            {!this.state.mobileFilterOn && <Hidden only={['md', 'lg', 'xl']}>
                 <div>
                     {this.props.type === 'scout' && <ScoutFilter countries={this.props.countries}
                                                                  countryOptions={this.props.countryOptions}
@@ -673,26 +676,26 @@ class Search extends Component {
                             onChange={this.changePagination}/>
             </footer>}
             {!currentUser ?
-            <Grid container gutter={8} className={classes.content}>
-                <Grid item xs={12}>
-                    <Typography type="subheading" className={classes.subTitle}>Sign up to get full access to
-                        {this.props.type === 'player' &&
+                <Grid container gutter={8} className={classes.content}>
+                    <Grid item xs={12}>
+                        <Typography type="subheading" className={classes.subTitle}>Sign up to get full access to
+                            {this.props.type === 'player' &&
                             ' a talanted roster of players'
-                        }
-                        {this.props.type === 'scout' &&
+                            }
+                            {this.props.type === 'scout' &&
                             ' our database of scouts'
-                        }
-                    </Typography>
-                    <div className={classes.buttons}>
-                        <Link to="/sign/up" disabledUnderline>
-                            <Button raised color="primary" className={classes.buttonCancel}>Sign Up</Button>
-                        </Link>
-                        <Link to="/sign/in" disabledUnderline>
-                            <Button raised>Log In</Button>
-                        </Link>
-                    </div>
+                            }
+                        </Typography>
+                        <div className={classes.buttons}>
+                            <Link to="/sign/up" disabledUnderline>
+                                <Button raised color="primary" className={classes.buttonCancel}>Sign Up</Button>
+                            </Link>
+                            <Link to="/sign/in" disabledUnderline>
+                                <Button raised>Log In</Button>
+                            </Link>
+                        </div>
+                    </Grid>
                 </Grid>
-            </Grid>
                 : null}
 
             <Snackbar
