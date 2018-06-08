@@ -12,7 +12,7 @@ import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import withWidth from 'material-ui/utils/withWidth';
 import {Link, Pagination, Autosuggest} from '../../../common/components';
-import Hidden from '../../../common/components/Hidden';
+import Hidden from 'material-ui/Hidden';
 import Button from 'material-ui/Button';
 import Snackbar from 'material-ui/Snackbar';
 import Helmet from 'react-helmet';
@@ -542,7 +542,6 @@ class Search extends Component {
                                                                        showPopUp={this.showPopUp}
                                                                        filters={this.props.filters && this.props.filters.player ? this.props.filters.player : {}}
                                                                        setFilters={this.props.setFilters}
-
                         />}
                         <Typography className={classNames(classes.link, classes.clearLink)}
                                     type="body1"
@@ -618,6 +617,7 @@ class Search extends Component {
                                                                  currentUser={this.props.currentUser}
                                                                  filters={this.props.filters && this.props.filters.scout ? this.props.filters.scout : {}}
                                                                  setFilters={this.props.setFilters}
+
                     />
                     }
 
@@ -640,6 +640,8 @@ class Search extends Component {
                                                                    currentUser={this.props.currentUser}
                                                                    filters={this.props.filters && this.props.filters.player ? this.props.filters.player : {}}
                                                                    setFilters={this.props.setFilters}
+                                                                   showRange={!this.state.mobileFilterOn}
+
                     />}
                 </div>
             </Hidden>}
