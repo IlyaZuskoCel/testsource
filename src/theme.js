@@ -430,7 +430,10 @@ const theme = (outerTheme) => {
                     borderStyle: 'solid',
                     borderWidth: 0.5,
                     borderImageSource: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06) 20%, rgba(255, 255, 255, 0.0))',
-                    borderImageSlice: 1
+                    borderImageSlice: 1,
+                    [outerTheme.breakpoints.down(425)]: {
+                       marginLeft: -10,
+                    }
                 },
                 bar: {
                     border: 'solid 2px #e2e2e2',

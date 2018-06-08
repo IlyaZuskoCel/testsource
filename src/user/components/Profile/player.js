@@ -283,12 +283,12 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
         position: 'absolute',
         top: 16,
         left: 16,
-        zIndex: 10,
-        backgroundImage: 'linear-gradient(312deg, #c39e3d, #ddc674)',
-        backgroundClip: 'text',
-        '-webkitBackgroundClip': 'text',
         textFillColor: 'transparent',
-        color: 'transparent',
+        zIndex: 10,
+        backgroundImage: `${(typeof(window)!= 'undefined' && navigator.userAgent.search('.NET') > 0  )? '': 'linear-gradient(312deg, #c39e3d, #ddc674)' }`,
+        backgroundClip: 'text',
+        '-webkit-backgroundClip': 'text',
+        color: `${(typeof(window)!= 'undefined' && navigator.userAgent.search('.NET') > 0  )? '#c39e3d': 'transparent' }`,
         fontSize: 48,
         [theme.breakpoints.down('sm')]: {
             fontSize: 40,
@@ -374,7 +374,9 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
         },
 
     },
-    infoCardTeam: {},
+    infoCardTeam: {
+        maxWidth:254
+    },
     infoCardName: {
         marginTop: 8,
         fontSize: 32,

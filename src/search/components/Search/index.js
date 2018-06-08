@@ -299,7 +299,8 @@ class Search extends Component {
             clearFilters: '',
             dropdownLeagues: [],
             showPopup: false,
-            popUpText: 'You must be logged in'
+            popUpText: 'You must be logged in',
+            textField: true
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -524,6 +525,7 @@ class Search extends Component {
                                                                      showPopUp={this.showPopUp}
                                                                      filters={this.props.filters && this.props.filters.scout ? this.props.filters.scout : {}}
                                                                      setFilters={this.props.setFilters}
+                                                                     textField={this.state.textField}
                         />}
 
                         {this.props.type === 'player' && <PlayerFilter countries={this.props.countries}
@@ -545,6 +547,8 @@ class Search extends Component {
                                                                        showPopUp={this.showPopUp}
                                                                        filters={this.props.filters && this.props.filters.player ? this.props.filters.player : {}}
                                                                        setFilters={this.props.setFilters}
+                                                                       textField={this.state.textField}
+
                         />}
                         <Typography className={classNames(classes.link, classes.clearLink)}
                                     type="body1"
@@ -599,7 +603,7 @@ class Search extends Component {
                 </div>
             </Hidden>
 
-            {!this.state.mobileFilterOn && <Hidden only={['md', 'lg', 'xl']}>
+            {!this.state.mobileFilterOn  && <Hidden only={['md', 'lg', 'xl']}>
                 <div>
                     {this.props.type === 'scout' && <ScoutFilter countries={this.props.countries}
                                                                  countryOptions={this.props.countryOptions}
@@ -620,7 +624,6 @@ class Search extends Component {
                                                                  currentUser={this.props.currentUser}
                                                                  filters={this.props.filters && this.props.filters.scout ? this.props.filters.scout : {}}
                                                                  setFilters={this.props.setFilters}
-
                     />
                     }
 
@@ -643,8 +646,6 @@ class Search extends Component {
                                                                    currentUser={this.props.currentUser}
                                                                    filters={this.props.filters && this.props.filters.player ? this.props.filters.player : {}}
                                                                    setFilters={this.props.setFilters}
-                                                                   showRange={!this.state.mobileFilterOn}
-
                     />}
                 </div>
             </Hidden>}
@@ -676,26 +677,26 @@ class Search extends Component {
                             onChange={this.changePagination}/>
             </footer>}
             {!currentUser ?
-                <Grid container gutter={8} className={classes.content}>
-                    <Grid item xs={12}>
-                        <Typography type="subheading" className={classes.subTitle}>Sign up to get full access to
-                            {this.props.type === 'player' &&
+            <Grid container gutter={8} className={classes.content}>
+                <Grid item xs={12}>
+                    <Typography type="subheading" className={classes.subTitle}>Sign up to get full access to
+                        {this.props.type === 'player' &&
                             ' a talanted roster of players'
-                            }
-                            {this.props.type === 'scout' &&
+                        }
+                        {this.props.type === 'scout' &&
                             ' our database of scouts'
-                            }
-                        </Typography>
-                        <div className={classes.buttons}>
-                            <Link to="/sign/up" disabledUnderline>
-                                <Button raised color="primary" className={classes.buttonCancel}>Sign Up</Button>
-                            </Link>
-                            <Link to="/sign/in" disabledUnderline>
-                                <Button raised>Log In</Button>
-                            </Link>
-                        </div>
-                    </Grid>
+                        }
+                    </Typography>
+                    <div className={classes.buttons}>
+                        <Link to="/sign/up" disabledUnderline>
+                            <Button raised color="primary" className={classes.buttonCancel}>Sign Up</Button>
+                        </Link>
+                        <Link to="/sign/in" disabledUnderline>
+                            <Button raised>Log In</Button>
+                        </Link>
+                    </div>
                 </Grid>
+            </Grid>
                 : null}
 
             <Snackbar

@@ -105,6 +105,7 @@ class PlayerFilter extends Component {
             position: '',
             leagues: [],
             born: [PLAYER_MIN_AGE, PLAYER_MAX_AGE],
+            textField: true
         };
 
         this.born = [PLAYER_MIN_AGE, PLAYER_MAX_AGE];
@@ -346,12 +347,14 @@ class PlayerFilter extends Component {
 
 
                 </Grid>
-                <Grid item xs={12} md={4}>
+                <Grid item xs={12}  md={4}>
+                    {this.props.textField?
                     <Autosuggest fullWidth
                                  label="Team"
                                  value={this.props.teams && this.state.id_team_current ? this.props.teams[this.state.id_team_current] || '' : ''}
                                  suggestions={this.filterTeams(this.props.teamOptions)}
                                  onSuggestionSelected={this.onChangeAutosuggest('id_team_current')}/>
+                      : '' }
                 </Grid>
                 <Grid item xs={12} md={4}>
                     <DropDown fullWidth
@@ -379,7 +382,8 @@ class PlayerFilter extends Component {
                               value={GENDER_LIST[this.state.gender] || ''}
                               onChange={this.handleChange('gender')}/>
                 </Grid>
-                <Grid item xs={12} md={4}>
+                <Grid item xs={12}  md={4}>
+                    {this.props.textField?
                     <Hidden only={['xs', 'sm']}>
                         <TextField
                             id="name"
@@ -388,7 +392,8 @@ class PlayerFilter extends Component {
                             className={classes.textField}
                             onChange={this.onChangeName}
                         />
-                    </Hidden>
+                    </Hidden> : '' }
+
 
                     <Hidden only={['md', 'lg', 'xl']}>
                         <InputText options={[]}

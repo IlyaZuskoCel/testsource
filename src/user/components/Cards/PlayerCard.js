@@ -120,12 +120,13 @@ const styleSheet = createStyleSheet('Search', theme => ({
     },
     nameFont: {
         width: 180,
-        overflow: 'hidden',
         fontSize: 40,
         marginTop: 20,
-
+        lineHeight:'37px',
+        marginBottom: '3px',
         [theme.breakpoints.down('md')]: {
             fontSize: 32,
+
         },
 
         [theme.breakpoints.down('md')]: {

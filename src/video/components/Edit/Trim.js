@@ -94,7 +94,12 @@ class Trim extends Component {
             max: props.video.duration || null,
             time_start: props.video.time_start || 0,
             time_end: props.video.time_end || 0,
+            showRange: false,
         };
+    }
+
+    componentDidMount(){
+        setInterval(() => this.setState({showRange: true}),5000)
     }
 
     componentWillReceiveProps(nextProps) {
@@ -106,7 +111,6 @@ class Trim extends Component {
                 time_start: nextProps.video.time_start,
                 time_end: nextProps.video.time_end
             })
-
     }
 
     handleChange = range => {
@@ -146,11 +150,12 @@ class Trim extends Component {
                        id="video"
                        className={classes.video}
                        onTimeUpdate={this.handleTimeUpdate}
+                       onCanPlay={() => this.setState({showRange: true})}
                        controls
                        controlsList="nodownload"/>
             </Paper>
 
-            {!!video && !!this.state.max && "time_start" in video && "time_end" in video && video.time_start < video.time_end && (
+            {this.state.showRange === true && !!video && !!this.state.max && "time_start" in video && "time_end" in video && video.time_start < video.time_end && (
                 <div className={classes.range}>
                     <RangeSlider min={this.state.min}
                                  max={this.state.max}
@@ -160,7 +165,6 @@ class Trim extends Component {
                                  defaultValue={[video.time_start || 0, video.time_end || 0]}/>
                 </div>
             )}
-
 
             <div className={classes.buttons}>
                 <Button onClick={this.handleNext} raised
