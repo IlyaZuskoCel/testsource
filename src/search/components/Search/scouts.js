@@ -128,7 +128,9 @@ const styleSheet = createStyleSheet('Scout', theme => ({
         lineHeight: 1,
         letterSpacing: 0.4,
         textAlign: 'left',
-
+        maxWidth: 350,
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
         [theme.breakpoints.down('md')]: {
             fontSize: 32,
         }

@@ -78,6 +78,10 @@ const styleSheet = createStyleSheet('Header', theme => ({
     },
     username: {
         paddingLeft: 16,
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        maxWidth: 250
+
     },
     menu: {
         display: 'flex',

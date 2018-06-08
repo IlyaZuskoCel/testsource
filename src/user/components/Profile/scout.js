@@ -325,6 +325,11 @@ const styleSheet = createStyleSheet('ScoutProfile', theme => ({
         marginRight: 20,
     },
 
+    infoRightName: {
+        overflow: 'hidden',
+        textOverflow: 'ellipsis'
+    },
+
     infoRightAbout: {
         fontSize: 16,
         lineHeight: 1.5,
