@@ -442,7 +442,9 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
     },
     infoRightName: {
         textTransform: 'uppercase',
-        letterSpacing: '2.8px'
+        letterSpacing: '2.8px',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis'
     },
     infoRightCaption: {
         paddingBottom: 4,
