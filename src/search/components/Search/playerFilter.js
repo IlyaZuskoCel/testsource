@@ -36,7 +36,6 @@ const genderOptions = Object.keys(GENDER_LIST).map(value => ({
 }));
 
 
-
 const tipFormatter = (value, index) => {
     return index ? parseInt(value) - 1 : value;
 };
@@ -105,7 +104,7 @@ class PlayerFilter extends Component {
             name: '',
             team: '',
             year: '',
-            gender:'',
+            gender: '',
             position: '',
             leagues: [],
             born: [PLAYER_MIN_AGE, PLAYER_MAX_AGE],
@@ -153,7 +152,7 @@ class PlayerFilter extends Component {
     makeFilterRequest() {
         let queryString = '';
         let filters = {};
-        if(!this.props.currentUser) return this.props.showPopUp('You must be logged in to use the filter feature.');
+        if (!this.props.currentUser) return this.props.showPopUp('You must be logged in to use the filter feature.');
         let options = {
             id_country: this.state.id_country ? this.state.id_country : null,
             id_league: this.state.id_league ? this.state.id_league : null,
@@ -166,7 +165,7 @@ class PlayerFilter extends Component {
         };
 
 
-        var detail = { 
+        var detail = {
             country: this.state.id_country ? this.state.id_country : null,
             league: this.state.id_league ? this.state.id_league : null,
             level: this.state.id_level ? this.state.id_level : null,
@@ -178,18 +177,18 @@ class PlayerFilter extends Component {
         };
 
         // Intercom player search
-        if(typeof window !== "undefined" && window.Intercom) {
-            window.Intercom('update', { app_id: window.INTERCOM_ID });
+        if (typeof window !== "undefined" && window.Intercom) {
+            window.Intercom('update', {app_id: window.INTERCOM_ID});
             Intercom('trackEvent', 'Search players', detail);
         }
 
         // Intercom player view
-        if(typeof window !== "undefined" && window.Intercom) {
+        if (typeof window !== "undefined" && window.Intercom) {
             window.Intercom('update', {app_id: window.INTERCOM_ID});
             Intercom('trackEvent', 'View player', detail);
         }
 
-        if (this.state.name || this.state.id_league || this.state.id_team_current || this.state.year || this.state.position || this.state.gender || this.state.values || this.state.born || this.state.id_level|| this.state.id_country) {
+        if (this.state.name || this.state.id_league || this.state.id_team_current || this.state.year || this.state.position || this.state.gender || this.state.values || this.state.born || this.state.id_level || this.state.id_country) {
             queryString += '?';
 
             for (let key in options) {
@@ -226,7 +225,7 @@ class PlayerFilter extends Component {
     };
 
     clearLeague = () => {
-        this.setState({id_league: '', dropdownLeagues: [], id_level: '', id_country:''}, () => {
+        this.setState({id_league: '', dropdownLeagues: [], id_level: '', id_country: ''}, () => {
             this.makeFilterRequest();
         });
     };
@@ -360,7 +359,7 @@ class PlayerFilter extends Component {
                                  onSuggestionSelected={this.onChangeAutosuggest('id_team_current')}/>
                       : '' }
                 </Grid>
-                <Grid item xs={12}  md={4}>
+                <Grid item xs={12} md={4}>
                     <DropDown fullWidth
                               options={positionOptions}
                               label="Position"
@@ -368,7 +367,7 @@ class PlayerFilter extends Component {
                               onChange={this.handleChange('position')}/>
 
                 </Grid>
-                <Grid item xs={12}  md={4}>
+                <Grid item xs={12} md={4}>
                     <RangeSlider onAfterChange={this.getRange}
                                  onChange={this.handleChangeRange}
                                  value={this.state.born}
@@ -378,7 +377,8 @@ class PlayerFilter extends Component {
                                  min={PLAYER_MIN_AGE}
                                  max={PLAYER_MAX_AGE}/>
                 </Grid>
-                <Grid item xs={12}  md={4}>
+
+                <Grid item xs={12} md={4}>
                     <DropDown fullWidth
                               options={genderOptions}
                               label="Gender"
