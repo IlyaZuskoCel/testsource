@@ -122,6 +122,8 @@ const styleSheet = createStyleSheet('Search', theme => ({
         width: 180,
         fontSize: 40,
         marginTop: 20,
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
         lineHeight:'37px',
         marginBottom: '3px',
         [theme.breakpoints.down('md')]: {
