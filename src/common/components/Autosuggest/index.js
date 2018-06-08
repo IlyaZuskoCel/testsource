@@ -114,7 +114,7 @@ const styleSheet = createStyleSheet(theme => ({
         zIndex: 0,
     },
     iconCross: {
-        zIndex: 10000
+        zIndex: 999
     }
 }));
 
