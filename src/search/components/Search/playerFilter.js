@@ -89,6 +89,9 @@ const styleSheet = createStyleSheet('ScoutFilter', theme => ({
             padding: 20,
         }
     },
+    explorerUpField: {
+        margin: `${(typeof(window)!= 'undefined' && navigator.userAgent.search('.NET') > 0  )? '-14px 0px 0px 0px' : '0' }`
+    }
 }));
 
 class PlayerFilter extends Component {
@@ -347,7 +350,7 @@ class PlayerFilter extends Component {
 
 
                 </Grid>
-                <Grid item xs={12}  md={4}>
+                <Grid item xs={12}  md={4} className={classes.explorerUpField}>
                     {this.props.textField?
                     <Autosuggest fullWidth
                                  label="Team"
@@ -382,7 +385,7 @@ class PlayerFilter extends Component {
                               value={GENDER_LIST[this.state.gender] || ''}
                               onChange={this.handleChange('gender')}/>
                 </Grid>
-                <Grid item xs={12}  md={4}>
+                <Grid item xs={12}  md={4} className={classes.explorerUpField}>
                     {this.props.textField?
                     <Hidden only={['xs', 'sm']}>
                         <TextField
