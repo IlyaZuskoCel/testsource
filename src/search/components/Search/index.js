@@ -472,8 +472,8 @@ class Search extends Component {
         });
     }
 
-    showPopUp(popUpText) {
-        this.setState({showPopup: true, popUpText: popUpText});
+    showPopUp(popUpText){
+        this.setState({showPopup: true, popUpText: popUpText, textField:false});
     }
 
     componentWillMount() {
@@ -481,7 +481,7 @@ class Search extends Component {
     }
 
     handleClosePopup = () => {
-        this.setState({showPopup: false, clearField: this.props.type})
+        this.setState({showPopup:false, clearField: this.props.type, textField:true})
     };
 
     render() {
@@ -646,6 +646,7 @@ class Search extends Component {
                                                                    currentUser={this.props.currentUser}
                                                                    filters={this.props.filters && this.props.filters.player ? this.props.filters.player : {}}
                                                                    setFilters={this.props.setFilters}
+                                                                   textField={this.state.textField}
                     />}
                 </div>
             </Hidden>}
