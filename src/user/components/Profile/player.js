@@ -374,7 +374,9 @@ const styleSheet = createStyleSheet('PlayerProfile', theme => ({
         },
 
     },
-    infoCardTeam: {},
+    infoCardTeam: {
+        maxWidth:254
+    },
     infoCardName: {
         marginTop: 8,
         fontSize: 32,
