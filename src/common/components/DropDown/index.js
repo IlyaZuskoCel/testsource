@@ -36,7 +36,7 @@ const styleSheet = createStyleSheet('DropDown', theme => {
             lineHeight: '40px'
         },
         iconCross: {
-            zIndex: 10000
+            zIndex: 999
         },
         container: {
             width: '100%',

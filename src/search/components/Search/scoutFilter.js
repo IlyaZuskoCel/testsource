@@ -282,11 +282,13 @@ class ScoutFilter extends Component {
                     />
                 </Grid>
                 <Grid item xs={12} md={4}>
+                    {this.props.textField?
                     <Autosuggest fullWidth
                                  label="Team"
                                  value={this.props.teams && this.state.id_team_current ? this.props.teams[this.state.id_team_current] || '' : ''}
                                  suggestions={this.filterTeams(this.props.teamOptions) }
-                                 onSuggestionSelected={this.onChangeAutosuggest('id_team_current')}/>
+                                 onSuggestionSelected={this.onChangeAutosuggest('id_team_current')}/> 
+                      : '' }
                 </Grid>
                 <Grid item xs={12} md={4}>
                     {this.props.textField?
