@@ -7,7 +7,6 @@ import withWidth from 'material-ui/utils/withWidth';
 import Slider, {Range, createSliderWithTooltip} from 'rc-slider';
 import Tooltip from 'rc-tooltip';
 
-import 'rc-slider/assets/index.css';
 import {PLAYER_MAX_AGE, PLAYER_MIN_AGE} from "../../constants/playerSettings";
 
 const Handle = Slider.Handle;
