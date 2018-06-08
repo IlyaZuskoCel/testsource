@@ -99,7 +99,7 @@ class Trim extends Component {
     }
 
     componentDidMount(){
-        setInterval(() => this.setState({showRange: true}),5000)
+        setInterval(() => this.setState({showRange: true}),2000)
     }
 
     componentWillReceiveProps(nextProps) {
