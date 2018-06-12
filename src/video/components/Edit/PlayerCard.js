@@ -265,6 +265,8 @@ const styleSheet = createStyleSheet('PlayerCard', theme => ({
         marginBottom: 20,
     },
     infoRightName: {
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
         fontSize:34,
         [theme.breakpoints.down('sm')]: {
             fontSize:20,
