@@ -271,7 +271,7 @@ export const fetchTags = token => dispatch => {
 export const downloadVideo = (video, token) => dispatch => {
     let link = document.createElement("a");
     link.download = video.video_file_name;
-    link.href = video.video_path;
+    link.href = video.overlay_video_path || video.trim_video_file_path || video.video_path;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

@@ -220,9 +220,10 @@ class Players extends Component {
         const {classes} = this.props;
 
         return (<div className={classNames(classes.content)}>
-                <div className={classes.total}>
-                    <Typography type="caption">{this.props.total ? this.props.total : 0} player{(this.props.total && this.props.total > 1) ? 's' : ''} found</Typography>
-                </div>
+                {this.props.currentUser && <div className={classes.total}>
+                                                <Typography type="caption">{this.props.total ? this.props.total : 0} player{(this.props.total && this.props.total > 1) ? 's' : ''} found</Typography>
+                                           </div>
+                }
                 <div className={classes.resultContainer}>
 
                     {this.props.total === 0 && <Hidden only={['md', 'lg', 'xl']}><div className={classes.specificContainer}>
