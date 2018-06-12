@@ -288,9 +288,10 @@ class Scouts extends Component {
 
         return (
             <div className={classes.content}>
-                <div className={classes.total}>
+                {this.props.currentUser && <div className={classes.total}>
                     <Typography type="caption">{this.props.total ? this.props.total : 0} scout{(this.props.total && this.props.total > 1) ? 's' : ''} found</Typography>
                 </div>
+                }
                 <div className={classes.resultContainer}>
 
                     {this.props.total === 0 && <Hidden smUp>
