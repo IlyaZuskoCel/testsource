@@ -639,12 +639,12 @@ class PlayerProfile extends Component {
                 <meta property="og:title" content={detail.name}/>
                 <meta property="og:type" content="article"/>
                 <meta property="og:image" content={user.profile_picture}/>
-                <meta property="og:description" content={detail.league}/>
+                <meta property="og:description" content={user.biography}/>
                 <meta property="og:image" content={absUrl(user.profile_picture)} />
 
                 <meta name="twitter:card" content='player'/>
                 <meta name="twitter:title" content={detail.name}/>
-                <meta name="twitter:description" content={detail.league}/>
+                <meta name="twitter:description" content={user.biography}/>
                 <meta name="twitter:image" content={absUrl(user.profile_picture)}/>
 
                 <title>{`Player profile ${user.first_name} ${user.last_name}`}</title>
