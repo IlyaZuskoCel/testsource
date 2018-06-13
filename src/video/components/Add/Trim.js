@@ -20,17 +20,17 @@ import {RangeSlider} from '../../../common/components';
 
 const tipFormatter = value => {
 
-    if (value === 0) return '00:00';
+    if (value === 0) return '0:00';
 
     const duration = moment.duration(value);
     let time = '';
     if (duration.get('hours'))
-        time += ('00' + duration.get('hours')).slice(-2) + ':';
+        time += ('' + duration.get('hours')).slice(-2) + ':';
     if (duration.get('minutes'))
-        time += ('00' + duration.get('minutes')).slice(-2) + ':';
+        time += ('' + duration.get('minutes')).slice(-2) + ':';
 
-    time += ('00' + duration.get('seconds')).slice(-2) + ':';
-    time += ('00' + duration.get('milliseconds')).slice(-2);
+    time += ('' + duration.get('seconds')).slice(-2) + ':';
+    time += ('0' + duration.get('milliseconds')).slice(-2);
 
     return time;
 };
@@ -116,6 +116,7 @@ class Trim extends Component {
 
     handleChange = range => {
         const video = document.getElementById("video");
+        range = range.map(item => item * 1000)
         video.currentTime = range[0] / 1000;
         this.setState({
             time_start: range[0],
@@ -159,11 +160,11 @@ class Trim extends Component {
             {this.state.showRange === true && !!video && !!this.state.max && (
                 <div className={classes.range}>
                     <RangeSlider min={this.state.min}
-                                 max={this.state.max}
+                                 max={Math.floor(this.state.max/1000)}
                                  onAfterChange={this.handleChange}
                                  tipFormatter={tipFormatter}
                                  trackStyle={[{backgroundColor: '#d7001e'}]}
-                                 defaultValue={[video.time_start || 0, video.time_end || 0]}/>
+                                 defaultValue={[video.time_start/1000 || 0, video.time_end/1000 || 0]}/>
                 </div>
             )}
 
