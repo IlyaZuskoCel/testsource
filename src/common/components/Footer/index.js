@@ -140,23 +140,23 @@ class Footer extends Component {
                                 <Icon className={classes.logo}>scoutzoo-wordmark</Icon>
                             </Link>
                         ) : (
-                            <a href="https://scoutzoo.com" target="_blank" className={classes.logoLink}>
+                            <a href="https://site.scoutzoo.com" target="_blank" className={classes.logoLink}>
                                 <Icon className={classes.logo}>scoutzoo-wordmark</Icon>
                             </a>
                         )}
 
                     </Grid>
                     <Grid item xs={6} md={5} lg={6} className={classes.links}>
-                        <a href="https://scoutzoo.com/aboutus" target="_blank" className={classes.link}>
+                        <a href="https://site.scoutzoo.com/aboutus" target="_blank" className={classes.link}>
                             <Typography type="caption">About Us</Typography>
                         </a>
-                        <a href="https://scoutzoo.com/contact" target="_blank" className={classes.link}>
+                        <a href="https://site.scoutzoo.com/contact" target="_blank" className={classes.link}>
                             <Typography type="caption">Contact Us</Typography>
                         </a>
-                        <a href="https://scoutzoo.com/policy" target="_blank" className={classes.link}>
+                        <a href="https://site.scoutzoo.com/policy" target="_blank" className={classes.link}>
                             <Typography type="caption">Privacy Policy</Typography>
                         </a>
-                        <a href="https://scoutzoo.com/term" target="_blank" className={classes.link}>
+                        <a href="https://site.scoutzoo.com/term" target="_blank" className={classes.link}>
                             <Typography type="caption">Terms & Conditions</Typography>
                         </a>
                     </Grid>
