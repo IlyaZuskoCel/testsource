@@ -3,6 +3,7 @@ import Helmet from "react-helmet";
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
 const SITE_URL = process.env.SITE_URL;
+const LANDING_URL = process.env.LANDING_URL;
 const GOOGLE_UA = process.env.GOOGLE_UA;
 const INTERCOM_ID = process.env.INTERCOM_ID;
 
@@ -67,7 +68,8 @@ export default ({template, html, css, error, initialProps, store, options}) => {
             `<div id="app"></div>
              <script>window['${options.initialStateKey}'] = ${JSON.stringify(store ? store.getState() : {})};</script>
              <script>window['${options.initialPropsKey}'] = ${JSON.stringify(initialProps || {})};</script>
-             <script>window['SITE_URL'] = '${SITE_URL}';</script>`)
+             <script>window['SITE_URL'] = '${SITE_URL}';</script>
+             <script>window['LANDING_URL'] = '${LANDING_URL}';</script>`)
         .replace(
             `<div id="app"></div>`,
             `${errorHtml}<div id="app">${html}</div>`

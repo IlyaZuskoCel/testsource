@@ -7,16 +7,15 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 
-import classNames from 'classnames';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
-import withWidth from 'material-ui/utils/withWidth';
-import compose from 'recompose/compose';
 
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 
 
 import {PLAYER_ROLE, SCOUT_ROLE} from '../../../user/constants';
+
+import {getLandingUrl} from '../../helpers';
 
 import {Link, Icon} from '../'
 
@@ -140,23 +139,23 @@ class Footer extends Component {
                                 <Icon className={classes.logo}>scoutzoo-wordmark</Icon>
                             </Link>
                         ) : (
-                            <a href="https://site.scoutzoo.com" target="_blank" className={classes.logoLink}>
+                            <a href={getLandingUrl('/')} target="_blank" className={classes.logoLink}>
                                 <Icon className={classes.logo}>scoutzoo-wordmark</Icon>
                             </a>
                         )}
 
                     </Grid>
                     <Grid item xs={6} md={5} lg={6} className={classes.links}>
-                        <a href="https://site.scoutzoo.com/aboutus" target="_blank" className={classes.link}>
+                        <a href={getLandingUrl('/aboutus')} target="_blank" className={classes.link}>
                             <Typography type="caption">About Us</Typography>
                         </a>
-                        <a href="https://site.scoutzoo.com/contact" target="_blank" className={classes.link}>
+                        <a href={getLandingUrl('/contact')} target="_blank" className={classes.link}>
                             <Typography type="caption">Contact Us</Typography>
                         </a>
-                        <a href="https://site.scoutzoo.com/policy" target="_blank" className={classes.link}>
+                        <a href={getLandingUrl('/policy')} target="_blank" className={classes.link}>
                             <Typography type="caption">Privacy Policy</Typography>
                         </a>
-                        <a href="https://site.scoutzoo.com/term" target="_blank" className={classes.link}>
+                        <a href={getLandingUrl('/term')} target="_blank" className={classes.link}>
                             <Typography type="caption">Terms & Conditions</Typography>
                         </a>
                     </Grid>
