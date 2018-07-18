@@ -281,9 +281,10 @@ class PlayerCard extends Component {
     };
 
     handleClick = (event) => {
-        if(!this.props.currentUser && this.props.player.is_private)
+        if(!this.props.currentUser && this.props.player.is_private) {
             event.preventDefault();
             this.props.showPopUp('You must be logged in to view this profile');
+        }
     }
 
     handleDialogConfirm = () => {
