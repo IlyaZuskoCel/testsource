@@ -82,8 +82,9 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => ({
 class Wrap extends Component {
     static async getInitialProps({location, query, params, store, routeProps}) {
         const state = store.getState();
+        let page = location.search.split('&')[0].split('=')[1];
         return await Promise.all([
-                store.dispatch(location.pathname === '/search/scout' ? uploadScouts({page: 1, 'per-page': 18}, state.common.cookies.token) : uploadPlayers({page: 1, 'per-page': 18}, state.common.cookies.token)),
+                store.dispatch(location.pathname === '/search/scout' ? uploadScouts({page: page || 1, 'per-page': 18}, state.common.cookies.token) : uploadPlayers({page: page || 1, 'per-page': 18}, state.common.cookies.token)),
                 store.dispatch(getCountries(state.common.cookies.token)),
                 store.dispatch(getLeagues(state.common.cookies.token)),
                 store.dispatch(getTeams(state.common.cookies.token)),
