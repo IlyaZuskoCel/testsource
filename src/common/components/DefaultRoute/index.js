@@ -6,6 +6,7 @@
 import React from 'react';
 import {Route} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Helmet from 'react-helmet';
 
 import classNames from 'classnames';
 import {withStyles, createStyleSheet} from 'material-ui/styles';
@@ -105,6 +106,7 @@ const DefaultRoute = ({component: Component, isAuthenticated, loader ,alert, hid
 
         return (
             <div>
+                <Helmet titleTemplate="%s | Scout Zoo"/>
                 <Grid
                     className={classNames(classes.root, {[classes.hideBackgroundTopHeader]: hideBackgroundTopHeader || hideBackgroundTopMobileHeader})}>
                     {!hideHeader && <Header hideBackgroundTopHeader={hideBackgroundTopHeader}
