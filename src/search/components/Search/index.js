@@ -495,12 +495,7 @@ class Search extends Component {
                 <meta property="og:description" content="Scout Zoo is the online scouting platform where players upload their videos and get discovered by scouts worldwide." />
                 <meta name="description" content="Scout Zoo is the online scouting platform where players upload their videos and get discovered by scouts worldwide." />
                 <meta property="og:image" content="https://s3.amazonaws.com/scoutzoocraft-public-storage/_1200x630_crop_center-center_60/homepage-benefits-for-scouts.jpg?mtime=20170508205514" />
-                <meta property="og:url" content="https://scoutzoo.com/" />
-                <meta property="og:type" content="website" />
-                <meta name="theme-color" content="#D71F27" />
-                <meta name="theme-color" content="#D7001E" />
-                <meta name="msapplication-navbutton-color" content="#D7001E" />
-                <meta name="apple-mobile-web-app-status-bar-style" content="#D7001E" />
+
 
             </Helmet>
             <Hidden only={['xs', 'sm']}>

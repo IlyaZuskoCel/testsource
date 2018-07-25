@@ -17,8 +17,7 @@ import Typography from 'material-ui/Typography';
 import Header from '../../containers/Header'
 import Footer from '../../containers/Footer'
 
-import gifImage from './assets/images/spinner.gif';
-
+import {absUrl} from '../../helpers';
 import ScoutIcon from '../Icon';
 
 const styleSheet = createStyleSheet('DefaultRoute', theme => ({
@@ -82,11 +81,11 @@ const styleSheet = createStyleSheet('DefaultRoute', theme => ({
         borderRadius: '100%',
         border: '2px solid',
         borderTopColor: 'rgba(215,0,30, 0.65)',
-        borderBottomColor:'rgba(215,0,30, 0.15)',
-        borderLeftColor:'rgba(215,0,30, 0.65)',
-        borderRightColor:'rgba(215,0,30, 0.15)',
+        borderBottomColor: 'rgba(215,0,30, 0.15)',
+        borderLeftColor: 'rgba(215,0,30, 0.65)',
+        borderRightColor: 'rgba(215,0,30, 0.15)',
         animation: 'spinner 3000ms linear infinite',
-},
+    },
     '@keyframes spinner': {
         from: {
             transform: 'rotate(0deg)',
@@ -98,7 +97,7 @@ const styleSheet = createStyleSheet('DefaultRoute', theme => ({
 }));
 
 
-const DefaultRoute = ({component: Component, isAuthenticated, loader ,alert, hideAlert, classes, hideBackgroundTopHeader, hideBackgroundTopMobileHeader, hideBackgroundTopMobileHeaderScroll, hideBoxShadowScroll ,  hideHeader, ...rest}) => (
+const DefaultRoute = ({component: Component, isAuthenticated, loader, alert, hideAlert, classes, hideBackgroundTopHeader, hideBackgroundTopMobileHeader, hideBackgroundTopMobileHeaderScroll, hideBoxShadowScroll, hideHeader, ...rest}) => (
     <Route {...rest} render={props => {
 
         if (props.staticContext)
@@ -106,7 +105,21 @@ const DefaultRoute = ({component: Component, isAuthenticated, loader ,alert, hid
 
         return (
             <div>
-                <Helmet titleTemplate="%s | Scout Zoo"/>
+                <Helmet titleTemplate="%s | Scout Zoo">
+                    <meta property="og:url" content={absUrl('/')}/>
+                    <meta property="og:type" content="website"/>
+                    <link rel="apple-touch-icon" sizes="180x180" href="/public/favicons/apple-touch-icon.png"/>
+                    <link rel="icon" type="image/png" sizes="32x32" href="/public/favicons/favicon-32x32.png"/>
+                    <link rel="icon" type="image/png" sizes="16x16" href="/public/favicons/favicon-16x16.png"/>
+                    <link rel="manifest" href="/public/favicons/manifest.json"/>
+                    <link rel="mask-icon" href="/public/favicons/safari-pinned-tab.svg" color="#d71f27 "/>
+                    <link rel="shortcut icon" href="/public/favicons/favicon.ico"/>
+                    <meta name="msapplication-config" content="/public/favicons/browserconfig.xml"/>
+                    <meta name="theme-color" content="#D71F27"/>
+                    <meta name="theme-color" content="#D7001E"/>
+                    <meta name="msapplication-navbutton-color" content="#D7001E"/>
+                    <meta name="apple-mobile-web-app-status-bar-style" content="#D7001E"/>
+                </Helmet>
                 <Grid
                     className={classNames(classes.root, {[classes.hideBackgroundTopHeader]: hideBackgroundTopHeader || hideBackgroundTopMobileHeader})}>
                     {!hideHeader && <Header hideBackgroundTopHeader={hideBackgroundTopHeader}
@@ -123,10 +136,10 @@ const DefaultRoute = ({component: Component, isAuthenticated, loader ,alert, hid
                             horizontal: 'center'
                         }}
                         onClick={hideAlert}
-                        autoHideDuration={typeof alert.autoHideDuration  === "undefined" ? 5000 : alert.autoHideDuration}
-                        onRequestClose={(e,reason)=>reason === 'timeout' ? hideAlert() : null}
+                        autoHideDuration={typeof alert.autoHideDuration === "undefined" ? 5000 : alert.autoHideDuration}
+                        onRequestClose={(e, reason) => reason === 'timeout' ? hideAlert() : null}
                         open={alert.open}
-                        message={<div className={classes.message} >
+                        message={<div className={classes.message}>
                             <ScoutIcon className={classes.alertIcon}
                                        color={alert.type}>{alert.type === 'error' ? 'cross' : 'checkmark'}</ScoutIcon>
                             <Typography type="body2">{alert.message}</Typography>
@@ -134,11 +147,13 @@ const DefaultRoute = ({component: Component, isAuthenticated, loader ,alert, hid
                         </div>}
                     />
                 )}
-                <div className={classNames(classes.preloader , loader > 0 ? classes.showPreloader : classes.hidePreloader)}>
+                <div
+                    className={classNames(classes.preloader, loader > 0 ? classes.showPreloader : classes.hidePreloader)}>
                     <div className={classes.spinner}/>
                 </div>
             </div>
-        )}}/>
+        )
+    }}/>
 );
 
 DefaultRoute.propTypes = {
